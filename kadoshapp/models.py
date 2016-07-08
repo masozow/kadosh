@@ -40,6 +40,9 @@ class Bodega(models.Model):
     descripcion_bodega = models.CharField(max_length=45, blank=True, null=True)
     estado_bodega = models.BooleanField(default=True)
 
+    def __str__(self):
+        return self.nombre_bodega
+
     class Meta:
         managed = True
         db_table = 'Bodega'
@@ -50,6 +53,9 @@ class Caja(models.Model):
     sucursal_idsucursal = models.ForeignKey('Sucursal', db_column='Sucursal_idSucursal')  # Field name made lowercase.
     descripcion_caja = models.CharField(max_length=45, blank=True, null=True)
     estado_caja = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.descripcion_caja
 
     class Meta:
         managed = True
@@ -62,10 +68,12 @@ class CajaHasEmpleado(models.Model):
     momento_asignacion_caja = models.DateTimeField(default=timezone.now)
     momento_desasignacion_caja = models.DateTimeField(blank=True, null=True)
 
+    def __str__(self):
+        return 'Caja: %s - Fecha: %s - Empleado: %s' % (self.caja_idcaja.descripcion_caja, self.momento_asignacion_caja, self.empleado_idempleado)
+
     class Meta:
         managed = True
         db_table = 'Caja_has_Empleado'
-
 
 class CierreDeCaja(models.Model):
     idcierre_de_caja = models.AutoField(db_column='idCierre_de_caja', primary_key=True)  # Field name made lowercase.
@@ -76,6 +84,9 @@ class CierreDeCaja(models.Model):
     total_calculado_cierredecaja = models.DecimalField(db_column='total_calculado_cierreDeCaja', max_digits=12, decimal_places=2, blank=True, null=True)  # Field name made lowercase.
     finalizado_cierredecaja = models.BooleanField(db_column='finalizado_cierreDeCaja', default=True)
     #finalizado_cierredecaja = models.IntegerField(db_column='finalizado_cierreDeCaja', blank=True, null=True)  # Field name made lowercase.
+
+    def __str__(self):
+        return 'Caja: %s - Fecha: %s' % (self.caja_idcaja.descripcion_caja, self.fecha_cierredecaja)
 
     class Meta:
         managed = True
@@ -90,6 +101,9 @@ class Cliente(models.Model):
     tipo_cliente_idtipo_cliente = models.ForeignKey('TipoCliente', db_column='Tipo_cliente_idTipo_cliente')  # Field name made lowercase.
     estado_cliente = models.BooleanField(default=True)
     fecha_registro_cliente = models.DateField(default=timezone.now)
+
+    def __str__(self):
+        return 'Nit: %s - Nombre: %s %s' % (self.nit_cliente, self.persona_idpersona.nombres_persona, self.persona_idpersona.apellidos_persona)
 
     class Meta:
         managed = True
@@ -114,6 +128,9 @@ class Combo(models.Model):
     nombre_combo = models.CharField(max_length=45, blank=True, null=True)
     estado_combo = models.BooleanField(default=True)
 
+    def __str__(self):
+        return self.nombre_combo
+
     class Meta:
         managed = True
         db_table = 'Combo'
@@ -130,6 +147,9 @@ class Compra(models.Model):
     contado_compra = models.BooleanField(default=True)
     inventario_producto_idinventario_producto = models.ForeignKey('InventarioProducto', db_column='Inventario_producto_idInventario_producto')  # Field name made lowercase.
     empleado_idempleado = models.ForeignKey('Empleado', db_column='Empleado_idEmpleado')  # Field name made lowercase.
+
+    def __str__(self):
+        return 'Compra: %s - Proveedor: %s  - Fecha: %s' % (self.idcompra, self.proveedor_idproveedor.nombre_proveedor, self.fecha_compra)
 
     class Meta:
         managed = True
