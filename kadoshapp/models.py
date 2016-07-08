@@ -11,6 +11,9 @@ class AjusteInventario(models.Model):
     motivo_idmotivo = models.ForeignKey('Motivo', db_column='Motivo_idMotivo')  # Field name made lowercase.
     fecha_horaajuste = models.DateTimeField(db_column='fecha_horaAjuste', default=timezone.now)  # Field name made lowercase.
 
+    def __str__(self):
+        return self.idajuste_inventario
+
     class Meta:
         managed = True
         db_table = 'Ajuste_inventario'
@@ -19,8 +22,11 @@ class AjusteInventario(models.Model):
 class Anaquel(models.Model):
     idanaquel = models.AutoField(db_column='idAnaquel', primary_key=True)  # Field name made lowercase.
     bodega_idbodega = models.ForeignKey('Bodega', db_column='Bodega_idBodega')  # Field name made lowercase.
-    codigo_anaquel = models.CharField(max_length=45, blank=True, null=True)
+    codigo_anaquel = models.CharField(max_length=45, blank=True, null=True,unique=True)
     estado_anaquel = models.BooleanField(default=True)  # This field type is a guess.
+
+    def __str__(self):
+        return self.codigo_anaquel
 
     class Meta:
         managed = True
@@ -94,7 +100,7 @@ class Color(models.Model):
     idcolor = models.AutoField(db_column='idColor', primary_key=True)  # Field name made lowercase.
     nombre_color = models.CharField(max_length=45, blank=True, null=True)
     estado_color = models.BooleanField(default=True)  # This field type is a guess.
-    
+
     def __str__(self):
         return self.nombre_color
 
