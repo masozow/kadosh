@@ -329,6 +329,7 @@ class InventarioProducto(models.Model):
     producto_codigo_producto = models.ForeignKey('Producto', db_column='Producto_codigo_producto')  # Field name made lowercase.
     fecha_creacioninventario = models.DateTimeField(db_column='fecha_creacionInventario', default=timezone.now)  # Field name made lowercase.
     estado_inventario_producto = models.BooleanField(default=True)
+    costo_unitario_inventarioproducto = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
 
     class Meta:
         managed = True
