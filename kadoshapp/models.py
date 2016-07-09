@@ -163,6 +163,10 @@ class Contacto(models.Model):
     asunto_contacto = models.CharField(max_length=60, blank=True, null=True)
     mensaje_contacto = models.CharField(max_length=400, blank=True, null=True)
     estado_contacto = models.BooleanField(default=True)
+    fecha_contacto = models.DateField(default=timezone.now)
+
+    def __str__(self):
+        return 'Nombre: %s - Asunto: %s  - Fecha: %s' % (self.nombre_contacto, self.asunto_contacto, self.fecha_contacto)
 
     class Meta:
         managed = True
@@ -176,6 +180,9 @@ class Contenido(models.Model):
     index_idindex = models.ForeignKey('Index', db_column='Index_idIndex')  # Field name made lowercase.
     estado_contenido = models.BooleanField(default=True)
 
+    def __str__(self):
+        return 'Contenido: %s - Resumen: %s ' % (self.idcontenido, self.resumen_contenido)
+
     class Meta:
         managed = True
         db_table = 'Contenido'
@@ -188,6 +195,9 @@ class CuentaPorCobrar(models.Model):
     saldo_actual_cuentaporcobrar = models.DecimalField(db_column='saldo_actual_cuentaPorCobrar', max_digits=12, decimal_places=2, blank=True, null=True)  # Field name made lowercase.
     fecha_pagofinal_cuentaporcobrar = models.DateField(db_column='fecha_pagoFinal_cuentaPorCobrar', blank=True, null=True)  # Field name made lowercase.
     estado_cuentaporcobrar = models.BooleanField(db_column='estado_cuentaPorCobrar', default=True)  # Field name made lowercase.
+
+    def __str__(self):
+        return 'Cuenta: %s - Venta: %s ' % (self.idcuenta_por_cobrar, self.venta_idventa)
 
     class Meta:
         managed = True
