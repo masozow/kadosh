@@ -212,6 +212,9 @@ class CuentaPorPagar(models.Model):
     fecha_pagofinal_cuentaporpagar = models.DateField(db_column='fecha_pagofinal_cuentaPorPagar', blank=True, null=True)  # Field name made lowercase.
     estado_cuentaporpagar = models.BooleanField(db_column='estado_cuentaPorPagar', default=True)  # Field name made lowercase.
 
+    def __str__(self):
+        return 'Cuenta: %s - Venta: %s ' % (self.idcuenta_por_pagar, self.compra_idcompra)
+
     class Meta:
         managed = True
         db_table = 'Cuenta_por_pagar'
@@ -224,6 +227,9 @@ class DatosEnvio(models.Model):
     correo_electronico_envio = models.CharField(max_length=60, blank=True, null=True)
     telefonos_envio = models.CharField(max_length=36, blank=True, null=True)
     envio_idenvio = models.ForeignKey('Envio', db_column='Envio_idEnvio')  # Field name made lowercase.
+
+    def __str__(self):
+        return 'Envio: %s - Nombre: %s %s' % (self.envio_idenvio, self.nombres_envio,self.apellidos_envio)
 
     class Meta:
         managed = True
