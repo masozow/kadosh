@@ -3,3 +3,4 @@ __pycache__
 kadoshvenv
 db.sqlite3
 .DS_Store
+static
