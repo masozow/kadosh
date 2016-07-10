@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Color, Anaquel, CajaHasEmpleado, Caja, AjusteInventario, Bodega, CierreDeCaja, Cliente, Combo, Compra, Contacto, Contenido , CuentaPorCobrar, CuentaPorPagar, DatosEnvio, DetalleInventarioRealizado, DetalleCompra, DetalleVenta, Empleado, Envio, Estilo, Fotografia, Genero, Index, IndexHasFotografia, InventarioProducto, InventarioRealizado, Marca, Motivo, Noticia, NoticiaHasFotografia, PagoCuentaPorPagar, PagosCuentaPorCobrar, Persona, Precio, Producto, ProductoHasFotografia, Promocion, PromocionHasProducto, Proveedor, Puesto, Seguridad, Sucursal, Talla, TipoCliente, TipoPago, TipoProducto, TrasladoMercaderia, Venta
-
+#espero si salga
 admin.site.register(Color)
 admin.site.register(Anaquel)
 admin.site.register(Caja)
