@@ -63,6 +63,7 @@ class Caja(models.Model):
 
 
 class CajaHasEmpleado(models.Model):
+    idcaja_has_empleado = models.AutoField(db_column='idcaja_has_empleado', primary_key=True)  # Field name made lowercase.
     caja_idcaja = models.ForeignKey(Caja, db_column='Caja_idCaja')  # Field name made lowercase.
     empleado_idempleado = models.ForeignKey('Empleado', db_column='Empleado_idEmpleado')  # Field name made lowercase.
     momento_asignacion_caja = models.DateTimeField(default=timezone.now)
@@ -272,6 +273,9 @@ class DetalleVenta(models.Model):
     cantidad_venta = models.IntegerField(blank=True, null=True)
     valor_parcial_venta = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
 
+    def __str__(self):
+        return 'Venta: %s - Producto: %s - Detalle: %s' % (self.venta_idventa, self.inventario_producto_idinventario_producto,self.iddetalleventa)
+
     class Meta:
         managed = True
         db_table = 'Detalle_venta'
@@ -279,13 +283,16 @@ class DetalleVenta(models.Model):
 
 class Empleado(models.Model):
     idempleado = models.AutoField(db_column='idEmpleado', primary_key=True)  # Field name made lowercase.
-    usuario = models.ForeignKey('auth.User')
+    usuario = models.ForeignKey(User)
     persona_idpersona = models.ForeignKey('Persona', db_column='Persona_idPersona')  # Field name made lowercase.
     puesto_idpuesto = models.ForeignKey('Puesto', db_column='Puesto_idPuesto')  # Field name made lowercase.
     fecha_contratacion_empleado = models.DateField(default=timezone.now)
     codigo_autorización_empleado = models.CharField(max_length=45, blank=True, null=True)
     sucursal_idsucursal = models.ForeignKey('Sucursal', db_column='Sucursal_idSucursal')  # Field name made lowercase.
     estado_empleado = models.BooleanField(default=True)
+
+    def __str__(self):
+        return 'Empleado: %s - Nombre: %s %s' % (self.idempleado, self.persona_idpersona.nombres_persona,self.persona_idpersona.apellidos_persona)
 
     class Meta:
         managed = True
