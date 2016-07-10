@@ -242,6 +242,9 @@ class DetalleInventarioRealizado(models.Model):
     ajuste_inventario_idajuste_inventario = models.ForeignKey(AjusteInventario, db_column='Ajuste_inventario_idAjuste_inventario')  # Field name made lowercase.
     cantidad_real_inventario_realizado = models.IntegerField(blank=True, null=True)
 
+    def __str__(self):
+        return 'Inventario: %s - Lote de producto: %s - Fecha: %s' % (self.inventario_realizado_idinventario_realizado, self.inventario_producto_idinventario_producto,self.inventario_realizado_idinventario_realizado.fecha_realizacion_inventario)
+
     class Meta:
         managed = True
         db_table = 'Detalle inventario_realizado'
@@ -253,6 +256,9 @@ class DetalleCompra(models.Model):
     cantidad_compra = models.IntegerField(blank=True, null=True)
     valor_parcial_compra = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
     iddetallecompra = models.AutoField(db_column='idDetalleCompra', primary_key=True)  # Field name made lowercase.
+
+    def __str__(self):
+        return 'Compra: %s - Producto: %s - Detalle: %s' % (self.compra_idcompra, self.inventario_producto_idinventario_producto,self.iddetallecompra)
 
     class Meta:
         managed = True
