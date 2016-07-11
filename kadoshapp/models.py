@@ -37,7 +37,7 @@ class Bodega(models.Model):
     idbodega = models.AutoField(db_column='idBodega', primary_key=True)  # Field name made lowercase.
     sucursal_idsucursal = models.ForeignKey('Sucursal', db_column='Sucursal_idSucursal')  # Field name made lowercase.
     nombre_bodega = models.CharField(max_length=45, blank=True, null=True)
-    descripcion_bodega = models.CharField(max_length=45, blank=True, null=True)
+    descripcion_bodega = models.CharField(max_length=100, blank=True, null=True)
     estado_bodega = models.BooleanField(default=True)
 
     def __str__(self):
