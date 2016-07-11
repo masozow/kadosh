@@ -4167,3 +4167,419 @@ Not Found: /imagenes/reporte.png
 (0.000) SET SQL_AUTO_IS_NULL = 0; args=None
 (0.031) SHOW FULL TABLES; args=None
 (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 394, in urlconf_module
+    return self._urlconf_module
+AttributeError: 'RegexURLResolver' object has no attribute '_urlconf_module'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/handlers/base.py", line 119, in get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 366, in resolve
+    for pattern in self.url_patterns:
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 402, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 396, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/importlib/__init__.py", line 109, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2226, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1129, in _exec
+  File "<frozen importlib._bootstrap>", line 1467, in exec_module
+  File "<frozen importlib._bootstrap>", line 1572, in get_code
+  File "<frozen importlib._bootstrap>", line 1532, in source_to_code
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "/home/mario/kadosh/sistemakadosh/urls.py", line 14
+    url(r'', include('kadoshapp.urls') name='inicio'),
+                                          ^
+SyntaxError: invalid syntax
+Internal Server Error: /login
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 394, in urlconf_module
+    return self._urlconf_module
+AttributeError: 'RegexURLResolver' object has no attribute '_urlconf_module'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/handlers/base.py", line 108, in get_response
+    response = middleware_method(request)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/middleware/common.py", line 74, in process_request
+    if (not urlresolvers.is_valid_path(request.path_info, urlconf) and
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 647, in is_valid_path
+    resolve(path, urlconf)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 522, in resolve
+    return get_resolver(urlconf).resolve(path)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 366, in resolve
+    for pattern in self.url_patterns:
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 402, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 396, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/importlib/__init__.py", line 109, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2226, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1129, in _exec
+  File "<frozen importlib._bootstrap>", line 1467, in exec_module
+  File "<frozen importlib._bootstrap>", line 1572, in get_code
+  File "<frozen importlib._bootstrap>", line 1532, in source_to_code
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "/home/mario/kadosh/sistemakadosh/urls.py", line 14
+    url(r'', include('kadoshapp.urls') name='inicio'),
+                                          ^
+SyntaxError: invalid syntax
+Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/handlers/base.py", line 164, in get_response
+    response = response.render()
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/template/response.py", line 158, in render
+    self.content = self.rendered_content
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/template/response.py", line 133, in rendered_content
+    template = self._resolve_template(self.template_name)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/template/response.py", line 88, in _resolve_template
+    new_template = self.resolve_template(template)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/template/response.py", line 80, in resolve_template
+    return loader.get_template(template, using=self.using)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/template/loader.py", line 46, in get_template
+    raise TemplateDoesNotExist(template_name)
+django.template.base.TemplateDoesNotExist: login.html
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.001) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.274) SELECT `auth_user`.`id`, `auth_user`.`password`, `auth_user`.`last_login`, `auth_user`.`is_superuser`, `auth_user`.`username`, `auth_user`.`first_name`, `auth_user`.`last_name`, `auth_user`.`email`, `auth_user`.`is_staff`, `auth_user`.`is_active`, `auth_user`.`date_joined` FROM `auth_user` WHERE `auth_user`.`username` = 'admin'; args=('admin',)
+Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/views/decorators/debug.py", line 76, in sensitive_post_parameters_wrapper
+    return view(request, *args, **kwargs)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/utils/decorators.py", line 110, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/views/decorators/cache.py", line 57, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/contrib/auth/views.py", line 48, in login
+    redirect_to = resolve_url(settings.LOGIN_REDIRECT_URL)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/shortcuts.py", line 196, in resolve_url
+    to = force_text(to)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/utils/encoding.py", line 90, in force_text
+    s = six.text_type(s)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/utils/functional.py", line 141, in __text_cast
+    return func(*self.__args, **self.__kw)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 579, in reverse
+    return force_text(iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs)))
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 496, in _reverse_with_prefix
+    (lookup_view_s, args, kwargs, len(patterns), patterns))
+django.core.urlresolvers.NoReverseMatch: Reverse for 'inicio' with arguments '()' and keyword arguments '{}' not found. 0 pattern(s) tried: []
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.001) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 394, in urlconf_module
+    return self._urlconf_module
+AttributeError: 'RegexURLResolver' object has no attribute '_urlconf_module'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/handlers/base.py", line 119, in get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 366, in resolve
+    for pattern in self.url_patterns:
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 402, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 396, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/importlib/__init__.py", line 109, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2226, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1129, in _exec
+  File "<frozen importlib._bootstrap>", line 1467, in exec_module
+  File "<frozen importlib._bootstrap>", line 1572, in get_code
+  File "<frozen importlib._bootstrap>", line 1532, in source_to_code
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "/home/mario/kadosh/sistemakadosh/urls.py", line 14
+    url(r'', include('kadoshapp.urls') name='cool'),
+                                          ^
+SyntaxError: invalid syntax
+Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 394, in urlconf_module
+    return self._urlconf_module
+AttributeError: 'RegexURLResolver' object has no attribute '_urlconf_module'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/handlers/base.py", line 119, in get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 366, in resolve
+    for pattern in self.url_patterns:
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 402, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 396, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/importlib/__init__.py", line 109, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2226, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1129, in _exec
+  File "<frozen importlib._bootstrap>", line 1471, in exec_module
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "/home/mario/kadosh/sistemakadosh/urls.py", line 14, in <module>
+    url(r'', include('kadoshapp.urls',name='cool')),
+TypeError: include() got an unexpected keyword argument 'name'
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SELECT `auth_user`.`id`, `auth_user`.`password`, `auth_user`.`last_login`, `auth_user`.`is_superuser`, `auth_user`.`username`, `auth_user`.`first_name`, `auth_user`.`last_name`, `auth_user`.`email`, `auth_user`.`is_staff`, `auth_user`.`is_active`, `auth_user`.`date_joined` FROM `auth_user` WHERE `auth_user`.`username` = 'admin'; args=('admin',)
+(0.026) SELECT `django_session`.`session_key`, `django_session`.`session_data`, `django_session`.`expire_date` FROM `django_session` WHERE (`django_session`.`session_key` = 'ba3q3gtg6oq6pvr343kedo9t1xa4l6g7' AND `django_session`.`expire_date` > '2016-07-11 04:23:46.418504'); args=('ba3q3gtg6oq6pvr343kedo9t1xa4l6g7', '2016-07-11 04:23:46.418504')
+(0.130) UPDATE `auth_user` SET `last_login` = '2016-07-11 04:23:46.446060' WHERE `auth_user`.`id` = 1; args=('2016-07-11 04:23:46.446060', 1)
+(0.000) UPDATE `django_session` SET `session_data` = 'YmM4MzlmN2M4Yjg5ZTJmNDY1NDdiMThkMzc3NGQ0MDA5MWRiNTdlYTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5MjdmM2M1NjIwYTdiYzcxZjI4OWYwYTExNjU4ZWY5YjVjODY0Y2IzIn0=', `expire_date` = '2016-07-25 04:23:46.637759' WHERE `django_session`.`session_key` = 'ba3q3gtg6oq6pvr343kedo9t1xa4l6g7'; args=('YmM4MzlmN2M4Yjg5ZTJmNDY1NDdiMThkMzc3NGQ0MDA5MWRiNTdlYTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5MjdmM2M1NjIwYTdiYzcxZjI4OWYwYTExNjU4ZWY5YjVjODY0Y2IzIn0=', '2016-07-25 04:23:46.637759', 'ba3q3gtg6oq6pvr343kedo9t1xa4l6g7')
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SELECT `auth_user`.`id`, `auth_user`.`password`, `auth_user`.`last_login`, `auth_user`.`is_superuser`, `auth_user`.`username`, `auth_user`.`first_name`, `auth_user`.`last_name`, `auth_user`.`email`, `auth_user`.`is_staff`, `auth_user`.`is_active`, `auth_user`.`date_joined` FROM `auth_user` WHERE `auth_user`.`username` = 'admin'; args=('admin',)
+(0.001) SELECT `django_session`.`session_key`, `django_session`.`session_data`, `django_session`.`expire_date` FROM `django_session` WHERE (`django_session`.`session_key` = 'ba3q3gtg6oq6pvr343kedo9t1xa4l6g7' AND `django_session`.`expire_date` > '2016-07-11 04:30:27.462724'); args=('ba3q3gtg6oq6pvr343kedo9t1xa4l6g7', '2016-07-11 04:30:27.462724')
+(0.014) UPDATE `auth_user` SET `last_login` = '2016-07-11 04:30:27.465649' WHERE `auth_user`.`id` = 1; args=('2016-07-11 04:30:27.465649', 1)
+(0.000) UPDATE `django_session` SET `session_data` = 'ZjBlZDA3NGI4YTFmZjA5NTVlZGQ1NjcyY2JjNWZhODg4NWZlNmMwOTp7Il9hdXRoX3VzZXJfaGFzaCI6IjkyN2YzYzU2MjBhN2JjNzFmMjg5ZjBhMTE2NThlZjliNWM4NjRjYjMiLCJfYXV0aF91c2VyX2lkIjoiMSIsIl9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIn0=', `expire_date` = '2016-07-25 04:30:27.520888' WHERE `django_session`.`session_key` = 'ba3q3gtg6oq6pvr343kedo9t1xa4l6g7'; args=('ZjBlZDA3NGI4YTFmZjA5NTVlZGQ1NjcyY2JjNWZhODg4NWZlNmMwOTp7Il9hdXRoX3VzZXJfaGFzaCI6IjkyN2YzYzU2MjBhN2JjNzFmMjg5ZjBhMTE2NThlZjliNWM4NjRjYjMiLCJfYXV0aF91c2VyX2lkIjoiMSIsIl9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIn0=', '2016-07-25 04:30:27.520888', 'ba3q3gtg6oq6pvr343kedo9t1xa4l6g7')
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SELECT `auth_user`.`id`, `auth_user`.`password`, `auth_user`.`last_login`, `auth_user`.`is_superuser`, `auth_user`.`username`, `auth_user`.`first_name`, `auth_user`.`last_name`, `auth_user`.`email`, `auth_user`.`is_staff`, `auth_user`.`is_active`, `auth_user`.`date_joined` FROM `auth_user` WHERE `auth_user`.`username` = 'admin'; args=('admin',)
+(0.000) SELECT `django_session`.`session_key`, `django_session`.`session_data`, `django_session`.`expire_date` FROM `django_session` WHERE (`django_session`.`session_key` = 'ba3q3gtg6oq6pvr343kedo9t1xa4l6g7' AND `django_session`.`expire_date` > '2016-07-11 04:30:41.895106'); args=('ba3q3gtg6oq6pvr343kedo9t1xa4l6g7', '2016-07-11 04:30:41.895106')
+(0.000) UPDATE `auth_user` SET `last_login` = '2016-07-11 04:30:41.896890' WHERE `auth_user`.`id` = 1; args=('2016-07-11 04:30:41.896890', 1)
+(0.000) UPDATE `django_session` SET `session_data` = 'ZjBlZDA3NGI4YTFmZjA5NTVlZGQ1NjcyY2JjNWZhODg4NWZlNmMwOTp7Il9hdXRoX3VzZXJfaGFzaCI6IjkyN2YzYzU2MjBhN2JjNzFmMjg5ZjBhMTE2NThlZjliNWM4NjRjYjMiLCJfYXV0aF91c2VyX2lkIjoiMSIsIl9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIn0=', `expire_date` = '2016-07-25 04:30:41.969564' WHERE `django_session`.`session_key` = 'ba3q3gtg6oq6pvr343kedo9t1xa4l6g7'; args=('ZjBlZDA3NGI4YTFmZjA5NTVlZGQ1NjcyY2JjNWZhODg4NWZlNmMwOTp7Il9hdXRoX3VzZXJfaGFzaCI6IjkyN2YzYzU2MjBhN2JjNzFmMjg5ZjBhMTE2NThlZjliNWM4NjRjYjMiLCJfYXV0aF91c2VyX2lkIjoiMSIsIl9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIn0=', '2016-07-25 04:30:41.969564', 'ba3q3gtg6oq6pvr343kedo9t1xa4l6g7')
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.005) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.004) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SELECT `django_session`.`session_key`, `django_session`.`session_data`, `django_session`.`expire_date` FROM `django_session` WHERE (`django_session`.`session_key` = 'ba3q3gtg6oq6pvr343kedo9t1xa4l6g7' AND `django_session`.`expire_date` > '2016-07-11 04:34:34.633538'); args=('ba3q3gtg6oq6pvr343kedo9t1xa4l6g7', '2016-07-11 04:34:34.633538')
+(0.001) SELECT `auth_user`.`id`, `auth_user`.`password`, `auth_user`.`last_login`, `auth_user`.`is_superuser`, `auth_user`.`username`, `auth_user`.`first_name`, `auth_user`.`last_name`, `auth_user`.`email`, `auth_user`.`is_staff`, `auth_user`.`is_active`, `auth_user`.`date_joined` FROM `auth_user` WHERE `auth_user`.`id` = 1; args=(1,)
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.002) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.026) SELECT `django_session`.`session_key`, `django_session`.`session_data`, `django_session`.`expire_date` FROM `django_session` WHERE (`django_session`.`session_key` = 'ba3q3gtg6oq6pvr343kedo9t1xa4l6g7' AND `django_session`.`expire_date` > '2016-07-11 04:36:55.774369'); args=('ba3q3gtg6oq6pvr343kedo9t1xa4l6g7', '2016-07-11 04:36:55.774369')
+(0.000) SELECT `auth_user`.`id`, `auth_user`.`password`, `auth_user`.`last_login`, `auth_user`.`is_superuser`, `auth_user`.`username`, `auth_user`.`first_name`, `auth_user`.`last_name`, `auth_user`.`email`, `auth_user`.`is_staff`, `auth_user`.`is_active`, `auth_user`.`date_joined` FROM `auth_user` WHERE `auth_user`.`id` = 1; args=(1,)
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SELECT `django_session`.`session_key`, `django_session`.`session_data`, `django_session`.`expire_date` FROM `django_session` WHERE (`django_session`.`session_key` = 'ba3q3gtg6oq6pvr343kedo9t1xa4l6g7' AND `django_session`.`expire_date` > '2016-07-11 04:37:15.973720'); args=('ba3q3gtg6oq6pvr343kedo9t1xa4l6g7', '2016-07-11 04:37:15.973720')
+(0.000) SELECT `auth_user`.`id`, `auth_user`.`password`, `auth_user`.`last_login`, `auth_user`.`is_superuser`, `auth_user`.`username`, `auth_user`.`first_name`, `auth_user`.`last_name`, `auth_user`.`email`, `auth_user`.`is_staff`, `auth_user`.`is_active`, `auth_user`.`date_joined` FROM `auth_user` WHERE `auth_user`.`id` = 1; args=(1,)
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SELECT `django_session`.`session_key`, `django_session`.`session_data`, `django_session`.`expire_date` FROM `django_session` WHERE (`django_session`.`session_key` = 'ba3q3gtg6oq6pvr343kedo9t1xa4l6g7' AND `django_session`.`expire_date` > '2016-07-11 04:39:13.683628'); args=('ba3q3gtg6oq6pvr343kedo9t1xa4l6g7', '2016-07-11 04:39:13.683628')
+(0.000) SELECT `auth_user`.`id`, `auth_user`.`password`, `auth_user`.`last_login`, `auth_user`.`is_superuser`, `auth_user`.`username`, `auth_user`.`first_name`, `auth_user`.`last_name`, `auth_user`.`email`, `auth_user`.`is_staff`, `auth_user`.`is_active`, `auth_user`.`date_joined` FROM `auth_user` WHERE `auth_user`.`id` = 1; args=(1,)
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SELECT `django_session`.`session_key`, `django_session`.`session_data`, `django_session`.`expire_date` FROM `django_session` WHERE (`django_session`.`session_key` = 'ba3q3gtg6oq6pvr343kedo9t1xa4l6g7' AND `django_session`.`expire_date` > '2016-07-11 04:39:13.758110'); args=('ba3q3gtg6oq6pvr343kedo9t1xa4l6g7', '2016-07-11 04:39:13.758110')
+(0.000) SELECT `auth_user`.`id`, `auth_user`.`password`, `auth_user`.`last_login`, `auth_user`.`is_superuser`, `auth_user`.`username`, `auth_user`.`first_name`, `auth_user`.`last_name`, `auth_user`.`email`, `auth_user`.`is_staff`, `auth_user`.`is_active`, `auth_user`.`date_joined` FROM `auth_user` WHERE `auth_user`.`id` = 1; args=(1,)
+(0.015) SELECT `django_admin_log`.`id`, `django_admin_log`.`action_time`, `django_admin_log`.`user_id`, `django_admin_log`.`content_type_id`, `django_admin_log`.`object_id`, `django_admin_log`.`object_repr`, `django_admin_log`.`action_flag`, `django_admin_log`.`change_message`, `auth_user`.`id`, `auth_user`.`password`, `auth_user`.`last_login`, `auth_user`.`is_superuser`, `auth_user`.`username`, `auth_user`.`first_name`, `auth_user`.`last_name`, `auth_user`.`email`, `auth_user`.`is_staff`, `auth_user`.`is_active`, `auth_user`.`date_joined`, `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_admin_log` INNER JOIN `auth_user` ON ( `django_admin_log`.`user_id` = `auth_user`.`id` ) LEFT OUTER JOIN `django_content_type` ON ( `django_admin_log`.`content_type_id` = `django_content_type`.`id` ) WHERE `django_admin_log`.`user_id` = 1 ORDER BY `django_admin_log`.`action_time` DESC LIMIT 10; args=(1,)
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SELECT `django_session`.`session_key`, `django_session`.`session_data`, `django_session`.`expire_date` FROM `django_session` WHERE (`django_session`.`session_key` = 'ba3q3gtg6oq6pvr343kedo9t1xa4l6g7' AND `django_session`.`expire_date` > '2016-07-11 04:39:30.399722'); args=('ba3q3gtg6oq6pvr343kedo9t1xa4l6g7', '2016-07-11 04:39:30.399722')
+(0.000) SELECT `auth_user`.`id`, `auth_user`.`password`, `auth_user`.`last_login`, `auth_user`.`is_superuser`, `auth_user`.`username`, `auth_user`.`first_name`, `auth_user`.`last_name`, `auth_user`.`email`, `auth_user`.`is_staff`, `auth_user`.`is_active`, `auth_user`.`date_joined` FROM `auth_user` WHERE `auth_user`.`id` = 1; args=(1,)
+(0.000) SELECT `django_session`.`session_key`, `django_session`.`session_data`, `django_session`.`expire_date` FROM `django_session` WHERE `django_session`.`session_key` = 'ba3q3gtg6oq6pvr343kedo9t1xa4l6g7'; args=('ba3q3gtg6oq6pvr343kedo9t1xa4l6g7',)
+(0.000) DELETE FROM `django_session` WHERE `django_session`.`session_key` IN ('ba3q3gtg6oq6pvr343kedo9t1xa4l6g7'); args=('ba3q3gtg6oq6pvr343kedo9t1xa4l6g7',)
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SELECT `auth_user`.`id`, `auth_user`.`password`, `auth_user`.`last_login`, `auth_user`.`is_superuser`, `auth_user`.`username`, `auth_user`.`first_name`, `auth_user`.`last_name`, `auth_user`.`email`, `auth_user`.`is_staff`, `auth_user`.`is_active`, `auth_user`.`date_joined` FROM `auth_user` WHERE `auth_user`.`username` = 'admin'; args=('admin',)
+(0.000) SELECT (1) AS `a` FROM `django_session` WHERE `django_session`.`session_key` = 'js5kt9stodw39k77r9aqxhltg82ad03s' LIMIT 1; args=('js5kt9stodw39k77r9aqxhltg82ad03s',)
+(0.018) INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES ('js5kt9stodw39k77r9aqxhltg82ad03s', 'MzQyMDViMTExZmU2ZTljY2E2NGE1N2QxOGNmYTYzMTI0NTkzMTcyZDp7fQ==', '2016-07-25 04:39:57.153358'); args=('js5kt9stodw39k77r9aqxhltg82ad03s', 'MzQyMDViMTExZmU2ZTljY2E2NGE1N2QxOGNmYTYzMTI0NTkzMTcyZDp7fQ==', '2016-07-25 04:39:57.153358')
+(0.000) SELECT `django_session`.`session_key`, `django_session`.`session_data`, `django_session`.`expire_date` FROM `django_session` WHERE `django_session`.`session_key` = 'js5kt9stodw39k77r9aqxhltg82ad03s'; args=('js5kt9stodw39k77r9aqxhltg82ad03s',)
+(0.000) DELETE FROM `django_session` WHERE `django_session`.`session_key` IN ('js5kt9stodw39k77r9aqxhltg82ad03s'); args=('js5kt9stodw39k77r9aqxhltg82ad03s',)
+(0.001) UPDATE `auth_user` SET `last_login` = '2016-07-11 04:39:57.305690' WHERE `auth_user`.`id` = 1; args=('2016-07-11 04:39:57.305690', 1)
+(0.000) UPDATE `django_session` SET `session_data` = 'MjRlZmNkYTQ2MmQ1M2MzZWFmNTI3NjljNTEzNGEzNTk0MmE4M2FkZjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9oYXNoIjoiOTI3ZjNjNTYyMGE3YmM3MWYyODlmMGExMTY1OGVmOWI1Yzg2NGNiMyIsIl9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIn0=', `expire_date` = '2016-07-25 04:39:57.339731' WHERE `django_session`.`session_key` = 'js5kt9stodw39k77r9aqxhltg82ad03s'; args=('MjRlZmNkYTQ2MmQ1M2MzZWFmNTI3NjljNTEzNGEzNTk0MmE4M2FkZjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9oYXNoIjoiOTI3ZjNjNTYyMGE3YmM3MWYyODlmMGExMTY1OGVmOWI1Yzg2NGNiMyIsIl9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIn0=', '2016-07-25 04:39:57.339731', 'js5kt9stodw39k77r9aqxhltg82ad03s')
+(0.000) INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES ('js5kt9stodw39k77r9aqxhltg82ad03s', 'MjRlZmNkYTQ2MmQ1M2MzZWFmNTI3NjljNTEzNGEzNTk0MmE4M2FkZjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9oYXNoIjoiOTI3ZjNjNTYyMGE3YmM3MWYyODlmMGExMTY1OGVmOWI1Yzg2NGNiMyIsIl9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIn0=', '2016-07-25 04:39:57.339731'); args=('js5kt9stodw39k77r9aqxhltg82ad03s', 'MjRlZmNkYTQ2MmQ1M2MzZWFmNTI3NjljNTEzNGEzNTk0MmE4M2FkZjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9oYXNoIjoiOTI3ZjNjNTYyMGE3YmM3MWYyODlmMGExMTY1OGVmOWI1Yzg2NGNiMyIsIl9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIn0=', '2016-07-25 04:39:57.339731')
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SELECT `django_session`.`session_key`, `django_session`.`session_data`, `django_session`.`expire_date` FROM `django_session` WHERE (`django_session`.`session_key` = 'js5kt9stodw39k77r9aqxhltg82ad03s' AND `django_session`.`expire_date` > '2016-07-11 04:39:57.381825'); args=('js5kt9stodw39k77r9aqxhltg82ad03s', '2016-07-11 04:39:57.381825')
+(0.001) SELECT `auth_user`.`id`, `auth_user`.`password`, `auth_user`.`last_login`, `auth_user`.`is_superuser`, `auth_user`.`username`, `auth_user`.`first_name`, `auth_user`.`last_name`, `auth_user`.`email`, `auth_user`.`is_staff`, `auth_user`.`is_active`, `auth_user`.`date_joined` FROM `auth_user` WHERE `auth_user`.`id` = 1; args=(1,)
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SELECT `django_session`.`session_key`, `django_session`.`session_data`, `django_session`.`expire_date` FROM `django_session` WHERE (`django_session`.`expire_date` > '2016-07-11 04:48:50.886379' AND `django_session`.`session_key` = 'js5kt9stodw39k77r9aqxhltg82ad03s'); args=('2016-07-11 04:48:50.886379', 'js5kt9stodw39k77r9aqxhltg82ad03s')
+(0.000) SELECT `auth_user`.`id`, `auth_user`.`password`, `auth_user`.`last_login`, `auth_user`.`is_superuser`, `auth_user`.`username`, `auth_user`.`first_name`, `auth_user`.`last_name`, `auth_user`.`email`, `auth_user`.`is_staff`, `auth_user`.`is_active`, `auth_user`.`date_joined` FROM `auth_user` WHERE `auth_user`.`id` = 1; args=(1,)
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SELECT `django_session`.`session_key`, `django_session`.`session_data`, `django_session`.`expire_date` FROM `django_session` WHERE (`django_session`.`expire_date` > '2016-07-11 04:48:52.677821' AND `django_session`.`session_key` = 'js5kt9stodw39k77r9aqxhltg82ad03s'); args=('2016-07-11 04:48:52.677821', 'js5kt9stodw39k77r9aqxhltg82ad03s')
+(0.000) SELECT `auth_user`.`id`, `auth_user`.`password`, `auth_user`.`last_login`, `auth_user`.`is_superuser`, `auth_user`.`username`, `auth_user`.`first_name`, `auth_user`.`last_name`, `auth_user`.`email`, `auth_user`.`is_staff`, `auth_user`.`is_active`, `auth_user`.`date_joined` FROM `auth_user` WHERE `auth_user`.`id` = 1; args=(1,)
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SELECT `auth_user`.`id`, `auth_user`.`password`, `auth_user`.`last_login`, `auth_user`.`is_superuser`, `auth_user`.`username`, `auth_user`.`first_name`, `auth_user`.`last_name`, `auth_user`.`email`, `auth_user`.`is_staff`, `auth_user`.`is_active`, `auth_user`.`date_joined` FROM `auth_user` WHERE `auth_user`.`username` = 'admin'; args=('admin',)
+(0.001) SELECT `django_session`.`session_key`, `django_session`.`session_data`, `django_session`.`expire_date` FROM `django_session` WHERE (`django_session`.`expire_date` > '2016-07-11 04:49:00.197550' AND `django_session`.`session_key` = 'js5kt9stodw39k77r9aqxhltg82ad03s'); args=('2016-07-11 04:49:00.197550', 'js5kt9stodw39k77r9aqxhltg82ad03s')
+(0.000) UPDATE `auth_user` SET `last_login` = '2016-07-11 04:49:00.200704' WHERE `auth_user`.`id` = 1; args=('2016-07-11 04:49:00.200704', 1)
+(0.001) UPDATE `django_session` SET `session_data` = 'MjRlZmNkYTQ2MmQ1M2MzZWFmNTI3NjljNTEzNGEzNTk0MmE4M2FkZjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9oYXNoIjoiOTI3ZjNjNTYyMGE3YmM3MWYyODlmMGExMTY1OGVmOWI1Yzg2NGNiMyIsIl9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIn0=', `expire_date` = '2016-07-25 04:49:00.273608' WHERE `django_session`.`session_key` = 'js5kt9stodw39k77r9aqxhltg82ad03s'; args=('MjRlZmNkYTQ2MmQ1M2MzZWFmNTI3NjljNTEzNGEzNTk0MmE4M2FkZjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9oYXNoIjoiOTI3ZjNjNTYyMGE3YmM3MWYyODlmMGExMTY1OGVmOWI1Yzg2NGNiMyIsIl9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIn0=', '2016-07-25 04:49:00.273608', 'js5kt9stodw39k77r9aqxhltg82ad03s')
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SELECT `django_session`.`session_key`, `django_session`.`session_data`, `django_session`.`expire_date` FROM `django_session` WHERE (`django_session`.`expire_date` > '2016-07-11 04:49:00.341150' AND `django_session`.`session_key` = 'js5kt9stodw39k77r9aqxhltg82ad03s'); args=('2016-07-11 04:49:00.341150', 'js5kt9stodw39k77r9aqxhltg82ad03s')
+(0.000) SELECT `auth_user`.`id`, `auth_user`.`password`, `auth_user`.`last_login`, `auth_user`.`is_superuser`, `auth_user`.`username`, `auth_user`.`first_name`, `auth_user`.`last_name`, `auth_user`.`email`, `auth_user`.`is_staff`, `auth_user`.`is_active`, `auth_user`.`date_joined` FROM `auth_user` WHERE `auth_user`.`id` = 1; args=(1,)
+Not Found: /1
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.001) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+Not Found: /1
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SELECT `django_session`.`session_key`, `django_session`.`session_data`, `django_session`.`expire_date` FROM `django_session` WHERE (`django_session`.`session_key` = 'js5kt9stodw39k77r9aqxhltg82ad03s' AND `django_session`.`expire_date` > '2016-07-11 04:49:52.247676'); args=('js5kt9stodw39k77r9aqxhltg82ad03s', '2016-07-11 04:49:52.247676')
+(0.000) SELECT `auth_user`.`id`, `auth_user`.`password`, `auth_user`.`last_login`, `auth_user`.`is_superuser`, `auth_user`.`username`, `auth_user`.`first_name`, `auth_user`.`last_name`, `auth_user`.`email`, `auth_user`.`is_staff`, `auth_user`.`is_active`, `auth_user`.`date_joined` FROM `auth_user` WHERE `auth_user`.`id` = 1; args=(1,)
+(0.001) SELECT `django_admin_log`.`id`, `django_admin_log`.`action_time`, `django_admin_log`.`user_id`, `django_admin_log`.`content_type_id`, `django_admin_log`.`object_id`, `django_admin_log`.`object_repr`, `django_admin_log`.`action_flag`, `django_admin_log`.`change_message`, `auth_user`.`id`, `auth_user`.`password`, `auth_user`.`last_login`, `auth_user`.`is_superuser`, `auth_user`.`username`, `auth_user`.`first_name`, `auth_user`.`last_name`, `auth_user`.`email`, `auth_user`.`is_staff`, `auth_user`.`is_active`, `auth_user`.`date_joined`, `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_admin_log` INNER JOIN `auth_user` ON ( `django_admin_log`.`user_id` = `auth_user`.`id` ) LEFT OUTER JOIN `django_content_type` ON ( `django_admin_log`.`content_type_id` = `django_content_type`.`id` ) WHERE `django_admin_log`.`user_id` = 1 ORDER BY `django_admin_log`.`action_time` DESC LIMIT 10; args=(1,)
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SELECT `django_session`.`session_key`, `django_session`.`session_data`, `django_session`.`expire_date` FROM `django_session` WHERE (`django_session`.`session_key` = 'js5kt9stodw39k77r9aqxhltg82ad03s' AND `django_session`.`expire_date` > '2016-07-11 04:49:54.913163'); args=('js5kt9stodw39k77r9aqxhltg82ad03s', '2016-07-11 04:49:54.913163')
+(0.000) SELECT `auth_user`.`id`, `auth_user`.`password`, `auth_user`.`last_login`, `auth_user`.`is_superuser`, `auth_user`.`username`, `auth_user`.`first_name`, `auth_user`.`last_name`, `auth_user`.`email`, `auth_user`.`is_staff`, `auth_user`.`is_active`, `auth_user`.`date_joined` FROM `auth_user` WHERE `auth_user`.`id` = 1; args=(1,)
+(0.000) SELECT `django_session`.`session_key`, `django_session`.`session_data`, `django_session`.`expire_date` FROM `django_session` WHERE `django_session`.`session_key` = 'js5kt9stodw39k77r9aqxhltg82ad03s'; args=('js5kt9stodw39k77r9aqxhltg82ad03s',)
+(0.000) DELETE FROM `django_session` WHERE `django_session`.`session_key` IN ('js5kt9stodw39k77r9aqxhltg82ad03s'); args=('js5kt9stodw39k77r9aqxhltg82ad03s',)
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SELECT `auth_user`.`id`, `auth_user`.`password`, `auth_user`.`last_login`, `auth_user`.`is_superuser`, `auth_user`.`username`, `auth_user`.`first_name`, `auth_user`.`last_name`, `auth_user`.`email`, `auth_user`.`is_staff`, `auth_user`.`is_active`, `auth_user`.`date_joined` FROM `auth_user` WHERE `auth_user`.`username` = 'admin'; args=('admin',)
+(0.000) SELECT (1) AS `a` FROM `django_session` WHERE `django_session`.`session_key` = '9i8dlfctkxvfo41uny06z7fkgu1m2rqh' LIMIT 1; args=('9i8dlfctkxvfo41uny06z7fkgu1m2rqh',)
+(0.000) INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES ('9i8dlfctkxvfo41uny06z7fkgu1m2rqh', 'MzQyMDViMTExZmU2ZTljY2E2NGE1N2QxOGNmYTYzMTI0NTkzMTcyZDp7fQ==', '2016-07-25 04:50:08.251747'); args=('9i8dlfctkxvfo41uny06z7fkgu1m2rqh', 'MzQyMDViMTExZmU2ZTljY2E2NGE1N2QxOGNmYTYzMTI0NTkzMTcyZDp7fQ==', '2016-07-25 04:50:08.251747')
+(0.000) SELECT `django_session`.`session_key`, `django_session`.`session_data`, `django_session`.`expire_date` FROM `django_session` WHERE `django_session`.`session_key` = '9i8dlfctkxvfo41uny06z7fkgu1m2rqh'; args=('9i8dlfctkxvfo41uny06z7fkgu1m2rqh',)
+(0.000) DELETE FROM `django_session` WHERE `django_session`.`session_key` IN ('9i8dlfctkxvfo41uny06z7fkgu1m2rqh'); args=('9i8dlfctkxvfo41uny06z7fkgu1m2rqh',)
+(0.000) UPDATE `auth_user` SET `last_login` = '2016-07-11 04:50:08.410857' WHERE `auth_user`.`id` = 1; args=('2016-07-11 04:50:08.410857', 1)
+(0.000) UPDATE `django_session` SET `session_data` = 'NjYyZjUyODc0YTI1NjQ2NmRkMzU0YmExYmExNzEwNTViZGU1YzA2MTp7Il9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9oYXNoIjoiOTI3ZjNjNTYyMGE3YmM3MWYyODlmMGExMTY1OGVmOWI1Yzg2NGNiMyIsIl9hdXRoX3VzZXJfaWQiOiIxIn0=', `expire_date` = '2016-07-25 04:50:08.444891' WHERE `django_session`.`session_key` = '9i8dlfctkxvfo41uny06z7fkgu1m2rqh'; args=('NjYyZjUyODc0YTI1NjQ2NmRkMzU0YmExYmExNzEwNTViZGU1YzA2MTp7Il9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9oYXNoIjoiOTI3ZjNjNTYyMGE3YmM3MWYyODlmMGExMTY1OGVmOWI1Yzg2NGNiMyIsIl9hdXRoX3VzZXJfaWQiOiIxIn0=', '2016-07-25 04:50:08.444891', '9i8dlfctkxvfo41uny06z7fkgu1m2rqh')
+(0.000) INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES ('9i8dlfctkxvfo41uny06z7fkgu1m2rqh', 'NjYyZjUyODc0YTI1NjQ2NmRkMzU0YmExYmExNzEwNTViZGU1YzA2MTp7Il9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9oYXNoIjoiOTI3ZjNjNTYyMGE3YmM3MWYyODlmMGExMTY1OGVmOWI1Yzg2NGNiMyIsIl9hdXRoX3VzZXJfaWQiOiIxIn0=', '2016-07-25 04:50:08.444891'); args=('9i8dlfctkxvfo41uny06z7fkgu1m2rqh', 'NjYyZjUyODc0YTI1NjQ2NmRkMzU0YmExYmExNzEwNTViZGU1YzA2MTp7Il9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9oYXNoIjoiOTI3ZjNjNTYyMGE3YmM3MWYyODlmMGExMTY1OGVmOWI1Yzg2NGNiMyIsIl9hdXRoX3VzZXJfaWQiOiIxIn0=', '2016-07-25 04:50:08.444891')
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SELECT `django_session`.`session_key`, `django_session`.`session_data`, `django_session`.`expire_date` FROM `django_session` WHERE (`django_session`.`session_key` = '9i8dlfctkxvfo41uny06z7fkgu1m2rqh' AND `django_session`.`expire_date` > '2016-07-11 04:50:08.485928'); args=('9i8dlfctkxvfo41uny06z7fkgu1m2rqh', '2016-07-11 04:50:08.485928')
+(0.001) SELECT `auth_user`.`id`, `auth_user`.`password`, `auth_user`.`last_login`, `auth_user`.`is_superuser`, `auth_user`.`username`, `auth_user`.`first_name`, `auth_user`.`last_name`, `auth_user`.`email`, `auth_user`.`is_staff`, `auth_user`.`is_active`, `auth_user`.`date_joined` FROM `auth_user` WHERE `auth_user`.`id` = 1; args=(1,)
+Not Found: /1
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+Not Found: /1
+Not Found: /1
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SELECT `django_session`.`session_key`, `django_session`.`session_data`, `django_session`.`expire_date` FROM `django_session` WHERE (`django_session`.`expire_date` > '2016-07-11 04:50:49.672971' AND `django_session`.`session_key` = '9i8dlfctkxvfo41uny06z7fkgu1m2rqh'); args=('2016-07-11 04:50:49.672971', '9i8dlfctkxvfo41uny06z7fkgu1m2rqh')
+(0.000) SELECT `auth_user`.`id`, `auth_user`.`password`, `auth_user`.`last_login`, `auth_user`.`is_superuser`, `auth_user`.`username`, `auth_user`.`first_name`, `auth_user`.`last_name`, `auth_user`.`email`, `auth_user`.`is_staff`, `auth_user`.`is_active`, `auth_user`.`date_joined` FROM `auth_user` WHERE `auth_user`.`id` = 1; args=(1,)
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SELECT `auth_user`.`id`, `auth_user`.`password`, `auth_user`.`last_login`, `auth_user`.`is_superuser`, `auth_user`.`username`, `auth_user`.`first_name`, `auth_user`.`last_name`, `auth_user`.`email`, `auth_user`.`is_staff`, `auth_user`.`is_active`, `auth_user`.`date_joined` FROM `auth_user` WHERE `auth_user`.`username` = 'admin'; args=('admin',)
+(0.000) SELECT `django_session`.`session_key`, `django_session`.`session_data`, `django_session`.`expire_date` FROM `django_session` WHERE (`django_session`.`expire_date` > '2016-07-11 04:50:57.105775' AND `django_session`.`session_key` = '9i8dlfctkxvfo41uny06z7fkgu1m2rqh'); args=('2016-07-11 04:50:57.105775', '9i8dlfctkxvfo41uny06z7fkgu1m2rqh')
+(0.000) UPDATE `auth_user` SET `last_login` = '2016-07-11 04:50:57.107209' WHERE `auth_user`.`id` = 1; args=('2016-07-11 04:50:57.107209', 1)
+(0.000) UPDATE `django_session` SET `session_data` = 'MDRhZjRiYTllMWJjMjc3ZWRkNGRkZTc0ZDViZmFkYmZhM2NjNjM0Mjp7Il9hdXRoX3VzZXJfaGFzaCI6IjkyN2YzYzU2MjBhN2JjNzFmMjg5ZjBhMTE2NThlZjliNWM4NjRjYjMiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaWQiOiIxIn0=', `expire_date` = '2016-07-25 04:50:57.172055' WHERE `django_session`.`session_key` = '9i8dlfctkxvfo41uny06z7fkgu1m2rqh'; args=('MDRhZjRiYTllMWJjMjc3ZWRkNGRkZTc0ZDViZmFkYmZhM2NjNjM0Mjp7Il9hdXRoX3VzZXJfaGFzaCI6IjkyN2YzYzU2MjBhN2JjNzFmMjg5ZjBhMTE2NThlZjliNWM4NjRjYjMiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaWQiOiIxIn0=', '2016-07-25 04:50:57.172055', '9i8dlfctkxvfo41uny06z7fkgu1m2rqh')
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SELECT `django_session`.`session_key`, `django_session`.`session_data`, `django_session`.`expire_date` FROM `django_session` WHERE (`django_session`.`expire_date` > '2016-07-11 04:50:57.289272' AND `django_session`.`session_key` = '9i8dlfctkxvfo41uny06z7fkgu1m2rqh'); args=('2016-07-11 04:50:57.289272', '9i8dlfctkxvfo41uny06z7fkgu1m2rqh')
+(0.000) SELECT `auth_user`.`id`, `auth_user`.`password`, `auth_user`.`last_login`, `auth_user`.`is_superuser`, `auth_user`.`username`, `auth_user`.`first_name`, `auth_user`.`last_name`, `auth_user`.`email`, `auth_user`.`is_staff`, `auth_user`.`is_active`, `auth_user`.`date_joined` FROM `auth_user` WHERE `auth_user`.`id` = 1; args=(1,)
+Not Found: /1
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SELECT `django_session`.`session_key`, `django_session`.`session_data`, `django_session`.`expire_date` FROM `django_session` WHERE (`django_session`.`expire_date` > '2016-07-11 04:51:01.958779' AND `django_session`.`session_key` = '9i8dlfctkxvfo41uny06z7fkgu1m2rqh'); args=('2016-07-11 04:51:01.958779', '9i8dlfctkxvfo41uny06z7fkgu1m2rqh')
+(0.000) SELECT `auth_user`.`id`, `auth_user`.`password`, `auth_user`.`last_login`, `auth_user`.`is_superuser`, `auth_user`.`username`, `auth_user`.`first_name`, `auth_user`.`last_name`, `auth_user`.`email`, `auth_user`.`is_staff`, `auth_user`.`is_active`, `auth_user`.`date_joined` FROM `auth_user` WHERE `auth_user`.`id` = 1; args=(1,)
+(0.057) SELECT `django_admin_log`.`id`, `django_admin_log`.`action_time`, `django_admin_log`.`user_id`, `django_admin_log`.`content_type_id`, `django_admin_log`.`object_id`, `django_admin_log`.`object_repr`, `django_admin_log`.`action_flag`, `django_admin_log`.`change_message`, `auth_user`.`id`, `auth_user`.`password`, `auth_user`.`last_login`, `auth_user`.`is_superuser`, `auth_user`.`username`, `auth_user`.`first_name`, `auth_user`.`last_name`, `auth_user`.`email`, `auth_user`.`is_staff`, `auth_user`.`is_active`, `auth_user`.`date_joined`, `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_admin_log` INNER JOIN `auth_user` ON ( `django_admin_log`.`user_id` = `auth_user`.`id` ) LEFT OUTER JOIN `django_content_type` ON ( `django_admin_log`.`content_type_id` = `django_content_type`.`id` ) WHERE `django_admin_log`.`user_id` = 1 ORDER BY `django_admin_log`.`action_time` DESC LIMIT 10; args=(1,)
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SELECT `django_session`.`session_key`, `django_session`.`session_data`, `django_session`.`expire_date` FROM `django_session` WHERE (`django_session`.`expire_date` > '2016-07-11 04:51:10.916695' AND `django_session`.`session_key` = '9i8dlfctkxvfo41uny06z7fkgu1m2rqh'); args=('2016-07-11 04:51:10.916695', '9i8dlfctkxvfo41uny06z7fkgu1m2rqh')
+(0.000) SELECT `auth_user`.`id`, `auth_user`.`password`, `auth_user`.`last_login`, `auth_user`.`is_superuser`, `auth_user`.`username`, `auth_user`.`first_name`, `auth_user`.`last_name`, `auth_user`.`email`, `auth_user`.`is_staff`, `auth_user`.`is_active`, `auth_user`.`date_joined` FROM `auth_user` WHERE `auth_user`.`id` = 1; args=(1,)
+Not Found: /ingreso_mercaderia
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()

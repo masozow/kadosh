@@ -29,6 +29,11 @@ SECRET_KEY = '*5-fe-0ao1jir_e+4ft*r6gxrk6z13o^l@=d_zf=8%##mga7&)'
 DEBUG = True
 
 ALLOWED_HOSTS = []
+#esta parte la escribi para hacer el logueo
+from django.core.urlresolvers import reverse_lazy
+LOGIN_URL=reverse_lazy('login')
+LOGIN_REDIRECT_URL=reverse_lazy('login')
+LOGOUT_URL=reverse_lazy('logout')
 
 #Archivo log
 
