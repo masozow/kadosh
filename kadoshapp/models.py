@@ -96,7 +96,7 @@ class CierreDeCaja(models.Model):
 
 class Cliente(models.Model):
     idcliente = models.AutoField(db_column='idCliente', primary_key=True)  # Field name made lowercase.
-    usuario = models.ForeignKey('auth.User')
+    #usuario = models.ForeignKey('auth.User')
     persona_idpersona = models.ForeignKey('Persona', db_column='Persona_idPersona')  # Field name made lowercase.
     nit_cliente = models.CharField(max_length=13, blank=True, null=True)
     tipo_cliente_idtipo_cliente = models.ForeignKey('TipoCliente', db_column='Tipo_cliente_idTipo_cliente')  # Field name made lowercase.
