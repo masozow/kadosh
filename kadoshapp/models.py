@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 from django.utils import timezone
 from django.db import models
 from django.utils.timezone import localtime, now
+from django.conf import settings
 
 # Create your models here.
 
@@ -55,7 +56,7 @@ class Caja(models.Model):
     estado_caja = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.descripcion_caja
+        return '%s - %s' % (self.idcaja,self.descripcion_caja)
 
     class Meta:
         managed = True
@@ -333,14 +334,14 @@ class Estilo(models.Model):
 
 class Fotografia(models.Model):
     idfotografia = models.AutoField(db_column='idFotografia', primary_key=True)  # Field name made lowercase.
-    nombre_fotografia = models.CharField(max_length=45, blank=True, null=True)
-    ruta_fotografia = models.ImageField(upload_to = "/fotografias" )
+    nombre_fotografia = models.CharField(max_length=45, blank=True, null=True,default='s/n')
+    ruta_fotografia = models.ImageField(upload_to = settings.MEDIA_ROOT)
     #ruta_fotografia = models.CharField(max_length=200, blank=True, null=True)
     estado_fotografia = models.BooleanField(default=True)
     principal_fotografia = models.BooleanField(default=False)
 
     def __str__(self):
-        return '%s - %s %s' % (self.idfotografia, self.nombre_fotografia)
+        return '%s - %s' % (self.idfotografia, self.nombre_fotografia)
 
     class Meta:
         managed = True
@@ -551,7 +552,7 @@ class Producto(models.Model):
     estado_producto = models.BooleanField(default=True)
 
     def __str__(self):
-        return '%s - %s' % (self.codigo_producto,self.descripcion_producto[0:15])
+        return '%s - %s...' % (self.codigo_producto,self.descripcion_producto[0:15])
 
     class Meta:
         managed = True
@@ -561,9 +562,10 @@ class Producto(models.Model):
 class ProductoHasFotografia(models.Model):
     producto_codigo_producto = models.ForeignKey(Producto, db_column='Producto_codigo_producto')  # Field name made lowercase.
     fotografia_idfotografia = models.ForeignKey(Fotografia, db_column='Fotografia_idFotografia')  # Field name made lowercase.
+    idproductohasfotografia = models.AutoField(db_column='idproductohasfotografia', primary_key=True)
 
     def __str__(self):
-        return '%s - %s' % (self.producto_codigo_producto,self.fotografia_idfotografia)
+        return '%s _-_ %s' % (self.producto_codigo_producto,self.fotografia_idfotografia)
 
     class Meta:
         managed = True
@@ -658,7 +660,7 @@ class Sucursal(models.Model):
 
 
 class Talla(models.Model):
-    idtalla = models.IntegerField(db_column='idTalla', primary_key=True)  # Field name made lowercase.
+    idtalla = models.AutoField(db_column='idTalla', primary_key=True)  # Field name made lowercase.
     nombre_talla = models.CharField(db_column='nombre_Talla', max_length=5, blank=True, null=True)  # Field name made lowercase.
     estado_talla = models.BooleanField(default=True)  # This field type is a guess.
 
