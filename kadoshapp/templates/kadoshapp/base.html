@@ -1,0 +1,239 @@
+{% load staticfiles %}
+<!DOCTYPE hmtl>
+<html>
+<head><!--cabeceras-->
+<meta charset="utf-8">
+<title>Menu</title><!--Titulo de la pagina-->
+      <!--Font de google+iconos-->
+      <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--materialize.css-->
+      <link type="text/css" rel="stylesheet" href="{% static "css/materialize.min.css" %}" media="screen,projection"/>
+      <!--Para movil-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <style type="text/css">
+
+      header, body, footer {
+        padding-left: 240px;
+      }
+
+
+      @media only screen and (max-width : 992px) {
+        header, body, footer {
+          padding-left: 0;
+        }
+      }
+      </style>
+</head>
+
+
+<body><!--Cuerpo de pagina-->
+  <!-- Barra de navegacion principal y para vista movil-->
+            <nav>
+            <div class="nav-wrapper cyan">
+            <a href="#!" class="brand-logo center">Kadosh Inventario</a>
+            <ul class="right hide-on">
+                    <li><a href="#"><i class="material-icons">settings_power</i></a></li>
+                  </ul>
+            <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+            <ul class="side-nav cyan collapsible data-collapsible="expandable"" id="mobile-demo">
+
+
+
+              <li><!-- Primer Elemento-->
+                <div class="collapsible-header white-text text-white center-align"> <h4>Opciones</h4></div>
+
+              </li><!-- Fin Primer Elemento-->
+
+              <li><!-- Mercaderia-->
+                <div class="collapsible-header white-text text-white waves-effect waves-light">
+                  <img class="responsive-img" src="{% static "imagenes/merca2.png" %}"> Mercaderia</div>
+                <div class="collapsible-body "><!-- Sub Elemntos--->
+                  <div class="collection">
+                  <a href="http://materializecss.com/collapsible.html" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align ">Traslado de mercaderia</a>
+                  <a href="#!" class="white-text text-white waves-effect waves-light collection-item  cyan lighten-1 center-align">Traslado de mercaderia</a>
+                  <a href="#!" class="white-text text-white waves-effect waves-light collection-item  cyan lighten-1 center-align">Ofertas</a>
+                </div>
+                </div>
+              </li><!-- Fin -->
+
+              <li><!-- Ventas-->
+                <div class="collapsible-header white-text text-white waves-effect waves-light">
+                    <img class="responsive-img" src="{% static "imagenes/venta.png" %}">
+                  Ventas</div>
+                <div class="collapsible-body"><!-- Sub Elemntos--->
+                  <div class="collection">
+                  <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1  center-align">Realizar venta</a>
+                  <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Anular venta</a>
+                  <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Cierre de caja</a>
+
+                </div>
+                </div>
+              </li><!-- Fin-->
+
+
+              <li><!-- Clientes-->
+                <div class="collapsible-header white-text text-white waves-effect waves-light">
+                    <img class="responsive-img" src="{% static "imagenes/cliente.png" %}">
+                  Clientes</div>
+                <div class="collapsible-body"><!-- Sub Elemntos--->
+                  <div class="collection">
+                  <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Nuevo</a>
+                  <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Modificar Datos</a>
+                </div>
+                </div>
+              </li><!-- Fin-->
+
+              <li><!-- Reportes-->
+                <div class="collapsible-header white-text text-white waves-effect waves-light">
+                    <img class="responsive-img" src="{% static "imagenes/reporte.png" %}">
+                  Reportes</div>
+                <div class="collapsible-body"><!-- Sub Elemntos--->
+                  <div class="collection">
+                  <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Ventas</a>
+                  <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Proveedores</a>
+                  <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Clientes</a>
+                  <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Productos</a>
+                </div>
+                </div>
+              </li><!-- Fin-->
+
+              <li><!-- Inventarios-->
+                <div class="collapsible-header white-text text-white waves-effect waves-light">
+                    <img class="responsive-img" src="{% static "imagenes/inventario.png" %}">
+                  Inventarios</div>
+                <div class="collapsible-body"><!-- Sub Elemntos--->
+                  <div class="collection">
+                  <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Arqueo</a>
+                  <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Completo</a>
+                </div>
+                </div>
+              </li><!-- Fin-->
+
+            </ul>
+            </div>
+            </nav>
+  <!-- Fin Barra de navegacion principal-->
+
+
+<!-- contenido -->
+<div class="row">
+
+  <div class="col  m4 l3">
+    <!-- Barra lateral-->
+    <ul id="slide-out" class="side-nav fixed cyan collapsible z-depth-5 " data-collapsible="expandable">
+
+      <li><!-- Primer Elemento-->
+        <div class="collapsible-header white-text text-white center-align"> <h4>Opciones</h4></div>
+
+      </li><!-- Fin Primer Elemento-->
+
+      <li><!-- Mercaderia-->
+        <div class="collapsible-header white-text text-white waves-effect waves-light">
+          <img class="responsive-img" src="{% static "imagenes/merca2.png" %}"> Mercaderia</div>
+        <div class="collapsible-body "><!-- Sub Elemntos--->
+          <div class="collection">
+          <a href="http://materializecss.com/collapsible.html" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1center-align ">Traslado de mercaderia</a>
+          <a href="#!" class="white-text text-white waves-effect waves-light collection-item  cyan lighten-1 center-align">Traslado de mercaderia</a>
+          <a href="#!" class="white-text text-white waves-effect waves-light collection-item  cyan lighten-1 center-align">Ofertas</a>
+        </div>
+        </div>
+      </li><!-- Fin -->
+
+      <li><!-- Ventas-->
+        <div class="collapsible-header white-text text-white waves-effect waves-light">
+            <img class="responsive-img" src="{% static "imagenes/venta.png" %}">
+          Ventas</div>
+        <div class="collapsible-body"><!-- Sub Elemntos--->
+          <div class="collection">
+          <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1  center-align">Realizar venta</a>
+          <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Anular venta</a>
+          <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Cierre de caja</a>
+
+        </div>
+        </div>
+      </li><!-- Fin-->
+
+
+      <li><!-- Clientes-->
+        <div class="collapsible-header white-text text-white waves-effect waves-light">
+            <img class="responsive-img" src="{% static "imagenes/cliente.png" %}">
+          Clientes</div>
+        <div class="collapsible-body"><!-- Sub Elemntos--->
+          <div class="collection">
+          <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Nuevo</a>
+          <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Modificar Datos</a>
+        </div>
+        </div>
+      </li><!-- Fin-->
+
+      <li><!-- Reportes-->
+        <div class="collapsible-header white-text text-white waves-effect waves-light">
+            <img class="responsive-img" src="{% static "imagenes/reporte.png" %}">
+          Reportes</div>
+        <div class="collapsible-body"><!-- Sub Elemntos--->
+          <div class="collection">
+          <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Ventas</a>
+          <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Proveedores</a>
+          <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Clientes</a>
+          <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Productos</a>
+        </div>
+        </div>
+      </li><!-- Fin-->
+
+      <li><!-- Inventarios-->
+        <div class="collapsible-header white-text text-white waves-effect waves-light">
+            <img class="responsive-img" src="{% static "imagenes/inventario.png" %}">
+          Inventarios</div>
+        <div class="collapsible-body"><!-- Sub Elemntos--->
+          <div class="collection">
+          <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Arqueo</a>
+          <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Completo</a>
+        </div>
+        </div>
+      </li><!-- Fin-->
+
+
+
+      </ul>
+      <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+
+<!-- Fin Barra lateral como menu-->
+  </div>
+
+  <div class="col s12 m8 l9"><!-- Contenido Principal-->
+    {% block content %}
+
+    {% endblock %}
+  </div><!--Fin contenido principal-->
+
+</div>
+<!--  FOOTER ->
+ <footer class="page-footer cyan">
+
+     <div class="container grey-text text-lighten-4">
+       <span>Copyright © 2016 All rights reserved. Design and Developed by Marving Velasquez, Mario Juarez</span>
+
+       </div>
+
+ </footer>
+   <! FIN FOOTER -->
+
+
+<!--Importacion de script jQuery y materialize.js-->
+<script type="text/javascript"  src='https://code.jquery.com/jquery-2.1.1.min.js'></script>
+<script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+<!-- Funcion para hacer aparecer el boton responsive del menu-->
+<script type="text/javascript">
+//$(".button-collapse").sideNav();
+$(".button-collapse").sideNav();
+
+//funcion para desplegar sub-elementos de barra lateral
+$(document).ready(function(){
+    $('.collapsible').collapsible({
+      accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+    });
+  });
+</script>
+</body>
+
+</html>
