@@ -283,7 +283,7 @@ class DetalleVenta(models.Model):
 
 class Empleado(models.Model):
     idempleado = models.AutoField(db_column='idEmpleado', primary_key=True)  # Field name made lowercase.
-    usuario = models.ForeignKey(User)
+    #usuario = models.ForeignKey(User)
     persona_idpersona = models.ForeignKey('Persona', db_column='Persona_idPersona')  # Field name made lowercase.
     puesto_idpuesto = models.ForeignKey('Puesto', db_column='Puesto_idPuesto')  # Field name made lowercase.
     fecha_contratacion_empleado = models.DateField(default=timezone.now)

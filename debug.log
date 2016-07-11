@@ -3562,3 +3562,111 @@ Traceback (most recent call last):
 django.db.utils.OperationalError: (1054, "Unknown column 'Empleado.usuario_id' in 'field list'")
 (0.000) SELECT `Empleado`.`idEmpleado`, `Empleado`.`usuario_id`, `Empleado`.`Persona_idPersona`, `Empleado`.`Puesto_idPuesto`, `Empleado`.`fecha_contratacion_empleado`, `Empleado`.`codigo_autorización_empleado`, `Empleado`.`Sucursal_idSucursal`, `Empleado`.`estado_empleado` FROM `Empleado` LIMIT 21; args=()
 >>>>>>> f0d1a1f9ec290353a5422c00a2d819759a21bd2b
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.450) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SET foreign_key_checks=0; args=None
+(0.000) SET foreign_key_checks=1; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET foreign_key_checks=0; args=None
+(0.000) SET foreign_key_checks=1; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) 
+            SELECT kc.`constraint_name`, kc.`column_name`,
+                kc.`referenced_table_name`, kc.`referenced_column_name`
+            FROM information_schema.key_column_usage AS kc
+            WHERE
+                kc.table_schema = 'kadosh' AND
+                kc.table_name = 'Empleado'
+        ; args=['kadosh', 'Empleado']
+(0.000) 
+            SELECT c.constraint_name, c.constraint_type
+            FROM information_schema.table_constraints AS c
+            WHERE
+                c.table_schema = 'kadosh' AND
+                c.table_name = 'Empleado'
+        ; args=['kadosh', 'Empleado']
+(0.000) SHOW INDEX FROM `Empleado`; args=None
+ALTER TABLE `Empleado` DROP COLUMN `usuario_id` CASCADE; (params [])
+(0.000) ALTER TABLE `Empleado` DROP COLUMN `usuario_id` CASCADE; args=[]
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.003) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SET foreign_key_checks=0; args=None
+(0.000) SET foreign_key_checks=1; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET foreign_key_checks=0; args=None
+(0.000) SET foreign_key_checks=1; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.002) SHOW FULL TABLES; args=None
+(0.000) INSERT INTO `django_migrations` (`app`, `name`, `applied`) VALUES ('kadoshapp', '0006_remove_empleado_usuario', '2016-07-11 00:09:55.911094'); args=['kadoshapp', '0006_remove_empleado_usuario', '2016-07-11 00:09:55.911094']
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'logentry' AND `django_content_type`.`app_label` = 'admin'); args=('logentry', 'admin')
+(0.000) SELECT `auth_permission`.`content_type_id`, `auth_permission`.`codename` FROM `auth_permission` INNER JOIN `django_content_type` ON ( `auth_permission`.`content_type_id` = `django_content_type`.`id` ) WHERE `auth_permission`.`content_type_id` IN (1) ORDER BY `django_content_type`.`app_label` ASC, `django_content_type`.`model` ASC, `auth_permission`.`codename` ASC; args=(1,)
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE `django_content_type`.`app_label` = 'admin'; args=('admin',)
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'permission' AND `django_content_type`.`app_label` = 'auth'); args=('permission', 'auth')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'group' AND `django_content_type`.`app_label` = 'auth'); args=('group', 'auth')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'user' AND `django_content_type`.`app_label` = 'auth'); args=('user', 'auth')
+(0.000) SELECT `auth_permission`.`content_type_id`, `auth_permission`.`codename` FROM `auth_permission` INNER JOIN `django_content_type` ON ( `auth_permission`.`content_type_id` = `django_content_type`.`id` ) WHERE `auth_permission`.`content_type_id` IN (2, 3, 4) ORDER BY `django_content_type`.`app_label` ASC, `django_content_type`.`model` ASC, `auth_permission`.`codename` ASC; args=(2, 3, 4)
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE `django_content_type`.`app_label` = 'auth'; args=('auth',)
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'contenttype' AND `django_content_type`.`app_label` = 'contenttypes'); args=('contenttype', 'contenttypes')
+(0.000) SELECT `auth_permission`.`content_type_id`, `auth_permission`.`codename` FROM `auth_permission` INNER JOIN `django_content_type` ON ( `auth_permission`.`content_type_id` = `django_content_type`.`id` ) WHERE `auth_permission`.`content_type_id` IN (5) ORDER BY `django_content_type`.`app_label` ASC, `django_content_type`.`model` ASC, `auth_permission`.`codename` ASC; args=(5,)
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE `django_content_type`.`app_label` = 'contenttypes'; args=('contenttypes',)
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'session' AND `django_content_type`.`app_label` = 'sessions'); args=('session', 'sessions')
+(0.000) SELECT `auth_permission`.`content_type_id`, `auth_permission`.`codename` FROM `auth_permission` INNER JOIN `django_content_type` ON ( `auth_permission`.`content_type_id` = `django_content_type`.`id` ) WHERE `auth_permission`.`content_type_id` IN (6) ORDER BY `django_content_type`.`app_label` ASC, `django_content_type`.`model` ASC, `auth_permission`.`codename` ASC; args=(6,)
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE `django_content_type`.`app_label` = 'sessions'; args=('sessions',)
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'ajusteinventario' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('ajusteinventario', 'kadoshapp')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'anaquel' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('anaquel', 'kadoshapp')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'bodega' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('bodega', 'kadoshapp')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'caja' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('caja', 'kadoshapp')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'cajahasempleado' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('cajahasempleado', 'kadoshapp')
+(0.001) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'cierredecaja' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('cierredecaja', 'kadoshapp')
+(0.001) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'cliente' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('cliente', 'kadoshapp')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'color' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('color', 'kadoshapp')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'combo' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('combo', 'kadoshapp')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'compra' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('compra', 'kadoshapp')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'contacto' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('contacto', 'kadoshapp')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'contenido' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('contenido', 'kadoshapp')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'cuentaporcobrar' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('cuentaporcobrar', 'kadoshapp')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'cuentaporpagar' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('cuentaporpagar', 'kadoshapp')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'datosenvio' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('datosenvio', 'kadoshapp')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'detalleinventariorealizado' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('detalleinventariorealizado', 'kadoshapp')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'detallecompra' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('detallecompra', 'kadoshapp')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'detalleventa' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('detalleventa', 'kadoshapp')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'empleado' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('empleado', 'kadoshapp')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'envio' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('envio', 'kadoshapp')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'estilo' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('estilo', 'kadoshapp')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'fotografia' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('fotografia', 'kadoshapp')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'genero' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('genero', 'kadoshapp')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'index' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('index', 'kadoshapp')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'indexhasfotografia' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('indexhasfotografia', 'kadoshapp')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'inventarioproducto' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('inventarioproducto', 'kadoshapp')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'inventariorealizado' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('inventariorealizado', 'kadoshapp')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'marca' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('marca', 'kadoshapp')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'motivo' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('motivo', 'kadoshapp')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'noticia' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('noticia', 'kadoshapp')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'noticiahasfotografia' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('noticiahasfotografia', 'kadoshapp')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'pagocuentaporpagar' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('pagocuentaporpagar', 'kadoshapp')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'pagoscuentaporcobrar' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('pagoscuentaporcobrar', 'kadoshapp')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'persona' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('persona', 'kadoshapp')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'precio' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('precio', 'kadoshapp')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'producto' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('producto', 'kadoshapp')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'productohasfotografia' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('productohasfotografia', 'kadoshapp')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'promocion' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('promocion', 'kadoshapp')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'promocionhasproducto' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('promocionhasproducto', 'kadoshapp')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'proveedor' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('proveedor', 'kadoshapp')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'puesto' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('puesto', 'kadoshapp')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'seguridad' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('seguridad', 'kadoshapp')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'sucursal' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('sucursal', 'kadoshapp')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'talla' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('talla', 'kadoshapp')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'tipocliente' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('tipocliente', 'kadoshapp')
+(0.001) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'tipopago' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('tipopago', 'kadoshapp')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'tipoproducto' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('tipoproducto', 'kadoshapp')
+(0.001) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'trasladomercaderia' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('trasladomercaderia', 'kadoshapp')
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`model` = 'venta' AND `django_content_type`.`app_label` = 'kadoshapp'); args=('venta', 'kadoshapp')
+(0.000) SELECT `auth_permission`.`content_type_id`, `auth_permission`.`codename` FROM `auth_permission` INNER JOIN `django_content_type` ON ( `auth_permission`.`content_type_id` = `django_content_type`.`id` ) WHERE `auth_permission`.`content_type_id` IN (7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55) ORDER BY `django_content_type`.`app_label` ASC, `django_content_type`.`model` ASC, `auth_permission`.`codename` ASC; args=(7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55)
+(0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE `django_content_type`.`app_label` = 'kadoshapp'; args=('kadoshapp',)
