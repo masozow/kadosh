@@ -4,6 +4,7 @@
 <head><!--cabeceras-->
 <meta charset="utf-8">
 <title>Menu</title><!--Titulo de la pagina-->
+
       <!--Font de google+iconos-->
       <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <!--materialize.css-->
@@ -160,7 +161,7 @@
           Clientes</div>
         <div class="collapsible-body"><!-- Sub Elemntos--->
           <div class="collection">
-          <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Nuevo</a>
+          <a href="{% url 'kadoshapp.views.registro' %}" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Nuevo</a>
           <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Modificar Datos</a>
         </div>
         </div>
@@ -234,6 +235,12 @@ $(document).ready(function(){
     });
   });
 </script>
+<!--Script para formularios de django-->
+<!--script>
+      $(function(){
+        $('form.uniForm').uniform();
+      });
+    </script-->
 </body>
 
 </html>
