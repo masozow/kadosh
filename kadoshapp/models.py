@@ -13,7 +13,7 @@ class AjusteInventario(models.Model):
     fecha_horaajuste = models.DateTimeField(db_column='fecha_horaAjuste', default=timezone.now)  # Field name made lowercase.
 
     def __str__(self):
-        return self.idajuste_inventario
+        return '%s) %s' % (self.idajuste_inventario,self.inventario_producto_idinventario_producto)
 
     class Meta:
         managed = True
@@ -71,7 +71,7 @@ class CajaHasEmpleado(models.Model):
     momento_desasignacion_caja = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
-        return 'Caja: %s - Fecha: %s - Empleado: %s' % (self.caja_idcaja.descripcion_caja, self.momento_asignacion_caja, self.empleado_idempleado)
+        return 'Caja: %s - Fecha: %s - Empleado: %s' % (self.caja_idcaja, self.momento_asignacion_caja, self.empleado_idempleado)
 
     class Meta:
         managed = True
@@ -88,7 +88,7 @@ class CierreDeCaja(models.Model):
     #finalizado_cierredecaja = models.IntegerField(db_column='finalizado_cierreDeCaja', blank=True, null=True)  # Field name made lowercase.
 
     def __str__(self):
-        return 'Caja: %s - Fecha: %s' % (self.caja_idcaja.descripcion_caja, self.fecha_cierredecaja)
+        return 'Caja: %s - Fecha: %s' % (self.caja_idcaja, self.fecha_cierredecaja)
 
     class Meta:
         managed = True
@@ -199,7 +199,7 @@ class CuentaPorCobrar(models.Model):
     estado_cuentaporcobrar = models.BooleanField(db_column='estado_cuentaPorCobrar', default=True)  # Field name made lowercase.
 
     def __str__(self):
-        return 'Cuenta: %s - Venta: %s ' % (self.idcuenta_por_cobrar, self.venta_idventa)
+        return 'Cuenta: %s - Venta: %s ' % (self.idcuenta_por_cobrar, self.venta_idventa.idventa)
 
     class Meta:
         managed = True
@@ -215,7 +215,7 @@ class CuentaPorPagar(models.Model):
     estado_cuentaporpagar = models.BooleanField(db_column='estado_cuentaPorPagar', default=True)  # Field name made lowercase.
 
     def __str__(self):
-        return 'Cuenta: %s - Venta: %s ' % (self.idcuenta_por_pagar, self.compra_idcompra)
+        return 'Cuenta: %s - Compra: %s ' % (self.idcuenta_por_pagar, self.compra_idcompra.idcompra)
 
     class Meta:
         managed = True
@@ -241,11 +241,12 @@ class DatosEnvio(models.Model):
 class DetalleInventarioRealizado(models.Model):
     inventario_realizado_idinventario_realizado = models.ForeignKey('InventarioRealizado', db_column='Inventario_realizado_idInventario_realizado')  # Field name made lowercase.
     inventario_producto_idinventario_producto = models.ForeignKey('InventarioProducto', db_column='Inventario_producto_idInventario_producto')  # Field name made lowercase.
-    ajuste_inventario_idajuste_inventario = models.ForeignKey(AjusteInventario, db_column='Ajuste_inventario_idAjuste_inventario')  # Field name made lowercase.
+    ajuste_inventario_idajuste_inventario = models.ForeignKey(AjusteInventario, db_column='Ajuste_inventario_idAjuste_inventario', null=True, blank=True)  # Field name made lowercase.
     cantidad_real_inventario_realizado = models.IntegerField(blank=True, null=True)
+    iddetalleinventariorealizado = models.AutoField(db_column='iddetalleinventariorealizado', primary_key=True)
 
     def __str__(self):
-        return 'Inventario: %s - Lote de producto: %s - Fecha: %s' % (self.inventario_realizado_idinventario_realizado, self.inventario_producto_idinventario_producto,self.inventario_realizado_idinventario_realizado.fecha_realizacion_inventario)
+        return '%s - Lote de producto: %s' % (self.inventario_realizado_idinventario_realizado, self.inventario_producto_idinventario_producto.idinventario_producto)
 
     class Meta:
         managed = True
@@ -260,7 +261,7 @@ class DetalleCompra(models.Model):
     iddetallecompra = models.AutoField(db_column='idDetalleCompra', primary_key=True)  # Field name made lowercase.
 
     def __str__(self):
-        return 'Compra: %s - Producto: %s - Detalle: %s' % (self.compra_idcompra, self.inventario_producto_idinventario_producto,self.iddetallecompra)
+        return ' %s - Producto: %s - Detalle: %s' % (self.compra_idcompra, self.inventario_producto_idinventario_producto,self.iddetallecompra)
 
     class Meta:
         managed = True
@@ -275,7 +276,7 @@ class DetalleVenta(models.Model):
     valor_parcial_venta = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
 
     def __str__(self):
-        return 'Venta: %s - Producto: %s - Detalle: %s' % (self.venta_idventa, self.inventario_producto_idinventario_producto,self.iddetalleventa)
+        return 'Id: %s - Venta: %s - Lote: %s - Producto: %s' % (self.iddetalleventa,self.venta_idventa.idventa, self.inventario_producto_idinventario_producto.idinventario_producto, self.inventario_producto_idinventario_producto.producto_codigo_producto)
 
     class Meta:
         managed = True
@@ -311,7 +312,7 @@ class Envio(models.Model):
     estado_envio = models.BooleanField(default=True)
 
     def __str__(self):
-        return '%s - %s %s' % (self.idempleado, self.persona_idpersona.nombres_persona,self.persona_idpersona.apellidos_persona)
+        return '%s - Rep: %s - F: %s' % (self.idenvio, self.repartidor_envio,self.momentosolicitud_envio)
 
     class Meta:
         managed = True
@@ -378,9 +379,10 @@ class IndexHasFotografia(models.Model):
     index_idindex = models.ForeignKey(Index, db_column='Index_idIndex')  # Field name made lowercase.
     fotografia_idfotografia = models.ForeignKey(Fotografia, db_column='Fotografia_idFotografia')  # Field name made lowercase.
     ubicacion_fotografiaindex = models.SmallIntegerField(db_column='ubicacion_fotografiaIndex', blank=True, null=True)  # Field name made lowercase.
+    idindexhasfotografia = models.AutoField(db_column='idindexhasfotografia', primary_key=True)
 
     def __str__(self):
-        return '%s - Foto: %s' % (self.id_index, self.fotografia_idfotografia)
+        return '%s - Index:%s - Foto: %s' % (self.idindexhasfotografia,self.index_idindex, self.fotografia_idfotografia)
 
     class Meta:
         managed = True
@@ -456,7 +458,7 @@ class Noticia(models.Model):
     estado_noticia = models.BooleanField(default=True)
 
     def __str__(self):
-        return '%s - F: %s - %s' % (self.idnoticia, self.momento_publicacion_noticia,self.titulo_noticia[0-10])
+        return '%s - F: %s - %s' % (self.idnoticia, self.momento_publicacion_noticia,self.titulo_noticia[0:15])
 
     class Meta:
         managed = True
@@ -467,6 +469,7 @@ class NoticiaHasFotografia(models.Model):
     noticia_idnoticia = models.ForeignKey(Noticia, db_column='Noticia_idNoticia')  # Field name made lowercase.
     fotografia_idfotografia = models.ForeignKey(Fotografia, db_column='Fotografia_idFotografia')  # Field name made lowercase.
     vista_previa = models.BooleanField(default=True)
+    idnoticiahasfotografia = models.AutoField(db_column='idnoticiahasfotografia', primary_key=True)
 
     def __str__(self):
         return 'N: %s - Fo: %s' % (self.noticia_idnoticia, self.fotografia_idfotografia)
@@ -482,9 +485,10 @@ class PagoCuentaPorPagar(models.Model):
     cuenta_por_pagar_idcuenta_por_pagar = models.ForeignKey(CuentaPorPagar, db_column='Cuenta_por_pagar_idCuenta_por_pagar')  # Field name made lowercase.
     fecha_pago_cuentaporpagar = models.DateTimeField(db_column='fecha_pago_cuentaPorPagar', default=timezone.now)  # Field name made lowercase.
     monto_pago_cuentaporpagar = models.DecimalField(db_column='monto_pago_cuentaPorPagar', max_digits=12, decimal_places=2, blank=True, null=True)  # Field name made lowercase.
+    tipo_pago_idtipo_pago = models.ForeignKey('TipoPago', db_column='Tipo_pago_idTipo_pago')  # Field name made lowercase.
 
     def __str__(self):
-        return 'Id:%s - Cuenta: %s - F: %s' % (self.idpago_cuenta_por_pagar, self.cuenta_por_pagar_idcuenta_por_pagar,self.fecha_pago_cuentaporpagar)
+        return 'Id:%s - Cuenta: %s - Compra: %s - F: %s' % (self.idpago_cuenta_por_pagar, self.cuenta_por_pagar_idcuenta_por_pagar.idcuenta_por_pagar, self.cuenta_por_pagar_idcuenta_por_pagar.compra_idcompra.idcompra,self.fecha_pago_cuentaporpagar)
 
     class Meta:
         managed = True
@@ -499,7 +503,7 @@ class PagosCuentaPorCobrar(models.Model):
     tipo_pago_idtipo_pago = models.ForeignKey('TipoPago', db_column='Tipo_pago_idTipo_pago')  # Field name made lowercase.
 
     def __str__(self):
-        return 'Id:%s - Cuenta: %s - F: %s' % (self.idpago_cuenta_por_cobrar, self.cuenta_por_cobrar_idcuenta_por_cobrar,self.fecha_pago_cuentaporcobrar)
+        return 'Id:%s - %s - F: %s' % (self.idpagos_cuenta_por_cobrar, self.cuenta_por_cobrar_idcuenta_por_cobrar,self.fecha_pago_cuentaporcobrar)
 
     class Meta:
         managed = True
@@ -528,7 +532,7 @@ class Precio(models.Model):
     idprecio = models.AutoField(db_column='idPrecio', primary_key=True)  # Field name made lowercase.
     nombre_precio = models.CharField(max_length=45, blank=True, null=True)
     valor_precio = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
-    fechainicial_precio = models.DateTimeField(db_column='fechaInicial_precio', blank=True, null=True)  # Field name made lowercase.
+    fechainicial_precio = models.DateTimeField(db_column='fechaInicial_precio', blank=True, null=True, default=timezone.now)  # Field name made lowercase.
     fechafinal_precio = models.DateTimeField(db_column='fechaFinal_precio', blank=True, null=True)  # Field name made lowercase.
     producto_codigo_producto = models.ForeignKey('Producto', db_column='Producto_codigo_producto')  # Field name made lowercase.
     estado_precio = models.BooleanField(default=True)
@@ -576,7 +580,7 @@ class ProductoHasFotografia(models.Model):
 class Promocion(models.Model):
     idpromocion = models.AutoField(db_column='idPromocion', primary_key=True)  # Field name made lowercase.
     nombre_promocion = models.CharField(max_length=50, blank=True, null=True)
-    fecha_inicialpromocion = models.DateField(db_column='fecha_inicialPromocion', blank=True, null=True)  # Field name made lowercase.
+    fecha_inicialpromocion = models.DateField(db_column='fecha_inicialPromocion', blank=True, null=True, default=timezone.now)  # Field name made lowercase.
     fecha_finalpromocion = models.DateField(db_column='fecha_finalPromocion', blank=True, null=True)  # Field name made lowercase.
     valor_promocion = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
     estado_promocion = models.BooleanField(default=True)
@@ -592,9 +596,10 @@ class Promocion(models.Model):
 class PromocionHasProducto(models.Model):
     promocion_idpromocion = models.ForeignKey(Promocion, db_column='Promocion_idPromocion')  # Field name made lowercase.
     inventario_producto_idinventario_producto = models.ForeignKey(InventarioProducto, db_column='Inventario_producto_idInventario_producto')  # Field name made lowercase.
+    idpromocionhasproducto = models.AutoField(db_column='idpromocionhasproducto', primary_key=True)
 
     def __str__(self):
-        return '%s - LoteProd: %s' % (self.promocion_idpromocion,self.inventario_producto_idinventario_producto)
+        return '%s - Lote: %s - Prod: %s' % (self.promocion_idpromocion, self.inventario_producto_idinventario_producto.idinventario_producto,self.inventario_producto_idinventario_producto.producto_codigo_producto)
 
     class Meta:
         managed = True
@@ -637,7 +642,7 @@ class Seguridad(models.Model):
     estado_seguridad = models.BooleanField(default=True)
 
     def __str__(self):
-        return '%s - Cli: %s' % (self.iseguridad,self.cliente_idcliente)
+        return '%s - Cli: %s' % (self.idseguridad,self.cliente_idcliente)
 
     class Meta:
         managed = True
