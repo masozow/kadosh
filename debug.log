@@ -19596,3 +19596,40 @@ AttributeError: 'DateField' object has no attribute 'is_hidden'
 (0.000) SET SQL_AUTO_IS_NULL = 0; args=None
 (0.475) SHOW FULL TABLES; args=None
 (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.696) SHOW FULL TABLES; args=None
+(0.017) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.002) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SELECT `Tipo_cliente`.`idTipo_cliente`, `Tipo_cliente`.`nombre_tipoCliente`, `Tipo_cliente`.`estado_tipoCliente` FROM `Tipo_cliente`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.023) INSERT INTO `Persona` (`nombres_persona`, `apellidos_persona`, `telefonos_persona`, `direccion_persona`, `fecha_nacimiento_persona`, `dpi_persona`, `estado_persona`) VALUES ('Nombre1', 'Apellido1', '324321,234234', 'Calle 1', '1992-07-11', '2398723495723', 1); args=['Nombre1', 'Apellido1', '324321,234234', 'Calle 1', '1992-07-11', '2398723495723', True]
+(0.001) SELECT `Tipo_cliente`.`idTipo_cliente`, `Tipo_cliente`.`nombre_tipoCliente`, `Tipo_cliente`.`estado_tipoCliente` FROM `Tipo_cliente` WHERE `Tipo_cliente`.`idTipo_cliente` = 1; args=(1,)
+(0.000) SELECT (1) AS `a` FROM `Tipo_cliente` WHERE `Tipo_cliente`.`idTipo_cliente` = 1 LIMIT 1; args=(1,)
+(0.015) INSERT INTO `Cliente` (`Persona_idPersona`, `nit_cliente`, `Tipo_cliente_idTipo_cliente`, `estado_cliente`, `fecha_registro_cliente`) VALUES (13, '4543243-5', 1, 1, '2016-07-15'); args=[13, '4543243-5', 1, True, '2016-07-15']
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.061) SELECT `django_session`.`session_key`, `django_session`.`session_data`, `django_session`.`expire_date` FROM `django_session` WHERE (`django_session`.`session_key` = 'hxa6yk8rq6qnodwh4nsn7e897pgg7ahr' AND `django_session`.`expire_date` > '2016-07-16 02:24:13.797086'); args=('hxa6yk8rq6qnodwh4nsn7e897pgg7ahr', '2016-07-16 02:24:13.797086')
+(0.000) SELECT `auth_user`.`id`, `auth_user`.`password`, `auth_user`.`last_login`, `auth_user`.`is_superuser`, `auth_user`.`username`, `auth_user`.`first_name`, `auth_user`.`last_name`, `auth_user`.`email`, `auth_user`.`is_staff`, `auth_user`.`is_active`, `auth_user`.`date_joined` FROM `auth_user` WHERE `auth_user`.`id` = 1; args=(1,)
+(0.015) SELECT COUNT('*') AS `__count` FROM `Persona`; args=('*',)
+(0.000) SELECT `Persona`.`idPersona`, `Persona`.`nombres_persona`, `Persona`.`apellidos_persona`, `Persona`.`telefonos_persona`, `Persona`.`direccion_persona`, `Persona`.`fecha_nacimiento_persona`, `Persona`.`dpi_persona`, `Persona`.`estado_persona` FROM `Persona` ORDER BY `Persona`.`idPersona` DESC; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SELECT `django_session`.`session_key`, `django_session`.`session_data`, `django_session`.`expire_date` FROM `django_session` WHERE (`django_session`.`session_key` = 'hxa6yk8rq6qnodwh4nsn7e897pgg7ahr' AND `django_session`.`expire_date` > '2016-07-16 02:24:15.931529'); args=('hxa6yk8rq6qnodwh4nsn7e897pgg7ahr', '2016-07-16 02:24:15.931529')
+(0.007) SELECT `auth_user`.`id`, `auth_user`.`password`, `auth_user`.`last_login`, `auth_user`.`is_superuser`, `auth_user`.`username`, `auth_user`.`first_name`, `auth_user`.`last_name`, `auth_user`.`email`, `auth_user`.`is_staff`, `auth_user`.`is_active`, `auth_user`.`date_joined` FROM `auth_user` WHERE `auth_user`.`id` = 1; args=(1,)
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SELECT `django_session`.`session_key`, `django_session`.`session_data`, `django_session`.`expire_date` FROM `django_session` WHERE (`django_session`.`session_key` = 'hxa6yk8rq6qnodwh4nsn7e897pgg7ahr' AND `django_session`.`expire_date` > '2016-07-16 02:24:21.538993'); args=('hxa6yk8rq6qnodwh4nsn7e897pgg7ahr', '2016-07-16 02:24:21.538993')
+(0.002) SELECT `auth_user`.`id`, `auth_user`.`password`, `auth_user`.`last_login`, `auth_user`.`is_superuser`, `auth_user`.`username`, `auth_user`.`first_name`, `auth_user`.`last_name`, `auth_user`.`email`, `auth_user`.`is_staff`, `auth_user`.`is_active`, `auth_user`.`date_joined` FROM `auth_user` WHERE `auth_user`.`id` = 1; args=(1,)
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.002) SELECT `django_session`.`session_key`, `django_session`.`session_data`, `django_session`.`expire_date` FROM `django_session` WHERE (`django_session`.`session_key` = 'hxa6yk8rq6qnodwh4nsn7e897pgg7ahr' AND `django_session`.`expire_date` > '2016-07-16 02:24:27.433772'); args=('hxa6yk8rq6qnodwh4nsn7e897pgg7ahr', '2016-07-16 02:24:27.433772')
+(0.000) SELECT `auth_user`.`id`, `auth_user`.`password`, `auth_user`.`last_login`, `auth_user`.`is_superuser`, `auth_user`.`username`, `auth_user`.`first_name`, `auth_user`.`last_name`, `auth_user`.`email`, `auth_user`.`is_staff`, `auth_user`.`is_active`, `auth_user`.`date_joined` FROM `auth_user` WHERE `auth_user`.`id` = 1; args=(1,)
+(0.004) SELECT COUNT('*') AS `__count` FROM `Cliente`; args=('*',)
+(0.002) SELECT `Cliente`.`idCliente`, `Cliente`.`Persona_idPersona`, `Cliente`.`nit_cliente`, `Cliente`.`Tipo_cliente_idTipo_cliente`, `Cliente`.`estado_cliente`, `Cliente`.`fecha_registro_cliente` FROM `Cliente` ORDER BY `Cliente`.`idCliente` DESC; args=()
+(0.006) SELECT `Persona`.`idPersona`, `Persona`.`nombres_persona`, `Persona`.`apellidos_persona`, `Persona`.`telefonos_persona`, `Persona`.`direccion_persona`, `Persona`.`fecha_nacimiento_persona`, `Persona`.`dpi_persona`, `Persona`.`estado_persona` FROM `Persona` WHERE `Persona`.`idPersona` = 13; args=(13,)
+(0.003) SELECT `Persona`.`idPersona`, `Persona`.`nombres_persona`, `Persona`.`apellidos_persona`, `Persona`.`telefonos_persona`, `Persona`.`direccion_persona`, `Persona`.`fecha_nacimiento_persona`, `Persona`.`dpi_persona`, `Persona`.`estado_persona` FROM `Persona` WHERE `Persona`.`idPersona` = 1; args=(1,)
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SELECT `django_session`.`session_key`, `django_session`.`session_data`, `django_session`.`expire_date` FROM `django_session` WHERE (`django_session`.`session_key` = 'hxa6yk8rq6qnodwh4nsn7e897pgg7ahr' AND `django_session`.`expire_date` > '2016-07-16 02:24:28.378926'); args=('hxa6yk8rq6qnodwh4nsn7e897pgg7ahr', '2016-07-16 02:24:28.378926')
+(0.007) SELECT `auth_user`.`id`, `auth_user`.`password`, `auth_user`.`last_login`, `auth_user`.`is_superuser`, `auth_user`.`username`, `auth_user`.`first_name`, `auth_user`.`last_name`, `auth_user`.`email`, `auth_user`.`is_staff`, `auth_user`.`is_active`, `auth_user`.`date_joined` FROM `auth_user` WHERE `auth_user`.`id` = 1; args=(1,)

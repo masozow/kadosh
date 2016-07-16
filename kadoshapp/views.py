@@ -14,7 +14,7 @@ def registro_cliente(request):
         form=Form_RegistroCliente_Persona(request.POST)
         if form.is_valid(): #validando a la persona
             ultima_persona=form.save()
-            return render(request, 'kadoshapp/ingreso_mercaderia.html',{})
+            #return render(request, 'kadoshapp/ingreso_mercaderia.html',{})
         else:
             print (f.errors)
             #mensaje error (raise error)
@@ -32,10 +32,10 @@ def registro_cliente(request):
             #por el que devuelve el queryset ultima_persona
             sf.save()
             #ahora sí se guarda
-            return render(request, 'kadoshapp/ingreso_mercaderia.html',{})
         else:
             print (sf.errors)
             #mensaje error (raise error)
+        return render(request, 'kadoshapp/ingreso_mercaderia.html',{})
     else:
         form=Form_RegistroCliente_Persona()
         sub_form=Form_RegistroCliente_Cliente()
