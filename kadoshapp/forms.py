@@ -1,6 +1,7 @@
 from django import forms
 from .models import Persona,Cliente,TipoCliente
 from django.forms import ModelChoiceField,Select
+from django.contrib.admin import widgets
 
 #form Cliente
 class Form_RegistroCliente_Persona(forms.ModelForm):
@@ -9,7 +10,8 @@ class Form_RegistroCliente_Persona(forms.ModelForm):
         exclude=('estado_persona',)
         #fields=('dpi_persona','nombres_persona','apellidos_persona','telefonos_persona','direccion_persona','fecha_nacimiento_persona',)
         widgets = {
-            'fecha_nacimiento_persona': forms.DateInput(format='%d/%m/%Y'),
+            'fecha_nacimiento_persona': widgets.AdminDateWidget(),
+            #forms.DateInput(format='%d/%m/%Y'),
             #DateInput(attrs={'class':'datepicker'}), #Esto es para usar jquery
         }
 
