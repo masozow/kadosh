@@ -3,10 +3,52 @@ from .models import Persona, Cliente, TipoCliente
 from .forms import Form_RegistroCliente_Persona, Form_RegistroCliente_Cliente
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
+#importacion para form de IngresoMercaderiaPorProveedor
+from .models import Producto, DetalleCompra, TipoProducto, Fotografia, InventarioProducto, Anaquel, Compra
+from .forms import Form_IngresoMercaderiaPorProveedor_Producto, Form_IngresoMercaderiaPorProveedor_DetalleCompra, Form_IngresoMercaderiaPorProveedor_TipoProducto, Form_IngresoMercaderiaPorProveedor_Fotografia, Form_IngresoMercaderiaPorProveedor_InventarioProducto, Form_IngresoMercaderiaPorProveedor_Anaquel, Form_IngresoMercaderiaPorProveedor_Compra
+#cosas de form Compra
+from .models import Compra, InventarioProducto, Producto, DetalleCompra, Fotografia, Anaquel, TipoProducto
+from .forms import Form_Compra_Compra, Form_Compra_InventarioProducto,Form_Compra_Producto, Form_Compra_DetalleCompra,Form_Compra_Fotografia, Form_Compra_Anaquel, Form_Compra_TipoProducto
 
 # Create your views here.
 def ingreso_mercaderia(request):
     return render(request, 'kadoshapp/ingreso_mercaderia.html',{})
+#Vista de form de compra
+def Compra(request):
+    if request.method=='POST':
+        form_Compra=Form_Compra_Compra(request.POST)
+        if form_Compra.is_valid():
+            ultima_Compra=form_Compra.save()
+        return render(request, 'kadoshapp/ingreso_mercaderia.html',{})
+    else:
+        form_Compra=Form_Compra_Compra()
+        form_Detallecompra=Form_Compra_DetalleCompra()
+        form_InventarioProducto=Form_Compra_InventarioProducto()
+        form_Producto=Form_Compra_Producto()
+        form_fotografia=Form_Compra_Fotografia()
+        form_anaquel=Form_Compra_Anaquel()
+        form_TipoProducto=Form_Compra_TipoProducto()
+    return render(request, 'kadoshapp/Compra.html', {'form_Producto': form_Producto,'form_Detallecompra':form_Detallecompra, 'form_TipoProducto':form_TipoProducto,'form_fotografia':form_fotografia ,'form_InventarioProducto':form_InventarioProducto, 'form_anaquel':form_anaquel, 'form_Compra':form_Compra })
+
+
+
+#Vista de formulario de IngresoDeMercaderiaPorProveedor
+def ingresodemercaderiaporProveedor(request):
+    if request.method=='POST':
+        form_Producto=Form_IngresoMercaderiaPorProveedor_Producto(request.POST)
+        if form_Producto.is_valid():
+            ultimo_producto=form_Producto.save()
+        return render(request, 'kadoshapp/ingreso_mercaderia.html',{})
+    else:
+        form_Producto=Form_IngresoMercaderiaPorProveedor_Producto()
+        form_Detallecompra=Form_IngresoMercaderiaPorProveedor_DetalleCompra()
+        form_TipoProducto=Form_IngresoMercaderiaPorProveedor_TipoProducto()
+        form_fotografia=Form_IngresoMercaderiaPorProveedor_Fotografia()
+        form_InventarioProducto=Form_IngresoMercaderiaPorProveedor_InventarioProducto()
+        form_anaquel=Form_IngresoMercaderiaPorProveedor_Anaquel()
+        form_Compra=Form_IngresoMercaderiaPorProveedor_Compra()
+    return render(request, 'kadoshapp/IngresoMercaderiaPorProveedor.html', {'form_Producto': form_Producto,'form_Detallecompra':form_Detallecompra, 'form_TipoProducto':form_TipoProducto,'form_fotografia':form_fotografia ,'form_InventarioProducto':form_InventarioProducto, 'form_anaquel':form_anaquel, 'form_Compra':form_Compra })
+
 
 
 def registro_cliente(request):

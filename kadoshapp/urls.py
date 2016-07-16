@@ -10,4 +10,6 @@ urlpatterns=[
 # name='logout'),
 url(r'^$', views.ingreso_mercaderia, name='ingreso_mercaderia'),
 url(r'^ingreso/cliente/$', views.registro_cliente, name='registroCliente'),
+url(r'^ingreso/MercaderiaPoProveedor/$', views.ingresodemercaderiaporProveedor, name='IngresoMercaPorProveedor'),
+url(r'^ingreso/Compra/$', views.Compra, name='Compra'),
 ]

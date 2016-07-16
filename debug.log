@@ -19751,3 +19751,980 @@ Traceback (most recent call last):
 NameError: name 'AdminDateWidget' is not defined
 (0.000) SET SQL_AUTO_IS_NULL = 0; args=None
 (0.000) SELECT `Tipo_cliente`.`idTipo_cliente`, `Tipo_cliente`.`nombre_tipoCliente`, `Tipo_cliente`.`estado_tipoCliente` FROM `Tipo_cliente`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SELECT `Tipo_cliente`.`idTipo_cliente`, `Tipo_cliente`.`nombre_tipoCliente`, `Tipo_cliente`.`estado_tipoCliente` FROM `Tipo_cliente`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SELECT `Tipo_cliente`.`idTipo_cliente`, `Tipo_cliente`.`nombre_tipoCliente`, `Tipo_cliente`.`estado_tipoCliente` FROM `Tipo_cliente`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) INSERT INTO `Persona` (`nombres_persona`, `apellidos_persona`, `telefonos_persona`, `direccion_persona`, `fecha_nacimiento_persona`, `dpi_persona`, `estado_persona`) VALUES ('Zlatan', 'Ibraimovich', '12345678', 'su casa jijij', '2013-01-01', '1234567891', 1); args=['Zlatan', 'Ibraimovich', '12345678', 'su casa jijij', '2013-01-01', '1234567891', True]
+(0.000) SELECT `Tipo_cliente`.`idTipo_cliente`, `Tipo_cliente`.`nombre_tipoCliente`, `Tipo_cliente`.`estado_tipoCliente` FROM `Tipo_cliente` WHERE `Tipo_cliente`.`idTipo_cliente` = 1; args=(1,)
+(0.000) SELECT (1) AS `a` FROM `Tipo_cliente` WHERE `Tipo_cliente`.`idTipo_cliente` = 1 LIMIT 1; args=(1,)
+(0.000) INSERT INTO `Cliente` (`Persona_idPersona`, `nit_cliente`, `Tipo_cliente_idTipo_cliente`, `estado_cliente`, `fecha_registro_cliente`) VALUES (3, '12345678', 1, 1, '2016-07-15'); args=[3, '12345678', 1, True, '2016-07-15']
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 394, in urlconf_module
+    return self._urlconf_module
+AttributeError: 'RegexURLResolver' object has no attribute '_urlconf_module'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/handlers/base.py", line 119, in get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 366, in resolve
+    for pattern in self.url_patterns:
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 402, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 396, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/importlib/__init__.py", line 109, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2226, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1129, in _exec
+  File "<frozen importlib._bootstrap>", line 1471, in exec_module
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "/home/mario/kadosh/sistemakadosh/urls.py", line 11, in <module>
+    url(r'', include('kadoshapp.urls')),
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/conf/urls/__init__.py", line 33, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/importlib/__init__.py", line 109, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2226, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1129, in _exec
+  File "<frozen importlib._bootstrap>", line 1471, in exec_module
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "/home/mario/kadosh/kadoshapp/urls.py", line 2, in <module>
+    from . import views
+  File "/home/mario/kadosh/kadoshapp/views.py", line 19
+    ultimo_producto=form.is_valid():
+                                   ^
+SyntaxError: invalid syntax
+Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 394, in urlconf_module
+    return self._urlconf_module
+AttributeError: 'RegexURLResolver' object has no attribute '_urlconf_module'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/handlers/base.py", line 119, in get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 366, in resolve
+    for pattern in self.url_patterns:
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 402, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 396, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/importlib/__init__.py", line 109, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2226, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1129, in _exec
+  File "<frozen importlib._bootstrap>", line 1471, in exec_module
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "/home/mario/kadosh/sistemakadosh/urls.py", line 11, in <module>
+    url(r'', include('kadoshapp.urls')),
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/conf/urls/__init__.py", line 33, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/importlib/__init__.py", line 109, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2226, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1129, in _exec
+  File "<frozen importlib._bootstrap>", line 1471, in exec_module
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "/home/mario/kadosh/kadoshapp/urls.py", line 2, in <module>
+    from . import views
+  File "/home/mario/kadosh/kadoshapp/views.py", line 21
+    else:
+       ^
+SyntaxError: invalid syntax
+Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 394, in urlconf_module
+    return self._urlconf_module
+AttributeError: 'RegexURLResolver' object has no attribute '_urlconf_module'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/handlers/base.py", line 119, in get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 366, in resolve
+    for pattern in self.url_patterns:
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 402, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 396, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/importlib/__init__.py", line 109, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2226, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1129, in _exec
+  File "<frozen importlib._bootstrap>", line 1471, in exec_module
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "/home/mario/kadosh/sistemakadosh/urls.py", line 11, in <module>
+    url(r'', include('kadoshapp.urls')),
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/conf/urls/__init__.py", line 33, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/importlib/__init__.py", line 109, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2226, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1129, in _exec
+  File "<frozen importlib._bootstrap>", line 1471, in exec_module
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "/home/mario/kadosh/kadoshapp/urls.py", line 2, in <module>
+    from . import views
+  File "/home/mario/kadosh/kadoshapp/views.py", line 3, in <module>
+    from .forms import Form_RegistroCliente_Persona, Form_RegistroCliente_Cliente
+  File "/home/mario/kadosh/kadoshapp/forms.py", line 24, in <module>
+    class Form_IngresoMercaderiaPorProveedor_Fotografia(forms.ModelForm):
+  File "/home/mario/kadosh/kadoshapp/forms.py", line 25, in Form_IngresoMercaderiaPorProveedor_Fotografia
+    class Meta:
+  File "/home/mario/kadosh/kadoshapp/forms.py", line 27, in Meta
+    fields('nombre_fotografia','ruta_fotografia',)
+NameError: name 'fields' is not defined
+Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 394, in urlconf_module
+    return self._urlconf_module
+AttributeError: 'RegexURLResolver' object has no attribute '_urlconf_module'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/handlers/base.py", line 119, in get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 366, in resolve
+    for pattern in self.url_patterns:
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 402, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 396, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/importlib/__init__.py", line 109, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2226, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1129, in _exec
+  File "<frozen importlib._bootstrap>", line 1471, in exec_module
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "/home/mario/kadosh/sistemakadosh/urls.py", line 11, in <module>
+    url(r'', include('kadoshapp.urls')),
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/conf/urls/__init__.py", line 33, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/importlib/__init__.py", line 109, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2226, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1129, in _exec
+  File "<frozen importlib._bootstrap>", line 1471, in exec_module
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "/home/mario/kadosh/kadoshapp/urls.py", line 2, in <module>
+    from . import views
+  File "/home/mario/kadosh/kadoshapp/views.py", line 3, in <module>
+    from .forms import Form_RegistroCliente_Persona, Form_RegistroCliente_Cliente
+  File "/home/mario/kadosh/kadoshapp/forms.py", line 44, in <module>
+    class Form_IngresoMercaderiaPorProveedor_Compra(forms.ModelForm):
+  File "/home/mario/kadosh/kadoshapp/forms.py", line 45, in Form_IngresoMercaderiaPorProveedor_Compra
+    class Meta:
+  File "/home/mario/kadosh/kadoshapp/forms.py", line 47, in Meta
+    fields('contado_compra','proveedor_idproveedor',)
+NameError: name 'fields' is not defined
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SELECT `Talla`.`idTalla`, `Talla`.`nombre_Talla`, `Talla`.`estado_talla` FROM `Talla`; args=()
+(0.000) SELECT `Estilo`.`idEstilo`, `Estilo`.`nombre_estilo`, `Estilo`.`Tipo_producto_idTipo_producto`, `Estilo`.`estado_estilo` FROM `Estilo`; args=()
+(0.000) SELECT `Color`.`idColor`, `Color`.`nombre_color`, `Color`.`estado_color` FROM `Color`; args=()
+(0.001) SELECT `Combo`.`idCombo`, `Combo`.`nombre_combo`, `Combo`.`estado_combo` FROM `Combo`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SELECT `Talla`.`idTalla`, `Talla`.`nombre_Talla`, `Talla`.`estado_talla` FROM `Talla`; args=()
+(0.000) SELECT `Estilo`.`idEstilo`, `Estilo`.`nombre_estilo`, `Estilo`.`Tipo_producto_idTipo_producto`, `Estilo`.`estado_estilo` FROM `Estilo`; args=()
+(0.000) SELECT `Color`.`idColor`, `Color`.`nombre_color`, `Color`.`estado_color` FROM `Color`; args=()
+(0.000) SELECT `Combo`.`idCombo`, `Combo`.`nombre_combo`, `Combo`.`estado_combo` FROM `Combo`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SELECT `Talla`.`idTalla`, `Talla`.`nombre_Talla`, `Talla`.`estado_talla` FROM `Talla`; args=()
+(0.000) SELECT `Estilo`.`idEstilo`, `Estilo`.`nombre_estilo`, `Estilo`.`Tipo_producto_idTipo_producto`, `Estilo`.`estado_estilo` FROM `Estilo`; args=()
+(0.000) SELECT `Color`.`idColor`, `Color`.`nombre_color`, `Color`.`estado_color` FROM `Color`; args=()
+(0.000) SELECT `Combo`.`idCombo`, `Combo`.`nombre_combo`, `Combo`.`estado_combo` FROM `Combo`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SELECT `Talla`.`idTalla`, `Talla`.`nombre_Talla`, `Talla`.`estado_talla` FROM `Talla`; args=()
+(0.000) SELECT `Estilo`.`idEstilo`, `Estilo`.`nombre_estilo`, `Estilo`.`Tipo_producto_idTipo_producto`, `Estilo`.`estado_estilo` FROM `Estilo`; args=()
+(0.000) SELECT `Color`.`idColor`, `Color`.`nombre_color`, `Color`.`estado_color` FROM `Color`; args=()
+(0.000) SELECT `Combo`.`idCombo`, `Combo`.`nombre_combo`, `Combo`.`estado_combo` FROM `Combo`; args=()
+(0.000) SELECT `Anaquel`.`idAnaquel`, `Anaquel`.`Bodega_idBodega`, `Anaquel`.`codigo_anaquel`, `Anaquel`.`estado_anaquel` FROM `Anaquel`; args=()
+(0.000) SELECT `Bodega`.`idBodega`, `Bodega`.`Sucursal_idSucursal`, `Bodega`.`nombre_bodega`, `Bodega`.`descripcion_bodega`, `Bodega`.`estado_bodega` FROM `Bodega`; args=()
+(0.000) SELECT `Proveedor`.`idProveedor`, `Proveedor`.`nombre_proveedor`, `Proveedor`.`direccion_proveedor`, `Proveedor`.`telefonos_proveedor`, `Proveedor`.`estado_proveedor` FROM `Proveedor`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SELECT `Talla`.`idTalla`, `Talla`.`nombre_Talla`, `Talla`.`estado_talla` FROM `Talla`; args=()
+(0.000) SELECT `Estilo`.`idEstilo`, `Estilo`.`nombre_estilo`, `Estilo`.`Tipo_producto_idTipo_producto`, `Estilo`.`estado_estilo` FROM `Estilo`; args=()
+(0.000) SELECT `Color`.`idColor`, `Color`.`nombre_color`, `Color`.`estado_color` FROM `Color`; args=()
+(0.000) SELECT `Combo`.`idCombo`, `Combo`.`nombre_combo`, `Combo`.`estado_combo` FROM `Combo`; args=()
+(0.000) SELECT `Anaquel`.`idAnaquel`, `Anaquel`.`Bodega_idBodega`, `Anaquel`.`codigo_anaquel`, `Anaquel`.`estado_anaquel` FROM `Anaquel`; args=()
+(0.000) SELECT `Bodega`.`idBodega`, `Bodega`.`Sucursal_idSucursal`, `Bodega`.`nombre_bodega`, `Bodega`.`descripcion_bodega`, `Bodega`.`estado_bodega` FROM `Bodega`; args=()
+(0.000) SELECT `Proveedor`.`idProveedor`, `Proveedor`.`nombre_proveedor`, `Proveedor`.`direccion_proveedor`, `Proveedor`.`telefonos_proveedor`, `Proveedor`.`estado_proveedor` FROM `Proveedor`; args=()
+(0.004) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.152) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SELECT `Talla`.`idTalla`, `Talla`.`nombre_Talla`, `Talla`.`estado_talla` FROM `Talla`; args=()
+(0.018) SELECT `Genero`.`idGener`, `Genero`.`nombre_genero`, `Genero`.`estado_genero` FROM `Genero`; args=()
+(0.000) SELECT `Estilo`.`idEstilo`, `Estilo`.`nombre_estilo`, `Estilo`.`Tipo_producto_idTipo_producto`, `Estilo`.`estado_estilo` FROM `Estilo`; args=()
+(0.000) SELECT `Color`.`idColor`, `Color`.`nombre_color`, `Color`.`estado_color` FROM `Color`; args=()
+(0.000) SELECT `Combo`.`idCombo`, `Combo`.`nombre_combo`, `Combo`.`estado_combo` FROM `Combo`; args=()
+(0.000) SELECT `Anaquel`.`idAnaquel`, `Anaquel`.`Bodega_idBodega`, `Anaquel`.`codigo_anaquel`, `Anaquel`.`estado_anaquel` FROM `Anaquel`; args=()
+(0.000) SELECT `Bodega`.`idBodega`, `Bodega`.`Sucursal_idSucursal`, `Bodega`.`nombre_bodega`, `Bodega`.`descripcion_bodega`, `Bodega`.`estado_bodega` FROM `Bodega`; args=()
+(0.000) SELECT `Proveedor`.`idProveedor`, `Proveedor`.`nombre_proveedor`, `Proveedor`.`direccion_proveedor`, `Proveedor`.`telefonos_proveedor`, `Proveedor`.`estado_proveedor` FROM `Proveedor`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+Internal Server Error: /ingreso/MercaderiaPoProveedor/
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 394, in urlconf_module
+    return self._urlconf_module
+AttributeError: 'RegexURLResolver' object has no attribute '_urlconf_module'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/handlers/base.py", line 119, in get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 366, in resolve
+    for pattern in self.url_patterns:
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 402, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 396, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/importlib/__init__.py", line 109, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2226, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1129, in _exec
+  File "<frozen importlib._bootstrap>", line 1471, in exec_module
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "/home/mario/kadosh/sistemakadosh/urls.py", line 11, in <module>
+    url(r'', include('kadoshapp.urls')),
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/conf/urls/__init__.py", line 33, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/importlib/__init__.py", line 109, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2226, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1129, in _exec
+  File "<frozen importlib._bootstrap>", line 1471, in exec_module
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "/home/mario/kadosh/kadoshapp/urls.py", line 2, in <module>
+    from . import views
+  File "/home/mario/kadosh/kadoshapp/views.py", line 3, in <module>
+    from .forms import Form_RegistroCliente_Persona, Form_RegistroCliente_Cliente
+  File "/home/mario/kadosh/kadoshapp/forms.py", line 19, in <module>
+    class Form_IngresoMercaderiaPorProveedor_TipoProducto(forms.ModelForm):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/forms/models.py", line 295, in __new__
+    raise FieldError(message)
+django.core.exceptions.FieldError: Unknown field(s) (id_marca) specified for TipoProducto
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SELECT `Talla`.`idTalla`, `Talla`.`nombre_Talla`, `Talla`.`estado_talla` FROM `Talla`; args=()
+(0.000) SELECT `Genero`.`idGener`, `Genero`.`nombre_genero`, `Genero`.`estado_genero` FROM `Genero`; args=()
+(0.000) SELECT `Estilo`.`idEstilo`, `Estilo`.`nombre_estilo`, `Estilo`.`Tipo_producto_idTipo_producto`, `Estilo`.`estado_estilo` FROM `Estilo`; args=()
+(0.000) SELECT `Color`.`idColor`, `Color`.`nombre_color`, `Color`.`estado_color` FROM `Color`; args=()
+(0.000) SELECT `Combo`.`idCombo`, `Combo`.`nombre_combo`, `Combo`.`estado_combo` FROM `Combo`; args=()
+(0.000) SELECT `Marca`.`id_marca`, `Marca`.`nombre_marca`, `Marca`.`estado_marca` FROM `Marca`; args=()
+(0.000) SELECT `Anaquel`.`idAnaquel`, `Anaquel`.`Bodega_idBodega`, `Anaquel`.`codigo_anaquel`, `Anaquel`.`estado_anaquel` FROM `Anaquel`; args=()
+(0.000) SELECT `Bodega`.`idBodega`, `Bodega`.`Sucursal_idSucursal`, `Bodega`.`nombre_bodega`, `Bodega`.`descripcion_bodega`, `Bodega`.`estado_bodega` FROM `Bodega`; args=()
+(0.000) SELECT `Proveedor`.`idProveedor`, `Proveedor`.`nombre_proveedor`, `Proveedor`.`direccion_proveedor`, `Proveedor`.`telefonos_proveedor`, `Proveedor`.`estado_proveedor` FROM `Proveedor`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.032) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+Internal Server Error: /ingreso/Compra/
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 394, in urlconf_module
+    return self._urlconf_module
+AttributeError: 'RegexURLResolver' object has no attribute '_urlconf_module'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/handlers/base.py", line 119, in get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 366, in resolve
+    for pattern in self.url_patterns:
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 402, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 396, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/importlib/__init__.py", line 109, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2226, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1129, in _exec
+  File "<frozen importlib._bootstrap>", line 1471, in exec_module
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "/home/mario/kadosh/sistemakadosh/urls.py", line 11, in <module>
+    url(r'', include('kadoshapp.urls')),
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/conf/urls/__init__.py", line 33, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/importlib/__init__.py", line 109, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2226, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1129, in _exec
+  File "<frozen importlib._bootstrap>", line 1471, in exec_module
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "/home/mario/kadosh/kadoshapp/urls.py", line 2, in <module>
+    from . import views
+  File "/home/mario/kadosh/kadoshapp/views.py", line 18
+    if request.method=='POST':
+     ^
+IndentationError: expected an indented block
+Internal Server Error: /ingreso/Compra/
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 394, in urlconf_module
+    return self._urlconf_module
+AttributeError: 'RegexURLResolver' object has no attribute '_urlconf_module'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/handlers/base.py", line 119, in get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 366, in resolve
+    for pattern in self.url_patterns:
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 402, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 396, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/importlib/__init__.py", line 109, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2226, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1129, in _exec
+  File "<frozen importlib._bootstrap>", line 1471, in exec_module
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "/home/mario/kadosh/sistemakadosh/urls.py", line 11, in <module>
+    url(r'', include('kadoshapp.urls')),
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/conf/urls/__init__.py", line 33, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/importlib/__init__.py", line 109, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2226, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1129, in _exec
+  File "<frozen importlib._bootstrap>", line 1471, in exec_module
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "/home/mario/kadosh/kadoshapp/urls.py", line 2, in <module>
+    from . import views
+  File "/home/mario/kadosh/kadoshapp/views.py", line 19
+    form_Compra=Form_Compra_Compra(request.POST)
+              ^
+IndentationError: expected an indented block
+Internal Server Error: /ingreso/Compra/
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 394, in urlconf_module
+    return self._urlconf_module
+AttributeError: 'RegexURLResolver' object has no attribute '_urlconf_module'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/handlers/base.py", line 119, in get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 366, in resolve
+    for pattern in self.url_patterns:
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 402, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 396, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/importlib/__init__.py", line 109, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2226, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1129, in _exec
+  File "<frozen importlib._bootstrap>", line 1471, in exec_module
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "/home/mario/kadosh/sistemakadosh/urls.py", line 11, in <module>
+    url(r'', include('kadoshapp.urls')),
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/conf/urls/__init__.py", line 33, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/importlib/__init__.py", line 109, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2226, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1129, in _exec
+  File "<frozen importlib._bootstrap>", line 1471, in exec_module
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "/home/mario/kadosh/kadoshapp/urls.py", line 2, in <module>
+    from . import views
+  File "/home/mario/kadosh/kadoshapp/views.py", line 19
+    form_Compra=Form_Compra_Compra(request.POST)
+              ^
+IndentationError: expected an indented block
+Internal Server Error: /ingreso/Compra/
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 394, in urlconf_module
+    return self._urlconf_module
+AttributeError: 'RegexURLResolver' object has no attribute '_urlconf_module'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/handlers/base.py", line 119, in get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 366, in resolve
+    for pattern in self.url_patterns:
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 402, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 396, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/importlib/__init__.py", line 109, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2226, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1129, in _exec
+  File "<frozen importlib._bootstrap>", line 1471, in exec_module
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "/home/mario/kadosh/sistemakadosh/urls.py", line 11, in <module>
+    url(r'', include('kadoshapp.urls')),
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/conf/urls/__init__.py", line 33, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/importlib/__init__.py", line 109, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2226, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1129, in _exec
+  File "<frozen importlib._bootstrap>", line 1471, in exec_module
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "/home/mario/kadosh/kadoshapp/urls.py", line 2, in <module>
+    from . import views
+  File "/home/mario/kadosh/kadoshapp/views.py", line 19
+    form_Compra=Form_Compra_Compra(request.POST)
+              ^
+IndentationError: expected an indented block
+Internal Server Error: /ingreso/Compra/
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 394, in urlconf_module
+    return self._urlconf_module
+AttributeError: 'RegexURLResolver' object has no attribute '_urlconf_module'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/handlers/base.py", line 119, in get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 366, in resolve
+    for pattern in self.url_patterns:
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 402, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 396, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/importlib/__init__.py", line 109, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2226, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1129, in _exec
+  File "<frozen importlib._bootstrap>", line 1471, in exec_module
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "/home/mario/kadosh/sistemakadosh/urls.py", line 11, in <module>
+    url(r'', include('kadoshapp.urls')),
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/conf/urls/__init__.py", line 33, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/importlib/__init__.py", line 109, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2226, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1129, in _exec
+  File "<frozen importlib._bootstrap>", line 1471, in exec_module
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "/home/mario/kadosh/kadoshapp/urls.py", line 2, in <module>
+    from . import views
+  File "/home/mario/kadosh/kadoshapp/views.py", line 19
+    form_Compra=Form_Compra(request.POST)
+              ^
+IndentationError: expected an indented block
+Internal Server Error: /ingreso/Compra/
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 394, in urlconf_module
+    return self._urlconf_module
+AttributeError: 'RegexURLResolver' object has no attribute '_urlconf_module'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/handlers/base.py", line 119, in get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 366, in resolve
+    for pattern in self.url_patterns:
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 402, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 396, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/importlib/__init__.py", line 109, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2226, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1129, in _exec
+  File "<frozen importlib._bootstrap>", line 1471, in exec_module
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "/home/mario/kadosh/sistemakadosh/urls.py", line 11, in <module>
+    url(r'', include('kadoshapp.urls')),
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/conf/urls/__init__.py", line 33, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/importlib/__init__.py", line 109, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2226, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1129, in _exec
+  File "<frozen importlib._bootstrap>", line 1471, in exec_module
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "/home/mario/kadosh/kadoshapp/urls.py", line 2, in <module>
+    from . import views
+  File "/home/mario/kadosh/kadoshapp/views.py", line 19
+    form_Compra=Form_Compra(request.POST)
+              ^
+IndentationError: expected an indented block
+Internal Server Error: /ingreso/Compra/
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 394, in urlconf_module
+    return self._urlconf_module
+AttributeError: 'RegexURLResolver' object has no attribute '_urlconf_module'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/handlers/base.py", line 119, in get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 366, in resolve
+    for pattern in self.url_patterns:
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 402, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 396, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/importlib/__init__.py", line 109, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2226, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1129, in _exec
+  File "<frozen importlib._bootstrap>", line 1471, in exec_module
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "/home/mario/kadosh/sistemakadosh/urls.py", line 11, in <module>
+    url(r'', include('kadoshapp.urls')),
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/conf/urls/__init__.py", line 33, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/importlib/__init__.py", line 109, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2226, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1129, in _exec
+  File "<frozen importlib._bootstrap>", line 1471, in exec_module
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "/home/mario/kadosh/kadoshapp/urls.py", line 2, in <module>
+    from . import views
+  File "/home/mario/kadosh/kadoshapp/views.py", line 21
+    ultima_Compra=form_Compra.save()
+                ^
+IndentationError: expected an indented block
+Internal Server Error: /ingreso/Compra/
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 394, in urlconf_module
+    return self._urlconf_module
+AttributeError: 'RegexURLResolver' object has no attribute '_urlconf_module'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/handlers/base.py", line 119, in get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 366, in resolve
+    for pattern in self.url_patterns:
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 402, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 396, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/importlib/__init__.py", line 109, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2226, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1129, in _exec
+  File "<frozen importlib._bootstrap>", line 1471, in exec_module
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "/home/mario/kadosh/sistemakadosh/urls.py", line 11, in <module>
+    url(r'', include('kadoshapp.urls')),
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/conf/urls/__init__.py", line 33, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/importlib/__init__.py", line 109, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2226, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1129, in _exec
+  File "<frozen importlib._bootstrap>", line 1471, in exec_module
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "/home/mario/kadosh/kadoshapp/urls.py", line 2, in <module>
+    from . import views
+  File "/home/mario/kadosh/kadoshapp/views.py", line 23
+    else:
+       ^
+SyntaxError: invalid syntax
+Internal Server Error: /ingreso/Compra/
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 394, in urlconf_module
+    return self._urlconf_module
+AttributeError: 'RegexURLResolver' object has no attribute '_urlconf_module'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/handlers/base.py", line 119, in get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 366, in resolve
+    for pattern in self.url_patterns:
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 402, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 396, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/importlib/__init__.py", line 109, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2226, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1129, in _exec
+  File "<frozen importlib._bootstrap>", line 1471, in exec_module
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "/home/mario/kadosh/sistemakadosh/urls.py", line 11, in <module>
+    url(r'', include('kadoshapp.urls')),
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/conf/urls/__init__.py", line 33, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/importlib/__init__.py", line 109, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2226, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1129, in _exec
+  File "<frozen importlib._bootstrap>", line 1471, in exec_module
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "/home/mario/kadosh/kadoshapp/urls.py", line 2, in <module>
+    from . import views
+  File "/home/mario/kadosh/kadoshapp/views.py", line 24
+    form_Compra=Form_Compra_Compra()
+              ^
+IndentationError: expected an indented block
+Internal Server Error: /ingreso/Compra/
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 394, in urlconf_module
+    return self._urlconf_module
+AttributeError: 'RegexURLResolver' object has no attribute '_urlconf_module'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/handlers/base.py", line 119, in get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 366, in resolve
+    for pattern in self.url_patterns:
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 402, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 396, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/importlib/__init__.py", line 109, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2226, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1129, in _exec
+  File "<frozen importlib._bootstrap>", line 1471, in exec_module
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "/home/mario/kadosh/sistemakadosh/urls.py", line 11, in <module>
+    url(r'', include('kadoshapp.urls')),
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/conf/urls/__init__.py", line 33, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/importlib/__init__.py", line 109, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2226, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1129, in _exec
+  File "<frozen importlib._bootstrap>", line 1471, in exec_module
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "/home/mario/kadosh/kadoshapp/urls.py", line 2, in <module>
+    from . import views
+  File "/home/mario/kadosh/kadoshapp/views.py", line 3, in <module>
+    from .forms import Form_RegistroCliente_Persona, Form_RegistroCliente_Cliente
+  File "/home/mario/kadosh/kadoshapp/forms.py", line 11, in <module>
+    class Form_Compra_Compra(forms.ModelForm):
+  File "/home/mario/kadosh/kadoshapp/forms.py", line 12, in Form_Compra_Compra
+    class Meta:
+  File "/home/mario/kadosh/kadoshapp/forms.py", line 14, in Meta
+    fields('proveedor_idproveedor','contado_compra','tipo_pago_idtipo_pago',)
+NameError: name 'fields' is not defined
+Internal Server Error: /ingreso/Compra/
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/mario/kadosh/kadoshapp/views.py", line 31, in Compra
+    return render(request, 'kadoshapp/Compra.html', {'form_Producto': form_Producto,'form_Detallecompra':form_Detallecompra, 'form_TipoProducto':form_TipoProducto,'form_fotografia':form_fotografia ,'form_InventarioProducto':form_InventarioProducto, 'form_Anaquel':form_Anaquel, 'form_Compra':form_Compra })
+NameError: name 'form_Detallecompra' is not defined
+Internal Server Error: /ingreso/Compra/
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/mario/kadosh/kadoshapp/views.py", line 31, in Compra
+    return render(request, 'kadoshapp/Compra.html', {'form_Producto': form_Producto,'form_Detallecompra':form_Detallecompra, 'form_TipoProducto':form_TipoProducto,'form_fotografia':form_fotografia ,'form_InventarioProducto':form_InventarioProducto, 'form_Anaquel':form_Anaquel, 'form_Compra':form_Compra })
+NameError: name 'form_Detallecompra' is not defined
+Internal Server Error: /ingreso/Compra/
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/mario/kadosh/kadoshapp/views.py", line 31, in Compra
+    return render(request, 'kadoshapp/Compra.html', {'form_Producto': form_Producto,'form_Detallecompra':form_Detallecompra, 'form_TipoProducto':form_TipoProducto,'form_fotografia':form_fotografia ,'form_InventarioProducto':form_InventarioProducto, 'form_Anaquel':form_Anaquel, 'form_Compra':form_Compra })
+NameError: name 'form_Detallecompra' is not defined
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SELECT `Proveedor`.`idProveedor`, `Proveedor`.`nombre_proveedor`, `Proveedor`.`direccion_proveedor`, `Proveedor`.`telefonos_proveedor`, `Proveedor`.`estado_proveedor` FROM `Proveedor`; args=()
+(0.000) SELECT `Tipo_pago`.`idTipo_pago`, `Tipo_pago`.`nombre_tipoPago`, `Tipo_pago`.`estado_tipoPago` FROM `Tipo_pago`; args=()
+(0.000) SELECT `Talla`.`idTalla`, `Talla`.`nombre_Talla`, `Talla`.`estado_talla` FROM `Talla`; args=()
+(0.000) SELECT `Genero`.`idGener`, `Genero`.`nombre_genero`, `Genero`.`estado_genero` FROM `Genero`; args=()
+(0.000) SELECT `Estilo`.`idEstilo`, `Estilo`.`nombre_estilo`, `Estilo`.`Tipo_producto_idTipo_producto`, `Estilo`.`estado_estilo` FROM `Estilo`; args=()
+(0.000) SELECT `Color`.`idColor`, `Color`.`nombre_color`, `Color`.`estado_color` FROM `Color`; args=()
+(0.000) SELECT `Combo`.`idCombo`, `Combo`.`nombre_combo`, `Combo`.`estado_combo` FROM `Combo`; args=()
+(0.000) SELECT `Marca`.`id_marca`, `Marca`.`nombre_marca`, `Marca`.`estado_marca` FROM `Marca`; args=()
+(0.000) SELECT `Producto`.`codigo_producto`, `Producto`.`descripcion_producto`, `Producto`.`Talla_idTalla`, `Producto`.`Genero_idGener`, `Producto`.`Estilo_idEstilo`, `Producto`.`Color_idColor`, `Producto`.`Combo_idCombo`, `Producto`.`estado_producto` FROM `Producto`; args=()
+(0.000) SELECT `Anaquel`.`idAnaquel`, `Anaquel`.`Bodega_idBodega`, `Anaquel`.`codigo_anaquel`, `Anaquel`.`estado_anaquel` FROM `Anaquel`; args=()
+(0.000) SELECT `Bodega`.`idBodega`, `Bodega`.`Sucursal_idSucursal`, `Bodega`.`nombre_bodega`, `Bodega`.`descripcion_bodega`, `Bodega`.`estado_bodega` FROM `Bodega`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+Internal Server Error: /ingreso/Compra/
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 394, in urlconf_module
+    return self._urlconf_module
+AttributeError: 'RegexURLResolver' object has no attribute '_urlconf_module'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/handlers/base.py", line 119, in get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 366, in resolve
+    for pattern in self.url_patterns:
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 402, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 396, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/importlib/__init__.py", line 109, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2226, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1129, in _exec
+  File "<frozen importlib._bootstrap>", line 1471, in exec_module
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "/home/mario/kadosh/sistemakadosh/urls.py", line 11, in <module>
+    url(r'', include('kadoshapp.urls')),
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/conf/urls/__init__.py", line 33, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/importlib/__init__.py", line 109, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2226, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1129, in _exec
+  File "<frozen importlib._bootstrap>", line 1471, in exec_module
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "/home/mario/kadosh/kadoshapp/urls.py", line 2, in <module>
+    from . import views
+  File "/home/mario/kadosh/kadoshapp/views.py", line 3, in <module>
+    from .forms import Form_RegistroCliente_Persona, Form_RegistroCliente_Cliente
+  File "/home/mario/kadosh/kadoshapp/forms.py", line 36, in <module>
+    class Form_Compra_TrasladoMercaderia(forms.ModelForm):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/forms/models.py", line 295, in __new__
+    raise FieldError(message)
+django.core.exceptions.FieldError: Unknown field(s) (bodega_ingreso) specified for Anaquel
+Internal Server Error: /ingreso/Compra/
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 394, in urlconf_module
+    return self._urlconf_module
+AttributeError: 'RegexURLResolver' object has no attribute '_urlconf_module'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/handlers/base.py", line 119, in get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 366, in resolve
+    for pattern in self.url_patterns:
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 402, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 396, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/importlib/__init__.py", line 109, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2226, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1129, in _exec
+  File "<frozen importlib._bootstrap>", line 1471, in exec_module
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "/home/mario/kadosh/sistemakadosh/urls.py", line 11, in <module>
+    url(r'', include('kadoshapp.urls')),
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/conf/urls/__init__.py", line 33, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/importlib/__init__.py", line 109, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2226, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1129, in _exec
+  File "<frozen importlib._bootstrap>", line 1471, in exec_module
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "/home/mario/kadosh/kadoshapp/urls.py", line 2, in <module>
+    from . import views
+  File "/home/mario/kadosh/kadoshapp/views.py", line 8, in <module>
+    from .forms import Form_IngresoMercaderiaPorProveedor_Producto, Form_IngresoMercaderiaPorProveedor_DetalleCompra, Form_IngresoMercaderiaPorProveedor_TipoProducto, Form_IngresoMercaderiaPorProveedor_Fotografia, Form_IngresoMercaderiaPorProveedor_InventarioProducto, Form_IngresoMercaderiaPorProveedor_Anaquel, Form_IngresoMercaderiaPorProveedor_Compra
+ImportError: cannot import name 'Form_IngresoMercaderiaPorProveedor_Anaquel'
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SELECT `Proveedor`.`idProveedor`, `Proveedor`.`nombre_proveedor`, `Proveedor`.`direccion_proveedor`, `Proveedor`.`telefonos_proveedor`, `Proveedor`.`estado_proveedor` FROM `Proveedor`; args=()
+(0.000) SELECT `Tipo_pago`.`idTipo_pago`, `Tipo_pago`.`nombre_tipoPago`, `Tipo_pago`.`estado_tipoPago` FROM `Tipo_pago`; args=()
+(0.000) SELECT `Talla`.`idTalla`, `Talla`.`nombre_Talla`, `Talla`.`estado_talla` FROM `Talla`; args=()
+(0.000) SELECT `Genero`.`idGener`, `Genero`.`nombre_genero`, `Genero`.`estado_genero` FROM `Genero`; args=()
+(0.000) SELECT `Estilo`.`idEstilo`, `Estilo`.`nombre_estilo`, `Estilo`.`Tipo_producto_idTipo_producto`, `Estilo`.`estado_estilo` FROM `Estilo`; args=()
+(0.000) SELECT `Color`.`idColor`, `Color`.`nombre_color`, `Color`.`estado_color` FROM `Color`; args=()
+(0.000) SELECT `Combo`.`idCombo`, `Combo`.`nombre_combo`, `Combo`.`estado_combo` FROM `Combo`; args=()
+(0.000) SELECT `Marca`.`id_marca`, `Marca`.`nombre_marca`, `Marca`.`estado_marca` FROM `Marca`; args=()
+(0.000) SELECT `Producto`.`codigo_producto`, `Producto`.`descripcion_producto`, `Producto`.`Talla_idTalla`, `Producto`.`Genero_idGener`, `Producto`.`Estilo_idEstilo`, `Producto`.`Color_idColor`, `Producto`.`Combo_idCombo`, `Producto`.`estado_producto` FROM `Producto`; args=()
+(0.000) SELECT `Anaquel`.`idAnaquel`, `Anaquel`.`Bodega_idBodega`, `Anaquel`.`codigo_anaquel`, `Anaquel`.`estado_anaquel` FROM `Anaquel`; args=()
+(0.000) SELECT `Bodega`.`idBodega`, `Bodega`.`Sucursal_idSucursal`, `Bodega`.`nombre_bodega`, `Bodega`.`descripcion_bodega`, `Bodega`.`estado_bodega` FROM `Bodega`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SELECT `Talla`.`idTalla`, `Talla`.`nombre_Talla`, `Talla`.`estado_talla` FROM `Talla`; args=()
+(0.000) SELECT `Genero`.`idGener`, `Genero`.`nombre_genero`, `Genero`.`estado_genero` FROM `Genero`; args=()
+(0.000) SELECT `Estilo`.`idEstilo`, `Estilo`.`nombre_estilo`, `Estilo`.`Tipo_producto_idTipo_producto`, `Estilo`.`estado_estilo` FROM `Estilo`; args=()
+(0.000) SELECT `Color`.`idColor`, `Color`.`nombre_color`, `Color`.`estado_color` FROM `Color`; args=()
+(0.000) SELECT `Combo`.`idCombo`, `Combo`.`nombre_combo`, `Combo`.`estado_combo` FROM `Combo`; args=()
+(0.000) SELECT `Marca`.`id_marca`, `Marca`.`nombre_marca`, `Marca`.`estado_marca` FROM `Marca`; args=()
+(0.000) SELECT `Anaquel`.`idAnaquel`, `Anaquel`.`Bodega_idBodega`, `Anaquel`.`codigo_anaquel`, `Anaquel`.`estado_anaquel` FROM `Anaquel`; args=()
+(0.000) SELECT `Bodega`.`idBodega`, `Bodega`.`Sucursal_idSucursal`, `Bodega`.`nombre_bodega`, `Bodega`.`descripcion_bodega`, `Bodega`.`estado_bodega` FROM `Bodega`; args=()
+(0.000) SELECT `Proveedor`.`idProveedor`, `Proveedor`.`nombre_proveedor`, `Proveedor`.`direccion_proveedor`, `Proveedor`.`telefonos_proveedor`, `Proveedor`.`estado_proveedor` FROM `Proveedor`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SELECT `Proveedor`.`idProveedor`, `Proveedor`.`nombre_proveedor`, `Proveedor`.`direccion_proveedor`, `Proveedor`.`telefonos_proveedor`, `Proveedor`.`estado_proveedor` FROM `Proveedor`; args=()
+(0.000) SELECT `Tipo_pago`.`idTipo_pago`, `Tipo_pago`.`nombre_tipoPago`, `Tipo_pago`.`estado_tipoPago` FROM `Tipo_pago`; args=()
+(0.000) SELECT `Talla`.`idTalla`, `Talla`.`nombre_Talla`, `Talla`.`estado_talla` FROM `Talla`; args=()
+(0.000) SELECT `Genero`.`idGener`, `Genero`.`nombre_genero`, `Genero`.`estado_genero` FROM `Genero`; args=()
+(0.000) SELECT `Estilo`.`idEstilo`, `Estilo`.`nombre_estilo`, `Estilo`.`Tipo_producto_idTipo_producto`, `Estilo`.`estado_estilo` FROM `Estilo`; args=()
+(0.000) SELECT `Color`.`idColor`, `Color`.`nombre_color`, `Color`.`estado_color` FROM `Color`; args=()
+(0.000) SELECT `Combo`.`idCombo`, `Combo`.`nombre_combo`, `Combo`.`estado_combo` FROM `Combo`; args=()
+(0.000) SELECT `Marca`.`id_marca`, `Marca`.`nombre_marca`, `Marca`.`estado_marca` FROM `Marca`; args=()
+(0.000) SELECT `Producto`.`codigo_producto`, `Producto`.`descripcion_producto`, `Producto`.`Talla_idTalla`, `Producto`.`Genero_idGener`, `Producto`.`Estilo_idEstilo`, `Producto`.`Color_idColor`, `Producto`.`Combo_idCombo`, `Producto`.`estado_producto` FROM `Producto`; args=()
+(0.000) SELECT `Anaquel`.`idAnaquel`, `Anaquel`.`Bodega_idBodega`, `Anaquel`.`codigo_anaquel`, `Anaquel`.`estado_anaquel` FROM `Anaquel`; args=()
+(0.000) SELECT `Bodega`.`idBodega`, `Bodega`.`Sucursal_idSucursal`, `Bodega`.`nombre_bodega`, `Bodega`.`descripcion_bodega`, `Bodega`.`estado_bodega` FROM `Bodega`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SELECT `Proveedor`.`idProveedor`, `Proveedor`.`nombre_proveedor`, `Proveedor`.`direccion_proveedor`, `Proveedor`.`telefonos_proveedor`, `Proveedor`.`estado_proveedor` FROM `Proveedor`; args=()
+(0.000) SELECT `Tipo_pago`.`idTipo_pago`, `Tipo_pago`.`nombre_tipoPago`, `Tipo_pago`.`estado_tipoPago` FROM `Tipo_pago`; args=()
+(0.000) SELECT `Talla`.`idTalla`, `Talla`.`nombre_Talla`, `Talla`.`estado_talla` FROM `Talla`; args=()
+(0.000) SELECT `Genero`.`idGener`, `Genero`.`nombre_genero`, `Genero`.`estado_genero` FROM `Genero`; args=()
+(0.000) SELECT `Estilo`.`idEstilo`, `Estilo`.`nombre_estilo`, `Estilo`.`Tipo_producto_idTipo_producto`, `Estilo`.`estado_estilo` FROM `Estilo`; args=()
+(0.000) SELECT `Color`.`idColor`, `Color`.`nombre_color`, `Color`.`estado_color` FROM `Color`; args=()
+(0.000) SELECT `Combo`.`idCombo`, `Combo`.`nombre_combo`, `Combo`.`estado_combo` FROM `Combo`; args=()
+(0.000) SELECT `Marca`.`id_marca`, `Marca`.`nombre_marca`, `Marca`.`estado_marca` FROM `Marca`; args=()
+(0.000) SELECT `Producto`.`codigo_producto`, `Producto`.`descripcion_producto`, `Producto`.`Talla_idTalla`, `Producto`.`Genero_idGener`, `Producto`.`Estilo_idEstilo`, `Producto`.`Color_idColor`, `Producto`.`Combo_idCombo`, `Producto`.`estado_producto` FROM `Producto`; args=()
+(0.000) SELECT `Anaquel`.`idAnaquel`, `Anaquel`.`Bodega_idBodega`, `Anaquel`.`codigo_anaquel`, `Anaquel`.`estado_anaquel` FROM `Anaquel`; args=()
+(0.000) SELECT `Bodega`.`idBodega`, `Bodega`.`Sucursal_idSucursal`, `Bodega`.`nombre_bodega`, `Bodega`.`descripcion_bodega`, `Bodega`.`estado_bodega` FROM `Bodega`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SELECT `Talla`.`idTalla`, `Talla`.`nombre_Talla`, `Talla`.`estado_talla` FROM `Talla`; args=()
+(0.000) SELECT `Genero`.`idGener`, `Genero`.`nombre_genero`, `Genero`.`estado_genero` FROM `Genero`; args=()
+(0.000) SELECT `Estilo`.`idEstilo`, `Estilo`.`nombre_estilo`, `Estilo`.`Tipo_producto_idTipo_producto`, `Estilo`.`estado_estilo` FROM `Estilo`; args=()
+(0.000) SELECT `Color`.`idColor`, `Color`.`nombre_color`, `Color`.`estado_color` FROM `Color`; args=()
+(0.000) SELECT `Combo`.`idCombo`, `Combo`.`nombre_combo`, `Combo`.`estado_combo` FROM `Combo`; args=()
+(0.000) SELECT `Marca`.`id_marca`, `Marca`.`nombre_marca`, `Marca`.`estado_marca` FROM `Marca`; args=()
+(0.000) SELECT `Anaquel`.`idAnaquel`, `Anaquel`.`Bodega_idBodega`, `Anaquel`.`codigo_anaquel`, `Anaquel`.`estado_anaquel` FROM `Anaquel`; args=()
+(0.000) SELECT `Bodega`.`idBodega`, `Bodega`.`Sucursal_idSucursal`, `Bodega`.`nombre_bodega`, `Bodega`.`descripcion_bodega`, `Bodega`.`estado_bodega` FROM `Bodega`; args=()
+(0.000) SELECT `Proveedor`.`idProveedor`, `Proveedor`.`nombre_proveedor`, `Proveedor`.`direccion_proveedor`, `Proveedor`.`telefonos_proveedor`, `Proveedor`.`estado_proveedor` FROM `Proveedor`; args=()
