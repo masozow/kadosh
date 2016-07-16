@@ -9,5 +9,5 @@ urlpatterns=[
 #url(r'^$','django.contrib.auth.views.logout_then_login',
 # name='logout'),
 url(r'^$', views.ingreso_mercaderia, name='ingreso_mercaderia'),
-url(r'^ingreso/cliente/$', views.registro, name='registro'),
+url(r'^ingreso/cliente/$', views.registro_cliente, name='registroCliente'),
 ]

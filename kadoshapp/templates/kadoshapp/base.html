@@ -8,7 +8,9 @@
       <!--Font de google+iconos-->
       <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <!--materialize.css-->
-      <link type="text/css" rel="stylesheet" href="{% static "css/materialize.min.css" %}" media="screen,projection"/>
+      <!--link type="text/css" rel="stylesheet" href="{% static "css/materialize.min.css" %}" media="screen,projection"/>
+      {% block styles %}
+      {% endblock %}
       <!--Para movil-->
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
       <style type="text/css">
@@ -161,7 +163,7 @@
           Clientes</div>
         <div class="collapsible-body"><!-- Sub Elemntos--->
           <div class="collection">
-          <a href="{% url 'kadoshapp.views.registro' %}" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Nuevo</a>
+          <a href="{% url 'kadoshapp.views.registro_cliente' %}" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Nuevo</a>
           <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Modificar Datos</a>
         </div>
         </div>

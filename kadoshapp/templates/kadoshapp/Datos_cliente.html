@@ -1,11 +1,26 @@
 {% extends 'kadoshapp/base.html' %}
-
+{% load staticfiles %}
+<!--se añadió la fila anterior-->
+    {% block styles %}
+      <link type="text/css" rel="stylesheet" href="{% static "css/formularios.css" %}"/>
+    {% endblock %}
     {% block content %}
         <h5>Registro de Cliente</h5>
         <form method="POST" class="post-form">
           {% csrf_token %}
+            <!--p><label>Nombres: </label>{{ form.nombres_persona }}</p-->
             {{ form.as_p }}
             {{ sub_form.as_p }}
             <button type="submit" class="save btn btn-default">Guardar</button>
         </form>
+        <script>
+          $(function() {
+            $( ".datepicker" ).datepicker({
+              changeMonth: true,
+              changeYear: true,
+              yearRange: "1900:2020",
+              // You can put more options here.
+            });
+          });
+        </script>
     {% endblock %}
