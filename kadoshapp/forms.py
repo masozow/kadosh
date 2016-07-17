@@ -8,6 +8,70 @@ from .models import Producto, DetalleCompra, TipoProducto, Fotografia, Inventari
 from .models import Compra, InventarioProducto, Producto, DetalleCompra, Fotografia, Anaquel, TipoProducto
 #impor para formulario de Punto de Venta
 from .models import Venta, DetalleVenta, InventarioProducto, TipoProducto, Producto, Promocion, Precio
+#import para formulario de Traslado de mercaderia
+from .models import TrasladoMercaderia, Producto, TipoProducto, InventarioProducto
+#impor para formulario de CierreDeCaja
+from .models import CierreDeCaja, Empleado
+#impor para formulario Anular Venta
+from .models import Venta, Cliente, DetalleVenta, Empleado
+
+#Form para Anular Venta
+class Form_AnulaVenta_Venta(forms.ModelForm):
+    class Meta:
+        model=Venta
+        fields=('fecha_venta','idventa',)
+
+class Form_AnulaVenta_Cliente(forms.ModelForm):
+    class Meta:
+        model=Cliente
+        fields=('nit_cliente',)
+
+class Form_AnulaVenta_DetalleVenta(forms.ModelForm):
+    class Meta:
+        model=DetalleVenta
+        fields=('venta_idventa',)
+
+class Form_AnulaVenta_Empleado(forms.ModelForm):
+    class Meta:
+        model=Empleado
+        fields=('codigo_autorización_empleado',)
+
+
+
+#Form para cierre de CierreDeCaja
+class Form_CierreDeCaj_CierreDeCaja(forms.ModelForm):
+    class Meta:
+        model=CierreDeCaja
+        fields=('caja_idcaja','empleado_idempleado','total_real_cierredecaja','total_calculado_cierredecaja',)
+
+class Form_CierreDeCaj_Empleado(forms.ModelForm):
+    class Meta:
+        model=Empleado
+        fields=('codigo_autorización_empleado',)
+
+#Form TrasladoMercaderia
+class Form_TrasladoMerca_TrasaladoMercaderia(forms.ModelForm):
+    class Meta:
+        model=TrasladoMercaderia
+        fields=('bodega_egreso','bodega_ingreso','motivo_idmotivo',)
+
+class Form_TrasladoMerca_Producto(forms.ModelForm):
+    class Meta:
+        model=Producto
+        exclude=('estado_producto','descripcion_producto',)
+
+class Form_TrasladoMerca_TipoProducto(forms.ModelForm):
+    class Meta:
+        model=TipoProducto
+        fields=('marca_id_marca',)
+class Form_TrasladoMerca_InventarioProducto(forms.ModelForm):
+    class Meta:
+        model=InventarioProducto
+        fields=('producto_codigo_producto',)
+
+class Form_TrasladoMerca_Cantidad(forms.Form):
+    cantida = forms.IntegerField(label='cantidad')
+
 
 #Form Punto de Venta
 class Form_PuntoVenta_Venta(forms.ModelForm):

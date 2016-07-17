@@ -13,4 +13,7 @@ url(r'^ingreso/cliente/$', views.registro_cliente, name='registroCliente'),
 url(r'^ingreso/MercaderiaPoProveedor/$', views.ingresodemercaderiaporProveedor, name='IngresoMercaPorProveedor'),
 url(r'^ingreso/Compra/$', views.Compra, name='Compra'),
 url(r'^Realizacion/Venta/$', views.PuntoDeVenta, name='PuntoDeVenta'),
+url(r'^Trazalado/Mercaderia/$', views.TrasladoMercaderia, name='TrasladoMerca'),
+url(r'^Cierre/Caja/$', views.CierreDeCaja, name='CierreDeCaja'),
+url(r'^Venta/Anular/$', views.AnularVenta, name='AnularVenta'),
 ]

@@ -1,0 +1,17 @@
+{% extends 'kadoshapp/base.html' %}
+{% load staticfiles %}
+<!--se añadió la fila anterior-->
+    {% block styles %}
+      <link type="text/css" rel="stylesheet" href="{% static "css/formularios.css" %}"/>
+    {% endblock %}
+    {% block content %}
+        <h5>Cierre De Caja</h5>
+        <form method="POST" class="post-form">
+          {% csrf_token %}
+            {{ form_Cierrecaja.as_p }}
+            {{ form_empleado.as_p }}
+
+
+            <button type="submit" class="save btn btn-default">Guardar</button>
+        </form>
+    {% endblock %}

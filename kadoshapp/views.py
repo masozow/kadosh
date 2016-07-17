@@ -12,11 +12,65 @@ from .forms import Form_Compra_Compra, Form_Compra_InventarioProducto,Form_Compr
 #cosas de punto de Venta
 from .models import Venta, DetalleVenta, InventarioProducto, TipoProducto, Producto, Promocion, Precio
 from .forms import Form_PuntoVenta_Venta,Form_PuntoVenta_DetalleVenta,Form_PuntoVenta_InventarioProducto, Form_PuntoVenta_TipoProducto, Form_PuntoVenta_Producto, Form_PuntoVenta_Promocion,Form_PuntoVenta_Precio
+#cosas Traslado de mercaderia
+from .models import TrasladoMercaderia, Producto, TipoProducto, InventarioProducto
+from .forms import Form_TrasladoMerca_TrasaladoMercaderia, Form_TrasladoMerca_Producto, Form_TrasladoMerca_TipoProducto, Form_TrasladoMerca_InventarioProducto, Form_TrasladoMerca_Cantidad
+#impor para formulario de CierreDeCaja
+from .models import CierreDeCaja, Empleado
+from .forms import Form_CierreDeCaj_CierreDeCaja, Form_CierreDeCaj_Empleado
+#cosas Anular Venta
+from .models import Venta, Cliente, DetalleVenta, Empleado
+from .forms import Form_AnulaVenta_Venta, Form_AnulaVenta_Cliente, Form_AnulaVenta_DetalleVenta, Form_AnulaVenta_Empleado
 
-
-# Create your views here.
+# Creat your views here.
 def ingreso_mercaderia(request):
     return render(request, 'kadoshapp/ingreso_mercaderia.html',{})
+#vista CierreDeCaja
+def AnularVenta(request):
+    if request.method=='POST':
+        form_Venta=Form_AnulaVenta_Venta(request.POST)
+        if form_Venta.is_valid():
+            ultima_anulacionventa=form_Venta.save()
+        return render(request, 'kadoshapp/ingreso_mercaderia.html',{})
+    else:
+        form_Venta=Form_AnulaVenta_Venta()
+        form_Cliente=Form_AnulaVenta_Cliente()
+        form_DetalleVenta=Form_AnulaVenta_DetalleVenta()
+        form_empleado=Form_AnulaVenta_Empleado()
+    return render(request, 'kadoshapp/AnularVenta.html', {'form_Venta':form_Venta, 'form_Cliente':form_Cliente, 'form_DetalleVenta':form_DetalleVenta, 'form_empleado':form_empleado })
+
+
+#vista CierreDeCaja
+def CierreDeCaja(request):
+    if request.method=='POST':
+        form_Cierrecaja=Form_CierreDeCaj_CierreDeCaja(request.POST)
+        if form_Cierrecaja.is_valid():
+            ultimo_cierre=form_Cierrecaja.save()
+        return render(request, 'kadoshapp/ingreso_mercaderia.html',{})
+    else:
+        form_Cierrecaja=Form_CierreDeCaj_CierreDeCaja()
+        form_empleado=Form_CierreDeCaj_Empleado()
+
+    return render(request, 'kadoshapp/CierreDeCaja.html', {'form_Cierrecaja':form_Cierrecaja,'form_empleado':form_empleado })
+
+
+
+#CVista de Traslado de mercaderia
+def TrasladoMercaderia(request):
+    if request.method=='POST':
+        form_Traslado=Form_TrasladoMerca_TrasaladoMercaderia(request.POST)
+        if form_Traslado.is_valid():
+            ultimo_traslado=form_Traslado.save()
+        return render(request, 'kadoshapp/ingreso_mercaderia.html',{})
+    else:
+        form_Traslado=Form_TrasladoMerca_TrasaladoMercaderia()
+        form_Producto=Form_TrasladoMerca_Producto
+        form_TipoProducto=Form_TrasladoMerca_TipoProducto
+        form_InventarioProducto=Form_TrasladoMerca_InventarioProducto
+        form_cantidad=Form_TrasladoMerca_Cantidad
+    return render(request, 'kadoshapp/TrasladoMerca.html', {'form_TipoProducto':form_TipoProducto,'form_Producto':form_Producto ,'form_InventarioProducto':form_InventarioProducto, 'form_Traslado':form_Traslado, 'form_cantidad':form_cantidad })
+
+
 #Vista de Punto de Venta
 def PuntoDeVenta(request):
     if request.method=='POST':
