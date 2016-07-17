@@ -20728,3 +20728,15 @@ ImportError: cannot import name 'Form_IngresoMercaderiaPorProveedor_Anaquel'
 (0.000) SELECT `Anaquel`.`idAnaquel`, `Anaquel`.`Bodega_idBodega`, `Anaquel`.`codigo_anaquel`, `Anaquel`.`estado_anaquel` FROM `Anaquel`; args=()
 (0.000) SELECT `Bodega`.`idBodega`, `Bodega`.`Sucursal_idSucursal`, `Bodega`.`nombre_bodega`, `Bodega`.`descripcion_bodega`, `Bodega`.`estado_bodega` FROM `Bodega`; args=()
 (0.000) SELECT `Proveedor`.`idProveedor`, `Proveedor`.`nombre_proveedor`, `Proveedor`.`direccion_proveedor`, `Proveedor`.`telefonos_proveedor`, `Proveedor`.`estado_proveedor` FROM `Proveedor`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SELECT `Tipo_cliente`.`idTipo_cliente`, `Tipo_cliente`.`nombre_tipoCliente`, `Tipo_cliente`.`estado_tipoCliente` FROM `Tipo_cliente`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.006) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.002) SELECT `Tipo_cliente`.`idTipo_cliente`, `Tipo_cliente`.`nombre_tipoCliente`, `Tipo_cliente`.`estado_tipoCliente` FROM `Tipo_cliente`; args=()
