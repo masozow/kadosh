@@ -6,6 +6,44 @@ from django.contrib.admin import widgets
 from .models import Producto, DetalleCompra, TipoProducto, Fotografia, InventarioProducto, Anaquel, Compra
 #Import para formulario de Compra
 from .models import Compra, InventarioProducto, Producto, DetalleCompra, Fotografia, Anaquel, TipoProducto
+#impor para formulario de Punto de Venta
+from .models import Venta, DetalleVenta, InventarioProducto, TipoProducto, Producto, Promocion, Precio
+
+#Form Punto de Venta
+class Form_PuntoVenta_Venta(forms.ModelForm):
+    class Meta:
+        model=Venta
+        fields=('cliente_idcliente','empleado_idempleado','tipo_pago_idtipo_pago','contado_venta',)
+
+class Form_PuntoVenta_DetalleVenta(forms.ModelForm):
+    class Meta:
+        model=DetalleVenta
+        fields=('cantidad_venta',)
+
+class Form_PuntoVenta_InventarioProducto(forms.ModelForm):
+    class Meta:
+        model=InventarioProducto
+        fields=('producto_codigo_producto',)
+
+class Form_PuntoVenta_TipoProducto(forms.ModelForm):
+    class Meta:
+        model=TipoProducto
+        fields=('marca_id_marca',)
+
+class Form_PuntoVenta_Producto(forms.ModelForm):
+    class Meta:
+        model=Producto
+        exclude=('estado_producto','descripcion_producto',)
+
+class Form_PuntoVenta_Promocion(forms.ModelForm):
+    class Meta:
+        model=Promocion
+        fields=('idpromocion',)
+
+class Form_PuntoVenta_Precio(forms.ModelForm):
+    class Meta:
+        model=Precio
+        fields=('valor_precio',)
 
 #Form Compra
 class Form_Compra_Compra(forms.ModelForm):

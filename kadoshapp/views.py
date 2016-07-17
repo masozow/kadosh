@@ -9,10 +9,34 @@ from .forms import Form_IngresoMercaderiaPorProveedor_Producto, Form_IngresoMerc
 #cosas de form Compra
 from .models import Compra, InventarioProducto, Producto, DetalleCompra, Fotografia, Anaquel, TipoProducto
 from .forms import Form_Compra_Compra, Form_Compra_InventarioProducto,Form_Compra_Producto, Form_Compra_DetalleCompra,Form_Compra_Fotografia, Form_Compra_Anaquel, Form_Compra_TipoProducto
+#cosas de punto de Venta
+from .models import Venta, DetalleVenta, InventarioProducto, TipoProducto, Producto, Promocion, Precio
+from .forms import Form_PuntoVenta_Venta,Form_PuntoVenta_DetalleVenta,Form_PuntoVenta_InventarioProducto, Form_PuntoVenta_TipoProducto, Form_PuntoVenta_Producto, Form_PuntoVenta_Promocion,Form_PuntoVenta_Precio
+
 
 # Create your views here.
 def ingreso_mercaderia(request):
     return render(request, 'kadoshapp/ingreso_mercaderia.html',{})
+#Vista de Punto de Venta
+def PuntoDeVenta(request):
+    if request.method=='POST':
+        form_Venta=Form_PuntoVenta_Venta(request.POST)
+        if form_Venta.is_valid():
+            ultima_venta=form_Venta.save()
+        return render(request, 'kadoshapp/ingreso_mercaderia.html',{})
+    else:
+        form_Venta=Form_PuntoVenta_Venta()
+        form_DetalleVenta=Form_PuntoVenta_DetalleVenta()
+        form_InventarioProducto=Form_PuntoVenta_InventarioProducto()
+        form_Producto=Form_PuntoVenta_Producto()
+        form_TipoProducto=Form_PuntoVenta_TipoProducto()
+        form_Promocion=Form_PuntoVenta_Promocion()
+        form_Precio=Form_PuntoVenta_Precio()
+    return render(request, 'kadoshapp/PuntoDeVenta.html', {'form_Venta': form_Venta,'form_DetalleVenta':form_DetalleVenta, 'form_TipoProducto':form_TipoProducto,'form_Producto':form_Producto ,'form_InventarioProducto':form_InventarioProducto, 'form_Promocion':form_Promocion, 'form_Precio':form_Precio })
+
+
+
+
 #Vista de form de compra
 def Compra(request):
     if request.method=='POST':
