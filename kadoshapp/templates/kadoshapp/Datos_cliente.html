@@ -5,14 +5,32 @@
       <link type="text/css" rel="stylesheet" href="{% static "css/formularios.css" %}">
     {% endblock %}
     {% block content %}
+    <!--agregando esto para que funcione el DateField-->
+        <!--link rel="stylesheet" type="text/css" href="{% static 'static/admin/css/forms.css' %} "/>
+        <link rel="stylesheet" type="text/css" href="{% static 'static/admin/css/base.css' %} "/>
+        <link rel="stylesheet" type="text/css" href="{% static 'static/admin/css/global.css' %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'static/admin/css/widgets.css' %}"/>
+
+
+        <script type="text/javascript" src="/admin/jsi18n/"></script>
+        <script type="text/javascript" src="{% static 'admin/js/core.js' %}"></script>
+        <script type="text/javascript" src="{% static 'admin/js/admin/RelatedObjectLookups.js' %}"></script>
+        <script type="text/javascript" src="{% static 'admin/js/jquery.js' %}"></script>
+        <script type="text/javascript" src="{% static 'admin/js/jquery.init.js' %}"></script>
+        <script type="text/javascript" src="{% static 'admin/js/actions.js' %}"></script>
+        <script type="text/javascript" src="{% static 'admin/js/calendar.js' %}"></script>
+        <script type="text/javascript" src="{% static 'admin/js/admin/DateTimeShortcuts.js' %}"></script-->
+    <!--hasta acá, si funcionó, es para el widget del admin-->
         <h5>Registro de Cliente</h5>
         <form method="POST" class="post-form">
           {% csrf_token %}
             <!--p><label>Nombres: </label>{{ form.nombres_persona }}</p-->
             {{ form.as_p }}
             {{ sub_form.as_p }}
+
             <button type="submit" class="save btn btn-default">Guardar</button>
         </form>
+
         <!--script>
           $(function() {
             $( ".datepicker" ).datepicker({

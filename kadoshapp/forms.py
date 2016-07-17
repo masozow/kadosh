@@ -2,6 +2,7 @@ from django import forms
 from .models import Persona,Cliente,TipoCliente
 from django.forms import ModelChoiceField,Select
 from django.contrib.admin import widgets
+from django.forms import extras
 #Import para formulario de Ingres de mercaderia por Proveedor
 from .models import Producto, DetalleCompra, TipoProducto, Fotografia, InventarioProducto, Anaquel, Compra
 #Import para formulario de Compra
@@ -226,7 +227,8 @@ class Form_RegistroCliente_Persona(forms.ModelForm):
         exclude=('estado_persona',)
         #fields=('dpi_persona','nombres_persona','apellidos_persona','telefonos_persona','direccion_persona','fecha_nacimiento_persona',)
         widgets = {
-            'fecha_nacimiento_persona': widgets.AdminDateWidget(),
+            'fecha_nacimiento_persona':extras.SelectDateWidget(years=range(1900, 2015))
+            #'fecha_nacimiento_persona': widgets.AdminDateWidget(), #este funcionó con todo el bloque de código que se agregó en el template
             #forms.DateInput(format='%d/%m/%Y'),
             #DateInput(attrs={'class':'datepicker'}), #Esto es para usar jquery
         }
