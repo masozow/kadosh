@@ -24,10 +24,30 @@ from .forms import Form_AnulaVenta_Venta, Form_AnulaVenta_Cliente, Form_AnulaVen
 #cosar para Inventario
 from .models import Empleado, Anaquel, InventarioProducto, DetalleInventarioRealizado, AjusteInventario, InventarioRealizado
 from .forms import Form_Inventario_InventarioRealizado, Form_Inventario_Empleado,Form_Inventario_InventarioProducto, Form_Inventario_Anque, Form_Inventario_InventarioProducto, Form_Inventario_DetalleInventarioRealizado, Form_Inventario_AjusteInventario
+#cosas de Promocion
+from .models import Producto, TipoProducto, InventarioProducto, Promocion
+from .forms import Form_Promocion_Producto, form_Promocion_TipoProducto, Form_Promocion_InventarioProducto, Form_Promocion_Promocion, form_Promocion_Cantidad
+
 
 # Creat your views here.
 def ingreso_mercaderia(request):
     return render(request, 'kadoshapp/ingreso_mercaderia.html',{})
+#Vista de Promocion
+def Promocion(request):
+    if request.method=='POST':
+        form_promocion=Form_Promocion_Promocion(request.POST)
+        if form_promocion.is_valid():
+            ultima_promocion=form_promocion.save()
+        return render(request, 'kadoshapp/ingreso_mercaderia.html',{})
+    else:
+        form_promocion=Form_Promocion_Promocion()
+        form_producto=Form_Promocion_Producto()
+        form_tipoproducto=form_Promocion_TipoProducto()
+        form_inventarioproducto=Form_Promocion_InventarioProducto()
+        form_cantidad=form_Promocion_Cantidad()
+    return render(request, 'kadoshapp/Promocion.html', {'form_promocion':form_promocion, 'form_producto':form_producto, 'form_tipoproducto':form_tipoproducto, 'form_inventarioproducto':form_inventarioproducto , 'form_cantidad':form_cantidad  })
+
+
 #vista CierreDeCaja
 def Inventario(request):
     if request.method=='POST':

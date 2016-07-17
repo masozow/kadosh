@@ -1,0 +1,18 @@
+{% extends 'kadoshapp/base.html' %}
+{% load staticfiles %}
+<!--se añadió la fila anterior-->
+   {% block styles %}
+     <link type="text/css" rel="stylesheet" href="{% static "css/formularios.css" %}"/>
+   {% endblock %}
+   {% block content %}
+       <h5>Promocion</h5>
+       <form method="POST" class="post-form">
+         {% csrf_token %}
+           {{ form_promocion.as_p }}
+           {{ form_producto.as_p }}
+           {{ form_tipoproducto.as_p }}
+           {{ form_inventarioproducto.as_p }}
+           {{ form_cantidad.as_p }}
+           <button type="submit" class="save btn btn-default">Guardar</button>
+       </form>
+   {% endblock %}

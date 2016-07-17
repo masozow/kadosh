@@ -17,7 +17,28 @@ from .models import CierreDeCaja, Empleado
 from .models import Venta, Cliente, DetalleVenta, Empleado
 #import para formulario Inventario
 from .models import Empleado, Anaquel, InventarioProducto, DetalleInventarioRealizado, AjusteInventario, InventarioRealizado
+#import para formulario de Promocion
+from .models import Producto, TipoProducto, InventarioProducto, Promocion
 
+#forms para Promocion
+class form_Promocion_Cantidad(forms.Form):
+    cantida = forms.IntegerField(label='cantidad')
+class Form_Promocion_Producto(forms.ModelForm):
+    class Meta:
+        model=Producto
+        exclude=('estado_producto','descripcion_producto',)
+class form_Promocion_TipoProducto(forms.ModelForm):
+    class Meta:
+        model=TipoProducto
+        fields=('marca_id_marca',)
+class Form_Promocion_InventarioProducto(forms.ModelForm):
+    class Meta:
+        model=InventarioProducto
+        fields=('producto_codigo_producto',)
+class Form_Promocion_Promocion(forms.ModelForm):
+    class Meta:
+        model=Promocion
+        fields=('nombre_promocion','valor_promocion','fecha_inicialpromocion','fecha_finalpromocion',)
 #Forms para Invenario
 class Form_Inventario_InventarioRealizado(forms.ModelForm):
     class Meta:
