@@ -52,8 +52,9 @@
                   <img class="responsive-img" src="{% static "imagenes/merca2.png" %}"> Mercaderia</div>
                 <div class="collapsible-body "><!-- Sub Elemntos--->
                   <div class="collection">
-                  <a href="http://materializecss.com/collapsible.html" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align ">Traslado de mercaderia</a>
-                  <a href="#!" class="white-text text-white waves-effect waves-light collection-item  cyan lighten-1 center-align">Traslado de mercaderia</a>
+                  <a href="{% url 'kadoshapp.views.ingresodemercaderiaporProveedor' %}" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align ">Ingreso de mercaderia por proveedor</a>
+                  <a href="{% url 'kadoshapp.views.Compra' %}" class="white-text text-white waves-effect waves-light collection-item  cyan lighten-1 center-align">Compra</a>
+                  <a href="{% url 'kadoshapp.views.TrasladoMercaderia' %}" class="white-text text-white waves-effect waves-light collection-item  cyan lighten-1 center-align">Traslado de mercaderia</a>
                   <a href="#!" class="white-text text-white waves-effect waves-light collection-item  cyan lighten-1 center-align">Ofertas</a>
                 </div>
                 </div>
@@ -65,7 +66,7 @@
                   Ventas</div>
                 <div class="collapsible-body"><!-- Sub Elemntos--->
                   <div class="collection">
-                  <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1  center-align">Realizar venta</a>
+                  <a href="{% url 'kadoshapp.views.PuntoDeVenta' %}" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1  center-align">Realizar venta</a>
                   <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Anular venta</a>
                   <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Cierre de caja</a>
 
@@ -135,9 +136,10 @@
           <img class="responsive-img" src="{% static "imagenes/merca2.png" %}"> Mercaderia</div>
         <div class="collapsible-body "><!-- Sub Elemntos--->
           <div class="collection">
-          <a href="http://materializecss.com/collapsible.html" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1center-align ">Traslado de mercaderia</a>
-          <a href="#!" class="white-text text-white waves-effect waves-light collection-item  cyan lighten-1 center-align">Traslado de mercaderia</a>
-          <a href="#!" class="white-text text-white waves-effect waves-light collection-item  cyan lighten-1 center-align">Ofertas</a>
+            <a href="{% url 'kadoshapp.views.ingresodemercaderiaporProveedor' %}" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align ">Ingreso de mercaderia por proveedor</a>
+            <a href="{% url 'kadoshapp.views.Compra' %}" class="white-text text-white waves-effect waves-light collection-item  cyan lighten-1 center-align">Compra</a>
+            <a href="{% url 'kadoshapp.views.TrasladoMercaderia' %}" class="white-text text-white waves-effect waves-light collection-item  cyan lighten-1 center-align">Traslado de mercaderia</a>
+            <a href="#!" class="white-text text-white waves-effect waves-light collection-item  cyan lighten-1 center-align">Ofertas</a>
         </div>
         </div>
       </li><!-- Fin -->
@@ -148,7 +150,7 @@
           Ventas</div>
         <div class="collapsible-body"><!-- Sub Elemntos--->
           <div class="collection">
-          <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1  center-align">Realizar venta</a>
+          <a href="{% url 'kadoshapp.views.PuntoDeVenta' %}" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1  center-align">Realizar venta</a>
           <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Anular venta</a>
           <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Cierre de caja</a>
 

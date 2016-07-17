@@ -105,7 +105,7 @@ class Cliente(models.Model):
     fecha_registro_cliente = models.DateField(default=timezone.now)
 
     def __str__(self):
-        return 'Nit: %s - Nombre: %s %s' % (self.nit_cliente, self.persona_idpersona.nombres_persona, self.persona_idpersona.apellidos_persona)
+        return '%s - Nombre: %s %s' % (self.nit_cliente, self.persona_idpersona.nombres_persona, self.persona_idpersona.apellidos_persona)
 
     class Meta:
         managed = True
@@ -597,6 +597,8 @@ class PromocionHasProducto(models.Model):
     promocion_idpromocion = models.ForeignKey(Promocion, db_column='Promocion_idPromocion')  # Field name made lowercase.
     inventario_producto_idinventario_producto = models.ForeignKey(InventarioProducto, db_column='Inventario_producto_idInventario_producto')  # Field name made lowercase.
     idpromocionhasproducto = models.AutoField(db_column='idpromocionhasproducto', primary_key=True)
+    estado_promocion = models.BooleanField(default=True)
+    cantidad_productoenpromocion=models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return '%s - Lote: %s - Prod: %s' % (self.promocion_idpromocion, self.inventario_producto_idinventario_producto.idinventario_producto,self.inventario_producto_idinventario_producto.producto_codigo_producto)
