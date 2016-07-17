@@ -19,8 +19,8 @@ from .models import Venta, Cliente, DetalleVenta, Empleado
 from .models import Empleado, Anaquel, InventarioProducto, DetalleInventarioRealizado, AjusteInventario, InventarioRealizado
 #import para formulario de Promocion
 from .models import Producto, TipoProducto, InventarioProducto, Promocion
-
-#forms para Promocion
+#Floja si lees esto es porque si va aparecer jijiji
+#forms para Promocion espero ahora si aparezca
 class form_Promocion_Cantidad(forms.Form):
     cantida = forms.IntegerField(label='cantidad')
 class Form_Promocion_Producto(forms.ModelForm):
