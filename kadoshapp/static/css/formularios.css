@@ -11,9 +11,9 @@ select.browser-default {
 
 select {
   background-color: rgba(255, 255, 255, 0.9);
-  width: 30%;
-  padding: 5px;
-  border: 1px solid #f2f2f2;
+  width: 30% !important;
+  padding: 1px;
+  border: 1px solid gray; /*#f2f2f2*/
   border-radius: 2px;
   height: 2rem;
 }
@@ -23,7 +23,7 @@ select {
 }
 
 .select-wrapper {
-  /*position: relative;*/
+  position: relative;
 }
 
 .select-wrapper input.select-dropdown {
@@ -141,12 +141,12 @@ nav .input-field {
 nav .input-field input {
   height: 100%;
   font-size: 1.2rem;
-  border: 1px solid grey !important;
+  border: 1px solid gray !important;
   padding-left: 2rem;
 }
 
 nav .input-field input:focus, nav .input-field input[type=text]:valid, nav .input-field input[type=password]:valid, nav .input-field input[type=email]:valid, nav .input-field input[type=url]:valid, nav .input-field input[type=date]:valid {
-  border: 1px solid grey !important;
+  border: 1px solid gray !important;
   /*box-shadow: 1px 0px 0px #888888;*/
   box-shadow: none;
 }
@@ -241,7 +241,7 @@ nav .input-field label.active {
 
 .input-field input[type=search]:focus {
   background-color: #fff;
-  border: 1px solid grey !important;
+  border: 1px solid gray !important;
   box-shadow: none;
   color: #444;
 }
@@ -286,7 +286,7 @@ input[type=number],
 input[type=search],
 textarea.materialize-textarea {
   background-color: transparent;
-  border: 1px solid grey !important;
+  border: 1px solid gray !important;
   /*border-bottom: 1px solid #9e9e9e;*/
   border-radius: 0;
   outline: none;
