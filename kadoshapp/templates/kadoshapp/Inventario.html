@@ -1,0 +1,19 @@
+{% extends 'kadoshapp/base.html' %}
+{% load staticfiles %}
+<!--se añadió la fila anterior-->
+   {% block styles %}
+     <link type="text/css" rel="stylesheet" href="{% static "css/formularios.css" %}"/>
+   {% endblock %}
+   {% block content %}
+       <h5>Inventario</h5>
+       <form method="POST" class="post-form">
+         {% csrf_token %}
+           {{ form_inventariorealizado.as_p }}
+           {{ form_empleado.as_p }}
+           {{ form_invetario.as_p }}
+           {{ form_detallainventario.as_p }}
+           {{ form_ajusteinventario.as_p }}
+           {{ form_anaquel.as_p }}
+           <button type="submit" class="save btn btn-default">Guardar</button>
+       </form>
+   {% endblock %}

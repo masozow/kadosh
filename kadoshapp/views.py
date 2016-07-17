@@ -21,10 +21,31 @@ from .forms import Form_CierreDeCaj_CierreDeCaja, Form_CierreDeCaj_Empleado
 #cosas Anular Venta
 from .models import Venta, Cliente, DetalleVenta, Empleado
 from .forms import Form_AnulaVenta_Venta, Form_AnulaVenta_Cliente, Form_AnulaVenta_DetalleVenta, Form_AnulaVenta_Empleado
+#cosar para Inventario
+from .models import Empleado, Anaquel, InventarioProducto, DetalleInventarioRealizado, AjusteInventario, InventarioRealizado
+from .forms import Form_Inventario_InventarioRealizado, Form_Inventario_Empleado,Form_Inventario_InventarioProducto, Form_Inventario_Anque, Form_Inventario_InventarioProducto, Form_Inventario_DetalleInventarioRealizado, Form_Inventario_AjusteInventario
 
 # Creat your views here.
 def ingreso_mercaderia(request):
     return render(request, 'kadoshapp/ingreso_mercaderia.html',{})
+#vista CierreDeCaja
+def Inventario(request):
+    if request.method=='POST':
+        form_Invetario=Form_Inventario_InventarioProducto(request.POST)
+        if form_inventario.is_valid():
+            ultimo_invenario=form_inventario.save()
+        return render(request, 'kadoshapp/ingreso_mercaderia.html',{})
+    else:
+        form_inventario=Form_TrasladoMerca_InventarioProducto()
+        form_anaquel=Form_Inventario_Anque()
+        form_detallainventario=Form_Inventario_DetalleInventarioRealizado()
+        form_empleado=Form_Inventario_Empleado()
+        form_ajusteinventario=Form_Inventario_AjusteInventario()
+        form_inventariorealizado=Form_Inventario_InventarioRealizado();
+    return render(request, 'kadoshapp/Inventario.html', {'form_inventario':form_inventario, 'form_anaquel':form_anaquel, 'form_detallainventario':form_detallainventario, 'form_empleado':form_empleado , 'form_ajusteinventario':form_ajusteinventario, 'form_inventariorealizado':form_inventariorealizado  })
+
+
+
 #vista CierreDeCaja
 def AnularVenta(request):
     if request.method=='POST':

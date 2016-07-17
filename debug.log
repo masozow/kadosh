@@ -21549,3 +21549,168 @@ django.template.base.TemplateSyntaxError: Invalid block tag: 'static', expected 
 (0.000) SELECT `Venta`.`idVenta`, `Venta`.`Empleado_idEmpleado`, `Venta`.`Cliente_idCliente`, `Venta`.`Caja_idCaja`, `Venta`.`Tipo_pago_idTipo_pago`, `Venta`.`fecha_venta`, `Venta`.`total_venta`, `Venta`.`contado_venta`, `Venta`.`estado_venta` FROM `Venta`; args=()
 (0.000) SELECT `Cliente`.`idCliente`, `Cliente`.`Persona_idPersona`, `Cliente`.`nit_cliente`, `Cliente`.`Tipo_cliente_idTipo_cliente`, `Cliente`.`estado_cliente`, `Cliente`.`fecha_registro_cliente` FROM `Cliente` WHERE `Cliente`.`idCliente` = 1; args=(1,)
 (0.000) SELECT `Persona`.`idPersona`, `Persona`.`nombres_persona`, `Persona`.`apellidos_persona`, `Persona`.`telefonos_persona`, `Persona`.`direccion_persona`, `Persona`.`fecha_nacimiento_persona`, `Persona`.`dpi_persona`, `Persona`.`estado_persona` FROM `Persona` WHERE `Persona`.`idPersona` = 1; args=(1,)
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+Internal Server Error: /Inventario/
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 394, in urlconf_module
+    return self._urlconf_module
+AttributeError: 'RegexURLResolver' object has no attribute '_urlconf_module'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/handlers/base.py", line 119, in get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 366, in resolve
+    for pattern in self.url_patterns:
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 402, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/core/urlresolvers.py", line 396, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/importlib/__init__.py", line 109, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2226, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1129, in _exec
+  File "<frozen importlib._bootstrap>", line 1471, in exec_module
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "/home/mario/kadosh/sistemakadosh/urls.py", line 11, in <module>
+    url(r'', include('kadoshapp.urls')),
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/conf/urls/__init__.py", line 33, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/importlib/__init__.py", line 109, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2226, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1129, in _exec
+  File "<frozen importlib._bootstrap>", line 1471, in exec_module
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "/home/mario/kadosh/kadoshapp/urls.py", line 2, in <module>
+    from . import views
+  File "/home/mario/kadosh/kadoshapp/views.py", line 3, in <module>
+    from .forms import Form_RegistroCliente_Persona, Form_RegistroCliente_Cliente
+  File "/home/mario/kadosh/kadoshapp/forms.py", line 26, in <module>
+    class Form_Inventario_Anque(forms.ModelForm):
+  File "/home/mario/kadosh/kadoshvenv/lib/python3.4/site-packages/django/forms/models.py", line 295, in __new__
+    raise FieldError(message)
+django.core.exceptions.FieldError: Unknown field(s) (bodega_idbodega) specified for Empleado
+Not Found: /Inventario/
+Not Found: /Realiar/Inventario/
+Not Found: /Realiar/Inventario/
+(0.001) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+Not Found: /Realiar/Inventario/
+Not Found: /Realiar/Inventario/
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+Not Found: /Realiar/Inventario/
+Not Found: /Realiar/Inventario/
+Not Found: /Realiar/Inventario/
+Not Found: /Realiar/Inventario/
+Not Found: /Realiar/Inventario/
+Not Found: /Realiar/Inventario/
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+Not Found: /Realiar/Inventario/
+Not Found: /Realiar/Inventario/
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+Not Found: /Inventario/
+Not Found: /Inventario/
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SELECT `Venta`.`idVenta`, `Venta`.`Empleado_idEmpleado`, `Venta`.`Cliente_idCliente`, `Venta`.`Caja_idCaja`, `Venta`.`Tipo_pago_idTipo_pago`, `Venta`.`fecha_venta`, `Venta`.`total_venta`, `Venta`.`contado_venta`, `Venta`.`estado_venta` FROM `Venta`; args=()
+(0.000) SELECT `Cliente`.`idCliente`, `Cliente`.`Persona_idPersona`, `Cliente`.`nit_cliente`, `Cliente`.`Tipo_cliente_idTipo_cliente`, `Cliente`.`estado_cliente`, `Cliente`.`fecha_registro_cliente` FROM `Cliente` WHERE `Cliente`.`idCliente` = 1; args=(1,)
+(0.000) SELECT `Persona`.`idPersona`, `Persona`.`nombres_persona`, `Persona`.`apellidos_persona`, `Persona`.`telefonos_persona`, `Persona`.`direccion_persona`, `Persona`.`fecha_nacimiento_persona`, `Persona`.`dpi_persona`, `Persona`.`estado_persona` FROM `Persona` WHERE `Persona`.`idPersona` = 1; args=(1,)
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SELECT `Venta`.`idVenta`, `Venta`.`Empleado_idEmpleado`, `Venta`.`Cliente_idCliente`, `Venta`.`Caja_idCaja`, `Venta`.`Tipo_pago_idTipo_pago`, `Venta`.`fecha_venta`, `Venta`.`total_venta`, `Venta`.`contado_venta`, `Venta`.`estado_venta` FROM `Venta`; args=()
+(0.000) SELECT `Cliente`.`idCliente`, `Cliente`.`Persona_idPersona`, `Cliente`.`nit_cliente`, `Cliente`.`Tipo_cliente_idTipo_cliente`, `Cliente`.`estado_cliente`, `Cliente`.`fecha_registro_cliente` FROM `Cliente` WHERE `Cliente`.`idCliente` = 1; args=(1,)
+(0.000) SELECT `Persona`.`idPersona`, `Persona`.`nombres_persona`, `Persona`.`apellidos_persona`, `Persona`.`telefonos_persona`, `Persona`.`direccion_persona`, `Persona`.`fecha_nacimiento_persona`, `Persona`.`dpi_persona`, `Persona`.`estado_persona` FROM `Persona` WHERE `Persona`.`idPersona` = 1; args=(1,)
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SELECT `Venta`.`idVenta`, `Venta`.`Empleado_idEmpleado`, `Venta`.`Cliente_idCliente`, `Venta`.`Caja_idCaja`, `Venta`.`Tipo_pago_idTipo_pago`, `Venta`.`fecha_venta`, `Venta`.`total_venta`, `Venta`.`contado_venta`, `Venta`.`estado_venta` FROM `Venta`; args=()
+(0.000) SELECT `Cliente`.`idCliente`, `Cliente`.`Persona_idPersona`, `Cliente`.`nit_cliente`, `Cliente`.`Tipo_cliente_idTipo_cliente`, `Cliente`.`estado_cliente`, `Cliente`.`fecha_registro_cliente` FROM `Cliente` WHERE `Cliente`.`idCliente` = 1; args=(1,)
+(0.000) SELECT `Persona`.`idPersona`, `Persona`.`nombres_persona`, `Persona`.`apellidos_persona`, `Persona`.`telefonos_persona`, `Persona`.`direccion_persona`, `Persona`.`fecha_nacimiento_persona`, `Persona`.`dpi_persona`, `Persona`.`estado_persona` FROM `Persona` WHERE `Persona`.`idPersona` = 1; args=(1,)
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SELECT `Venta`.`idVenta`, `Venta`.`Empleado_idEmpleado`, `Venta`.`Cliente_idCliente`, `Venta`.`Caja_idCaja`, `Venta`.`Tipo_pago_idTipo_pago`, `Venta`.`fecha_venta`, `Venta`.`total_venta`, `Venta`.`contado_venta`, `Venta`.`estado_venta` FROM `Venta`; args=()
+(0.000) SELECT `Cliente`.`idCliente`, `Cliente`.`Persona_idPersona`, `Cliente`.`nit_cliente`, `Cliente`.`Tipo_cliente_idTipo_cliente`, `Cliente`.`estado_cliente`, `Cliente`.`fecha_registro_cliente` FROM `Cliente` WHERE `Cliente`.`idCliente` = 1; args=(1,)
+(0.000) SELECT `Persona`.`idPersona`, `Persona`.`nombres_persona`, `Persona`.`apellidos_persona`, `Persona`.`telefonos_persona`, `Persona`.`direccion_persona`, `Persona`.`fecha_nacimiento_persona`, `Persona`.`dpi_persona`, `Persona`.`estado_persona` FROM `Persona` WHERE `Persona`.`idPersona` = 1; args=(1,)
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SELECT `Venta`.`idVenta`, `Venta`.`Empleado_idEmpleado`, `Venta`.`Cliente_idCliente`, `Venta`.`Caja_idCaja`, `Venta`.`Tipo_pago_idTipo_pago`, `Venta`.`fecha_venta`, `Venta`.`total_venta`, `Venta`.`contado_venta`, `Venta`.`estado_venta` FROM `Venta`; args=()
+(0.000) SELECT `Cliente`.`idCliente`, `Cliente`.`Persona_idPersona`, `Cliente`.`nit_cliente`, `Cliente`.`Tipo_cliente_idTipo_cliente`, `Cliente`.`estado_cliente`, `Cliente`.`fecha_registro_cliente` FROM `Cliente` WHERE `Cliente`.`idCliente` = 1; args=(1,)
+(0.000) SELECT `Persona`.`idPersona`, `Persona`.`nombres_persona`, `Persona`.`apellidos_persona`, `Persona`.`telefonos_persona`, `Persona`.`direccion_persona`, `Persona`.`fecha_nacimiento_persona`, `Persona`.`dpi_persona`, `Persona`.`estado_persona` FROM `Persona` WHERE `Persona`.`idPersona` = 1; args=(1,)
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SELECT `Venta`.`idVenta`, `Venta`.`Empleado_idEmpleado`, `Venta`.`Cliente_idCliente`, `Venta`.`Caja_idCaja`, `Venta`.`Tipo_pago_idTipo_pago`, `Venta`.`fecha_venta`, `Venta`.`total_venta`, `Venta`.`contado_venta`, `Venta`.`estado_venta` FROM `Venta`; args=()
+(0.000) SELECT `Cliente`.`idCliente`, `Cliente`.`Persona_idPersona`, `Cliente`.`nit_cliente`, `Cliente`.`Tipo_cliente_idTipo_cliente`, `Cliente`.`estado_cliente`, `Cliente`.`fecha_registro_cliente` FROM `Cliente` WHERE `Cliente`.`idCliente` = 1; args=(1,)
+(0.000) SELECT `Persona`.`idPersona`, `Persona`.`nombres_persona`, `Persona`.`apellidos_persona`, `Persona`.`telefonos_persona`, `Persona`.`direccion_persona`, `Persona`.`fecha_nacimiento_persona`, `Persona`.`dpi_persona`, `Persona`.`estado_persona` FROM `Persona` WHERE `Persona`.`idPersona` = 1; args=(1,)
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SELECT `Motivo`.`idMotivo`, `Motivo`.`nombre_motivo`, `Motivo`.`estado_motivo` FROM `Motivo`; args=()
+(0.000) SELECT `Bodega`.`idBodega`, `Bodega`.`Sucursal_idSucursal`, `Bodega`.`nombre_bodega`, `Bodega`.`descripcion_bodega`, `Bodega`.`estado_bodega` FROM `Bodega`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SELECT `Persona`.`idPersona`, `Persona`.`nombres_persona`, `Persona`.`apellidos_persona`, `Persona`.`telefonos_persona`, `Persona`.`direccion_persona`, `Persona`.`fecha_nacimiento_persona`, `Persona`.`dpi_persona`, `Persona`.`estado_persona` FROM `Persona`; args=()
+(0.000) SELECT `Motivo`.`idMotivo`, `Motivo`.`nombre_motivo`, `Motivo`.`estado_motivo` FROM `Motivo`; args=()
+(0.000) SELECT `Bodega`.`idBodega`, `Bodega`.`Sucursal_idSucursal`, `Bodega`.`nombre_bodega`, `Bodega`.`descripcion_bodega`, `Bodega`.`estado_bodega` FROM `Bodega`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SELECT `Empleado`.`idEmpleado`, `Empleado`.`Persona_idPersona`, `Empleado`.`Puesto_idPuesto`, `Empleado`.`fecha_contratacion_empleado`, `Empleado`.`codigo_autorización_empleado`, `Empleado`.`Sucursal_idSucursal`, `Empleado`.`estado_empleado` FROM `Empleado`; args=()
+(0.000) SELECT `Persona`.`idPersona`, `Persona`.`nombres_persona`, `Persona`.`apellidos_persona`, `Persona`.`telefonos_persona`, `Persona`.`direccion_persona`, `Persona`.`fecha_nacimiento_persona`, `Persona`.`dpi_persona`, `Persona`.`estado_persona` FROM `Persona` WHERE `Persona`.`idPersona` = 2; args=(2,)
+(0.000) SELECT `Motivo`.`idMotivo`, `Motivo`.`nombre_motivo`, `Motivo`.`estado_motivo` FROM `Motivo`; args=()
+(0.000) SELECT `Bodega`.`idBodega`, `Bodega`.`Sucursal_idSucursal`, `Bodega`.`nombre_bodega`, `Bodega`.`descripcion_bodega`, `Bodega`.`estado_bodega` FROM `Bodega`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.006) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SELECT `Empleado`.`idEmpleado`, `Empleado`.`Persona_idPersona`, `Empleado`.`Puesto_idPuesto`, `Empleado`.`fecha_contratacion_empleado`, `Empleado`.`codigo_autorización_empleado`, `Empleado`.`Sucursal_idSucursal`, `Empleado`.`estado_empleado` FROM `Empleado`; args=()
+(0.000) SELECT `Persona`.`idPersona`, `Persona`.`nombres_persona`, `Persona`.`apellidos_persona`, `Persona`.`telefonos_persona`, `Persona`.`direccion_persona`, `Persona`.`fecha_nacimiento_persona`, `Persona`.`dpi_persona`, `Persona`.`estado_persona` FROM `Persona` WHERE `Persona`.`idPersona` = 2; args=(2,)
+(0.000) SELECT `Bodega`.`idBodega`, `Bodega`.`Sucursal_idSucursal`, `Bodega`.`nombre_bodega`, `Bodega`.`descripcion_bodega`, `Bodega`.`estado_bodega` FROM `Bodega`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SELECT `Empleado`.`idEmpleado`, `Empleado`.`Persona_idPersona`, `Empleado`.`Puesto_idPuesto`, `Empleado`.`fecha_contratacion_empleado`, `Empleado`.`codigo_autorización_empleado`, `Empleado`.`Sucursal_idSucursal`, `Empleado`.`estado_empleado` FROM `Empleado`; args=()
+(0.000) SELECT `Persona`.`idPersona`, `Persona`.`nombres_persona`, `Persona`.`apellidos_persona`, `Persona`.`telefonos_persona`, `Persona`.`direccion_persona`, `Persona`.`fecha_nacimiento_persona`, `Persona`.`dpi_persona`, `Persona`.`estado_persona` FROM `Persona` WHERE `Persona`.`idPersona` = 2; args=(2,)
+(0.000) SELECT `Motivo`.`idMotivo`, `Motivo`.`nombre_motivo`, `Motivo`.`estado_motivo` FROM `Motivo`; args=()
+(0.000) SELECT `Bodega`.`idBodega`, `Bodega`.`Sucursal_idSucursal`, `Bodega`.`nombre_bodega`, `Bodega`.`descripcion_bodega`, `Bodega`.`estado_bodega` FROM `Bodega`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.001) SHOW FULL TABLES; args=None
+(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+(0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+(0.000) SELECT `Empleado`.`idEmpleado`, `Empleado`.`Persona_idPersona`, `Empleado`.`Puesto_idPuesto`, `Empleado`.`fecha_contratacion_empleado`, `Empleado`.`codigo_autorización_empleado`, `Empleado`.`Sucursal_idSucursal`, `Empleado`.`estado_empleado` FROM `Empleado`; args=()
+(0.000) SELECT `Persona`.`idPersona`, `Persona`.`nombres_persona`, `Persona`.`apellidos_persona`, `Persona`.`telefonos_persona`, `Persona`.`direccion_persona`, `Persona`.`fecha_nacimiento_persona`, `Persona`.`dpi_persona`, `Persona`.`estado_persona` FROM `Persona` WHERE `Persona`.`idPersona` = 2; args=(2,)
+(0.000) SELECT `Motivo`.`idMotivo`, `Motivo`.`nombre_motivo`, `Motivo`.`estado_motivo` FROM `Motivo`; args=()
+(0.000) SELECT `Bodega`.`idBodega`, `Bodega`.`Sucursal_idSucursal`, `Bodega`.`nombre_bodega`, `Bodega`.`descripcion_bodega`, `Bodega`.`estado_bodega` FROM `Bodega`; args=()

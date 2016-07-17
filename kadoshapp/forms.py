@@ -14,6 +14,38 @@ from .models import TrasladoMercaderia, Producto, TipoProducto, InventarioProduc
 from .models import CierreDeCaja, Empleado
 #impor para formulario Anular Venta
 from .models import Venta, Cliente, DetalleVenta, Empleado
+#import para formulario Inventario
+from .models import Empleado, Anaquel, InventarioProducto, DetalleInventarioRealizado, AjusteInventario, InventarioRealizado
+
+#Forms para Invenario
+class Form_Inventario_InventarioRealizado(forms.ModelForm):
+    class Meta:
+        model=InventarioRealizado
+        fields=('empleado_idempleado','completo_inventario')
+class Form_Inventario_Empleado(forms.ModelForm):
+    class Meta:
+        model=Empleado
+        fields=('codigo_autorización_empleado',)
+
+class Form_Inventario_Anque(forms.ModelForm):
+    class Meta:
+        model=Anaquel
+        fields=('bodega_idbodega',)
+
+class Form_Inventario_InventarioProducto(forms.ModelForm):
+    class Meta:
+        model=InventarioProducto
+        fields=('anaquel_idanaquel',)
+
+class Form_Inventario_DetalleInventarioRealizado(forms.ModelForm):
+    class Meta:
+        model=DetalleInventarioRealizado
+        fields=('cantidad_real_inventario_realizado',)
+
+class Form_Inventario_AjusteInventario(forms.ModelForm):
+    class Meta:
+        model=AjusteInventario
+        fields=('motivo_idmotivo',)
 
 #Form para Anular Venta
 class Form_AnulaVenta_Venta(forms.ModelForm):

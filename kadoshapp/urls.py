@@ -16,4 +16,6 @@ url(r'^Realizacion/Venta/$', views.PuntoDeVenta, name='PuntoDeVenta'),
 url(r'^Trazalado/Mercaderia/$', views.TrasladoMercaderia, name='TrasladoMerca'),
 url(r'^Cierre/Caja/$', views.CierreDeCaja, name='CierreDeCaja'),
 url(r'^Venta/Anular/$', views.AnularVenta, name='AnularVenta'),
+url(r'^Inventario/Nuevo/$', views.Inventario, name='Inventario'),
+
 ]
