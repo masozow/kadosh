@@ -8,6 +8,17 @@
         <h5>Punto de Venta</h5>
         <form method="POST" class="post-form">
           {% csrf_token %}
+            <p><label>Cliente: </label>{{ form_cliente.nit_del_cliente}}{{form_Venta.cliente_idcliente}}
+            <label for="id_codigo_producto">Código: </label>{{ form_Producto.codigo_producto }}
+            <label for="check_mostrar">Mostrar datos del producto:</label> <input checked="checked" id="check_mostrar" name="mostrar_check" type="checkbox" /></p></p>
+
+            <div class="divider"></div>
+
+            <p><label>Marca: </label>{{form_TipoProducto.marca_id_marca}} <label>Tipo: </label>{{form_estiloproducto.tipo_producto_idtipo_producto}}<label>Estilo: </label>{{form_Producto.talla_idtalla}}
+            <label for="id_talla_idtalla">Talla: </label>{{form_Producto.talla_idtalla}}
+
+            </p>
+            <div class="divider"></div>
             {{ form_Venta.as_p }}
             {{ form_Producto.as_p }}
             {{ form_DetalleVenta.as_p }}
@@ -15,6 +26,8 @@
             {{ form_Promocion.as_p }}
             {{ form_InventarioProducto.as_p }}
             {{ form_Precio.as_p }}
+            {{ form_estiloproducto.as_p}}
+
 
 
             <button type="submit" class="save btn btn-default">Guardar</button>

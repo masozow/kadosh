@@ -1,25 +1,26 @@
 from django import forms
-from .models import Persona,Cliente,TipoCliente
 from django.forms import ModelChoiceField,Select
 from django.contrib.admin import widgets
 from django.forms import extras
+
+from .models import Persona,Cliente,TipoCliente
 #Import para formulario de Ingres de mercaderia por Proveedor
 from .models import Producto, DetalleCompra, TipoProducto, Fotografia, InventarioProducto, Anaquel, Compra
 #Import para formulario de Compra
-from .models import Compra, InventarioProducto, Producto, DetalleCompra, Fotografia, Anaquel, TipoProducto
+#from .models import Anaquel #, TipoProducto, Producto, Compra, InventarioProducto, DetalleCompra, Fotografia,
 #impor para formulario de Punto de Venta
-from .models import Venta, DetalleVenta, InventarioProducto, TipoProducto, Producto, Promocion, Precio
+from .models import Venta, DetalleVenta, Promocion, Precio,Estilo #'''TipoProducto,''' InventarioProducto, Producto,
 #import para formulario de Traslado de mercaderia
-from .models import TrasladoMercaderia, Producto, TipoProducto, InventarioProducto
+from .models import TrasladoMercaderia #'''TipoProducto''', , Producto, InventarioProducto
 #impor para formulario de CierreDeCaja
 from .models import CierreDeCaja, Empleado
 #impor para formulario Anular Venta
-from .models import Venta, Cliente, DetalleVenta, Empleado
+#from .models import Venta, Cliente, DetalleVenta, Empleado
 #import para formulario Inventario
-from .models import Empleado, Anaquel, InventarioProducto, DetalleInventarioRealizado, AjusteInventario, InventarioRealizado
+from .models import DetalleInventarioRealizado, AjusteInventario, InventarioRealizado #Empleado, Anaquel, InventarioProducto,
 #import para formulario de Promocion
-from .models import Producto, TipoProducto, InventarioProducto, Promocion
-#Floja si lees esto es porque si va aparecer jijiji
+#from .models import Promocion #'''Producto, TipoProducto,InventarioProducto, '''
+
 #forms para Promocion espero ahora si aparezca
 class form_Promocion_Cantidad(forms.Form):
     cantida = forms.IntegerField(label='cantidad')
@@ -124,10 +125,13 @@ class Form_TrasladoMerca_InventarioProducto(forms.ModelForm):
         fields=('producto_codigo_producto',)
 
 class Form_TrasladoMerca_Cantidad(forms.Form):
-    cantida = forms.IntegerField(label='cantidad')
+    cantida = forms.IntegerField(label='Cantidad')
 
 
 #Form Punto de Venta
+class Form_PuntoVenta_busquedas(forms.Form):
+    nit_del_cliente = forms.CharField(label='Buscar Nit',max_length=13)
+
 class Form_PuntoVenta_Venta(forms.ModelForm):
     class Meta:
         model=Venta
@@ -142,6 +146,11 @@ class Form_PuntoVenta_InventarioProducto(forms.ModelForm):
     class Meta:
         model=InventarioProducto
         fields=('producto_codigo_producto',)
+
+class Form_PuntoVenta_EstiloProducto(forms.ModelForm):
+    class Meta:
+        model=Estilo
+        fields=('tipo_producto_idtipo_producto',)
 
 class Form_PuntoVenta_TipoProducto(forms.ModelForm):
     class Meta:
