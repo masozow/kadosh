@@ -4,7 +4,29 @@
     {% block styles %}
       <link type="text/css" rel="stylesheet" href="{% static "css/formularios.css" %}"/>
     {% endblock %}
+
+    {% block extra_scripts %}
+    <script type="text/javascript">
+        $( document ).ready(function(){
+          $('input#id_nit_del_cliente').focus();
+        });
+        $( 'input#id_nit_del_cliente' ).keyup(function(e){
+          switch (e.keyCode) {
+            case 9: $('input#id_codigo_producto').focus();
+              break;
+          }
+        });
+        $( 'input#id_codigo_producto' ).keyup(function(e){
+          switch (e.keyCdode) {
+            case 13: alert('Producto leido');
+              break;
+          }
+        });
+    </script>
+    {% endblock %}
+
     {% block content %}
+
         <h5>Punto de Venta</h5>
         <form method="POST" class="post-form">
           {% csrf_token %}
@@ -38,7 +60,7 @@
 
             <div class="divider"></div>
 
-            <p style="color: #80bfff;"><b>Promoción</b>
+            <p style="color: #80bfff;"><b>Promoción</b></p>
               <label>Nombre de la promocion: </label>{{form_cliente.nombre_delapromocion}}
               {{form_promocionhasproducto.promocion_idpromocion}}
             <p>
