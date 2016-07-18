@@ -21,16 +21,50 @@
         <script type="text/javascript" src="{% static 'admin/js/calendar.js' %}"></script>
         <script type="text/javascript" src="{% static 'admin/js/admin/DateTimeShortcuts.js' %}"></script-->
     <!--hasta acá, si funcionó, es para el widget del admin-->
+<div class="container">
         <h5>Registro de Cliente</h5>
         <form method="POST" class="post-form">
           {% csrf_token %}
             <!--p><label>Nombres: </label>{{ form.nombres_persona }}</p-->
-            {{ form.as_p }}
-            {{ sub_form.as_p }}
 
-            <button type="submit" class="save btn btn-default">Guardar</button>
+            <div class="row">
+              <div  class="col l6 m12 s12">
+              <div class"row">
+              <label for="dpi_persona"><h6>DPI:</h6> </label>{{ form.dpi_persona }}
+              </div>
+              <div class"row">
+              <label for="nombres_persona"><h6>Nombres:</h6> </label>{{ form.nombres_persona }}
+              </div>
+              <div class"row">
+                <label for="apellidos_persona"><h6>Apellidos:</h6> </label>{{ form.apellidos_persona }}
+              </div>
+              <div class"row">
+                <label for="telefonos_persona"><h6>Numero de Telefono/Celular:</h6> </label>{{ form.telefonos_persona }}
+              </div>
+                <div class"row">
+                    <label for="direccion_persona"><h6>Direccion:</h6> </label>{{ form.direccion_persona }}
+                </div>
+                <div class"row">
+                  <label for="fecha_nacimiento_persona"><h6>Fecha De Nacimiento dd/mm/yy:</h6> </label>{{ form.fecha_nacimiento_persona }}
+                </div>
+              <!--  {{ form.as_p }}-->
+              </div>
+              <div class="col l6 m12 s12">
+                <div class"row">
+                  <label for="nit_cliente"><h6>Nit:</h6> </label>{{ sub_form.nit_cliente }}
+                </div>
+                <div class"row">
+                  <label for="tipo_cliente_idtipo_cliente"><h6>Tipo de cliente:</h6> </label>{{ sub_form.tipo_cliente_idtipo_cliente }}
+                </div>
+                  <!--{{ sub_form.as_p }}-->
+              </div>
+            </div>
+
+
+
+            <button  type="submit" class="save btn btn-default">Guardar</button>
         </form>
-
+</div>
         <!--script>
           $(function() {
             $( ".datepicker" ).datepicker({

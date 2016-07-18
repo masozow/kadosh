@@ -11,7 +11,7 @@ select.browser-default {
 
 select {
   background-color: rgba(255, 255, 255, 0.9);
-  width: 30% !important;
+  width: 100% !important;
   padding: 1px;
   border: 1px solid gray; /*#f2f2f2*/
   border-radius: 2px;
@@ -292,7 +292,7 @@ textarea.materialize-textarea {
   border-radius: 10;
   outline: none;
   height: 2rem !important;
-  width: 30% !important;
+  width: 100% !important;
   font-size: 1rem;
   margin: 0 0 0 0 !important;
   padding: 0;

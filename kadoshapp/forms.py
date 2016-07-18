@@ -214,12 +214,12 @@ class Form_Compra_TipoProducto(forms.ModelForm):
 class Form_IngresoMercaderiaPorProveedor_Producto(forms.ModelForm):
     class Meta:
         model=Producto
-        exclude=('estado_producto','codigo_producto',)
+        exclude=('estado_producto',)
 
 class Form_IngresoMercaderiaPorProveedor_DetalleCompra(forms.ModelForm):
     class Meta:
         model=DetalleCompra
-        fields=('cantidad_compra',)
+        fields=('cantidad_compra','compra_idcompra')
 
 class Form_IngresoMercaderiaPorProveedor_TipoProducto(forms.ModelForm):
     class Meta:
