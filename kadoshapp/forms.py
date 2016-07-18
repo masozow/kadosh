@@ -180,7 +180,7 @@ class Form_PuntoVenta_Precio(forms.ModelForm):
         model=Precio
         fields=('valor_precio',)
         widgets={
-            'valor_precio': forms.NumberInput(attrs={'readonly':'True'})
+            'valor_precio': forms.NumberInput(attrs={'readonly':'True'}) #es para que no se pueda escribir en el
         }
 
 #Form Compra
