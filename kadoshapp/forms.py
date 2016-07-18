@@ -186,7 +186,7 @@ class Form_Compra_InventarioProducto(forms.ModelForm):
 class Form_Compra_Producto(forms.ModelForm):
     class Meta:
         model=Producto
-        exclude=('estado_producto','codigo_producto',)
+        exclude=('estado_producto',)
 
 class Form_Compra_DetalleCompra(forms.ModelForm):
     class Meta:
