@@ -9,7 +9,7 @@ from .models import Producto, DetalleCompra, TipoProducto, Fotografia, Inventari
 #Import para formulario de Compra
 #from .models import Anaquel #, TipoProducto, Producto, Compra, InventarioProducto, DetalleCompra, Fotografia,
 #impor para formulario de Punto de Venta
-from .models import Venta, DetalleVenta, Promocion, Precio,Estilo #'''TipoProducto,''' InventarioProducto, Producto,
+from .models import Venta, DetalleVenta, Promocion, Precio,Estilo, PromocionHasProducto #'''TipoProducto,''' InventarioProducto, Producto,
 #import para formulario de Traslado de mercaderia
 from .models import TrasladoMercaderia #'''TipoProducto''', , Producto, InventarioProducto
 #impor para formulario de CierreDeCaja
@@ -131,6 +131,8 @@ class Form_TrasladoMerca_Cantidad(forms.Form):
 #Form Punto de Venta
 class Form_PuntoVenta_busquedas(forms.Form):
     nit_del_cliente = forms.CharField(label='Buscar Nit',max_length=13)
+    nombre_delapromocion = forms.CharField(label='Nombre promocion',max_length=50)
+    codigo_autorizacion = forms.CharField(label='Codigo de autorización',max_length=50)
 
 class Form_PuntoVenta_Venta(forms.ModelForm):
     class Meta:
@@ -167,10 +169,19 @@ class Form_PuntoVenta_Promocion(forms.ModelForm):
         model=Promocion
         fields=('idpromocion',)
 
+class Form_PuntoVenta_PromocionHasProducto(forms.ModelForm):
+    class Meta:
+        model=PromocionHasProducto
+        fields=('promocion_idpromocion',)
+
+
 class Form_PuntoVenta_Precio(forms.ModelForm):
     class Meta:
         model=Precio
         fields=('valor_precio',)
+        widgets={
+            'valor_precio': forms.NumberInput(attrs={'readonly':'True'})
+        }
 
 #Form Compra
 class Form_Compra_Compra(forms.ModelForm):

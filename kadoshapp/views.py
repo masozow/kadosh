@@ -11,7 +11,7 @@ from .models import Compra, InventarioProducto, Producto, DetalleCompra, Fotogra
 from .forms import Form_Compra_Compra, Form_Compra_InventarioProducto,Form_Compra_Producto, Form_Compra_DetalleCompra,Form_Compra_Fotografia, Form_Compra_Anaquel, Form_Compra_TipoProducto
 #cosas de punto de Venta
 from .models import Venta, DetalleVenta, InventarioProducto, TipoProducto, Producto, Promocion, Precio
-from .forms import Form_PuntoVenta_Venta,Form_PuntoVenta_DetalleVenta,Form_PuntoVenta_InventarioProducto, Form_PuntoVenta_TipoProducto, Form_PuntoVenta_Producto, Form_PuntoVenta_Promocion,Form_PuntoVenta_Precio, Form_PuntoVenta_busquedas, Form_PuntoVenta_EstiloProducto
+from .forms import Form_PuntoVenta_Venta,Form_PuntoVenta_DetalleVenta,Form_PuntoVenta_InventarioProducto, Form_PuntoVenta_TipoProducto, Form_PuntoVenta_Producto, Form_PuntoVenta_Promocion,Form_PuntoVenta_Precio, Form_PuntoVenta_busquedas, Form_PuntoVenta_EstiloProducto, Form_PuntoVenta_PromocionHasProducto
 #cosas Traslado de mercaderia
 from .models import TrasladoMercaderia, Producto, TipoProducto, InventarioProducto
 from .forms import Form_TrasladoMerca_TrasaladoMercaderia, Form_TrasladoMerca_Producto, Form_TrasladoMerca_TipoProducto, Form_TrasladoMerca_InventarioProducto, Form_TrasladoMerca_Cantidad
@@ -129,6 +129,7 @@ def PuntoDeVenta(request):
         form_Precio=Form_PuntoVenta_Precio()
         form_cliente=Form_PuntoVenta_busquedas()
         form_estiloproducto=Form_PuntoVenta_EstiloProducto()
+        form_promocionhasproducto=Form_PuntoVenta_PromocionHasProducto()
     return render(request, 'kadoshapp/PuntoDeVenta.html', {
                     'form_Venta': form_Venta,
                     'form_DetalleVenta':form_DetalleVenta,
@@ -137,7 +138,8 @@ def PuntoDeVenta(request):
                     'form_InventarioProducto':form_InventarioProducto,
                     'form_Promocion':form_Promocion, 'form_Precio':form_Precio,
                     'form_cliente':form_cliente,
-                    'form_estiloproducto':form_estiloproducto
+                    'form_estiloproducto':form_estiloproducto,
+                    'form_promocionhasproducto': form_promocionhasproducto
                     })
 
 
