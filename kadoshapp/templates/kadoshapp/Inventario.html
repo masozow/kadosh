@@ -5,15 +5,99 @@
      <link type="text/css" rel="stylesheet" href="{% static "css/formularios.css" %}"/>
    {% endblock %}
    {% block content %}
+   <div class="container">
        <h5>Inventario</h5>
        <form method="POST" class="post-form">
          {% csrf_token %}
-           {{ form_inventariorealizado.as_p }}
+         <div class="row">
+          <div class=" col l6 m12 s12">
+            <label for="completo_inventario"><h6>Inventario Completo:</h6> </label>{{ form_inventariorealizado.completo_inventario}}
+          </div>
+          <div class=" col l6 m12 s12">
+            <label for="empleado_idempleado"><h6>Empleadp:</h6> </label>{{ form_inventariorealizado.empleado_idempleado}}
+            <label for="codigo_autorización_empleado"><h6>Codigo Autorizacion:</h6> </label>{{ form_empleado.codigo_autorización_empleado}}
+          </div>
+        </div>
+        <div class="row">
+          <div class=" col l6 m12 s12">
+            <div class="col s6">
+              <label for="bodega_idbodega"><h6>Bodega:</h6> </label>{{ form_anaquel.bodega_idbodega}}
+            </div>
+            <div class="col s6">
+              <label for="anaquel_idanaque"><h6>Anaquel:</h6> </label>{{ form_inventario.anaquel_idanaque}}
+            </div>
+
+              <table>
+        <thead>
+          <tr>
+              <th data-field="id">Name</th>
+              <th data-field="name">Item Name</th>
+              <th data-field="price">Item Price</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>Alvin</td>
+            <td>Eclair</td>
+            <td>$0.87</td>
+          </tr>
+          <tr>
+            <td>Alan</td>
+            <td>Jellybean</td>
+            <td>$3.76</td>
+          </tr>
+          <tr>
+            <td>Jonathan</td>
+            <td>Lollipop</td>
+            <td>$7.00</td>
+          </tr>
+        </tbody>
+      </table>
+
+          </div>
+          <div class=" col l6 m12 s12">
+          <label for="cantidad_real_inventario_realizado"><h6>Conteo Real:</h6> </label>{{ form_detallainventario.cantidad_real_inventario_realizado}}
+          <label for="motivo_idmotivo"><h6>Motivo Ajuste:</h6> </label>{{ form_ajusteinventario.motivo_idmotivo}}
+          </div>
+       </div>
+       <div class="row">
+         <table>
+        <thead>
+          <tr>
+              <th data-field="id">Name</th>
+              <th data-field="name">Item Name</th>
+              <th data-field="price">Item Price</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>Alvin</td>
+            <td>Eclair</td>
+            <td>$0.87</td>
+          </tr>
+          <tr>
+            <td>Alan</td>
+            <td>Jellybean</td>
+            <td>$3.76</td>
+          </tr>
+          <tr>
+            <td>Jonathan</td>
+            <td>Lollipop</td>
+            <td>$7.00</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+
+          <!-- {{ form_inventariorealizado.as_p }}
            {{ form_empleado.as_p }}
-           {{ form_invetario.as_p }}
+           {{ form_inventario.as_p }}
            {{ form_detallainventario.as_p }}
            {{ form_ajusteinventario.as_p }}
-           {{ form_anaquel.as_p }}
+           {{ form_anaquel.as_p }}-->
            <button type="submit" class="save btn btn-default">Guardar</button>
        </form>
+     </div>
    {% endblock %}

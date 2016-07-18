@@ -5,16 +5,87 @@
       <link type="text/css" rel="stylesheet" href="{% static "css/formularios.css" %}"/>
     {% endblock %}
     {% block content %}
+<div class="container">
         <h5>Traslado De Mercaderia</h5>
         <form method="POST" class="post-form">
           {% csrf_token %}
-            {{ form_Traslado.as_p }}
+      <div class="row">
+        <div  class="col l6 m12 s12">
+
+            <label for="bodega_egreso"><h6>Origen:</h6> </label>{{ form_Traslado.bodega_egreso}}
+            <label for="bodega_ingreso"><h6>Destino:</h6> </label>{{ form_Traslado.bodega_ingreso}}
+
+        </div>
+        <div class=" col  l6 m12 s12">
+            <label for="motivo_idmotivo"><h6>Motivo:</h6> </label>{{ form_Traslado.motivo_idmotivo}}
+      </div>
+
+      </div>
+      <div class="row">
+        <div  class="col l6 m12 s12">
+            {{ form_cantidad.as_p }}
+
+        <label for="marca_id_marca"><h6>Marca:</h6> </label>{{ form_TipoProducto.marca_id_marca}}
+          <label for="genero_idgener"><h6>Genero:</h6> </label>{{ form_Producto.genero_idgener}}
+          <label for="talla_idtalla"><h6>Talla:</h6> </label>{{ form_Producto.talla_idtalla}}
+          </div>
+          <div class="col l6 m12 s12">
+            <label for="codigo_producto"><h6>Codigo:</h6> </label>{{ form_Producto.codigo_producto}}
+
+          <label for="estilo_idestilo"><h6>Estilo:</h6> </label>{{ form_Producto.estilo_idestilo}}
+          <label for="color_idcolor"><h6>Color:</h6> </label>{{ form_Producto.color_idcolor}}
+          </div>
+          <div  class="col l12 m12 s12">
+          <label for="producto_codigo_producto"><h6>Descripcion Producto:</h6> </label>{{ form_InventarioProducto.producto_codigo_producto}}
+        </div>
+      </div>
+
+      <div class="row grey lighten-2">
+
+
+
+      <table>
+        <thead>
+          <tr>
+              <th data-field="id">Name</th>
+              <th data-field="name">Item Name</th>
+              <th data-field="price">Item Price</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>Alvin</td>
+            <td>Eclair</td>
+            <td>$0.87</td>
+          </tr>
+          <tr>
+            <td>Alan</td>
+            <td>Jellybean</td>
+            <td>$3.76</td>
+          </tr>
+          <tr>
+            <td>Jonathan</td>
+            <td>Lollipop</td>
+            <td>$7.00</td>
+          </tr>
+        </tbody>
+      </table>
+
+
+
+      </div>
+
+
+
+          <!--  {{ form_Traslado.as_p }}
             {{ form_Producto.as_p }}
             {{ form_TipoProducto.as_p }}
             {{ form_InventarioProducto.as_p }}
-            {{ form_cantidad.as_p }}
+            {{ form_cantidad.as_p }}-->
 
 
             <button type="submit" class="save btn btn-default">Guardar</button>
         </form>
+<div>
     {% endblock %}
