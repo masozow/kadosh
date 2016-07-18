@@ -5,13 +5,28 @@
       <link type="text/css" rel="stylesheet" href="{% static "css/formularios.css" %}"/>
     {% endblock %}
     {% block content %}
+<div class="container">
         <h5>Cierre De Caja</h5>
         <form method="POST" class="post-form">
           {% csrf_token %}
-            {{ form_Cierrecaja.as_p }}
-            {{ form_empleado.as_p }}
+     <div class="row">
+       <div class=" col l6 m12 s12">
+           <label for="caja_idcaja"><h6>Numero de caja:</h6> </label>{{ form_Cierrecaja.caja_idcaja}}
+           <label for="empleado_idempleado"><h6>Empleado:</h6> </label>{{ form_Cierrecaja.empleado_idempleado}}
+           <label for="total_calculado_cierredecaja"><h6>Total Calculado:</h6> </label>{{ form_Cierrecaja.total_calculado_cierredecaja}}
+           <label for="total_real_cierredecaja"><h6>Total Cierre:</h6> </label>{{ form_Cierrecaja.total_real_cierredecaja}}
+
+      </div>
+      <div class=" col l6 m12 s12">
+          <label for="codigo_autorización_empleado"><h6>Codigo de autorizacion:</h6> </label>{{ form_empleado.codigo_autorización_empleado}}
+     </div>
+
+     </div>
+          <!--  {{ form_Cierrecaja.as_p }}
+            {{ form_empleado.as_p }}-->
 
 
             <button type="submit" class="save btn btn-default">Guardar</button>
         </form>
+</div>
     {% endblock %}

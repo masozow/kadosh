@@ -5,13 +5,60 @@
      <link type="text/css" rel="stylesheet" href="{% static "css/formularios.css" %}"/>
    {% endblock %}
    {% block content %}
+   <div class="container">
        <h5>Anular Venta</h5>
        <form method="POST" class="post-form">
          {% csrf_token %}
-           {{ form_Venta.as_p }}
+         <div class="row">
+          <div class="col l6 m12 s12">
+          <label for="fecha_venta"><h6>Fecha de Venta:</h6> </label>{{ form_Venta.fecha_venta}}
+          <label for="fecha_venta"><h6>Codigo Venta:</h6> </label>{{ form_Venta.}}
+          </div>
+          <div class="col l6 m12 s12">
+            <label for="nit_cliente"><h6>Nit de Cliente:</h6> </label>{{ form_Cliente.nit_cliente}}
+            <label for="venta_idventa"><h6>Numero Venta:</h6> </label>{{ form_DetalleVenta.venta_idventa}}
+        </div>
+         </div>
+
+         <div class="row grey lighten-2">
+           <table>
+                   <thead>
+                     <tr>
+                         <th data-field="id">Name</th>
+                         <th data-field="name">Item Name</th>
+                         <th data-field="price">Item Price</th>
+                     </tr>
+                   </thead>
+
+                   <tbody>
+                     <tr>
+                       <td>Alvin</td>
+                       <td>Eclair</td>
+                       <td>$0.87</td>
+                     </tr>
+                     <tr>
+                       <td>Alan</td>
+                       <td>Jellybean</td>
+                       <td>$3.76</td>
+                     </tr>
+                     <tr>
+                       <td>Jonathan</td>
+                       <td>Lollipop</td>
+                       <td>$7.00</td>
+                     </tr>
+                   </tbody>
+                 </table>
+         </div>
+         <div class="row">
+           <label for="codigo_autorización_empleado"><h6>Codigo Autorizacion:</h6> </label>{{ form_empleado.codigo_autorización_empleado}}
+         </div>
+
+
+          <!-- {{ form_Venta.as_p }}
            {{ form_Cliente.as_p }}
            {{ form_DetalleVenta.as_p }}
-           {{ form_empleado.as_p }}
-           <button type="submit" class="save btn btn-default">Guardar</button>
+           {{ form_empleado.as_p }}-->
+           <button type="submit" class="save btn btn-default">Anular</button>
        </form>
+    </div>
    {% endblock %}
