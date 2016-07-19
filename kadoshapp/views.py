@@ -51,12 +51,12 @@ def Promocion(request):
 #vista CierreDeCaja
 def Inventario(request):
     if request.method=='POST':
-        form_Invetario=Form_Inventario_InventarioProducto(request.POST)
+        form_inventario=Form_Inventario_InventarioProducto(request.POST)
         if form_inventario.is_valid():
-            ultimo_invenario=form_inventario.save()
+            ultimo_inventario=form_inventario.save()
         return render(request, 'kadoshapp/ingreso_mercaderia.html',{})
     else:
-        form_inventario=Form_TrasladoMerca_InventarioProducto()
+        form_inventario=Form_Inventario_InventarioProducto()
         form_anaquel=Form_Inventario_Anque()
         form_detallainventario=Form_Inventario_DetalleInventarioRealizado()
         form_empleado=Form_Inventario_Empleado()
