@@ -7,19 +7,75 @@
 
     {% block extra_scripts %}
     <script type="text/javascript">
+    var selectDefault = $("#id_cliente_idcliente").html();
+
+    $.extend($.expr[":"], {
+      "starts-with": function(elem, i, data, set) {
+        var text = $.trim($(elem).text()),
+        term = data[3];
+        // first index is 0
+        return text.indexOf(term) === 0;
+        },
+      "ends-with": function(elem, i, data, set) {
+        var text = $.trim($(elem).text()),
+        term = data[3];
+        // last index is last possible
+        return text.lastIndexOf(term) === text.length - term.length;
+        }
+    });
+
         //Función que coloca el cursor en el textbox Nit del cliente, al momento de cargar la página
         $( document ).ready(function(){ //document indica toda la página, ready indica que ya se haya cargado el DOM
           $('input#id_nit_del_cliente').focus(); //se accede al input con el id que está después de #,
                                                  //.focus() indica que ahí se colocará el cursor
         });
+
+        //Funcion para buscar el nit del cliente:
+        $( 'input#id_nit_del_cliente' ).keyup(function(e){
+          var nit = $('input#id_nit_del_cliente').val();
+          if(e.keyCode=='8')
+          {
+            $("#id_cliente_idcliente").html(selectDefault);
+          }
+          if(nit==='')
+          {
+            //console.log("vacio:"+nit);
+          }
+          else {
+            //console.log("nit:"+nit);
+            $("#id_cliente_idcliente option:starts-with("+nit+")").attr('selected', true);
+            /*
+            var result=$("#id_cliente_idcliente option:starts-with("+nit+")");
+            console.log(result.length);
+            if(result.length==1){
+              $("#id_cliente_idcliente").html(selectDefault);
+            }
+            */
+            //var seleccionado=$("#id_cliente_idcliente option:selected").text();
+          }
+          //console.log("elemento:"+seleccionado);
+        });
+
         //Función que controla el tabindex, para pasar de Nit del cliente a Código del producto
         $( 'input#id_nit_del_cliente' ).keydown(function(e){ //Keydown es para que al presionarse la tecla haga algo.
                                                             //El parámetro "e" captura la tecla del teclado
           var keyCode = e.keyCode || e.which; //se declara una variable que capturará cualquiera de esos dos valores
           if (e.keyCode==9||e.keyCode==13) { //keycode obtiene el valor ascii de la tecla presionada
             e.preventDefault(); //previene que se realice la acción por defecto que efectuaría el navegador con esa tecla
-            $('input#id_codigo_producto').focus();
+            var text=$("#id_cliente_idcliente option:selected").text().split(' ');
+            var nit = $('input#id_nit_del_cliente').val();
+            if(text[0]===nit)
+            {
+              $('input#id_codigo_producto').focus();
+            }
+            else {
+              $('input#id_nit_del_cliente').val('');
+              $('input#id_nit_del_cliente').focus();
+              $("#id_cliente_idcliente").html(selectDefault);
+              alert('El cliente no existe');
+            }
           }
+          //$('input#id_nit_del_cliente').focus();
         });
         //Función que realiza una acción al leer código de barras
         $( 'input#id_codigo_producto' ).keydown(function(e){
@@ -86,21 +142,5 @@
             </p>
             <div class="divider"></div>
             <div class="divider"></div>
-            <!--
-            {{ form_Venta.as_p }}
-            {{ form_Producto.as_p }}
-            {{ form_DetalleVenta.as_p }}
-            {{ form_TipoProducto.as_p }}
-
-            {{ form_InventarioProducto.as_p }}
-            {{ form_Precio.as_p }}
-            {{ form_estiloproducto.as_p}}
-            <div class="divider"></div>
-            <div class="divider"></div>
-            {{ form_Promocion.as_p }}-->
-
-
-
-
         </form>
     {% endblock %}
