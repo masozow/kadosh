@@ -9,6 +9,7 @@
     <script type="text/javascript">
     var selectDefault = $("#id_cliente_idcliente").html();
 
+    //Función que crea un selector starts-with
     $.extend($.expr[":"], {
       "starts-with": function(elem, i, data, set) {
         var text = $.trim($(elem).text()),
@@ -33,27 +34,19 @@
         //Funcion para buscar el nit del cliente:
         $( 'input#id_nit_del_cliente' ).keyup(function(e){
           var nit = $('input#id_nit_del_cliente').val();
-          if(e.keyCode=='8')
+          if(e.keyCode=='8') //Si se borra algo, regresa el select al valor original (se hace esto porque se trababa antes)
           {
             $("#id_cliente_idcliente").html(selectDefault);
           }
           if(nit==='')
           {
-            //console.log("vacio:"+nit);
           }
           else {
-            //console.log("nit:"+nit);
             $("#id_cliente_idcliente option:starts-with("+nit+")").attr('selected', true);
-            /*
-            var result=$("#id_cliente_idcliente option:starts-with("+nit+")");
-            console.log(result.length);
-            if(result.length==1){
+            if($("#id_cliente_idcliente option:starts-with("+nit+")").length==0){ //si el texto no coincide, se resetea el select
               $("#id_cliente_idcliente").html(selectDefault);
             }
-            */
-            //var seleccionado=$("#id_cliente_idcliente option:selected").text();
           }
-          //console.log("elemento:"+seleccionado);
         });
 
         //Función que controla el tabindex, para pasar de Nit del cliente a Código del producto

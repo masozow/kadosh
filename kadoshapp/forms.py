@@ -158,6 +158,7 @@ class Form_PuntoVenta_TipoProducto(forms.ModelForm):
     class Meta:
         model=TipoProducto
         fields=('marca_id_marca',)
+        
 
 class Form_PuntoVenta_Producto(forms.ModelForm):
     class Meta:

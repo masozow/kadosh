@@ -141,7 +141,14 @@ def PuntoDeVenta(request):
                     'form_estiloproducto':form_estiloproducto,
                     'form_promocionhasproducto': form_promocionhasproducto
                     })
-
+#Vista para obtener solo el producto
+#def obtener_producto(request):
+#    if request.method=="POST":
+        #codigo=request.POST.get("id_codigo_producto")
+        #producto=Producto.objects.filter('codigo_producto'=codigo)
+        #return HttpRequest()
+    #else:
+        #pass
 
 
 
