@@ -32,7 +32,7 @@ ALLOWED_HOSTS = []
 #esta parte la escribi para hacer el logueo
 from django.core.urlresolvers import reverse_lazy
 LOGIN_URL=reverse_lazy('login')
-LOGIN_REDIRECT_URL=reverse_lazy('login')
+LOGIN_REDIRECT_URL=reverse_lazy('ingreso_mercaderia')
 LOGOUT_URL=reverse_lazy('logout')
 
 #Archivo log
@@ -113,7 +113,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'kadosh',
         'USER': 'root',
-        'PASSWORD': 'hola1234',
+        'PASSWORD': 'rena',
         'HOST': 'localhost',
         'PORT': '',
     }

@@ -11,7 +11,12 @@
          {% csrf_token %}
          <div class="row">
           <div class=" col l6 m12 s12">
-            <label for="completo_inventario"><h6>Inventario Completo:</h6> </label>{{ form_inventariorealizado.completo_inventario}}
+
+                  <input type="checkbox" id="completo_inventario" />
+                  <label for="completo_inventario">Inventario Completo</label>
+                  {{ form_inventariorealizado.completo_inventario}}
+
+
           </div>
           <div class=" col l6 m12 s12">
             <label for="empleado_idempleado"><h6>Empleadp:</h6> </label>{{ form_inventariorealizado.empleado_idempleado}}
