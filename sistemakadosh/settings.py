@@ -26,9 +26,9 @@ MEDIA_URL = '/archivos_varios/'  #put whatever you want that when url is rendere
 SECRET_KEY = '*5-fe-0ao1jir_e+4ft*r6gxrk6z13o^l@=d_zf=8%##mga7&)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG =  True #False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [] #si el debug es falso, hay que configurar los hosts aqui
 #esta parte la escribi para hacer el logueo
 from django.core.urlresolvers import reverse_lazy
 LOGIN_URL=reverse_lazy('login')

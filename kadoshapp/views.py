@@ -1,4 +1,9 @@
 from django.shortcuts import render
+from django.http import HttpResponse
+from django.core import serializers
+import json
+import pdb #para hacer el debugging
+
 from .models import Persona, Cliente, TipoCliente
 from .forms import Form_RegistroCliente_Persona, Form_RegistroCliente_Cliente
 from django.shortcuts import redirect
@@ -141,16 +146,35 @@ def PuntoDeVenta(request):
                     'form_estiloproducto':form_estiloproducto,
                     'form_promocionhasproducto': form_promocionhasproducto
                     })
-#Vista para obtener solo el producto
-#def obtener_producto(request):
-#    if request.method=="POST":
-        #codigo=request.POST.get("id_codigo_producto")
-        #producto=Producto.objects.filter('codigo_producto'=codigo)
-        #return HttpRequest()
-    #else:
-        #pass
 
 
+#Vista para obtener solo el producto mediante Ajax
+def BuscarProducto(request):
+    if request.method == 'POST':
+        #pdb.set_trace()
+        txt_codigo_producto = request.POST.get('codigo_producto') #aquí llamar por el nombre del objeto (name), no por el id
+        #runeval(txt_codigo_producto) #se supone que evalua la variable y la envia al debugger
+        #pdb.set_trace()  #estos son los breakpoints de django
+
+        response_data = {}
+        resp_producto=Producto.objects.all().filter(codigo_producto=txt_codigo_producto)
+        resp_inventario=InventarioProducto.objects.all().filter(producto_codigo_producto__in=resp_producto).order_by('-idinventario_producto')[:1]
+        resp_precio=Precio.objects.all().filter(producto_codigo_producto__in=resp_producto,estado_precio=1).order_by('-idprecio')[:1] #
+
+        response_data['codprod']=serializers.serialize('json', list(resp_producto), fields=('codigo_producto'))
+        response_data['lote']=serializers.serialize('json', list(resp_inventario), fields=('idinventario_producto'))
+        response_data['desc']=serializers.serialize('json', list(resp_producto), fields=('descripcion_producto'))
+        response_data['valorprod']=serializers.serialize('json', list(resp_precio), fields=('valor_precio'))
+
+        return HttpResponse(
+            json.dumps(response_data),
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
 
 #Vista de form de compra
 def Compra(request):

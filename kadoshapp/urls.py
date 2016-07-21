@@ -18,4 +18,5 @@ url(r'^Cierre/Caja/$', views.CierreDeCaja, name='CierreDeCaja'),
 url(r'^Venta/Anular/$', views.AnularVenta, name='AnularVenta'),
 url(r'^Inventario/Nuevo/$', views.Inventario, name='Inventario'),
 url(r'^Promocion/Nuevo/$', views.Promocion, name='Promocion'),
+url(r'^Buscar/Producto/$', views.BuscarProducto, name='BusquedaProd'),
 ]

@@ -7,6 +7,8 @@
 
     {% block extra_scripts %}
     <script type="text/javascript">
+/*Espacio para JQuery y busquedas dentro del DOM
+===========================================================================*/
     var selectDefault = $("#id_cliente_idcliente").html();
 
     //Función que crea un selector starts-with
@@ -77,8 +79,90 @@
           if(e.keyCode==13)
           {
             e.preventDefault();
+            obtener_producto();
             alert('Producto leído');
           }
+        });
+
+/*Espacio para Ajax
+============================================================================*/
+
+        function obtener_producto() {
+          console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+            console.log("Se ejecuta la funcion"); // Solo se comprueba que el llamado a la funcion sea correcto
+            $.ajax({
+                url : "/Buscar/Producto/", // La URL que llama a la vista
+                type : "POST", // Metodo http para realizar el request (peticion al servidor)
+                data : { codigo_producto : $('input#id_codigo_producto').val() }, // Datos enviados con el request en formato JSON
+
+                // Si el response es correcto (si la respuesta del servidor es correcta)
+                success : function(json) {
+                    $('input#id_codigo_producto').val(''); // Se limpia el campo del codigo del producto
+                    console.log(json); // Se envian los datos recibidos a la consola
+                    $("#talk").prepend("<li><strong>"+json.codprod.pk+"</strong> - <em> "+json.lote+"</em> - <span> "+json.desc+"</span></li>");
+                    console.log("success"); // Solo se comprueba mediante la consola, que el llamado fue correcto
+                },
+
+                // Si el response no tuvo exito
+                error : function(xhr,errmsg,err) {
+                    $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Ha ocurrido un error: "+errmsg+
+                        " <a href='#' class='close'>&times;</a></div>"); // Se agrega el error al DOM
+                    console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
+                }
+            });
+        };
+
+        //La siguiente funcion sirve para obtener un Token para el formulario y asi hacer un submit seguro
+
+        $(function() {
+            // This function gets cookie with a given name
+            function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie != '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = jQuery.trim(cookies[i]);
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+            var csrftoken = getCookie('csrftoken');
+
+            //The functions below will create a header with csrftoken
+
+            function csrfSafeMethod(method) {
+                // these HTTP methods do not require CSRF protection
+                return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+            }
+            function sameOrigin(url) {
+                // test that a given url is a same-origin URL
+                // url could be relative or scheme relative or absolute
+                var host = document.location.host; // host + port
+                var protocol = document.location.protocol;
+                var sr_origin = '//' + host;
+                var origin = protocol + sr_origin;
+                // Allow absolute or scheme relative URLs to same origin
+                return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
+                    (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
+                    // or any other URL that isn't scheme relative or absolute i.e relative.
+                    !(/^(\/\/|http:|https:).*/.test(url));  //El asterisco y diagonal que esta antes del punto si es necesario
+            }                                                 //La diagonal asterisco que esta antes del punto, hay que quitarla
+            $.ajaxSetup({
+                beforeSend: function(xhr, settings) {
+                    if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
+                        // Send the token to same-origin, relative URLs only.
+                        // Send the token only if the method warrants CSRF protection
+                        // Using the CSRFToken value acquired earlier
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    }
+                }
+            });
+
         });
     </script>
     {% endblock %}
@@ -96,6 +180,9 @@
             <label for="check_mostrar">Mostrar caracteristicas del producto:</label> <input checked="checked" id="check_mostrar" name="mostrar_check" type="checkbox" /></p>
             <label for="check_promocion">Es promocion:</label> <input checked="false" id="check_promocion" name="promocion_check" type="checkbox" /></p>
             <label>Vendedor: </label>{{form_Producto.empleado_idempleado}}
+
+            <ul id="talk">
+
 
             <div class="divider"></div>
 
@@ -125,10 +212,34 @@
 
             </p>
             <div class="divider"></div>
-            Aquí va la tabla
+            <table>
+              <thead>
+                <tr>
+                    <th data-field="id">Lote</th>
+                    <th data-field="name">Cod</th>
+                    <th data-field="price">Cantidad</th>
+                    <th data-field="price">Descripcion</th>
+                    <th data-field="price">Precio</th>
+                    <th data-field="price">Valor parcial</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>1</td>
+                  <td>2</td>
+                  <td>Suaves sabanas...</td>
+                  <td>80.3</td>
+                  <td>160.6</td>
+                </tr>
+              </tbody>
+            </table>
             <div class="divider"></div>
             <p>
               <label>Tipo de pago: </label>{{form_Venta.tipo_pago_idtipo_pago}}
+
+              <div id="results"></div>
+
               <button type="submit" class="save btn btn-default">Guardar</button>
               <button type="submit" class="save btn btn-default">Anular venta</button>
               <label>Código de autorización: </label>{{form_cliente.codigo_autorizacion}}
@@ -136,4 +247,6 @@
             <div class="divider"></div>
             <div class="divider"></div>
         </form>
+
+
     {% endblock %}
