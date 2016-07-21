@@ -55,7 +55,7 @@
                   <a href="{% url 'kadoshapp.views.ingresodemercaderiaporProveedor' %}" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align ">Ingreso de mercaderia por proveedor</a>
                   <a href="{% url 'kadoshapp.views.Compra' %}" class="white-text text-white waves-effect waves-light collection-item  cyan lighten-1 center-align">Compra</a>
                   <a href="{% url 'kadoshapp.views.TrasladoMercaderia' %}" class="white-text text-white waves-effect waves-light collection-item  cyan lighten-1 center-align">Traslado de mercaderia</a>
-                  <a href="#!" class="white-text text-white waves-effect waves-light collection-item  cyan lighten-1 center-align">Ofertas</a>
+                  <a href="{% url 'kadoshapp.views.Promocion' %}" class="white-text text-white waves-effect waves-light collection-item  cyan lighten-1 center-align">Ofertas</a>
                 </div>
                 </div>
               </li><!-- Fin -->
@@ -67,8 +67,8 @@
                 <div class="collapsible-body"><!-- Sub Elemntos--->
                   <div class="collection">
                   <a href="{% url 'kadoshapp.views.PuntoDeVenta' %}" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1  center-align">Realizar venta</a>
-                  <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Anular venta</a>
-                  <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Cierre de caja</a>
+                  <a href= "{% url 'kadoshapp.views.AnularVenta' %}" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Anular venta</a>
+                  <a href="{% url 'kadoshapp.views.CierreDeCaja' %}"  class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Cierre de caja</a>
 
                 </div>
                 </div>
@@ -81,7 +81,7 @@
                   Clientes</div>
                 <div class="collapsible-body"><!-- Sub Elemntos--->
                   <div class="collection">
-                  <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Nuevo</a>
+                  <a href="{% url 'kadoshapp.views.registro_cliente' %}"  class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Nuevo</a>
                   <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Modificar Datos</a>
                 </div>
                 </div>
@@ -107,8 +107,8 @@
                   Inventarios</div>
                 <div class="collapsible-body"><!-- Sub Elemntos--->
                   <div class="collection">
-                  <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Arqueo</a>
-                  <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Completo</a>
+
+                  <a href="{% url 'kadoshapp.views.Inventario' %}" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Completo</a>
                 </div>
                 </div>
               </li><!-- Fin-->
@@ -120,6 +120,7 @@
 
 
 <!-- contenido -->
+
 <div class="row">
 
   <div class="col  m4 l3">
@@ -136,10 +137,10 @@
           <img class="responsive-img" src="{% static "imagenes/merca2.png" %}"> Mercaderia</div>
         <div class="collapsible-body "><!-- Sub Elemntos--->
           <div class="collection">
-            <a href="{% url 'kadoshapp.views.ingresodemercaderiaporProveedor' %}" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align ">Ingreso de mercaderia por proveedor</a>
-            <a href="{% url 'kadoshapp.views.Compra' %}" class="white-text text-white waves-effect waves-light collection-item  cyan lighten-1 center-align">Compra</a>
-            <a href="{% url 'kadoshapp.views.TrasladoMercaderia' %}" class="white-text text-white waves-effect waves-light collection-item  cyan lighten-1 center-align">Traslado de mercaderia</a>
-            <a href="#!" class="white-text text-white waves-effect waves-light collection-item  cyan lighten-1 center-align">Ofertas</a>
+          <a href="{% url 'kadoshapp.views.ingresodemercaderiaporProveedor' %}" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align ">Ingreso de mercaderia por proveedor</a>
+          <a href="{% url 'kadoshapp.views.Compra' %}" class="white-text text-white waves-effect waves-light collection-item  cyan lighten-1 center-align">Compra</a>
+          <a href="{% url 'kadoshapp.views.TrasladoMercaderia' %}" class="white-text text-white waves-effect waves-light collection-item  cyan lighten-1 center-align">Traslado de mercaderia</a>
+          <a href="{% url 'kadoshapp.views.Promocion' %}" class="white-text text-white waves-effect waves-light collection-item  cyan lighten-1 center-align">Ofertas</a>
         </div>
         </div>
       </li><!-- Fin -->
@@ -151,8 +152,8 @@
         <div class="collapsible-body"><!-- Sub Elemntos--->
           <div class="collection">
           <a href="{% url 'kadoshapp.views.PuntoDeVenta' %}" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1  center-align">Realizar venta</a>
-          <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Anular venta</a>
-          <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Cierre de caja</a>
+          <a href= "{% url 'kadoshapp.views.AnularVenta' %}" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Anular venta</a>
+          <a href="{% url 'kadoshapp.views.CierreDeCaja' %}"  class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Cierre de caja</a>
 
         </div>
         </div>
@@ -165,7 +166,7 @@
           Clientes</div>
         <div class="collapsible-body"><!-- Sub Elemntos--->
           <div class="collection">
-          <a href="{% url 'kadoshapp.views.registro_cliente' %}" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Nuevo</a>
+          <a href="{% url 'kadoshapp.views.registro_cliente' %}"  class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Nuevo</a>
           <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Modificar Datos</a>
         </div>
         </div>
@@ -191,8 +192,8 @@
           Inventarios</div>
         <div class="collapsible-body"><!-- Sub Elemntos--->
           <div class="collection">
-          <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Arqueo</a>
-          <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Completo</a>
+
+          <a href="{% url 'kadoshapp.views.Inventario' %}" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Completo</a>
         </div>
         </div>
       </li><!-- Fin-->

@@ -21,7 +21,7 @@
           <div class="row">
 
           <div  class="col l6 m12 s12">
-            <div class="col  s6">
+            <div class="col s6">
             <label for="codigo_producto"><h6>Codigo:</h6> </label>{{ form_Producto.codigo_producto}}
             <label for="cantidad_compra"><h6>Cantidad:</h6> </label>{{ form_Detallecompra.cantidad_compra}}
             <label for="genero_idgener"><h6>Genero:</h6> </label>{{ form_Producto.genero_idgener}}
@@ -77,7 +77,8 @@
         </tbody>
       </table>
     </div>
-<label for="contado_compra"><h6>Al contado:</h6> </label>{{ form_Compra.contado_compra}}
+    <input type="checkbox" id="contado_compra" />
+<label for="contado_compra"><h6>Al contado</h6> </label>{{ form_Compra.contado_compra}}
 
 
           </div>
