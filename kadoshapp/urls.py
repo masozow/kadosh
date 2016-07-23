@@ -1,5 +1,6 @@
 from django.conf.urls import include, url
 from . import views
+from . import viewCliente
 
 urlpatterns=[
 #urls para loguear
@@ -9,7 +10,7 @@ url(r'^$','django.contrib.auth.views.login',
 url(r'^$','django.contrib.auth.views.logout_then_login',
  name='logout'),
 url(r'^index/kadosh/', views.ingreso_mercaderia, name='ingreso_mercaderia'),
-url(r'^ingreso/cliente/$', views.registro_cliente, name='registroCliente'),
+url(r'^ingreso/cliente/$', viewCliente.registro_cliente, name='registroCliente'),
 url(r'^ingreso/MercaderiaPoProveedor/$', views.ingresodemercaderiaporProveedor, name='IngresoMercaPorProveedor'),
 url(r'^ingreso/Compra/$', views.Compra, name='Compra'),
 url(r'^Realizacion/Venta/$', views.PuntoDeVenta, name='PuntoDeVenta'),
