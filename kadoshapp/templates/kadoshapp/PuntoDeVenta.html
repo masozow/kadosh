@@ -44,6 +44,7 @@
           {
           }
           else {
+            $("#id_cliente_idcliente").html(selectDefault);
             $("#id_cliente_idcliente option:starts-with("+nit+")").attr('selected', true);
             if($("#id_cliente_idcliente option:starts-with("+nit+")").length==0){ //si el texto no coincide, se resetea el select
               $("#id_cliente_idcliente").html(selectDefault);
