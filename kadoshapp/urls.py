@@ -1,6 +1,6 @@
 from django.conf.urls import include, url
 from . import views
-from . import viewCliente
+from . import viewCliente, viewIngresoMercaPorProveedor, viewCompra, viewPuntodeVenta, viewTrasladoMercaderia, viewCierreCaja, viewAnularVenta, viewInventario, viewPromocion
 
 urlpatterns=[
 #urls para loguear
@@ -11,13 +11,13 @@ url(r'^$','django.contrib.auth.views.logout_then_login',
  name='logout'),
 url(r'^index/kadosh/', views.ingreso_mercaderia, name='ingreso_mercaderia'),
 url(r'^ingreso/cliente/$', viewCliente.registro_cliente, name='registroCliente'),
-url(r'^ingreso/MercaderiaPoProveedor/$', views.ingresodemercaderiaporProveedor, name='IngresoMercaPorProveedor'),
-url(r'^ingreso/Compra/$', views.Compra, name='Compra'),
-url(r'^Realizacion/Venta/$', views.PuntoDeVenta, name='PuntoDeVenta'),
-url(r'^Trazalado/Mercaderia/$', views.TrasladoMercaderia, name='TrasladoMerca'),
-url(r'^Cierre/Caja/$', views.CierreDeCaja, name='CierreDeCaja'),
-url(r'^Venta/Anular/$', views.AnularVenta, name='AnularVenta'),
-url(r'^Inventario/Nuevo/$', views.Inventario, name='Inventario'),
-url(r'^Promocion/Nuevo/$', views.Promocion, name='Promocion'),
-url(r'^Buscar/Producto/$', views.BuscarProducto, name='BusquedaProd'),
+url(r'^ingreso/MercaderiaPoProveedor/$',viewIngresoMercaPorProveedor.ingresodemercaderiaporProveedor, name='IngresoMercaPorProveedor'),
+url(r'^ingreso/Compra/$', viewCompra.Compra, name='Compra'),
+url(r'^Realizacion/Venta/$', viewPuntodeVenta.PuntoDeVenta, name='PuntoDeVenta'),
+url(r'^Trazalado/Mercaderia/$', viewTrasladoMercaderia.TrasladoMercaderia, name='TrasladoMerca'),
+url(r'^Cierre/Caja/$', viewCierreCaja.CierreDeCaja, name='CierreDeCaja'),
+url(r'^Venta/Anular/$', viewAnularVenta.AnularVenta, name='AnularVenta'),
+url(r'^Inventario/Nuevo/$', viewInventario.Inventario, name='Inventario'),
+url(r'^Promocion/Nuevo/$', viewPromocion.Promocion, name='Promocion'),
+url(r'^Buscar/Producto/$', viewPuntodeVenta.BuscarProducto, name='BusquedaProd'),
 ]

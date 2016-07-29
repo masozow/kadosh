@@ -111,10 +111,10 @@ WSGI_APPLICATION = 'sistemakadosh.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'kadosh',
-        'USER': 'root',
+        'NAME': 'db_a0a63c_kadosh',
+        'USER': 'a0a63c_kadosh',
         'PASSWORD': 'hola1234',
-        'HOST': 'localhost',
+        'HOST': 'MYSQL5012.Smarterasp.net',
         'PORT': '',
     }
 }
