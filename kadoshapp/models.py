@@ -73,7 +73,7 @@ class CajaHasEmpleado(models.Model):
     momento_asignacion_caja = models.DateTimeField(default=timezone.now)
     momento_desasignacion_caja = models.DateTimeField(blank=True, null=True)
     estado_asignacion_caja = models.BooleanField(db_column='estado_asignación_caja', default=True)
-    
+
     def __str__(self):
         return 'Caja: %s - Fecha: %s - Empleado: %s' % (self.caja_idcaja, self.momento_asignacion_caja, self.empleado_idempleado)
 
@@ -159,7 +159,7 @@ class Compra(models.Model):
     vrf_compra = models.BooleanField(default=True)
     fecha_recepcion_compra = models.DateTimeField(default=timezone.now)
     fecha_realizacion_compra = models.DateTimeField(default=timezone.now)
-    casa_matriz = models.ForeignKey('Proveedor', db_column='Casa_matriz',related_name='proveedor_casa_matriz')  # Field name made lowercase.
+    casa_matriz = models.ForeignKey('Proveedor', db_column='Casa_matriz',related_name='proveedor_casa_matriz',blank=True)  # Field name made lowercase.
     empleado_recibio = models.ForeignKey('Empleado', db_column='Empleado_recibio',related_name='empleado_empleado_recibio')  # Field name made lowercase.
 
     def __str__(self):
