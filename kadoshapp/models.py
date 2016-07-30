@@ -335,7 +335,7 @@ class Empleado(models.Model):
     fecha_baja_empleado = models.DateField(blank=True,null=True)
     motivo_baja_empleado = models.CharField(max_length=200, blank=True, null=True)
     fotografia_empleado = models.ImageField(upload_to = settings.MEDIA_ROOT)
-    auth_user_id = models.ForeignKey('auth.User')
+    auth_user = models.ForeignKey('auth.User')
 
     def __str__(self):
         return '%s - %s %s' % (self.idempleado, self.persona_idpersona.nombres_persona,self.persona_idpersona.apellidos_persona)

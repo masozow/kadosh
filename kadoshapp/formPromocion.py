@@ -11,7 +11,7 @@ class Form_Promocion_Producto(forms.ModelForm):
         exclude=('estado_producto','descripcion_producto',)
 class form_Promocion_TipoProducto(forms.ModelForm):
     class Meta:
-        model=TipoProducto
+        model=MarcaHasTipoProducto
         fields=('marca_id_marca',)
 class Form_Promocion_InventarioProducto(forms.ModelForm):
     class Meta:
