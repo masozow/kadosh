@@ -173,80 +173,154 @@
         <h5>Punto de Venta</h5>
         <form method="POST" class="post-form">
           {% csrf_token %}
-            <p>
-            <label>Cliente: </label>{{ form_cliente.nit_del_cliente}}{{form_Venta.cliente_idcliente}}
-            <label for="id_codigo_producto">Código: </label>{{ form_Producto.codigo_producto }}
-            <label>Cantidad: </label>{{form_DetalleVenta.cantidad_venta}}
-            <label>Valor: </label>{{form_Precio.valor_precio}}
-            <label for="check_mostrar">Mostrar caracteristicas del producto:</label> <input checked="checked" id="check_mostrar" name="mostrar_check" type="checkbox" /></p>
-            <label for="check_promocion">Es promocion:</label> <input checked="false" id="check_promocion" name="promocion_check" type="checkbox" /></p>
-            <label>Vendedor: </label>{{form_Producto.empleado_idempleado}}
 
-            <ul id="talk">
+          <div class="row">
+            <div class="col l6 m12 s12">
+              <label>Cliente: </label>{{ form_cliente.nit_del_cliente}}{{form_Venta.cliente_idcliente}}
+            </div>
+
+            <div class="col l6 m12 s12">
+              <div class="col  s6">
+<label>Vendedor: </label>{{form_Producto.empleado_idempleado}}
+
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+      <div class="col l6 m12 s12">
+      <label>Cantidad: </label>{{form_DetalleVenta.cantidad_venta}}
+      <label>Valor: </label>{{form_Precio.valor_precio}}
+      </div>
+      <div class="col l6 m12 s12">
+      <label for="id_codigo_producto">Código: </label>{{ form_Producto.codigo_producto }}
+
+      <input checked="checked" class="filled-in" id="check_mostrar" name="mostrar_check" type="checkbox" />
+  <label for="check_mostrar">Mostrar caracteristicas del producto:</label>
+
+      <input checked="checked" class="filled-in" id="check_promocion" name="promocion_check" type="checkbox" />
+  <label for="check_promocion">Es promocion:</label>
+
+      </div>
+      </div>
 
 
-            <div class="divider"></div>
-
-            <p style="color: #80bfff;"><b>Características del producto</b></p>
-            <p><label>Marca: </label>{{form_TipoProducto.marca_id_marca}}
+      <div class="row">
+        <ul id="talk">
+        <div class="divider"></div>
+        <p style="color: #80bfff;"><b>Características del producto</b></p>
+      <div class="col l6 m12 s12">
+          <div class="col  s6">
+            <label>Marca: </label>{{form_TipoProducto.marca_id_marca}}
             <label>Tipo: </label>{{form_estiloproducto.tipo_producto_idtipo_producto}}
             <label>Estilo: </label>{{form_Producto.estilo_idestilo}}
             <label for="id_talla_idtalla">Talla: </label>{{form_Producto.talla_idtalla}}
+          </div>
+
+
+
+          <div class="col  s6">
             <label>Color: </label>{{form_Producto.color_idcolor}}
             <label>Género: </label>{{form_Producto.genero_idgener}}
             <label>Combo: </label>{{form_Producto.combo_idcombo}}
-            <label>Descripcion: </label>{{form_InventarioProducto.producto_codigo_producto}}
-            </p>
+          </div>
+
+      </div>
+      <div class="col l6 m12 s12">
+        <div class="row">
+        <div class="col s12 m6">
+          <div class="card blue-grey darken-1">
+            <div class="card-content white-text">
+              <span class="card-title">Imagen</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      </div>
+    </div>
+    <div class="row">
+        <div class="col l6 m12 s12">
+<label>Descripcion: </label>{{form_InventarioProducto.producto_codigo_producto}}
+</div>   </div>
+
 
             <div class="divider"></div>
 
             <p>
             <label>Al contado: </label>{{form_Venta.contado_venta}}
             </p>
-
             <div class="divider"></div>
 
-            <p style="color: #80bfff;"><b>Promoción</b></p>
-              <label>Nombre de la promocion: </label>{{form_cliente.nombre_delapromocion}}
-              {{form_promocionhasproducto.promocion_idpromocion}}
-            <p>
+  <div class="row">
+    <p style="color: #80bfff;"><b>Promoción</b></p>
+    <div class="col l6 m12 s12">
+      <label>Nombre de la promocion: </label>{{form_cliente.nombre_delapromocion}}
+      {{form_promocionhasproducto.promocion_idpromocion}}
+    </div>
+    <div class="col l6 m12 s12">
+    </div>
+  </div>
 
-            </p>
-            <div class="divider"></div>
-            <table>
-              <thead>
-                <tr>
-                    <th data-field="id">Lote</th>
-                    <th data-field="name">Cod</th>
-                    <th data-field="price">Cantidad</th>
-                    <th data-field="price">Descripcion</th>
-                    <th data-field="price">Precio</th>
-                    <th data-field="price">Valor parcial</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>1</td>
-                  <td>2</td>
-                  <td>Suaves sabanas...</td>
-                  <td>80.3</td>
-                  <td>160.6</td>
-                </tr>
-              </tbody>
-            </table>
-            <div class="divider"></div>
-            <p>
-              <label>Tipo de pago: </label>{{form_Venta.tipo_pago_idtipo_pago}}
+
+  <div class="divider"></div>
+  <div class="row">
+  <div class="divider"></div>
+    <div class="col l6 m12 s12">
+      <table>
+        <thead>
+          <tr>
+              <th data-field="id">Lote</th>
+              <th data-field="name">Cod</th>
+              <th data-field="price">Cantidad</th>
+              <th data-field="price">Descripcion</th>
+              <th data-field="price">Precio</th>
+              <th data-field="price">Valor parcial</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>1</td>
+            <td>2</td>
+            <td>Suaves sabanas...</td>
+            <td>80.3</td>
+            <td>160.6</td>
+          </tr>
+        </tbody>
+          </table>
+    </div>
+    <div class="col l6 m12 s12">
+          <button type="submit" class="save btn btn-default">Realizar Venta</button>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+  <div class="divider"></div>
+  <div class="divider"></div>
 
               <div id="results"></div>
 
-              <button type="submit" class="save btn btn-default">Guardar</button>
-              <button type="submit" class="save btn btn-default">Anular venta</button>
-              <label>Código de autorización: </label>{{form_cliente.codigo_autorizacion}}
-            </p>
-            <div class="divider"></div>
-            <div class="divider"></div>
+
+              <div class="divider"></div>
+              <div class="row">
+
+                <div class="col l6 m12 s12">
+              <label>Tipo de pago: </label>{{form_Venta.tipo_pago_idtipo_pago}}
+                </div>
+                <div class="col l6 m12 s12">
+                    <label>Código de autorización: </label>{{form_cliente.codigo_autorizacion}}
+                      <button type="submit" class="save btn btn-default">Anular venta</button>
+                </div>
+              </div>
+
+
         </form>
 
 
