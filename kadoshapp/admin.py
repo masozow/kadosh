@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Color, Anaquel, CajaHasEmpleado, Caja, AjusteInventario, Bodega, CierreDeCaja, Cliente, Compra, Contacto, Contenido , CuentaPorCobrar, CuentaPorPagar, DatosEnvio, DetalleCompra, DetalleVenta, Empleado, Envio, Estilo, Fotografia, Genero, Index, IndexHasFotografia, InventarioProducto, Marca, Motivo, Noticia, NoticiaHasFotografia, PagoCuentaPorPagar, PagosCuentaPorCobrar, Persona, Precio, Producto, ProductoHasFotografia, Promocion, PromocionHasProducto, Proveedor, Puesto, Seguridad, Sucursal, Talla, TipoCliente, TipoPago, TipoProducto, TrasladoMercaderia, Venta
+from .models import *
 #espero si salga
 
 #class DetalleCompraModelAdmin(admin.ModelAdmin):
@@ -8,31 +8,37 @@ from .models import Color, Anaquel, CajaHasEmpleado, Caja, AjusteInventario, Bod
     #    model = DetalleCompra
 
 
-admin.site.register(Color)
+admin.site.register(AjusteInventario)
 admin.site.register(Anaquel)
+admin.site.register(Bodega)
 admin.site.register(Caja)
 admin.site.register(CajaHasEmpleado)
-admin.site.register(AjusteInventario)
-admin.site.register(Bodega)
 admin.site.register(CierreDeCaja)
 admin.site.register(Cliente)
+admin.site.register(Color)
 admin.site.register(Compra)
 admin.site.register(Contacto)
 admin.site.register(Contenido)
 admin.site.register(CuentaPorCobrar)
 admin.site.register(CuentaPorPagar)
 admin.site.register(DatosEnvio)
+admin.site.register(Descuento)
 admin.site.register(DetalleCompra)#,DetalleCompraModelAdmin)
 admin.site.register(DetalleVenta)
+admin.site.register(Devolucion)
 admin.site.register(Empleado)
 admin.site.register(Envio)
+admin.site.register(EstandarCliente)
+admin.site.register(EstandaresVendedor)
 admin.site.register(Estilo)
 admin.site.register(Fotografia)
+admin.site.register(Gastos)
 admin.site.register(Genero)
 admin.site.register(Index)
 admin.site.register(IndexHasFotografia)
 admin.site.register(InventarioProducto)
 admin.site.register(Marca)
+admin.site.register(MarcaHasTipoProducto)
 admin.site.register(Motivo)
 admin.site.register(Noticia)
 admin.site.register(NoticiaHasFotografia)

@@ -648,7 +648,7 @@ class Precio(models.Model):
 
 class Producto(models.Model):
     codigo_producto = models.AutoField(primary_key=True)
-    descripcion_producto = models.CharField(max_length=250, blank=True, null=True)
+    descripcion_producto = models.TextField(max_length=250, blank=True, null=True)
     estado_producto = models.BooleanField(default=True)
     talla_idtalla = models.ForeignKey('Talla', db_column='Talla_idTalla')  # Field name made lowercase.
     genero_idgener = models.ForeignKey(Genero, db_column='Genero_idGener')  # Field name made lowercase.
