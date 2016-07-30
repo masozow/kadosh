@@ -36,5 +36,5 @@ class Form_Compra_Anaquel(forms.ModelForm):
 
 class Form_Compra_TipoProducto(forms.ModelForm):
     class Meta:
-        model=TipoProducto
+        model=MarcaHasTipoProducto
         fields=('marca_id_marca',)

@@ -26,14 +26,13 @@ class Form_PuntoVenta_InventarioProducto(forms.ModelForm):
 
 class Form_PuntoVenta_EstiloProducto(forms.ModelForm):
     class Meta:
-        model=Estilo
+        model=MarcaHasTipoProducto
         fields=('tipo_producto_idtipo_producto',)
 
 class Form_PuntoVenta_TipoProducto(forms.ModelForm):
     class Meta:
-        model=TipoProducto
+        model=MarcaHasTipoProducto
         fields=('marca_id_marca',)
-
 
 class Form_PuntoVenta_Producto(forms.ModelForm):
     class Meta:

@@ -526,7 +526,7 @@ class Marca(models.Model):
 
 
 class MarcaHasTipoProducto(models.Model):
-    marca_idmarca = models.ForeignKey('Marca', db_column='Marca_id_marca')  # Field name made lowercase.
+    marca_id_marca = models.ForeignKey('Marca', db_column='Marca_id_marca')  # Field name made lowercase.
     tipo_producto_idtipo_producto = models.ForeignKey('TipoProducto', db_column='Tipo_producto_idTipo_producto')  # Field name made lowercase.
 
     def __str__(self):
