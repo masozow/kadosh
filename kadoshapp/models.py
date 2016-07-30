@@ -30,7 +30,7 @@ class Anaquel(models.Model):
     estado_anaquel = models.BooleanField(default=True)  # This field type is a guess.
 
     def __str__(self):
-        return self.codigo_anaquel
+        return '%s (%s)' % (self.codigo_anaquel,self.bodega_idbodega.nombre_bodega)
 
     class Meta:
         managed = True
@@ -72,7 +72,8 @@ class CajaHasEmpleado(models.Model):
     empleado_idempleado = models.ForeignKey('Empleado', db_column='Empleado_idEmpleado')  # Field name made lowercase.
     momento_asignacion_caja = models.DateTimeField(default=timezone.now)
     momento_desasignacion_caja = models.DateTimeField(blank=True, null=True)
-
+    estado_asignacion_caja = models.BooleanField(db_column='estado_asignación_caja', default=True)
+    
     def __str__(self):
         return 'Caja: %s - Fecha: %s - Empleado: %s' % (self.caja_idcaja, self.momento_asignacion_caja, self.empleado_idempleado)
 
@@ -528,6 +529,7 @@ class Marca(models.Model):
 class MarcaHasTipoProducto(models.Model):
     marca_id_marca = models.ForeignKey('Marca', db_column='Marca_id_marca')  # Field name made lowercase.
     tipo_producto_idtipo_producto = models.ForeignKey('TipoProducto', db_column='Tipo_producto_idTipo_producto')  # Field name made lowercase.
+    idmarcahastipopoducto = models.AutoField(db_column='idMarcaHasTipoPoducto', primary_key=True)
 
     def __str__(self):
         return '%s - %s' % (self.marca_id_marca, self.tipo_producto_idtipo_producto)
@@ -539,7 +541,7 @@ class MarcaHasTipoProducto(models.Model):
 
 class Motivo(models.Model):
     idmotivo = models.AutoField(db_column='idMotivo', primary_key=True)  # Field name made lowercase.
-    nombre_motivo = models.CharField(max_length=45, blank=True, null=True)
+    nombre_motivo = models.CharField(max_length=60, blank=True, null=True)
     estado_motivo = models.BooleanField(default=True)
 
     def __str__(self):
@@ -661,7 +663,7 @@ class Producto(models.Model):
     #combo_idcombo = models.ForeignKey(Combo, db_column='Combo_idCombo')  # Field name made lowercase.
 
     def __str__(self):
-        return '%s - %s' % (self.codigo_producto,self.nombre_producto)
+        return '%s||%s||%s' % (self.codigo_producto,self.codigoestilo_producto,self.nombre_producto)
 
     class Meta:
         managed = True
@@ -778,7 +780,7 @@ class Talla(models.Model):
     estado_talla = models.BooleanField(default=True)  # This field type is a guess.
 
     def __str__(self):
-        return '%s - %s' % (self.idtalla,self.nombre_talla)
+        return '%s' % (self.nombre_talla)
 
     class Meta:
         managed = True
