@@ -17,7 +17,7 @@ class Form_IngresoMercaderiaPorProveedor_DetalleCompra(forms.ModelForm):
 class Form_IngresoMercaderiaPorProveedor_TipoProducto(forms.ModelForm):
     class Meta:
         model=TipoProducto
-        fields=('idtipo_producto')
+        fields=('idtipo_producto',)
 
 class Form_IngresoMercaderiaPorProveedor_Fotografia(forms.ModelForm):
     class Meta:
