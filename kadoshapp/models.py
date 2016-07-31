@@ -157,8 +157,8 @@ class Compra(models.Model):
     empleado_idempleado = models.ForeignKey('Empleado', db_column='Empleado_idEmpleado',related_name='empleado_empleado_idempleado')  # Field name made lowercase.
     numero_guia = models.CharField(max_length=45, blank=True, null=True)
     vrf_compra = models.BooleanField(default=True)
-    fecha_recepcion_compra = models.DateTimeField(default=timezone.now)
-    fecha_realizacion_compra = models.DateTimeField(default=timezone.now)
+    fecha_recepcion_compra = models.DateField(default=timezone.now)
+    fecha_realizacion_compra = models.DateField(default=timezone.now)
     casa_matriz = models.ForeignKey('Proveedor', db_column='Casa_matriz',related_name='proveedor_casa_matriz',blank=True)  # Field name made lowercase.
     empleado_recibio = models.ForeignKey('Empleado', db_column='Empleado_recibio',related_name='empleado_empleado_recibio')  # Field name made lowercase.
 
