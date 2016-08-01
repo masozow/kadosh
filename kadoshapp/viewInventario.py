@@ -8,7 +8,6 @@ from django.shortcuts import get_object_or_404
 
 from .models import *
 from .formInventario import *
-
 #vista Inventario
 def Inventario(request):
     if request.method=='POST':
@@ -19,8 +18,8 @@ def Inventario(request):
     else:
         form_inventario=Form_Inventario_InventarioProducto()
         form_anaquel=Form_Inventario_Anque()
-        form_detallainventario=Form_Inventario_DetalleInventarioRealizado()
+        #form_detallainventario=Form_Inventario_DetalleInventarioRealizado()
         form_empleado=Form_Inventario_Empleado()
         form_ajusteinventario=Form_Inventario_AjusteInventario()
-        form_inventariorealizado=Form_Inventario_InventarioRealizado();
-    return render(request, 'kadoshapp/Inventario.html', {'form_inventario':form_inventario, 'form_anaquel':form_anaquel, 'form_detallainventario':form_detallainventario, 'form_empleado':form_empleado , 'form_ajusteinventario':form_ajusteinventario, 'form_inventariorealizado':form_inventariorealizado  })
+        #form_inventariorealizado=Form_Inventario_InventarioRealizado();
+    return render(request, 'kadoshapp/Inventario.html', {'form_inventario':form_inventario, 'form_anaquel':form_anaquel,  'form_empleado':form_empleado , 'form_ajusteinventario':form_ajusteinventario  })

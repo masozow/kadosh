@@ -12,29 +12,60 @@
 
         <div class="row">
             <div  class="col l6 m12 s12">
-                <label for="proveedor_idproveedor"><h6>Nombre Proveedor:</h6> </label>{{ form_Compra.}}
+                <div class="col s6">
+                <label for="proveedor_idproveedor"><h6>Nombre Proveedor:</h6> </label>{{ form_Proveedor.nombre_proveedor}}
+                <label for="nit_proveedor"><h6>Nit Proveedor:</h6> </label>{{ form_Proveedor.nit_proveedor}}
+                <label for="casa_matriz"><h6>Casa matriz:</h6> </label>{{ form_Compra.casa_matriz}}
+              </div>
+                  <div class="col s6">
+                  <label for="proveedor_idproveedor"><h6>Proveedor:</h6> </label>{{ form_Compra.proveedor_idproveedor}}
+                </div>
             </div>
             <div  class="col l6 m12 s12">
-            <label for="proveedor_idproveedor"><h6>Proveedor:</h6> </label>{{ form_Compra.proveedor_idproveedor}}
+              <div class="col s6">
+                <label for="numero_guia"><h6>Numero de guia:</h6> </label>{{ form_Compra.numero_guia}}
+                <label for="empleado_recibio"><h6>Empleado que recibio:</h6> </label>{{ form_Compra.empleado_recibio}}
+                <label for="empleado_reviso"><h6>Empleado que reviso:</h6> </label>{{ form_Compra.empleado_reviso}}
+
+            <input type="checkbox" id="entregada_compra" />
+            <label for="entregada_compra"><h6>Compra Entregada</h6> </label>{{ form_Compra.entregada_compra}}
+
+
+              </div>
+              <div class="col s6">
+
+                <label for="fecha_recepcion_compra"><h6>Fecha recepcion:</h6> </label>{{ form_Compra.fecha_recepcion_compra}}
+                <input type="date" class="datepicker" id="fecha_recepcion_compra">
+
+
+                <label for="fecha_realizacion_compra"><h6>Fecha compra:</h6> </label>{{ form_Compra.fecha_realizacion_compra}}
+                <input type="date" class="datepicker" id="fecha_realizacion_compra">
+
+                <input type="checkbox" id="vrf_compra" />
+                <label for="vrf_compra"><h6>VRF</h6> </label>{{ form_Compra.vrf_compra}}
+              </div>
+
           </div>
         </div>
           <div class="row">
 
           <div  class="col l6 m12 s12">
             <div class="col s6">
-            <label for="codigo_producto"><h6>Codigo:</h6> </label>{{ form_Producto.codigo_producto}}
             <label for="cantidad_compra"><h6>Cantidad:</h6> </label>{{ form_Detallecompra.cantidad_compra}}
+            <label for="codigoestilo_producto"><h6>Codigo estilo:</h6> </label>{{ form_Producto.codigoestilo_producto}}
             <label for="genero_idgener"><h6>Genero:</h6> </label>{{ form_Producto.genero_idgener}}
             <label for="talla_idtalla"><h6>Talla:</h6> </label>{{ form_Producto.talla_idtalla}}
             </div>
             <div class="col s6">
-            <label for="producto_codigo_producto"><h6>Producto:</h6> </label>{{  form_InventarioProducto.producto_codigo_producto}}
-            <label for="combo_idcombo"><h6>Combo:</h6> </label>{{ form_Producto.combo_idcombo}}
+              <label for="codigobarras_producto"><h6>Codigo de barras:</h6> </label>{{ form_Producto.codigobarras_producto}}
+
             <label for="marca_id_marca"><h6>Marca:</h6> </label>{{ form_TipoProducto.marca_id_marca}}
             <label for="estilo_idestilo"><h6>Estilo:</h6> </label>{{ form_Producto.estilo_idestilo}}
             <label for="color_idcolor"><h6>Color:</h6> </label>{{ form_Producto.color_idcolor}}
             </div>
             <div class="col s12">
+              <label for="producto_codigo_producto"><h6>Producto:</h6> </label>{{  form_InventarioProducto.producto_codigo_producto}}
+              <label for="nombre_producto"><h6>Nombre producto:</h6> </label>{{  form_Producto.nombre_producto}}
               <label for="descripcion_producto"><h6>Descripcion:</h6> </label>{{ form_Producto.descripcion_producto}}
 
               <label for="nombre_fotografia"><h6>Nombre Fotografia:</h6> </label>{{ form_fotografia.nombre_fotografia}}
@@ -77,8 +108,8 @@
         </tbody>
       </table>
     </div>
-    <input type="checkbox" id="contado_compra" />
-<label for="contado_compra"><h6>Al contado</h6> </label>{{ form_Compra.contado_compra}}
+
+<label for="tipo_pago_idtipo_pago"><h6>Tipo de Pago</h6> </label>{{ form_Compra.tipo_pago_idtipo_pago}}
 
 
           </div>

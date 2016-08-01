@@ -10,6 +10,7 @@
 /*Espacio para JQuery y busquedas dentro del DOM
 ===========================================================================*/
     var selectDefault = $("#id_cliente_idcliente").html();
+
     //Función que crea un selector starts-with
     $.extend($.expr[":"], {
       "starts-with": function(elem, i, data, set) {
@@ -25,11 +26,13 @@
         return text.lastIndexOf(term) === text.length - term.length;
         }
     });
+
         //Función que coloca el cursor en el textbox Nit del cliente, al momento de cargar la página
         $( document ).ready(function(){ //document indica toda la página, ready indica que ya se haya cargado el DOM
           $('input#id_nit_del_cliente').focus(); //se accede al input con el id que está después de #,
                                                  //.focus() indica que ahí se colocará el cursor
         });
+
         //Funcion para buscar el nit del cliente:
         $( 'input#id_nit_del_cliente' ).keyup(function(e){
           var nit = $('input#id_nit_del_cliente').val();
@@ -48,6 +51,7 @@
             }
           }
         });
+
         //Función que controla el tabindex, para pasar de Nit del cliente a Código del producto
         $( 'input#id_nit_del_cliente' ).keydown(function(e){ //Keydown es para que al presionarse la tecla haga algo.
                                                             //El parámetro "e" captura la tecla del teclado
@@ -80,8 +84,10 @@
             alert('Producto leído');
           }
         });
+
 /*Espacio para Ajax
 ============================================================================*/
+
         function obtener_producto() {
           console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
             console.log("Se ejecuta la funcion"); // Solo se comprueba que el llamado a la funcion sea correcto
@@ -89,6 +95,7 @@
                 url : "/Buscar/Producto/", // La URL que llama a la vista
                 type : "POST", // Metodo http para realizar el request (peticion al servidor)
                 data : { codigo_producto : $('input#id_codigo_producto').val() }, // Datos enviados con el request en formato JSON
+
                 // Si el response es correcto (si la respuesta del servidor es correcta)
                 success : function(json) {
                     $('input#id_codigo_producto').val(''); // Se limpia el campo del codigo del producto
@@ -96,6 +103,7 @@
                     $("#talk").prepend("<li><strong>"+json.codprod.pk+"</strong> - <em> "+json.lote+"</em> - <span> "+json.desc+"</span></li>");
                     console.log("success"); // Solo se comprueba mediante la consola, que el llamado fue correcto
                 },
+
                 // Si el response no tuvo exito
                 error : function(xhr,errmsg,err) {
                     $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Ha ocurrido un error: "+errmsg+
@@ -104,7 +112,9 @@
                 }
             });
         };
+
         //La siguiente funcion sirve para obtener un Token para el formulario y asi hacer un submit seguro
+
         $(function() {
             // This function gets cookie with a given name
             function getCookie(name) {
@@ -123,7 +133,9 @@
                 return cookieValue;
             }
             var csrftoken = getCookie('csrftoken');
+
             //The functions below will create a header with csrftoken
+
             function csrfSafeMethod(method) {
                 // these HTTP methods do not require CSRF protection
                 return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
@@ -151,6 +163,7 @@
                     }
                 }
             });
+
         });
     </script>
     {% endblock %}
@@ -183,10 +196,10 @@
       <label for="id_codigo_producto">Código: </label>{{ form_Producto.codigo_producto }}
 
       <input checked="checked" class="filled-in" id="check_mostrar" name="mostrar_check" type="checkbox" />
-  <label for="check_mostrar">Mostrar caracteristicas del producto:</label>
+      <label for="check_mostrar">Mostrar caracteristicas del producto:</label>
 
       <input checked="checked" class="filled-in" id="check_promocion" name="promocion_check" type="checkbox" />
-  <label for="check_promocion">Es promocion:</label>
+      <label for="check_promocion">Es promocion:</label>
 
       </div>
       </div>
@@ -308,7 +321,7 @@
               </div>
 
 
-</form>
+        </form>
 
 
-{% endblock %}
+    {% endblock %}

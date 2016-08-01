@@ -240,7 +240,14 @@ $(document).ready(function(){
       accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
     });
   });
+  $('.datepicker').pickadate({
+    monthsFull: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'],
+    format: 'd/mmmm/yyyy',
+    selectMonths: true,
+      selectYears: 15 // Creates a dropdown of 15 years to control year
+    });
 </script>
+
 <!--Script para formularios de django-->
 <!--script>
       $(function(){
