@@ -1,14 +1,181 @@
 {% extends 'kadoshapp/base.html' %}
 {% load staticfiles %}
 <!--se añadió la fila anterior-->
+   {% block titulo %}
+    Punto de venta
+   {% endblock %}
     {% block styles %}
       <link type="text/css" rel="stylesheet" href="{% static "css/formularios.css" %}"/>
     {% endblock %}
 
+        {% block encabezado %}Punto de venta{% endblock %}
+    {% block content %}
+        <form method="POST" class="post-form">
+          {% csrf_token %}
+          <div class="row">
+            <div class="col l6 m12 s12">
+                Elegir caja: {{form_Venta.caja_idcaja}}
+            </div>
+            <div class="col l6 m12 s12">
+              <input type="checkbox" id="es_cotizacion" />
+              <label for="es_cotizacion"><h6>Cotizacion</h6> </label>{{ form_Venta.es_cotizacion}}
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col l6 m12 s12">
+              <label>Cliente: </label>{{ form_cliente.nit_del_cliente}}{{form_Venta.cliente_idcliente}}
+            </div>
+
+            <div class="col l6 m12 s12">
+
+ <label  for="vendedor_venta">Vendedor: </label>{{form_Venta.vendedor_venta}}
+
+
+        </div>
+      </div>
+
+      <div class="row">
+      <div class="col l6 m12 s12">
+      <label>Cantidad: </label>{{form_DetalleVenta.cantidad_venta}}
+      <label>Valor: </label>{{form_Precio.valor_precio}}
+      </div>
+      <div class="col l6 m12 s12">
+      <label for="codigobarras_producto">Código Barras: </label>{{ form_Producto.codigobarras_producto }}
+
+      <input class="filled-in" id="check_mostrar" name="mostrar_check" type="checkbox" />
+      <label for="check_mostrar">Mostrar caracteristicas del producto:</label>
+
+      <input class="filled-in" id="check_promocion" name="promocion_check" type="checkbox" />
+      <label for="check_promocion">Es promocion:</label>
+
+      </div>
+      </div>
+
+
+      <div class="row">
+        <ul id="talk">
+        <div class="divider"></div>
+        <div id="bloque_caracteristicas_producto">
+          <p style="color: #80bfff;"><b>Características del producto</b></p>
+          <div class="col l6 m12 s12">
+              <div class="col  s6">
+                <label>Marca: </label>{{form_TipoProducto.marca_id_marca}}
+                <label>Tipo: </label>{{form_estiloproducto.tipo_producto_idtipo_producto}}
+                <label>Estilo: </label>{{form_Producto.estilo_idestilo}}
+                <label for="id_talla_idtalla">Talla: </label>{{form_Producto.talla_idtalla}}
+              </div>
+
+              <div class="col  s6">
+                <label>Codigo Estilo: </label>{{form_Producto.codigoestilo_producto}}
+                <label>Color: </label>{{form_Producto.color_idcolor}}
+                <label>Género: </label>{{form_Producto.genero_idgener}}
+
+              </div>
+
+          </div>
+
+          <div class="col l6 m12 s12">
+            <div class="row">
+              <div class="col s12 m6">
+                <div class="card blue-grey darken-1">
+                  <div class="card-content white-text">
+                    <span class="card-title">Imagen</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+              <div class="col l6 m12 s12">
+                  <label>Descripcion: </label>{{form_InventarioProducto.producto_codigo_producto}}
+              </div>
+          </div>
+    </div>
+  </div>
+  <div class="divider"></div>
+  <div class="row">
+    <div id="bloque_promocion">
+      <p style="color: #80bfff;"><b>Promoción</b></p>
+      <div class="col l6 m12 s12">
+        <label>Nombre de la promocion: </label>{{form_cliente.nombre_delapromocion}}
+        {{form_promocionhasproducto.promocion_idpromocion}}
+      </div>
+      <div class="col l6 m12 s12">
+      </div>
+    </div>
+  </div>
+
+
+  <div class="divider"></div>
+  <div class="row">
+  <div class="divider"></div>
+    <div class="col l6 m12 s12">
+      <table>
+        <thead>
+          <tr>
+              <th data-field="id">Lote</th>
+              <th data-field="name">Cod</th>
+              <th data-field="price">Cantidad</th>
+              <th data-field="price">Descripcion</th>
+              <th data-field="price">Precio</th>
+              <th data-field="price">Valor parcial</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>1</td>
+            <td>2</td>
+            <td>Suaves sabanas...</td>
+            <td>80.3</td>
+            <td>160.6</td>
+          </tr>
+        </tbody>
+          </table>
+          <div class="divider"></div>
+    </div>
+    <div class="col l6 m12 s12">
+        <label>Descuento: </label>{{form_DetalleVenta.descuento_iddescuento}}
+          <button type="submit" class="save btn btn-default">Aplicar Descuento</button>
+
+          <button type="submit" class="save btn btn-default">Remover Producto</button>
+
+
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+              <div id="results"></div>
+
+              <div class="divider"></div>
+              <div class="row">
+
+                <div class="col l6 m12 s12">
+              <label>Tipo de pago: </label>{{form_Venta.tipo_pago_idtipo_pago}}
+                <label>Anotaciones: </label>{{form_Venta.anotaciones_venta}}
+                </div>
+                <div class="col l6 m12 s12">
+                  <button type="submit" class="save btn btn-default">Realizar Venta</button>
+
+                </div>
+
+              </div>
+<div class="divider"></div>
+<div class="col l6 m12 s12">
+    <label>Código de autorización: </label>{{form_cliente.codigo_autorizacion}}
+      <button type="submit" class="save btn btn-default">Anular venta</button>
+</div>
+
+</form>
+
+    {% endblock %}
+
     {% block extra_scripts %}
     <script type="text/javascript">
-/*Espacio para JQuery y busquedas dentro del DOM
-===========================================================================*/
+    /*Espacio para JQuery y busquedas dentro del DOM
+    ===========================================================================*/
     var selectDefault = $("#id_cliente_idcliente").html();
 
     //Función que crea un selector starts-with
@@ -29,9 +196,39 @@
 
         //Función que coloca el cursor en el textbox Nit del cliente, al momento de cargar la página
         $( document ).ready(function(){ //document indica toda la página, ready indica que ya se haya cargado el DOM
-          $('input#id_nit_del_cliente').focus(); //se accede al input con el id que está después de #,
-                                                 //.focus() indica que ahí se colocará el cursor
+          $('input#id_nit_del_cliente').focus(); //se accede al input con el id que está después de #, //.focus() indica que ahí se colocará el cursor
+          $('#bloque_caracteristicas_producto').hide(); //.hide() oculta el elemento con ese id
+          $('#bloque_promocion').hide();
         });
+
+        //Evento del mouse para detectar cuando se haga click en un elemento
+        $( '#check_mostrar' ).on({
+            //mouseenter: function() {
+            //    console.log( "hovered over a div" );
+            //},
+            //mouseleave: function() {
+            //    console.log( "mouse left a div" );
+            //},
+            click: function() {
+              if(document.getElementById('check_mostrar').checked) {
+                $("#bloque_caracteristicas_producto").show();
+              }
+              else {
+                $("#bloque_caracteristicas_producto").hide();
+              }
+            }
+        });
+        $( '#check_promocion' ).on({
+            click: function() {
+              if(document.getElementById('check_promocion').checked) {
+                $("#bloque_promocion").show();
+              }
+              else {
+                $("#bloque_promocion").hide();
+              }
+            }
+        });
+        //bloque_promocion
 
         //Funcion para buscar el nit del cliente:
         $( 'input#id_nit_del_cliente' ).keyup(function(e){
@@ -85,8 +282,8 @@
           }
         });
 
-/*Espacio para Ajax
-============================================================================*/
+    /*Espacio para Ajax
+    ============================================================================*/
 
         function obtener_producto() {
           console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
@@ -166,185 +363,4 @@
 
         });
     </script>
-    {% endblock %}
-
-    {% block content %}
-
-        <h5>Punto de Venta</h5>
-        <form method="POST" class="post-form">
-          {% csrf_token %}
-          <div class="row">
-            <div class="col l6 m12 s12">
-                <label>Elejir caja: </label>{{form_Venta.caja_idcaja}}
-            </div>
-            <div class="col l6 m12 s12">
-              <input type="checkbox" id="es_cotizacion" />
-              <label for="es_cotizacion"><h6>Cotizacion</h6> </label>{{ form_Venta.es_cotizacion}}
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col l6 m12 s12">
-              <label>Cliente: </label>{{ form_cliente.nit_del_cliente}}{{form_Venta.cliente_idcliente}}
-            </div>
-
-            <div class="col l6 m12 s12">
-
- <label  for="vendedor_venta">Vendedor: </label>{{form_Venta.vendedor_venta}}
-
-
-        </div>
-      </div>
-
-      <div class="row">
-      <div class="col l6 m12 s12">
-      <label>Cantidad: </label>{{form_DetalleVenta.cantidad_venta}}
-      <label>Valor: </label>{{form_Precio.valor_precio}}
-      </div>
-      <div class="col l6 m12 s12">
-      <label for="codigobarras_producto">Código Barras: </label>{{ form_Producto.codigobarras_producto }}
-
-      <input checked="checked" class="filled-in" id="check_mostrar" name="mostrar_check" type="checkbox" />
-      <label for="check_mostrar">Mostrar caracteristicas del producto:</label>
-
-      <input checked="checked" class="filled-in" id="check_promocion" name="promocion_check" type="checkbox" />
-      <label for="check_promocion">Es promocion:</label>
-
-      </div>
-      </div>
-
-
-      <div class="row">
-        <ul id="talk">
-        <div class="divider"></div>
-        <p style="color: #80bfff;"><b>Características del producto</b></p>
-      <div class="col l6 m12 s12">
-          <div class="col  s6">
-            <label>Marca: </label>{{form_TipoProducto.marca_id_marca}}
-            <label>Tipo: </label>{{form_estiloproducto.tipo_producto_idtipo_producto}}
-            <label>Estilo: </label>{{form_Producto.estilo_idestilo}}
-            <label for="id_talla_idtalla">Talla: </label>{{form_Producto.talla_idtalla}}
-          </div>
-
-
-
-          <div class="col  s6">
-            <label>Codigo Estilo: </label>{{form_Producto.codigoestilo_producto}}
-            <label>Color: </label>{{form_Producto.color_idcolor}}
-            <label>Género: </label>{{form_Producto.genero_idgener}}
-
-          </div>
-
-      </div>
-      <div class="col l6 m12 s12">
-        <div class="row">
-        <div class="col s12 m6">
-          <div class="card blue-grey darken-1">
-            <div class="card-content white-text">
-              <span class="card-title">Imagen</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      </div>
-    </div>
-    <div class="row">
-        <div class="col l6 m12 s12">
-<label>Descripcion: </label>{{form_InventarioProducto.producto_codigo_producto}}
-</div>   </div>
-
-
-            <div class="divider"></div>
-
-            <p>
-
-            </p>
-            <div class="divider"></div>
-
-  <div class="row">
-    <p style="color: #80bfff;"><b>Promoción</b></p>
-    <div class="col l6 m12 s12">
-      <label>Nombre de la promocion: </label>{{form_cliente.nombre_delapromocion}}
-      {{form_promocionhasproducto.promocion_idpromocion}}
-    </div>
-    <div class="col l6 m12 s12">
-    </div>
-  </div>
-
-
-  <div class="divider"></div>
-  <div class="row">
-  <div class="divider"></div>
-    <div class="col l6 m12 s12">
-      <table>
-        <thead>
-          <tr>
-              <th data-field="id">Lote</th>
-              <th data-field="name">Cod</th>
-              <th data-field="price">Cantidad</th>
-              <th data-field="price">Descripcion</th>
-              <th data-field="price">Precio</th>
-              <th data-field="price">Valor parcial</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>1</td>
-            <td>2</td>
-            <td>Suaves sabanas...</td>
-            <td>80.3</td>
-            <td>160.6</td>
-          </tr>
-        </tbody>
-          </table>
-          <div class="divider"></div>
-          <div class="divider"></div>
-          <div class="divider"></div>
-            <button type="submit" class="save btn btn-default">Remover Producto</button>
-    </div>
-    <div class="col l6 m12 s12">
-        <label>Descuento: </label>{{form_DetalleVenta.descuento_iddescuento}}
-          <button type="submit" class="save btn btn-default">Aplicar Descuento</button>
-
-
-    </div>
-  </div>
-
-
-
-
-
-
-
-
-  <div class="divider"></div>
-
-
-              <div id="results"></div>
-
-
-              <div class="divider"></div>
-              <div class="row">
-
-                <div class="col l6 m12 s12">
-              <label>Tipo de pago: </label>{{form_Venta.tipo_pago_idtipo_pago}}
-                <label>Anotaciones: </label>{{form_Venta.anotaciones_venta}}
-                </div>
-                <div class="col l6 m12 s12">
-                  <button type="submit" class="save btn btn-default">Realizar Venta</button>
-
-                </div>
-
-              </div>
-<div class="divider"></div>
-<div class="col l6 m12 s12">
-    <label>Código de autorización: </label>{{form_cliente.codigo_autorizacion}}
-      <button type="submit" class="save btn btn-default">Anular venta</button>
-</div>
-
-        </form>
-
-
     {% endblock %}
