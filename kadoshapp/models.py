@@ -855,7 +855,7 @@ class Venta(models.Model):
     contado_venta = models.BooleanField(default=True)
     estado_venta = models.BooleanField(default=True)
     anotaciones_venta = models.CharField(max_length=100, blank=True, null=True)  # Field name made lowercase.
-    vendedor_venta = models.ForeignKey('Empleado', related_name='empleado_empleado_vendio')  # Field name made lowercase.
+    vendedor_venta = models.ForeignKey('Empleado', db_column='vendedor_venta',related_name='empleado_empleado_vendio')  # Field name made lowercase.
     es_cotizacion = models.BooleanField(default=False)
 
     def __str__(self):
