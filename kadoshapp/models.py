@@ -161,6 +161,7 @@ class Compra(models.Model):
     fecha_realizacion_compra = models.DateField(default=timezone.now)
     casa_matriz = models.ForeignKey('Proveedor', db_column='Casa_matriz',related_name='proveedor_casa_matriz',blank=True)  # Field name made lowercase.
     empleado_recibio = models.ForeignKey('Empleado', db_column='Empleado_recibio',related_name='empleado_empleado_recibio')  # Field name made lowercase.
+    empleado_reviso = models.ForeignKey('Empleado', db_column='Empleado_reviso',related_name='empleado_empleado_reviso')  # Field name made lowercase.
 
     def __str__(self):
         return 'Compra: %s - Proveedor: %s  - Fecha: %s' % (self.idcompra, self.proveedor_idproveedor.nombre_proveedor, self.fecha_compra)
@@ -854,6 +855,7 @@ class Venta(models.Model):
     contado_venta = models.BooleanField(default=True)
     estado_venta = models.BooleanField(default=True)
     anotaciones_venta = models.CharField(max_length=100, blank=True, null=True)  # Field name made lowercase.
+    vendedor_venta = models.ForeignKey('Empleado', related_name='empleado_empleado_vendio')  # Field name made lowercase.
 
     def __str__(self):
         return '%s - Cli: %s F: %s' % (self.idventa,self.cliente_idcliente,self.fecha_venta)
