@@ -173,6 +173,15 @@
         <h5>Punto de Venta</h5>
         <form method="POST" class="post-form">
           {% csrf_token %}
+          <div class="row">
+            <div class="col l6 m12 s12">
+                <label>Elejir caja: </label>{{form_Venta.caja_idcaja}}
+            </div>
+            <div class="col l6 m12 s12">
+              <input type="checkbox" id="es_cotizacion" />
+              <label for="es_cotizacion"><h6>Cotizacion</h6> </label>{{ form_Venta.es_cotizacion}}
+            </div>
+          </div>
 
           <div class="row">
             <div class="col l6 m12 s12">
@@ -180,10 +189,10 @@
             </div>
 
             <div class="col l6 m12 s12">
-              <div class="col  s6">
-<label>Vendedor: </label>{{form_Producto.empleado_idempleado}}
 
-          </div>
+ <label  for="vendedor_venta">Vendedor: </label>{{form_Venta.vendedor_venta}}
+
+
         </div>
       </div>
 
@@ -193,7 +202,7 @@
       <label>Valor: </label>{{form_Precio.valor_precio}}
       </div>
       <div class="col l6 m12 s12">
-      <label for="id_codigo_producto">Código: </label>{{ form_Producto.codigo_producto }}
+      <label for="codigobarras_producto">Código Barras: </label>{{ form_Producto.codigobarras_producto }}
 
       <input checked="checked" class="filled-in" id="check_mostrar" name="mostrar_check" type="checkbox" />
       <label for="check_mostrar">Mostrar caracteristicas del producto:</label>
@@ -220,9 +229,10 @@
 
 
           <div class="col  s6">
+            <label>Codigo Estilo: </label>{{form_Producto.codigoestilo_producto}}
             <label>Color: </label>{{form_Producto.color_idcolor}}
             <label>Género: </label>{{form_Producto.genero_idgener}}
-            <label>Combo: </label>{{form_Producto.combo_idcombo}}
+
           </div>
 
       </div>
@@ -248,7 +258,7 @@
             <div class="divider"></div>
 
             <p>
-            <label>Al contado: </label>{{form_Venta.contado_venta}}
+
             </p>
             <div class="divider"></div>
 
@@ -289,9 +299,16 @@
           </tr>
         </tbody>
           </table>
+          <div class="divider"></div>
+          <div class="divider"></div>
+          <div class="divider"></div>
+            <button type="submit" class="save btn btn-default">Remover Producto</button>
     </div>
     <div class="col l6 m12 s12">
-          <button type="submit" class="save btn btn-default">Realizar Venta</button>
+        <label>Descuento: </label>{{form_DetalleVenta.descuento_iddescuento}}
+          <button type="submit" class="save btn btn-default">Aplicar Descuento</button>
+
+
     </div>
   </div>
 
@@ -303,7 +320,7 @@
 
 
   <div class="divider"></div>
-  <div class="divider"></div>
+
 
               <div id="results"></div>
 
@@ -313,13 +330,19 @@
 
                 <div class="col l6 m12 s12">
               <label>Tipo de pago: </label>{{form_Venta.tipo_pago_idtipo_pago}}
+                <label>Anotaciones: </label>{{form_Venta.anotaciones_venta}}
                 </div>
                 <div class="col l6 m12 s12">
-                    <label>Código de autorización: </label>{{form_cliente.codigo_autorizacion}}
-                      <button type="submit" class="save btn btn-default">Anular venta</button>
-                </div>
-              </div>
+                  <button type="submit" class="save btn btn-default">Realizar Venta</button>
 
+                </div>
+
+              </div>
+<div class="divider"></div>
+<div class="col l6 m12 s12">
+    <label>Código de autorización: </label>{{form_cliente.codigo_autorizacion}}
+      <button type="submit" class="save btn btn-default">Anular venta</button>
+</div>
 
         </form>
 

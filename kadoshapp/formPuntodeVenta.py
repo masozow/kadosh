@@ -12,12 +12,12 @@ class Form_PuntoVenta_busquedas(forms.Form):
 class Form_PuntoVenta_Venta(forms.ModelForm):
     class Meta:
         model=Venta
-        fields=('cliente_idcliente','empleado_idempleado','tipo_pago_idtipo_pago','contado_venta',)
+        fields=('anotaciones_venta','cliente_idcliente','empleado_idempleado','tipo_pago_idtipo_pago','contado_venta','vendedor_venta','caja_idcaja','es_cotizacion',)
 
 class Form_PuntoVenta_DetalleVenta(forms.ModelForm):
     class Meta:
         model=DetalleVenta
-        fields=('cantidad_venta',)
+        fields=('cantidad_venta','descuento_iddescuento',)
 
 class Form_PuntoVenta_InventarioProducto(forms.ModelForm):
     class Meta:
