@@ -16,9 +16,9 @@ class Form_TrasladoMerca_Producto(forms.ModelForm):
 
 class Form_TrasladoMerca_TipoProducto(forms.ModelForm):
     class Meta:
-        model=MarcaHasTipoProducto
+        model=Producto
         fields=('marca_id_marca',)
-        
+
 class Form_TrasladoMerca_InventarioProducto(forms.ModelForm):
     class Meta:
         model=InventarioProducto
