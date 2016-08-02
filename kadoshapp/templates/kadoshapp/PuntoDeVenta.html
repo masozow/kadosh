@@ -8,7 +8,7 @@
       <link type="text/css" rel="stylesheet" href="{% static "css/formularios.css" %}"/>
     {% endblock %}
 
-        {% block encabezado %}Punto de venta{% endblock %}
+    {% block encabezado %}Punto de venta{% endblock %}
     {% block content %}
         <form method="POST" class="post-form">
           {% csrf_token %}
@@ -228,7 +228,7 @@
               }
             }
         });
-        //bloque_promocion
+
 
         //Funcion para buscar el nit del cliente:
         $( 'input#id_nit_del_cliente' ).keyup(function(e){
