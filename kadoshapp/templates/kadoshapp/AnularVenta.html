@@ -9,7 +9,7 @@
    {% block content %}
 
 
-   <div class="container">
+
        <h5>Anular Venta</h5>
        <form method="POST" class="post-form">
          {% csrf_token %}
@@ -91,5 +91,5 @@
            {{ form_empleado.as_p }}-->
            <button type="submit" class="save btn btn-default">Anular</button>
        </form>
-    </div>
+  
    {% endblock %}

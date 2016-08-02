@@ -5,7 +5,7 @@
      <link type="text/css" rel="stylesheet" href="{% static "css/formularios.css" %}"/>
    {% endblock %}
    {% block content %}
-   <div class="conteiner">
+
        <h5>Ofeta producto/Crear promociones</h5>
        <form method="POST" class="post-form">
          {% csrf_token %}
@@ -141,6 +141,6 @@
            {{ form_cantidad.as_p }}-->
 
        </form>
-    </div>
+  
    {% endblock %}
 <!--para que subiera->

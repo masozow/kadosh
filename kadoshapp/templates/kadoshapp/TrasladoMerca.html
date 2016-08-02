@@ -5,7 +5,7 @@
       <link type="text/css" rel="stylesheet" href="{% static "css/formularios.css" %}"/>
     {% endblock %}
     {% block content %}
-<div class="container">
+
         <h5>Traslado De Mercaderia</h5>
         <form method="POST" class="post-form">
           {% csrf_token %}
@@ -101,5 +101,5 @@
 
             <button type="submit" class="save btn btn-default">Guardar</button>
         </form>
-<div>
+
     {% endblock %}

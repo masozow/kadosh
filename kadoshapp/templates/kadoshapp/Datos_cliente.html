@@ -21,7 +21,7 @@
         <script type="text/javascript" src="{% static 'admin/js/calendar.js' %}"></script>
         <script type="text/javascript" src="{% static 'admin/js/admin/DateTimeShortcuts.js' %}"></script-->
     <!--hasta acá, si funcionó, es para el widget del admin-->
-<div class="container">
+
         <h5>Registro de Cliente</h5>
         <form method="POST" class="post-form">
           {% csrf_token %}
@@ -64,7 +64,7 @@
 
             <button  type="submit" class="save btn btn-default">Guardar</button>
         </form>
-</div>
+
         <!--script>
           $(function() {
             $( ".datepicker" ).datepicker({

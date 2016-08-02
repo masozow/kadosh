@@ -206,9 +206,9 @@ nav .input-field label.active {
 
 .input-field .prefix ~ input,
 .input-field .prefix ~ textarea {
-  margin-left: 3rem;
+ margin-left: 3rem;
   width: 92%;
-  width: calc(100% - 3rem);
+  /*width: calc(100% - 3rem);*/
 }
 
 .input-field .prefix ~ textarea {
@@ -218,7 +218,7 @@ nav .input-field label.active {
 .input-field .prefix ~ label {
   margin-left: 3rem;
 }
-
+/*
 @media only screen and (max-width: 992px) {
   .input-field .prefix ~ input {
     width: 86%;
@@ -231,7 +231,7 @@ nav .input-field label.active {
     width: 80%;
     width: calc(100% - 3rem);
   }
-}
+}*/
 
 /* Search Field */
 .input-field input[type=search] {
