@@ -111,13 +111,13 @@
   <div class="row">
   <div class="divider"></div>
     <div class="col l6 m12 s12">
-      <table>
+      <table id="tabla_productos">
         <thead>
           <tr>
-              <th data-field="id">Lote</th>
+              <th data-field="id">Inv</th>
               <th data-field="name">Cod</th>
               <th data-field="price">Cantidad</th>
-              <th data-field="price">Descripcion</th>
+              <th data-field="price">Producto</th>
               <th data-field="price">Precio</th>
               <th data-field="price">Valor parcial</th>
           </tr>
@@ -173,103 +173,39 @@
     {% endblock %}
 
     {% block extra_scripts %}
+    <script type="text/javascript" src="{% static 'js/funciones.js' %}"></script>
     <script type="text/javascript">
     /*Espacio para JQuery y busquedas dentro del DOM
     ===========================================================================*/
-    var selectDefault = $("#id_cliente_idcliente").html();
-
-    //Función que crea un selector starts-with
-    $.extend($.expr[":"], {
-      "starts-with": function(elem, i, data, set) {
-        var text = $.trim($(elem).text()),
-        term = data[3];
-        // first index is 0
-        return text.indexOf(term) === 0;
-        },
-      "ends-with": function(elem, i, data, set) {
-        var text = $.trim($(elem).text()),
-        term = data[3];
-        // last index is last possible
-        return text.lastIndexOf(term) === text.length - term.length;
-        }
-    });
+      //Es importante colocar esta linea antes de llamar a las funciones de busqueda
+      //dentro de dropdown, porque obtiene el estado por defecto del dropdown, asi
+      //se puede resetear. Hay que hacer con cada dropdown donde se busque.
+       var selectDefault = $("#id_cliente_idcliente").html();
 
         //Función que coloca el cursor en el textbox Nit del cliente, al momento de cargar la página
+        //Similar al FormLoad
         $( document ).ready(function(){ //document indica toda la página, ready indica que ya se haya cargado el DOM
           $('input#id_nit_del_cliente').focus(); //se accede al input con el id que está después de #, //.focus() indica que ahí se colocará el cursor
           $('#bloque_caracteristicas_producto').hide(); //.hide() oculta el elemento con ese id
           $('#bloque_promocion').hide();
         });
 
-        //Evento del mouse para detectar cuando se haga click en un elemento
-        $( '#check_mostrar' ).on({
-            //mouseenter: function() {
-            //    console.log( "hovered over a div" );
-            //},
-            //mouseleave: function() {
-            //    console.log( "mouse left a div" );
-            //},
-            click: function() {
-              if(document.getElementById('check_mostrar').checked) {
-                $("#bloque_caracteristicas_producto").show();
-              }
-              else {
-                $("#bloque_caracteristicas_producto").hide();
-              }
-            }
-        });
-        $( '#check_promocion' ).on({
-            click: function() {
-              if(document.getElementById('check_promocion').checked) {
-                $("#bloque_promocion").show();
-              }
-              else {
-                $("#bloque_promocion").hide();
-              }
-            }
-        });
-
-
+        //Funcion que oculta o muestra el elemento con el id del 2do parametro,
+        //al dar clic en el checkbox con el id del primer parametro
+        //aqui se envia el primer id como parametro sin #, solo el primero
+        click_ocultar_mostrar('check_mostrar',"#bloque_caracteristicas_producto")
+        click_ocultar_mostrar('check_promocion',"#bloque_promocion")
         //Funcion para buscar el nit del cliente:
-        $( 'input#id_nit_del_cliente' ).keyup(function(e){
-          var nit = $('input#id_nit_del_cliente').val();
-          if(e.keyCode=='8') //Si se borra algo, regresa el select al valor original (se hace esto porque se trababa antes)
-          {
-            $("#id_cliente_idcliente").html(selectDefault);
-          }
-          if(nit==='')
-          {
-          }
-          else {
-            $("#id_cliente_idcliente").html(selectDefault);
-            $("#id_cliente_idcliente option:starts-with("+nit+")").attr('selected', true);
-            if($("#id_cliente_idcliente option:starts-with("+nit+")").length==0){ //si el texto no coincide, se resetea el select
-              $("#id_cliente_idcliente").html(selectDefault);
-            }
-          }
-        });
+        //el primer parametro es el id del txtbox y el segundo el id del dropdownlist
+        buscar_dropdown_startswith('input#id_nit_del_cliente','#id_cliente_idcliente');
 
-        //Función que controla el tabindex, para pasar de Nit del cliente a Código del producto
-        $( 'input#id_nit_del_cliente' ).keydown(function(e){ //Keydown es para que al presionarse la tecla haga algo.
-                                                            //El parámetro "e" captura la tecla del teclado
-          var keyCode = e.keyCode || e.which; //se declara una variable que capturará cualquiera de esos dos valores
-          if (e.keyCode==13) { //keycode obtiene el valor ascii de la tecla presionada
-            e.preventDefault(); //previene que se realice la acción por defecto que efectuaría el navegador con esa tecla
-            var text=$("#id_cliente_idcliente option:selected").text().split(' ');
-            var nit = $('input#id_nit_del_cliente').val();
-            if(text[0]===nit)
-            {
-              $('input#id_codigobarras_producto').focus();
-            }
-            else {
-              $('input#id_nit_del_cliente').val('');
-              $('input#id_nit_del_cliente').focus();
-              $("#id_cliente_idcliente").html(selectDefault);
-              alert('El cliente no existe');
-            }
-          }
-          //$('input#id_nit_del_cliente').focus();
-        });
+        //Función que cmprueba si el texto del textbox es igual al del dropdown
+        //si es asi pasa el cursor a otro textbox, de lo contrario muestra una alerta
+        //y devuelve el dropdown a su estado original. Se le envia ademas el parametro para que se haga un split
+        //del texto del elemento seleccionado en el dropdwon. Y otro parametro para saber que posicion del arreglo
+        //resultante del split, es la que se usara para la comparacion
+        comprobar_pasarsiguiente_mostrarmensaje('input#id_nit_del_cliente','input#id_codigobarras_producto','#id_cliente_idcliente','El cliente no existe',' ',0);
+
         //Función que realiza una acción al leer código de barras
         $( 'input#id_codigobarras_producto' ).keydown(function(e){
           var keyCode = e.keyCode || e.which; //la propiedad wich indica la tecla o el botón que se ha presionado específicamente
@@ -296,11 +232,27 @@
                 // Si el response es correcto (si la respuesta del servidor es correcta)
                 success : function(json) {
                     $(codigo_buscado).val(''); // Se limpia el campo del codigo del producto
-                    console.log(JSON.stringify(json)); // Se envian los datos recibidos a la consola
-                    var resultado=JSON.parse(json.codprod);
-                    console.log("oooooooooooooooooooooooooooooo");
-                    console.log(json.codprod.[0].pk);
-                    $("#talk").prepend("<li><strong>"+json.codprod+"</strong> - <em> "+json.valorprod[0]+"</em> - <span> "+json.nombre[0]+"</span></li>");
+                    var res_valorprod=JSON.parse(json.valorprod);
+                    var res_inventario=JSON.parse(json.inventario);
+                    var res_nombre=JSON.parse(json.nombre);
+                    var campos_valorprod =res_valorprod[0].fields;
+                    var campos_nombre =res_nombre[0].fields;
+                    var cantidad=$('input#id_cantidad_venta').val();
+                    var valor_parcial=cantidad*campos_valorprod.valor_precio;
+                    console.log(res_nombre[0].pk);
+                    console.log(campos_valorprod.valor_precio);
+                    console.log(res_inventario[0].pk);
+                    console.log(campos_nombre.nombre_producto);
+                    //$('#tabla_productos tr:last').after('<tr>'+ '</tr>');
+                    $('#tabla_productos > tbody:last-child').append('<tr>'+
+                                                                      '<td>'+res_inventario[0].pk+'</td>'+
+                                                                      '<td>'+res_nombre[0].pk+'</td>'+
+                                                                      '<td>'+cantidad+'</td>'+
+                                                                      '<td>'+campos_nombre.nombre_producto+'</td>'+
+                                                                      '<td>'+campos_valorprod.valor_precio+'</td>'+
+                                                                      '<td>'+valor_parcial+'</td>'+
+                                                                    '</tr>');
+                    //$("#talk").prepend("<li><strong>"+json.codprod+"</strong> - <em> "+json.valorprod[0]+"</em> - <span> "+json.nombre[0]+"</span></li>");
                     console.log("success"); // Solo se comprueba mediante la consola, que el llamado fue correcto
                 },
 
@@ -314,5 +266,6 @@
         };
     </script>
 
+    <script type="text/javascript" src="{% static 'js/selectorStartsWith.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/token.js' %}"></script>
     {% endblock %}

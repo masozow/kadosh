@@ -49,16 +49,27 @@ def BuscarProducto(request):
 
         response_data = {} #declarando un diccionario vacio
         #response_data['recibido']=txt_codigo_producto
-        resp_producto=Producto.objects.all().filter(codigobarras_producto=txt_codigo_producto)
-        resp_inventario=InventarioProducto.objects.all().filter(producto_codigo_producto__in=resp_producto).order_by('-idinventario_producto')[:1] #__in sirve para indicar que ese campo debe ser buscado dentro del objeto al que se hace referencia
-        resp_precio=Precio.objects.all().filter(producto_codigo_producto__in=resp_producto,estado_precio=1).order_by('-idprecio')[:1] #
+        resp_producto=Producto.objects.filter(codigobarras_producto=txt_codigo_producto)
+        resp_inventario=InventarioProducto.objects.filter(producto_codigo_producto__in=resp_producto).order_by('-idinventario_producto')[:1]
+        #__in sirve para indicar que ese campo debe ser buscado dentro del objeto al que se hace referencia
+        resp_precio=Precio.objects.filter(producto_codigo_producto__in=resp_producto,estado_precio=1).order_by('-idprecio')[:1] #
+        #resp_productonombre=Producto.objects.filter(codigobarras_producto=txt_codigo_producto).only('nombre_producto')
+        #resp_productocodigo=Producto.objects.filter(codigobarras_producto=txt_codigo_producto).only('codigo_producto')
 
-        response_data['codprod']=serializers.serialize('json', list(resp_producto), fields=('codigo_producto')) #serializers.serialize('json', resp_producto.only('codigo_producto'))#
-        response_data['inventario']=serializers.serialize('json', list(resp_inventario), fields=('idinventario_producto'))
+        #response_data['codprod']=resp_productocodigo
+        #response_data['inventario']=resp_inventario
+        #response_data['nombre']=resp_productonombre
+        #response_data['valorprod']=resp_precio
+
+        #response_data = {'codprod': resp_productocodigo,'inventario':resp_inventario,'nombre':resp_productonombre,'valorprod':resp_precio}
+        #respuesta=serializers.serialize('json',response_data)
+        #response_data['codprod']=serializers.serialize('json', list(resp_producto), fields=('pk')) #serializers.serialize('json', resp_producto.only('codigo_producto'))#
+        response_data['inventario']=serializers.serialize('json', list(resp_inventario), fields=('pk'))
         response_data['nombre']=serializers.serialize('json', list(resp_producto), fields=('nombre_producto'))
         response_data['valorprod']=serializers.serialize('json', list(resp_precio), fields=('valor_precio'))
 
         return HttpResponse(
+            #response_data,
             json.dumps(response_data),
             content_type="application/json"
         )
