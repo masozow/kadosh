@@ -22,4 +22,5 @@ def Promocion(request):
         form_tipoproducto=form_Promocion_TipoProducto()
         form_inventarioproducto=Form_Promocion_InventarioProducto()
         form_cantidad=form_Promocion_Cantidad()
-    return render(request, 'kadoshapp/Promocion.html', {'form_promocion':form_promocion, 'form_producto':form_producto, 'form_tipoproducto':form_tipoproducto, 'form_inventarioproducto':form_inventarioproducto , 'form_cantidad':form_cantidad  })
+        form_precio=Form_Promocion_Precio()
+    return render(request, 'kadoshapp/Promocion.html', {'form_precio':form_precio,'form_promocion':form_promocion, 'form_producto':form_producto, 'form_tipoproducto':form_tipoproducto, 'form_inventarioproducto':form_inventarioproducto , 'form_cantidad':form_cantidad  })

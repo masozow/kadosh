@@ -17,7 +17,21 @@ class Form_Promocion_InventarioProducto(forms.ModelForm):
     class Meta:
         model=InventarioProducto
         fields=('producto_codigo_producto',)
+
+class Form_Promocion_Precio(forms.ModelForm):
+    class Meta:
+        model=Precio
+        fields=('valor_precio',)
+        widgets = {
+            'fechainicial_precio': widgets.AdminDateWidget(), #este funcionó con todo el bloque de código que se agregó en el template
+            'fechafinal_precio': widgets.AdminDateWidget(),
+            }
+
 class Form_Promocion_Promocion(forms.ModelForm):
     class Meta:
         model=Promocion
-        fields=('nombre_promocion','valor_promocion','fecha_inicialpromocion','fecha_finalpromocion',)
+        fields=('nombre_promocion','valor_promocion',)
+        widgets = {
+            'fecha_inicialpromocion': widgets.AdminDateWidget(), #este funcionó con todo el bloque de código que se agregó en el template
+            'fecha_finalpromocion': widgets.AdminDateWidget(),
+            }

@@ -12,14 +12,22 @@
      <div class="row">
        <div class=" col l6 m12 s12">
            <label for="caja_idcaja"><h6>Numero de caja:</h6> </label>{{ form_Cierrecaja.caja_idcaja}}
-           <label for="empleado_idempleado"><h6>Empleado:</h6> </label>{{ form_Cierrecaja.empleado_idempleado}}
-           <label for="total_calculado_cierredecaja"><h6>Total Calculado:</h6> </label>{{ form_Cierrecaja.total_calculado_cierredecaja}}
+
+           <label for="total_calculado_cierredecaja"><h6>Total calculado:</h6> </label>{{ form_Cierrecaja.total_calculado_cierredecaja}}
+           <label for="total_efectivo_cierredecaja"><h6>Total efectivo:</h6> </label>{{ form_Cierrecaja.total_efectivo_cierredecaja}}
+           <label for="total_cheque_cierredecaja"><h6>Total cheque:</h6> </label>{{ form_Cierrecaja.total_cheque_cierredecaja}}
+           <label for="total_tarjeta_cierredecaja"><h6>Total tarjeta:</h6> </label>{{ form_Cierrecaja.total_tarjeta_cierredecaja}}
+
+
            <label for="total_real_cierredecaja"><h6>Total Cierre:</h6> </label>{{ form_Cierrecaja.total_real_cierredecaja}}
 
       </div>
       <div class=" col l6 m12 s12">
+         <label for="empleado_idempleado"><h6>Empleado que autoriza:</h6> </label>{{ form_Cierrecaja.empleado_idempleado}}
           <label for="codigo_autorización_empleado"><h6>Codigo de autorizacion:</h6> </label>{{ form_empleado.codigo_autorización_empleado}}
-     </div>
+          <label for="total_egresos_cierredecaja"><h6>Total egresos:</h6> </label>{{ form_Cierrecaja.total_egresos_cierredecaja}}
+
+    </div>
 
      </div>
           <!--  {{ form_Cierrecaja.as_p }}

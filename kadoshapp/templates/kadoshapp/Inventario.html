@@ -11,59 +11,54 @@
          {% csrf_token %}
          <div class="row">
           <div class=" col l6 m12 s12">
-
-                  <input type="checkbox" id="completo_inventario" />
-                  <label for="completo_inventario">Inventario Completo</label>
-                  {{ form_inventariorealizado.completo_inventario}}
-
-
-          </div>
-          <div class=" col l6 m12 s12">
-            <label for="empleado_idempleado"><h6>Empleadp:</h6> </label>{{ form_inventariorealizado.empleado_idempleado}}
-            <label for="codigo_autorización_empleado"><h6>Codigo Autorizacion:</h6> </label>{{ form_empleado.codigo_autorización_empleado}}
-          </div>
-        </div>
-        <div class="row">
-          <div class=" col l6 m12 s12">
             <div class="col s6">
               <label for="bodega_idbodega"><h6>Bodega:</h6> </label>{{ form_anaquel.bodega_idbodega}}
             </div>
             <div class="col s6">
               <label for="anaquel_idanaquel"><h6>Anaquel:</h6> </label>{{ form_inventario.anaquel_idanaquel}}
             </div>
+            <table>
+      <thead>
+        <tr>
+            <th data-field="id">Name</th>
+            <th data-field="name">Item Name</th>
+            <th data-field="price">Item Price</th>
+        </tr>
+      </thead>
 
-              <table>
-        <thead>
-          <tr>
-              <th data-field="id">Name</th>
-              <th data-field="name">Item Name</th>
-              <th data-field="price">Item Price</th>
-          </tr>
-        </thead>
+      <tbody>
+        <tr>
+          <td>Alvin</td>
+          <td>Eclair</td>
+          <td>$0.87</td>
+        </tr>
+        <tr>
+          <td>Alan</td>
+          <td>Jellybean</td>
+          <td>$3.76</td>
+        </tr>
+        <tr>
+          <td>Jonathan</td>
+          <td>Lollipop</td>
+          <td>$7.00</td>
+        </tr>
+      </tbody>
+    </table>
 
-        <tbody>
-          <tr>
-            <td>Alvin</td>
-            <td>Eclair</td>
-            <td>$0.87</td>
-          </tr>
-          <tr>
-            <td>Alan</td>
-            <td>Jellybean</td>
-            <td>$3.76</td>
-          </tr>
-          <tr>
-            <td>Jonathan</td>
-            <td>Lollipop</td>
-            <td>$7.00</td>
-          </tr>
-        </tbody>
-      </table>
 
           </div>
           <div class=" col l6 m12 s12">
-          <label for="cantidad_real_inventario_realizado"><h6>Conteo Real:</h6> </label>{{ form_detallainventario.cantidad_real_inventario_realizado}}
-          <label for="motivo_idmotivo"><h6>Motivo Ajuste:</h6> </label>{{ form_ajusteinventario.motivo_idmotivo}}
+            <p class="blue-text text-darken-2">Codigo Producto ####</p>
+            <label for="cantidad_real_ajuste"><h6>Conteo Real:</h6> </label>{{ form_ajusteinventario.cantidad_real_ajuste}}
+            <label for="motivo_idmotivo"><h6>Motivo Ajuste:</h6> </label>{{ form_ajusteinventario.motivo_idmotivo}}
+          </div>
+        </div>
+
+
+        <div class="row">
+        <h5> Ajustes Realizados</h5>
+          <div class=" col l12 m12 s12">
+
           </div>
        </div>
        <div class="row">

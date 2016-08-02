@@ -23,16 +23,31 @@
       </div>
       <div class="row">
         <div  class="col l6 m12 s12">
-            {{ form_cantidad.as_p }}
+          {{ form_cantidad.as_p }}
+        </div>
+        <div  class="col l6 m12 s12">
+          <label for="codigobarras_producto"><h6>Codigo barras:</h6> </label>{{ form_Producto.codigobarras_producto}}
+        </div>
+
+      </div>
+
+<div class="row">
+    <div  class="col l12 m12 s12">
+      <input checked="checked" class="filled-in" id="check_mostrar" name="mostrar_check" type="checkbox" />
+      <label for="check_mostrar">Mostrar caracteristicas del producto:</label>
+    </div>
+</div>
+      <div class="row">
+        <div  class="col l6 m12 s12">
+
 
         <label for="marca_id_marca"><h6>Marca:</h6> </label>{{ form_TipoProducto.marca_id_marca}}
           <label for="genero_idgener"><h6>Genero:</h6> </label>{{ form_Producto.genero_idgener}}
-          <label for="talla_idtalla"><h6>Talla:</h6> </label>{{ form_Producto.talla_idtalla}}
+            <label for="estilo_idestilo"><h6>Estilo:</h6> </label>{{ form_Producto.estilo_idestilo}}
+
           </div>
           <div class="col l6 m12 s12">
-            <label for="codigo_producto"><h6>Codigo:</h6> </label>{{ form_Producto.codigo_producto}}
-
-          <label for="estilo_idestilo"><h6>Estilo:</h6> </label>{{ form_Producto.estilo_idestilo}}
+         <label for="talla_idtalla"><h6>Talla:</h6> </label>{{ form_Producto.talla_idtalla}}
           <label for="color_idcolor"><h6>Color:</h6> </label>{{ form_Producto.color_idcolor}}
           </div>
           <div  class="col l12 m12 s12">
