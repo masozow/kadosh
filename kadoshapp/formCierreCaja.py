@@ -9,6 +9,7 @@ class Form_CierreDeCaj_CierreDeCaja(forms.ModelForm):
         model=CierreDeCaja
         fields=('total_egresos_cierredecaja','total_efectivo_cierredecaja','total_cheque_cierredecaja','total_tarjeta_cierredecaja','caja_idcaja','empleado_idempleado','total_real_cierredecaja','total_calculado_cierredecaja',)
 
+
 class Form_CierreDeCaj_Empleado(forms.ModelForm):
     class Meta:
         model=Empleado

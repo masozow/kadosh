@@ -8,7 +8,6 @@ from django.shortcuts import get_object_or_404
 
 from .models import *
 from .formPromocion import *
-
 #Vista de Promocion
 def Promocion(request):
     if request.method=='POST':

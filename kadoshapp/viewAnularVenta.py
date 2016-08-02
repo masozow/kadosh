@@ -5,7 +5,6 @@ import json
 import pdb #para hacer el debugging
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
-
 from .models import *
 from .formAnularVenta import *
 #vista Anular Venta

@@ -14,6 +14,7 @@ class Form_AnulaVenta_Venta(forms.ModelForm):
         fields=('idventa','empleado_idempleado',)
         widgets = {
             'fecha_venta': widgets.AdminDateWidget(), #este funcionó con todo el bloque de código que se agregó en el template
+
             }
 
 class Form_AnulaVenta_Cliente(forms.ModelForm):

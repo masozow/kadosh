@@ -27,6 +27,7 @@ class Form_Promocion_Precio(forms.ModelForm):
             'fechafinal_precio': widgets.AdminDateWidget(),
             }
 
+
 class Form_Promocion_Promocion(forms.ModelForm):
     class Meta:
         model=Promocion
