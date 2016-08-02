@@ -253,13 +253,13 @@
         $( 'input#id_nit_del_cliente' ).keydown(function(e){ //Keydown es para que al presionarse la tecla haga algo.
                                                             //El parámetro "e" captura la tecla del teclado
           var keyCode = e.keyCode || e.which; //se declara una variable que capturará cualquiera de esos dos valores
-          if (e.keyCode==9||e.keyCode==13) { //keycode obtiene el valor ascii de la tecla presionada
+          if (e.keyCode==13) { //keycode obtiene el valor ascii de la tecla presionada
             e.preventDefault(); //previene que se realice la acción por defecto que efectuaría el navegador con esa tecla
             var text=$("#id_cliente_idcliente option:selected").text().split(' ');
             var nit = $('input#id_nit_del_cliente').val();
             if(text[0]===nit)
             {
-              $('input#id_codigo_producto').focus();
+              $('input#id_codigobarras_producto').focus();
             }
             else {
               $('input#id_nit_del_cliente').val('');
@@ -271,33 +271,36 @@
           //$('input#id_nit_del_cliente').focus();
         });
         //Función que realiza una acción al leer código de barras
-        $( 'input#id_codigo_producto' ).keydown(function(e){
+        $( 'input#id_codigobarras_producto' ).keydown(function(e){
           var keyCode = e.keyCode || e.which; //la propiedad wich indica la tecla o el botón que se ha presionado específicamente
                                               //puede ser del teclado o del mouse, normaliza dos eventos: event.keyCode y event.charCode
           if(e.keyCode==13)
           {
             e.preventDefault();
-            obtener_producto();
+            obtener_producto('input#id_codigobarras_producto'); //Enviar como parametro el id del elemento txtBox
+                //Importante editar tambien el "data :" en la definicion de la funcion
             alert('Producto leído');
           }
         });
 
     /*Espacio para Ajax
     ============================================================================*/
-
-        function obtener_producto() {
+        function obtener_producto(codigo_buscado) {
           console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
             console.log("Se ejecuta la funcion"); // Solo se comprueba que el llamado a la funcion sea correcto
             $.ajax({
                 url : "/Buscar/Producto/", // La URL que llama a la vista
                 type : "POST", // Metodo http para realizar el request (peticion al servidor)
-                data : { codigo_producto : $('input#id_codigo_producto').val() }, // Datos enviados con el request en formato JSON
+                data : { codigobarras_producto : $(codigo_buscado).val() }, // Datos enviados con el request en formato JSON
 
                 // Si el response es correcto (si la respuesta del servidor es correcta)
                 success : function(json) {
-                    $('input#id_codigo_producto').val(''); // Se limpia el campo del codigo del producto
-                    console.log(json); // Se envian los datos recibidos a la consola
-                    $("#talk").prepend("<li><strong>"+json.codprod.pk+"</strong> - <em> "+json.lote+"</em> - <span> "+json.desc+"</span></li>");
+                    $(codigo_buscado).val(''); // Se limpia el campo del codigo del producto
+                    console.log(JSON.stringify(json)); // Se envian los datos recibidos a la consola
+                    var resultado=JSON.parse(json.codprod);
+                    console.log("oooooooooooooooooooooooooooooo");
+                    console.log(json.codprod.[0].pk);
+                    $("#talk").prepend("<li><strong>"+json.codprod+"</strong> - <em> "+json.valorprod[0]+"</em> - <span> "+json.nombre[0]+"</span></li>");
                     console.log("success"); // Solo se comprueba mediante la consola, que el llamado fue correcto
                 },
 
@@ -309,58 +312,7 @@
                 }
             });
         };
-
-        //La siguiente funcion sirve para obtener un Token para el formulario y asi hacer un submit seguro
-
-        $(function() {
-            // This function gets cookie with a given name
-            function getCookie(name) {
-                var cookieValue = null;
-                if (document.cookie && document.cookie != '') {
-                    var cookies = document.cookie.split(';');
-                    for (var i = 0; i < cookies.length; i++) {
-                        var cookie = jQuery.trim(cookies[i]);
-                        // Does this cookie string begin with the name we want?
-                        if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                            break;
-                        }
-                    }
-                }
-                return cookieValue;
-            }
-            var csrftoken = getCookie('csrftoken');
-
-            //The functions below will create a header with csrftoken
-
-            function csrfSafeMethod(method) {
-                // these HTTP methods do not require CSRF protection
-                return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-            }
-            function sameOrigin(url) {
-                // test that a given url is a same-origin URL
-                // url could be relative or scheme relative or absolute
-                var host = document.location.host; // host + port
-                var protocol = document.location.protocol;
-                var sr_origin = '//' + host;
-                var origin = protocol + sr_origin;
-                // Allow absolute or scheme relative URLs to same origin
-                return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
-                    (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
-                    // or any other URL that isn't scheme relative or absolute i.e relative.
-                    !(/^(\/\/|http:|https:).*/.test(url));  //El asterisco y diagonal que esta antes del punto si es necesario
-            }                                                 //La diagonal asterisco que esta antes del punto, hay que quitarla
-            $.ajaxSetup({
-                beforeSend: function(xhr, settings) {
-                    if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
-                        // Send the token to same-origin, relative URLs only.
-                        // Send the token only if the method warrants CSRF protection
-                        // Using the CSRFToken value acquired earlier
-                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
-                    }
-                }
-            });
-
-        });
     </script>
+
+    <script type="text/javascript" src="{% static 'js/token.js' %}"></script>
     {% endblock %}
