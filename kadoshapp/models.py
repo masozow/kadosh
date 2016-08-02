@@ -527,17 +527,17 @@ class Marca(models.Model):
         db_table = 'Marca'
 
 
-class MarcaHasTipoProducto(models.Model):
-    marca_id_marca = models.ForeignKey('Marca', db_column='Marca_id_marca')  # Field name made lowercase.
-    tipo_producto_idtipo_producto = models.ForeignKey('TipoProducto', db_column='Tipo_producto_idTipo_producto')  # Field name made lowercase.
-    idmarcahastipopoducto = models.AutoField(db_column='idMarcaHasTipoPoducto', primary_key=True)
-
-    def __str__(self):
-        return '%s - %s' % (self.marca_id_marca, self.tipo_producto_idtipo_producto)
-
-    class Meta:
-        managed = True
-        db_table = 'Marca_has_Tipo_producto'
+#class MarcaHasTipoProducto(models.Model):
+#    marca_id_marca = models.ForeignKey('Marca', db_column='Marca_id_marca')  # Field name made lowercase.
+#    tipo_producto_idtipo_producto = models.ForeignKey('TipoProducto', db_column='Tipo_producto_idTipo_producto')  # Field name made lowercase.
+#    idmarcahastipopoducto = models.AutoField(db_column='idMarcaHasTipoPoducto', primary_key=True)
+#
+#    def __str__(self):
+#        return '%s - %s' % (self.marca_id_marca, self.tipo_producto_idtipo_producto)
+#
+#    class Meta:
+#        managed = True
+#        db_table = 'Marca_has_Tipo_producto'
 
 
 class Motivo(models.Model):
@@ -661,6 +661,7 @@ class Producto(models.Model):
     codigoestilo_producto = models.CharField(max_length=45, blank=True, null=True)
     estilo_idestilo = models.ForeignKey(Estilo, db_column='Estilo_idEstilo')  # Field name made lowercase.
     nombre_producto = models.CharField(max_length=60, blank=True, null=True)
+    marca_id_marca = models.ForeignKey(Marca, db_column='marca_idmarca')  # Field name made lowercase.
     #combo_idcombo = models.ForeignKey(Combo, db_column='Combo_idCombo')  # Field name made lowercase.
 
     def __str__(self):
