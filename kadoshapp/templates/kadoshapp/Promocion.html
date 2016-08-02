@@ -6,27 +6,57 @@
    {% endblock %}
    {% block content %}
    <div class="conteiner">
-       <h5>Promocion</h5>
+       <h5>Ofeta producto/Crear promociones</h5>
        <form method="POST" class="post-form">
          {% csrf_token %}
+
+         <div class="row">
+              <div class="col l6 m12 s12">
+                <h6>Buscar Productos</h6>
+                <div class="col  s6">
+                   {{ form_cantidad.as_p }}
+                </div>
+                <div class="col  s6">
+                <label for="codigobarras_producto"><h6>Codigo barras:</h6> </label>{{ form_producto.codigobarras_producto}}
+
+              </div>
+              <input type="checkbox" id="test5" />
+               <label for="test5">Mostrar caracteristicas</label>
+              </div>
+
+              <div class="col l6 m12 s12">
+                <h6>Ofertar producto </h6>
+                <p class="blue-text text-darken-2">Codigo Producto ####</p>
+                 <label for="valor_precio"><h6>Precio:</h6> </label>{{ form_precio.valor_precio}}
+                 <label for="fechainicial_precio"><h6>Fecha inicio oferta:</h6> </label>{{ form_precio.fechainicial_precio}}
+                 <input type="date" class="datepicker" id="fechainicial_precio">
+
+                 <label for="fechafinal_precio"><h6>Fecha final oferta:</h6> </label>{{ form_precio.fechafinal_precio}}
+                 <input type="date" class="datepicker" id="fechafinal_precio">
+
+  <button type="submit" class=" btn btn-default">Crear oferta</button>
+              </div>
+
+        </div>
+
          <div class="row">
            <div class="col l6 m12 s12">
              <div class="col  s6">
-            <h6>Buscar Productos</h6>
-               {{ form_cantidad.as_p }}
-          
+
+
+
              <label for="marca_id_marca"><h6>Marca:</h6> </label>{{ form_tipoproducto.marca_id_marca}}
              <label for="genero_idgener"><h6>Genero:</h6> </label>{{ form_producto.genero_idgener}}
              <label for="talla_idtalla"><h6>Talla:</h6> </label>{{ form_producto.talla_idtalla}}
              </div>
              <div class="col s6">
-              <label for="codigo_producto"><h6>Codigo:</h6> </label>{{ form_producto.codigo_producto}}
+               <label for="codigoestilo_producto"><h6>Codigo estilo:</h6> </label>{{ form_producto.codigoestilo_producto}}
              <label for="estilo_idestilo"><h6>Estilo:</h6> </label>{{ form_producto.estilo_idestilo}}
              <label for="color_idcolor"><h6>Color:</h6> </label>{{ form_producto.color_idcolor}}
              </div>
 
              <div class="col s12">
-               <label for="producto_codigo_producto"><h6>Descripcion:</h6> </label>{{ form_inventarioproducto.producto_codigo_producto}}
+               <label for="producto_codigo_producto"><h6>Producto:</h6> </label>{{ form_inventarioproducto.producto_codigo_producto}}
              </div>
              <table>
                      <thead>
@@ -57,40 +87,49 @@
                    </table>
           </div>
           <div class="col l6 m12 s12">
-          <h6>Promocion Producto</h6>
- <label for="nombre_promocion"><h6>Nombre:</h6> </label>{{ form_promocion.nombre_promocion}}
-  <label for="valor_promocion"><h6>Valor:</h6> </label>{{ form_promocion.valor_promocion}}
-   <label for="fecha_inicialpromocion"><h6>Fecha Inicio:</h6> </label>{{ form_promocion.fecha_inicialpromocion}}
-   <label for="fecha_finalpromocion"><h6>Fecha Final:</h6> </label>{{ form_promocion.fecha_finalpromocion}}
-   <div >
-     <table>
-        <thead>
-          <tr>
-              <th data-field="id">Name</th>
-              <th data-field="name">Item Name</th>
-              <th data-field="price">Item Price</th>
-          </tr>
-        </thead>
+          <h6>Promocion </h6>
+            <p class="blue-text text-darken-2">Codigo Producto ####</p>
+             <button type="submit" class=" btn btn-default">Agregar a promocion</button>
+          <table>
+             <thead>
+               <tr>
+                   <th data-field="id">Name</th>
+                   <th data-field="name">Item Name</th>
+                   <th data-field="price">Item Price</th>
+               </tr>
+             </thead>
 
-        <tbody>
-          <tr>
-            <td>Alvin</td>
-            <td>Eclair</td>
-            <td>$0.87</td>
-          </tr>
-          <tr>
-            <td>Alan</td>
-            <td>Jellybean</td>
-            <td>$3.76</td>
-          </tr>
-          <tr>
-            <td>Jonathan</td>
-            <td>Lollipop</td>
-            <td>$7.00</td>
-          </tr>
-        </tbody>
-      </table>
+             <tbody>
+               <tr>
+                 <td>Alvin</td>
+                 <td>Eclair</td>
+                 <td>$0.87</td>
+               </tr>
+               <tr>
+                 <td>Alan</td>
+                 <td>Jellybean</td>
+                 <td>$3.76</td>
+               </tr>
+               <tr>
+                 <td>Jonathan</td>
+                 <td>Lollipop</td>
+                 <td>$7.00</td>
+               </tr>
+             </tbody>
+           </table>
+
+ <label for="nombre_promocion"><h6>Nombre:</h6> </label>{{ form_promocion.nombre_promocion}}
+  <label for="valor_promocion"><h6>Precio:</h6> </label>{{ form_promocion.valor_promocion}}
+   <label for="fecha_inicialpromocion"><h6>Fecha Inicio:</h6> </label>{{ form_promocion.fecha_inicialpromocion}}
+   <input type="date" class="datepicker" id="fecha_inicialpromocion">
+
+   <label for="fecha_finalpromocion"><h6>Fecha Final:</h6> </label>{{ form_promocion.fecha_finalpromocion}}
+   <input type="date" class="datepicker" id="fecha_finalpromocion">
+
+   <div >
+
    </div>
+    <button type="submit" class="save btn btn-default">Guardar Promocion</button>
          </div>
          </div>
 
@@ -100,7 +139,7 @@
            {{ form_tipoproducto.as_p }}
            {{ form_inventarioproducto.as_p }}
            {{ form_cantidad.as_p }}-->
-           <button type="submit" class="save btn btn-default">Guardar</button>
+
        </form>
     </div>
    {% endblock %}

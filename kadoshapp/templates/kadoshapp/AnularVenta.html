@@ -3,22 +3,45 @@
 <!--se añadió la fila anterior-->
    {% block styles %}
      <link type="text/css" rel="stylesheet" href="{% static "css/formularios.css" %}"/>
+
    {% endblock %}
+
    {% block content %}
+
+
    <div class="container">
        <h5>Anular Venta</h5>
        <form method="POST" class="post-form">
          {% csrf_token %}
          <div class="row">
+           <div class="col l12 m12 s12">
+             <label for="fecha_venta"><h6>Fecha de Venta:</h6> </label>{{ form_Venta.fecha_venta}}
+               <input type="date" class="datepicker" id="fecha_venta">
+
+           </div>
+         </div>
+
+
+         <div class="row">
           <div class="col l6 m12 s12">
-          <label for="fecha_venta"><h6>Fecha de Venta:</h6> </label>{{ form_Venta.fecha_venta}}
-          <label for="fecha_venta"><h6>Codigo Venta:</h6> </label>{{ form_Venta.}}
+         <label for="nit_cliente"><h6>Nit de Cliente:</h6> </label>{{ form_Cliente.nit_cliente}}
+           <label for="venta_idventa"><h6>Numero Venta:</h6> </label>{{ form_DetalleVenta.venta_idventa}}
+
+
           </div>
           <div class="col l6 m12 s12">
-            <label for="nit_cliente"><h6>Nit de Cliente:</h6> </label>{{ form_Cliente.nit_cliente}}
-            <label for="venta_idventa"><h6>Numero Venta:</h6> </label>{{ form_DetalleVenta.venta_idventa}}
+            <label for="nombres_persona"><h6>Nombre de Cliente:</h6> </label>{{ form_persona.nombres_persona}}
+
         </div>
          </div>
+
+         <div class="row">
+           <div class="col l6 m12 s12">
+           </div>
+           <div class="col l6 m12 s12">
+              <button type="submit" class=" btn btn-default">Buscar</button>
+           </div>
+        </div>
 
          <div class="row grey lighten-2">
            <table>
@@ -49,8 +72,16 @@
                    </tbody>
                  </table>
          </div>
+                <div class="row">
+                  <p class="blue-text text-darken-2">Numero de venta seleccionada ####</p>
+                </div>
          <div class="row">
-           <label for="codigo_autorización_empleado"><h6>Codigo Autorizacion:</h6> </label>{{ form_empleado.codigo_autorización_empleado}}
+           <div class="col l6 m12 s12">
+             <label for="empleado_idempleado"><h6>Empleado autoriza:</h6> </label>{{ form_Venta.empleado_idempleado}}
+           </div>
+           <div class="col l6 m12 s12">
+             <label for="codigo_autorización_empleado"><h6>Codigo Autorizacion:</h6> </label>{{ form_empleado.codigo_autorización_empleado}}
+           </div>
          </div>
 
 
