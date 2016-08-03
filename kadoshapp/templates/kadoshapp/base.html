@@ -25,6 +25,18 @@
           padding-left: 0;
         }
       }
+
+      /*color de calendario*/
+      .picker__date-display {
+    background-color:#00bcd4 ;
+  }
+  .picker__weekday-display {
+    background-color:#212121 ;
+  }
+  .picker__day--selected, .picker__day--selected:hover, .picker--focused .picker__day--selected {
+    background-color:#00bcd4 ;
+  }
+
       </style>
 </head>
 
@@ -242,9 +254,13 @@ $(document).ready(function(){
   });
   //calendario
   $('.datepicker').pickadate({
+    weekdaysFull: ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
+    monthsShort: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+    today: 'Hoy',
+clear: 'Limpiar',
+close: 'Cerrar',
     monthsFull: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'],
     format: 'd/mmmm/yyyy',
-
       selectYears: 50 // Creates a dropdown of 15 years to control year
     });
 </script>
