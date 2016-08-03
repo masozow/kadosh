@@ -4,9 +4,9 @@
     {% block styles %}
       <link type="text/css" rel="stylesheet" href="{% static "css/formularios.css" %}"/>
     {% endblock %}
+      {% block encabezado %}Compras{% endblock %}
     {% block content %}
 
-        <h5>Ingreso de Compas</h5>
         <form method="POST" class="post-form">
           {% csrf_token %}
         <div class="row">

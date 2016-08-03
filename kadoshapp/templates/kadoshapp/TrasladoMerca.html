@@ -4,9 +4,10 @@
     {% block styles %}
       <link type="text/css" rel="stylesheet" href="{% static "css/formularios.css" %}"/>
     {% endblock %}
+      {% block encabezado %}Traslado De Mercaderia{% endblock %}
     {% block content %}
 
-        <h5>Traslado De Mercaderia</h5>
+      
         <form method="POST" class="post-form">
           {% csrf_token %}
       <div class="row">

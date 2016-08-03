@@ -5,12 +5,12 @@
      <link type="text/css" rel="stylesheet" href="{% static "css/formularios.css" %}"/>
 
    {% endblock %}
-
+  {% block encabezado %}Anular Venta{% endblock %}
    {% block content %}
 
 
 
-       <h5>Anular Venta</h5>
+
        <form method="POST" class="post-form">
          {% csrf_token %}
          <div class="row">

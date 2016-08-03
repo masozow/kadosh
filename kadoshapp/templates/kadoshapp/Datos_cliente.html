@@ -4,6 +4,7 @@
     {% block styles %}
       <link type="text/css" rel="stylesheet" href="{% static "css/formularios.css" %}">
     {% endblock %}
+      {% block encabezado %}Clientes{% endblock %}
     {% block content %}
     <!--agregando esto para que funcione el DateField-->
         <!--link rel="stylesheet" type="text/css" href="{% static 'static/admin/css/forms.css' %} "/>
@@ -22,7 +23,7 @@
         <script type="text/javascript" src="{% static 'admin/js/admin/DateTimeShortcuts.js' %}"></script-->
     <!--hasta acá, si funcionó, es para el widget del admin-->
 
-        <h5>Registro de Cliente</h5>
+
         <form method="POST" class="post-form">
           {% csrf_token %}
             <!--p><label>Nombres: </label>{{ form.nombres_persona }}</p-->

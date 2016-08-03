@@ -4,9 +4,10 @@
    {% block styles %}
      <link type="text/css" rel="stylesheet" href="{% static "css/formularios.css" %}"/>
    {% endblock %}
+     {% block encabezado %}Promociones/Ofertas{% endblock %}
    {% block content %}
 
-       <h5>Ofeta producto/Crear promociones</h5>
+
        <form method="POST" class="post-form">
          {% csrf_token %}
 

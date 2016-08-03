@@ -4,9 +4,10 @@
     {% block styles %}
       <link type="text/css" rel="stylesheet" href="{% static "css/formularios.css" %}"/>
     {% endblock %}
+      {% block encabezado %}Cierre De Caja{% endblock %}
     {% block content %}
 
-        <h5>Cierre De Caja</h5>
+
         <form method="POST" class="post-form">
           {% csrf_token %}
      <div class="row">
