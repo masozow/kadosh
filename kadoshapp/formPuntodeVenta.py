@@ -60,3 +60,8 @@ class Form_PuntoVenta_Precio(forms.ModelForm):
         widgets={
             'valor_precio': forms.NumberInput(attrs={'readonly':'True'}) #es para que no se pueda escribir en el
         }
+
+class Form_PuntoVenta_Bodega(forms.ModelForm):
+    class Meta:
+        model=Anaquel
+        fields=('bodega_idbodega',)

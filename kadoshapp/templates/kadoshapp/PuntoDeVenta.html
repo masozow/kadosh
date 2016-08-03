@@ -14,11 +14,14 @@
           {% csrf_token %}
         <div id="bloque_encabezado" style="background-color: #e6e6ff;">
           <div class="row" style="margin-bottom: 0px;">
-            <div class="col l5 m12 s12">
+            <div class="col l3 m12 s12">
                 Elegir caja: {{form_Venta.caja_idcaja}}
             </div>
-            <div class="col l5 m12 s12">
+            <div class="col l4 m12 s12">
               Vendedor:{{form_Venta.vendedor_venta}}
+            </div>
+            <div class="col l3 m12 s12">
+              Bodega: {{form_bodega.bodega_idbodega}}
             </div>
             <div class="col l2 m12 s12">
               <br/>
@@ -30,7 +33,9 @@
 
           <div class="row" style="margin-bottom: 0px;">
             <div class="col l6 m12 s12">
-              Cliente: {{ form_cliente.nit_del_cliente}}{{form_Venta.cliente_idcliente}}
+              Cliente:  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input class="filled-in" style="transform: scale(0.5,0.5);" id="check_pornombre" name="pornombre_check" type="checkbox" />
+              <label style="font-size: 70%" for="check_pornombre">Por nombre</label>
+              {{ form_cliente.nit_del_cliente}}{{form_Venta.cliente_idcliente}}
             </div>
             <div class="col l4 m12 s12">
               </br>
@@ -229,16 +234,35 @@
         click_ocultar_mostrar('check_promocion',"#bloque_promocion");
         click_ocultar_mostrar('check_descuento',"#bloque_descuento");
         click_ocultar_mostrar('check_anular',"#bloque_anular");
+/*
+        $( '#check_pornombre' ).on({
+            click: function() {
+              if(document.getElementById('#check_pornombre').checked) {
+                $(seoculta).show();
+              }
+              else {
+                $(seoculta).hide();
+              }
+            }
+        });
+      }
+      */
         //Funcion para buscar el nit del cliente:
         //el primer parametro es el id del txtbox y el segundo el id del dropdownlist
-        buscar_dropdown_startswith('input#id_nit_del_cliente','#id_cliente_idcliente');
+        //buscar_dropdown_startswith('input#id_nit_del_cliente','#id_cliente_idcliente');
+
+        //Funcion para buscar en un dropdownlist de acuerdo al texto escrito en el textbox
+        //dependiendo del estado del checkbox enviado, puede buscar lo siguiente:
+        //(checked=False)busca el elemento del dropdown que inicie con el texto del textbox/inputtext
+        //(checked=True)busca el elemento del dropdown que contenga el texto del textbox/inputtext
+        buscar_dropdown_startswith_condicional('input#id_nit_del_cliente','#id_cliente_idcliente','#check_pornombre');
 
         //Función que cmprueba si el texto del textbox es igual al del dropdown
         //si es asi pasa el cursor a otro textbox, de lo contrario muestra una alerta
         //y devuelve el dropdown a su estado original. Se le envia ademas el parametro para que se haga un split
         //del texto del elemento seleccionado en el dropdwon. Y otro parametro para saber que posicion del arreglo
         //resultante del split, es la que se usara para la comparacion
-        comprobar_pasarsiguiente_mostrarmensaje('input#id_nit_del_cliente','input#id_codigobarras_producto','#id_cliente_idcliente','El cliente no existe',' ',0);
+        comprobar_pasarsiguiente_mostrarmensaje('input#id_nit_del_cliente','input#id_codigobarras_producto','#id_cliente_idcliente');
 
         //Función que realiza una acción al leer código de barras
         $( 'input#id_codigobarras_producto' ).keydown(function(e){
@@ -247,10 +271,9 @@
           if(e.keyCode==13)
           {
             e.preventDefault();
-            obtener_producto('input#id_codigobarras_producto'); //Enviar como parametro el id del elemento txtBox
-                //Importante editar tambien el "data :" en la definicion de la funcion
-
-            //alert('Producto leído');
+            obtener_producto('input#id_codigobarras_producto','#id_bodega_idbodega');
+            //Enviar como parametro el id del elemento txtBox, y el id del dropdown de bodega
+            //Importante editar tambien el "data :" en la definicion de la funcion
           }
         });
 
@@ -268,13 +291,13 @@
 
     /*Espacio para Ajax
     ============================================================================*/
-        function obtener_producto(codigo_buscado) {
+        function obtener_producto(codigo_buscado,bodega_que_vende) {
           //console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
             //console.log("Se ejecuta la funcion"); // Solo se comprueba que el llamado a la funcion sea correcto
             $.ajax({
                 url : "/Buscar/Producto/", // La URL que llama a la vista
                 type : "POST", // Metodo http para realizar el request (peticion al servidor)
-                data : { codigobarras_producto : $(codigo_buscado).val() }, // Datos enviados con el request en formato JSON
+                data : { codigobarras_producto : $(codigo_buscado).val(), bodega_venta: $(bodega_que_vende+" option:selected").text()  }, // Datos enviados con el request en formato JSON
 
                 // Si el response es correcto (si la respuesta del servidor es correcta)
                 success : function(json) {

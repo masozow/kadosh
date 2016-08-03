@@ -20,6 +20,56 @@ function buscar_dropdown_startswith(txtBox,cboBox){
   });
 }
 
+
+//Funcion para buscar en un dropdownlist de acuerdo al texto escrito en el textbox
+//dependiendo del estado del checkbox enviado, puede buscar lo siguiente:
+//(checked=False)busca el elemento del dropdown que inicie con el texto del textbox/inputtext
+//(checked=True)busca el elemento del dropdown que contenga el texto del textbox/inputtext
+function buscar_dropdown_startswith_condicional(txtBox,cboBox,chkBox){
+  $( txtBox ).keyup(function(e){
+    var nit = $(txtBox).val();
+    if(e.keyCode=='8') //Si se borra algo, regresa el select al valor original (se hace esto porque se trababa antes)
+    {
+      $(cboBox).html(selectDefault);
+    }
+    if(nit==='')
+    {
+    }
+    else {
+      if($(chkBox).is(':checked')) {
+        $(cboBox).html(selectDefault);
+        $(cboBox+" option:contains("+nit+")").attr('selected', true);
+        if($(cboBox+" option:contains("+nit+")").length==0){ //si el texto no coincide, se resetea el select
+          $(cboBox).html(selectDefault);
+        }
+      }
+      else {
+        $(cboBox).html(selectDefault);
+        $(cboBox+" option:starts-with("+nit+")").attr('selected', true);
+        if($(cboBox+" option:starts-with("+nit+")").length==0){ //si el texto no coincide, se resetea el select
+          $(cboBox).html(selectDefault);
+        }
+      }
+      /*
+      $(cboBox).html(selectDefault);
+      $(cboBox+" > option").filter(function () {
+          var texto=cboBox.text.split(parametrosplit);
+          console.log(texto);
+          var buscaresto=texto[indicesplit];
+          console.log(buscaresto);
+          var posicion=cboBox.text().indexof(buscaresto);
+          console.log(posicion);
+          return this.value.substring(posicion,cboBox.text().length) === buscaresto;
+      }).attr('selected', true);*/
+      //$(cboBox+" option:starts-with("+nit+")").attr('selected', true);
+      //if($(cboBox+" option:starts-with("+nit+")").length==0){ //si el texto no coincide, se resetea el select
+      //  $(cboBox).html(selectDefault);
+      //}
+    }
+  });
+}
+
+
 //Funcion que muestra lo que se le envie como segundo parametro
 //al dar clic al checkbox del primer parametro. Tambien lo puede ocultar
 //de acuerdo al estado del checkbox.
@@ -43,6 +93,7 @@ function click_ocultar_mostrar(activador,seoculta){
   });
 }
 
+
 //Función que cmprueba si el texto del textbox es igual al del dropdown
 //si es asi pasa el cursor a otro textbox, de lo contrario muestra una alerta
 //y devuelve el dropdown a su estado original. Se le envia ademas el parametro para que se haga un split
@@ -57,7 +108,8 @@ function comprobar_pasarsiguiente_mostrarmensaje(txtboxInicial,txtboxDestino,dro
       e.preventDefault(); //previene que se realice la acción por defecto que efectuaría el navegador con esa tecla
       var text=$(dropDownBusqueda+" option:selected").text().split(parametrosplit);
       var nit = $(txtboxInicial).val();
-      if(text[posicionarreglosplit]===nit)
+      var nit_tratado=nit.replace(']', '');
+      if(text[posicionarreglosplit]===nit_tratado)
       {
         $(txtboxDestino).focus();
       }

@@ -112,10 +112,11 @@ class Cliente(models.Model):
     fecha_registro_cliente = models.DateField(default=timezone.now)
 
     def __str__(self):
-        return '%s - Nombre: %s %s' % (self.nit_cliente, self.persona_idpersona.nombres_persona, self.persona_idpersona.apellidos_persona)
+        return '%s [%s %s]' % (self.nit_cliente, self.persona_idpersona.nombres_persona, self.persona_idpersona.apellidos_persona)
 
     class Meta:
         managed = True
+        ordering = ["persona_idpersona"]
         db_table = 'Cliente'
 
 
@@ -628,6 +629,7 @@ class Persona(models.Model):
 
     class Meta:
         managed = True
+        ordering=["nombres_persona","apellidos_persona"]
         db_table = 'Persona'
 
 

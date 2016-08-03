@@ -26,6 +26,7 @@ def PuntoDeVenta(request):
         form_cliente=Form_PuntoVenta_busquedas()
         form_estiloproducto=Form_PuntoVenta_EstiloProducto()
         form_promocionhasproducto=Form_PuntoVenta_PromocionHasProducto()
+        form_bodega=Form_PuntoVenta_Bodega()
     return render(request, 'kadoshapp/PuntoDeVenta.html', {
                     'form_Venta': form_Venta,
                     'form_DetalleVenta':form_DetalleVenta,
@@ -35,7 +36,8 @@ def PuntoDeVenta(request):
                     'form_Promocion':form_Promocion, 'form_Precio':form_Precio,
                     'form_cliente':form_cliente,
                     'form_estiloproducto':form_estiloproducto,
-                    'form_promocionhasproducto': form_promocionhasproducto
+                    'form_promocionhasproducto': form_promocionhasproducto,
+                    'form_bodega': form_bodega
                     })
 
 
