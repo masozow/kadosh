@@ -9,7 +9,7 @@
         <h5>Ingreso Mercaderia Por Proveedor</h5>
         <form method="POST" class="post-form">
           {% csrf_token %}
-    <div class="row">
+    <div class="row" style="margin-bottom: 0px;">
     <div  class="col l6 m12 s12">
     <label for="proveedor_idproveedor"><h6>Nombre de Proveedor:</h6> </label>{{ form_Compra.proveedor_idproveedor}}
     <label for="compra_idcompra"><h6>Numero de compra:</h6> </label>{{ form_Detallecompra.compra_idcompra}}
