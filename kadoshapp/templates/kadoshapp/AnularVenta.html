@@ -16,7 +16,7 @@
 
        <form method="POST" class="post-form">
          {% csrf_token %}
-         <div class="row">
+         <div class="row" style="margin-bottom: 0px;">
            <div class="col l12 m12 s12">
              <label for="fecha_venta"><h6>Fecha de Venta:</h6> </label>{{ form_Venta.fecha_venta}}
                <input type="date" class="datepicker" id="fecha_venta">
@@ -25,7 +25,7 @@
          </div>
 
 
-         <div class="row">
+         <div class="row" style="margin-bottom: 0px;">
           <div class="col l6 m12 s12">
          <label for="nit_cliente"><h6>Nit de Cliente:</h6> </label>{{ form_Cliente.nit_cliente}}
            <label for="venta_idventa"><h6>Numero Venta:</h6> </label>{{ form_DetalleVenta.venta_idventa}}
@@ -38,7 +38,7 @@
         </div>
          </div>
 
-         <div class="row">
+         <div class="row" style="margin-bottom: 0px;">
            <div class="col l6 m12 s12">
            </div>
            <div class="col l6 m12 s12">
@@ -75,10 +75,10 @@
                    </tbody>
                  </table>
          </div>
-                <div class="row">
+                <div class="row" style="margin-bottom: 0px;">
                   <p class="blue-text text-darken-2">Numero de venta seleccionada ####</p>
                 </div>
-         <div class="row">
+         <div class="row" style="margin-bottom: 0px;">
            <div class="col l6 m12 s12">
              <label for="empleado_idempleado"><h6>Empleado autoriza:</h6> </label>{{ form_Venta.empleado_idempleado}}
            </div>
