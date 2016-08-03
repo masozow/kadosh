@@ -71,3 +71,17 @@ function comprobar_pasarsiguiente_mostrarmensaje(txtboxInicial,txtboxDestino,dro
     //$('input#id_nit_del_cliente').focus();
   });
 }
+
+//Funcion para sumar la columna de una tabla
+//se le envia como primer parametro, el selector de la clase aplicada a la columna de la tabla_productos
+//luego como segundo, el nombre del 'number input' donde se escribira el resultado
+/*
+function sumar_valor_parcial(clase, escribiraqui)
+{
+  var sum=0;
+  $(clase).each(function() {
+      sum += parseFloat($(this).text());
+  });
+  $(escribiraqui).val(sum);
+}
+*/

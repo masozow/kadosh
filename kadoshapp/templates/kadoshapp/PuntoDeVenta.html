@@ -210,6 +210,7 @@
         function eliminar_fila(button){
           $('#tabla_productos').on('click', '#boton_eliminar', function(){
               $(this).closest ('tr').remove ();
+              sumar_valor_parcial(".suma_valor_parcial",'#id_total_venta');
           });
         }
 
@@ -245,6 +246,18 @@
           }
         });
 
+        //Funcion para sumar la columna de una tabla
+        //se le envia como primer parametro, el selector de la clase aplicada a la columna de la tabla_productos
+        //luego como segundo, el nombre del 'number input' donde se escribira el resultado
+        function sumar_valor_parcial(clase, escribiraqui)
+        {
+          var sum=0;
+          $(clase).each(function() {
+              sum += parseFloat($(this).text());
+          });
+          $(escribiraqui).val(sum);
+        }
+
     /*Espacio para Ajax
     ============================================================================*/
         function obtener_producto(codigo_buscado) {
@@ -276,13 +289,14 @@
                                                                       '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+cantidad+'</td>'+
                                                                       '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+campos_nombre.nombre_producto+'</td>'+
                                                                       '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+campos_valorprod.valor_precio+'</td>'+
-                                                                      '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+valor_parcial+'</td>'+
+                                                                      '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;" class="suma_valor_parcial">'+valor_parcial+'</td>'+
                                                                       '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;"> <input id="boton_eliminar" "type="button" onclick="eliminar_fila(this)" value="Eliminar" name="Eliminar" style="text-align: center; margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;"/> </td>'+
                                                                     '</tr>');
                     //$("#talk").prepend("<li><strong>"+json.codprod+"</strong> - <em> "+json.valorprod[0]+"</em> - <span> "+json.nombre[0]+"</span></li>");
                     $('input#id_valor_precio').val(campos_valorprod.valor_precio);
                     //console.log("success"); // Solo se comprueba mediante la consola, que el llamado fue correcto
                     $('input#id_cantidad_venta').val(1);
+                    sumar_valor_parcial(".suma_valor_parcial",'#id_total_venta');
                 },
                 // Si el response no tuvo exito
                 error : function(xhr,errmsg,err) {
