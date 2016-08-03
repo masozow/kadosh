@@ -12,7 +12,7 @@
     {% block content %}
         <form method="POST" class="post-form">
           {% csrf_token %}
-          <div class="row">
+          <div class="row" style="margin-bottom: 0px;">
             <div class="col l5 m12 s12">
                 Elegir caja: {{form_Venta.caja_idcaja}}
             </div>
@@ -27,7 +27,7 @@
 
           </div>
 
-          <div class="row">
+          <div class="row" style="margin-bottom: 0px;">
             <div class="col l6 m12 s12">
               Cliente: {{ form_cliente.nit_del_cliente}}{{form_Venta.cliente_idcliente}}
             </div>
@@ -39,7 +39,7 @@
             </div>
       </div>
 
-      <div class="row">
+      <div class="row" style="margin-bottom: 0px;">
       <div class="col l2 m12 s12">
       Cantidad:{{form_DetalleVenta.cantidad_venta}}
 
@@ -59,7 +59,7 @@
       </div>
 
 
-      <div class="row">
+      <div class="row" style="margin-bottom: 0px;">
         <ul id="talk">
         <div class="divider"></div>
         <div id="bloque_caracteristicas_producto">
@@ -82,7 +82,7 @@
           </div>
 
           <div class="col l6 m12 s12">
-            <div class="row">
+            <div class="row" style="margin-bottom: 0px;">
               <div class="col s12 m6">
                 <div class="card blue-grey darken-1">
                   <div class="card-content white-text">
@@ -92,7 +92,7 @@
               </div>
             </div>
           </div>
-          <div class="row">
+          <div class="row" style="margin-bottom: 0px;">
               <div class="col l6 m12 s12">
                   <label>Descripcion: </label>{{form_InventarioProducto.producto_codigo_producto}}
               </div>
@@ -100,7 +100,7 @@
     </div>
   </div>
   <div class="divider"></div>
-  <div class="row">
+  <div class="row" style="margin-bottom: 0px;">
     <div id="bloque_promocion">
       <p style="color: #80bfff;"><b>Promoción</b></p>
       <div class="col l6 m12 s12">
@@ -114,7 +114,7 @@
 
 
   <div class="divider"></div>
-  <div class="row">
+  <div class="row" style="margin-bottom: 0px;">
     <div class="col l6 m12 s12">
         Descuento: {{form_DetalleVenta.descuento_iddescuento}}
     </div>
@@ -158,7 +158,7 @@
               <div id="results"></div>
 
               <div class="divider"></div>
-              <div class="row">
+              <div class="row" style="margin-bottom: 0px;">
 
                 <div class="col l6 m12 s12">
               <label>Tipo de pago: </label>{{form_Venta.tipo_pago_idtipo_pago}}
