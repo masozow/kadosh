@@ -165,14 +165,6 @@
     </div>
   </div>
 
-
-
-              <div class="divider"></div>
-              <div class="row" style="margin-bottom: 0px;">
-
-
-
-              </div>
 <div class="divider"></div>
 <div class="row" style="margin-bottom: 0px;">
   <div id="bloque_anular">
@@ -209,6 +201,7 @@
           $('#bloque_descuento').hide();
           $('#bloque_anular').hide();
           $('input#id_cantidad_venta').val(1);
+          //$('id_caja_idcajaselect').material_select();
         });
 
         //var cantidadDefault= $("input#id_cantidad_venta").html();
@@ -255,8 +248,8 @@
     /*Espacio para Ajax
     ============================================================================*/
         function obtener_producto(codigo_buscado) {
-          console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-            console.log("Se ejecuta la funcion"); // Solo se comprueba que el llamado a la funcion sea correcto
+          //console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+            //console.log("Se ejecuta la funcion"); // Solo se comprueba que el llamado a la funcion sea correcto
             $.ajax({
                 url : "/Buscar/Producto/", // La URL que llama a la vista
                 type : "POST", // Metodo http para realizar el request (peticion al servidor)
@@ -272,10 +265,10 @@
                     var campos_nombre =res_nombre[0].fields;
                     var cantidad=$('input#id_cantidad_venta').val();
                     var valor_parcial=cantidad*campos_valorprod.valor_precio;
-                    console.log(res_nombre[0].pk);
-                    console.log(campos_valorprod.valor_precio);
-                    console.log(res_inventario[0].pk);
-                    console.log(campos_nombre.nombre_producto);
+                    //console.log(res_nombre[0].pk);
+                    //console.log(campos_valorprod.valor_precio);
+                    //console.log(res_inventario[0].pk);
+                    //console.log(campos_nombre.nombre_producto);
                     //$('#tabla_productos tr:last').after('<tr>'+ '</tr>');
                     $('#tabla_productos > tbody:last-child').append('<tr>'+
                                                                       '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+res_inventario[0].pk+'</td>'+
@@ -287,10 +280,10 @@
                                                                       '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;"> <input id="boton_eliminar" "type="button" onclick="eliminar_fila(this)" value="Eliminar" name="Eliminar" style="text-align: center; margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;"/> </td>'+
                                                                     '</tr>');
                     //$("#talk").prepend("<li><strong>"+json.codprod+"</strong> - <em> "+json.valorprod[0]+"</em> - <span> "+json.nombre[0]+"</span></li>");
-                    console.log("success"); // Solo se comprueba mediante la consola, que el llamado fue correcto
+                    $('input#id_valor_precio').val(campos_valorprod.valor_precio);
+                    //console.log("success"); // Solo se comprueba mediante la consola, que el llamado fue correcto
                     $('input#id_cantidad_venta').val(1);
                 },
-
                 // Si el response no tuvo exito
                 error : function(xhr,errmsg,err) {
                     $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Ha ocurrido un error: "+errmsg+
