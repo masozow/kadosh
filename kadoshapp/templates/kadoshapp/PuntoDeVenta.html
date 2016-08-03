@@ -79,13 +79,15 @@
                 <label>Tipo: </label>{{form_estiloproducto.tipo_producto_idtipo_producto}}
                 <label>Estilo: </label>{{form_Producto.estilo_idestilo}}
                 <label for="id_talla_idtalla">Talla: </label>{{form_Producto.talla_idtalla}}
+
               </div>
 
               <div class="col  s6">
                 <label>Codigo Estilo: </label>{{form_Producto.codigoestilo_producto}}
                 <label>Color: </label>{{form_Producto.color_idcolor}}
                 <label>Género: </label>{{form_Producto.genero_idgener}}
-
+                <br/>
+                <input class="save btn btn-default" id="boton_buscar_caracteristicas" type="button" onclick="buscar_caractesristicas(this)" value="Buscar" name="buscar_caracteristicas"/>
               </div>
 
           </div>
@@ -104,6 +106,7 @@
           <div class="row" style="margin-bottom: 0px;">
               <div class="col l6 m12 s12">
                   <label>Descripcion: </label>{{form_InventarioProducto.producto_codigo_producto}}
+                  <input class="save btn btn-default" id="boton_agregar_producto" type="button" onclick="agregar_producto(this)" value="Agregar" name="agregar_producto"/>
               </div>
           </div>
     </div>
@@ -112,11 +115,16 @@
   <div class="row" style="margin-bottom: 0px;">
     <div id="bloque_promocion">
       <p style="color: #80bfff;"><b>Promoción</b></p>
-      <div class="col l6 m12 s12">
-        <label>Nombre de la promocion: </label>{{form_cliente.nombre_delapromocion}}
-        {{form_promocionhasproducto.promocion_idpromocion}}
+      <div class="col l4 m12 s12">
+        Nombre de la promocion: {{form_cliente.nombre_delapromocion}}
       </div>
       <div class="col l6 m12 s12">
+        <br/>
+        {{form_promocionhasproducto.promocion_idpromocion}}
+      </div>
+      <div class="col l2 m12 s12">
+        <br/>
+        <input class="save btn btn-default" id="boton_agregar_promocion" type="button" onclick="agregar_promocion(this)" value="Agregar" name="agregar_promocion"/>
       </div>
     </div>
   </div>
@@ -130,7 +138,7 @@
     </div>
     <div class="col l6 m12 s12">
       <br/>
-      <input class="save btn btn-default" style=" transform: scale(0.9,0.8); padding-left:1px;padding-right:1px;"id="boton_agregar_descuento" type="button" onclick="agregar_descuento(this)" value="Agregar descuento" name="agregar_descuento"/>
+      <input class="save btn btn-default" style=" transform: scale(0.9,0.8); padding-left:1px;padding-right:1px;"id="boton_agregar_descuento" type="button" onclick="agregar_descuento(this)" value="Aplicar descuento" name="agregar_descuento"/>
       <!--button type="submit" class="save btn btn-default">Aplicar Descuento</button-->
     </div>
   </div>
