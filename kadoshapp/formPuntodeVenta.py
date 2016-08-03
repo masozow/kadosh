@@ -7,12 +7,15 @@ from .models import *
 class Form_PuntoVenta_busquedas(forms.Form):
     nit_del_cliente = forms.CharField(label='Buscar Nit',max_length=13)
     nombre_delapromocion = forms.CharField(label='Nombre promocion',max_length=50)
-    codigo_autorizacion = forms.CharField(label='Codigo de autorización',max_length=50)
 
+    codigo_autorizacion = forms.CharField(label='Codigo de autorización',max_length=50)
 class Form_PuntoVenta_Venta(forms.ModelForm):
     class Meta:
         model=Venta
-        fields=('anotaciones_venta','cliente_idcliente','empleado_idempleado','tipo_pago_idtipo_pago','contado_venta','vendedor_venta','caja_idcaja','es_cotizacion',)
+        fields=('anotaciones_venta','cliente_idcliente','empleado_idempleado','tipo_pago_idtipo_pago','contado_venta','vendedor_venta','caja_idcaja','es_cotizacion','total_venta')
+        widgets={
+            'total_venta': forms.NumberInput(attrs={'readonly':'True'}) #es para que no se pueda escribir en el
+        }
 
 class Form_PuntoVenta_DetalleVenta(forms.ModelForm):
     class Meta:

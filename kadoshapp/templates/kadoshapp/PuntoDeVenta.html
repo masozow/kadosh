@@ -13,43 +13,49 @@
         <form method="POST" class="post-form">
           {% csrf_token %}
           <div class="row">
-            <div class="col l6 m12 s12">
+            <div class="col l5 m12 s12">
                 Elegir caja: {{form_Venta.caja_idcaja}}
             </div>
-            <div class="col l6 m12 s12">
-              <input type="checkbox" id="es_cotizacion" />
-              <label for="es_cotizacion"><h6>Cotizacion</h6> </label>{{ form_Venta.es_cotizacion}}
+            <div class="col l5 m12 s12">
+              Vendedor:{{form_Venta.vendedor_venta}}
             </div>
+            <div class="col l2 m12 s12">
+              <br/>
+              <input type="checkbox" id="es_cotizacion" />
+              <label style="font-size: 80%" for="es_cotizacion">Cotización</label>{{ form_Venta.es_cotizacion}}
+            </div>
+
           </div>
 
           <div class="row">
             <div class="col l6 m12 s12">
-              <label>Cliente: </label>{{ form_cliente.nit_del_cliente}}{{form_Venta.cliente_idcliente}}
+              Cliente: {{ form_cliente.nit_del_cliente}}{{form_Venta.cliente_idcliente}}
             </div>
+            <div class="col l3 m12 s12">
 
-            <div class="col l6 m12 s12">
-
- <label  for="vendedor_venta">Vendedor: </label>{{form_Venta.vendedor_venta}}
-
-
-        </div>
+            </div>
+            <div class="col l3 m12 s12">
+              Total:{{form_Venta.total_venta}}
+            </div>
       </div>
 
       <div class="row">
-      <div class="col l6 m12 s12">
-      <label>Cantidad: </label>{{form_DetalleVenta.cantidad_venta}}
-      <label>Valor: </label>{{form_Precio.valor_precio}}
-      </div>
-      <div class="col l6 m12 s12">
-      <label for="codigobarras_producto">Código Barras: </label>{{ form_Producto.codigobarras_producto }}
-
-      <input class="filled-in" id="check_mostrar" name="mostrar_check" type="checkbox" />
-      <label for="check_mostrar">Mostrar caracteristicas del producto:</label>
-
-      <input class="filled-in" id="check_promocion" name="promocion_check" type="checkbox" />
-      <label for="check_promocion">Es promocion:</label>
+      <div class="col l2 m12 s12">
+      Cantidad:{{form_DetalleVenta.cantidad_venta}}
 
       </div>
+      <div class="col l4 m12 s12">
+      Código Barras:{{ form_Producto.codigobarras_producto }}
+      </div>
+      <div class="col l6 m12 s12">
+        </br>
+        <input class="filled-in" id="check_mostrar" name="mostrar_check" type="checkbox" />
+        <label style="font-size: 80%" for="check_mostrar">Mostrar características del producto</label>
+        <br/>
+        <input class="filled-in" id="check_promocion" name="promocion_check" type="checkbox" />
+        <label style="font-size: 80%" for="check_promocion">Es promoción</label>
+      </div>
+
       </div>
 
 
@@ -109,8 +115,17 @@
 
   <div class="divider"></div>
   <div class="row">
-  <div class="divider"></div>
     <div class="col l6 m12 s12">
+        Descuento: {{form_DetalleVenta.descuento_iddescuento}}
+    </div>
+    <div class="col l6 m12 s12">
+      <br/>
+      <button type="submit" class="save btn btn-default">Aplicar Descuento</button>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+    <div class="col l12 m12 s12">
       <table id="tabla_productos">
         <thead>
           <tr>
@@ -120,28 +135,21 @@
               <th data-field="price">Producto</th>
               <th data-field="price">Precio</th>
               <th data-field="price">Valor parcial</th>
+              <th data-field="price">Remover</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>1</td>
+            <!--td>1</td>
             <td>1</td>
             <td>2</td>
             <td>Suaves sabanas...</td>
             <td>80.3</td>
-            <td>160.6</td>
+            <td>160.6</td-->
           </tr>
         </tbody>
           </table>
           <div class="divider"></div>
-    </div>
-    <div class="col l6 m12 s12">
-        <label>Descuento: </label>{{form_DetalleVenta.descuento_iddescuento}}
-          <button type="submit" class="save btn btn-default">Aplicar Descuento</button>
-
-          <button type="submit" class="save btn btn-default">Remover Producto</button>
-
-
     </div>
   </div>
 
@@ -157,15 +165,18 @@
                 <label>Anotaciones: </label>{{form_Venta.anotaciones_venta}}
                 </div>
                 <div class="col l6 m12 s12">
+                  <br/>
                   <button type="submit" class="save btn btn-default">Realizar Venta</button>
-
                 </div>
 
               </div>
 <div class="divider"></div>
 <div class="col l6 m12 s12">
-    <label>Código de autorización: </label>{{form_cliente.codigo_autorizacion}}
-      <button type="submit" class="save btn btn-default">Anular venta</button>
+    Código de autorización: {{form_cliente.codigo_autorizacion}}
+</div>
+<div class="col l6 m12 s12">
+    <br/>
+    <button type="submit" class="save btn btn-default">Anular venta</button>
 </div>
 
 </form>
@@ -188,7 +199,17 @@
           $('input#id_nit_del_cliente').focus(); //se accede al input con el id que está después de #, //.focus() indica que ahí se colocará el cursor
           $('#bloque_caracteristicas_producto').hide(); //.hide() oculta el elemento con ese id
           $('#bloque_promocion').hide();
+          $('input#id_cantidad_venta').val(1);
         });
+
+        //var cantidadDefault= $("input#id_cantidad_venta").html();
+
+        //Para que funcione el boton de eliminar producto
+        function eliminar_fila(button){
+          $('#tabla_productos').on('click', '#boton_eliminar', function(){
+              $(this).closest ('tr').remove ();
+          });
+        }
 
         //Funcion que oculta o muestra el elemento con el id del 2do parametro,
         //al dar clic en el checkbox con el id del primer parametro
@@ -215,6 +236,7 @@
             e.preventDefault();
             obtener_producto('input#id_codigobarras_producto'); //Enviar como parametro el id del elemento txtBox
                 //Importante editar tambien el "data :" en la definicion de la funcion
+            $('input#id_cantidad_venta').val(1);
             alert('Producto leído');
           }
         });
@@ -251,6 +273,7 @@
                                                                       '<td>'+campos_nombre.nombre_producto+'</td>'+
                                                                       '<td>'+campos_valorprod.valor_precio+'</td>'+
                                                                       '<td>'+valor_parcial+'</td>'+
+                                                                      '<td> <input id="boton_eliminar" "type="button" onclick="eliminar_fila(this)" value="Eliminar" name="Eliminar"/> </td>'+
                                                                     '</tr>');
                     //$("#talk").prepend("<li><strong>"+json.codprod+"</strong> - <em> "+json.valorprod[0]+"</em> - <span> "+json.nombre[0]+"</span></li>");
                     console.log("success"); // Solo se comprueba mediante la consola, que el llamado fue correcto
