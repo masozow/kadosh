@@ -31,12 +31,23 @@
             <div class="col l6 m12 s12">
               Cliente: {{ form_cliente.nit_del_cliente}}{{form_Venta.cliente_idcliente}}
             </div>
-            <div class="col l3 m12 s12">
+            <div class="col l4 m12 s12">
+              </br>
+              <input class="filled-in" id="check_mostrar" name="mostrar_check" type="checkbox" />
+              <label style="font-size: 80%" for="check_mostrar">Características del producto</label>
+              <br/>
+              <input class="filled-in" id="check_promocion" name="promocion_check" type="checkbox" />
+              <label style="font-size: 80%" for="check_promocion">Es promoción</label>
+            </div>
+            <div class="col l2 m12 s12">
+              <br/>
+              <input class="filled-in" id="check_descuento" name="descuento_check" type="checkbox" />
+              <label style="font-size: 80%" for="check_descuento">Descuento</label>
+              <br/>
+              <input class="filled-in" id="check_anular" name="anular_check" type="checkbox" />
+              <label style="font-size: 80%" for="check_anular">Anular</label>
+            </div>
 
-            </div>
-            <div class="col l3 m12 s12">
-              Total:{{form_Venta.total_venta}}
-            </div>
       </div>
 
       <div class="row" style="margin-bottom: 0px;">
@@ -47,15 +58,12 @@
       <div class="col l4 m12 s12">
       Código Barras:{{ form_Producto.codigobarras_producto }}
       </div>
-      <div class="col l6 m12 s12">
-        </br>
-        <input class="filled-in" id="check_mostrar" name="mostrar_check" type="checkbox" />
-        <label style="font-size: 80%" for="check_mostrar">Mostrar características del producto</label>
-        <br/>
-        <input class="filled-in" id="check_promocion" name="promocion_check" type="checkbox" />
-        <label style="font-size: 80%" for="check_promocion">Es promoción</label>
+      <div class="col l3 m12 s12">
+        Valor:{{form_Precio.valor_precio}}
       </div>
-
+      <div class="col l3 m12 s12">
+        Total:{{form_Venta.total_venta}}
+      </div>
       </div>
 
 
@@ -115,47 +123,46 @@
 
   <div class="divider"></div>
   <div class="row" style="margin-bottom: 0px;">
+    <div id="bloque_descuento">
     <div class="col l6 m12 s12">
         Descuento: {{form_DetalleVenta.descuento_iddescuento}}
     </div>
     <div class="col l6 m12 s12">
       <br/>
-      <button type="submit" class="save btn btn-default">Aplicar Descuento</button>
+      <input class="save btn btn-default" style=" transform: scale(0.9,0.8); padding-left:1px;padding-right:1px;"id="boton_agregar_descuento" type="button" onclick="agregar_descuento(this)" value="Agregar descuento" name="agregar_descuento"/>
+      <!--button type="submit" class="save btn btn-default">Aplicar Descuento</button-->
     </div>
+  </div>
   </div>
 
   <div class="divider"></div>
     <div class="col l12 m12 s12">
       <table id="tabla_productos">
         <thead>
-          <tr>
-              <th data-field="id">Inv</th>
-              <th data-field="name">Cod</th>
-              <th data-field="price">Cantidad</th>
-              <th data-field="price">Producto</th>
-              <th data-field="price">Precio</th>
-              <th data-field="price">Valor parcial</th>
-              <th data-field="price">Remover</th>
+          <tr style="margin-bottom: 0px; margin-top: 0px; padding-top:0px; padding-botton:0px;">
+              <th data-field="id" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">Inv</th>
+              <th data-field="name" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">Cod</th>
+              <th data-field="price" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">Cantidad</th>
+              <th data-field="price" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">Producto</th>
+              <th data-field="price" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">Precio</th>
+              <th data-field="price" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">Valor parcial</th>
+              <th data-field="price" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">Remover</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <!--td>1</td>
+          <!--tr>
+            <td>1</td>
             <td>1</td>
             <td>2</td>
             <td>Suaves sabanas...</td>
             <td>80.3</td>
-            <td>160.6</td-->
-          </tr>
+            <td>160.6</td>
+          </tr-->
         </tbody>
           </table>
-          <div class="divider"></div>
     </div>
   </div>
 
-  <div class="divider"></div>
-
-              <div id="results"></div>
 
               <div class="divider"></div>
               <div class="row" style="margin-bottom: 0px;">
@@ -171,15 +178,18 @@
 
               </div>
 <div class="divider"></div>
-<div class="col l6 m12 s12">
-    Código de autorización: {{form_cliente.codigo_autorizacion}}
+<div class="row" style="margin-bottom: 0px;">
+  <div id="bloque_anular">
+    <div class="col l6 m12 s12">
+        Código de autorización: {{form_cliente.codigo_autorizacion}}
 
+    </div>
+    <div class="col l6 m12 s12">
+        <br/>
+        <button type="submit" class="save btn btn-default">Anular venta</button>
+    </div>
+  </div>
 </div>
-<div class="col l6 m12 s12">
-    <br/>
-    <button type="submit" class="save btn btn-default">Anular venta</button>
-</div>
-
 </form>
 
     {% endblock %}
@@ -200,6 +210,8 @@
           $('input#id_nit_del_cliente').focus(); //se accede al input con el id que está después de #, //.focus() indica que ahí se colocará el cursor
           $('#bloque_caracteristicas_producto').hide(); //.hide() oculta el elemento con ese id
           $('#bloque_promocion').hide();
+          $('#bloque_descuento').hide();
+          $('#bloque_anular').hide();
           $('input#id_cantidad_venta').val(1);
         });
 
@@ -215,8 +227,10 @@
         //Funcion que oculta o muestra el elemento con el id del 2do parametro,
         //al dar clic en el checkbox con el id del primer parametro
         //aqui se envia el primer id como parametro sin #, solo el primero
-        click_ocultar_mostrar('check_mostrar',"#bloque_caracteristicas_producto")
-        click_ocultar_mostrar('check_promocion',"#bloque_promocion")
+        click_ocultar_mostrar('check_mostrar',"#bloque_caracteristicas_producto");
+        click_ocultar_mostrar('check_promocion',"#bloque_promocion");
+        click_ocultar_mostrar('check_descuento',"#bloque_descuento");
+        click_ocultar_mostrar('check_anular',"#bloque_anular");
         //Funcion para buscar el nit del cliente:
         //el primer parametro es el id del txtbox y el segundo el id del dropdownlist
         buscar_dropdown_startswith('input#id_nit_del_cliente','#id_cliente_idcliente');
@@ -237,8 +251,8 @@
             e.preventDefault();
             obtener_producto('input#id_codigobarras_producto'); //Enviar como parametro el id del elemento txtBox
                 //Importante editar tambien el "data :" en la definicion de la funcion
-            $('input#id_cantidad_venta').val(1);
-            alert('Producto leído');
+
+            //alert('Producto leído');
           }
         });
 
@@ -268,16 +282,17 @@
                     console.log(campos_nombre.nombre_producto);
                     //$('#tabla_productos tr:last').after('<tr>'+ '</tr>');
                     $('#tabla_productos > tbody:last-child').append('<tr>'+
-                                                                      '<td>'+res_inventario[0].pk+'</td>'+
-                                                                      '<td>'+res_nombre[0].pk+'</td>'+
-                                                                      '<td>'+cantidad+'</td>'+
-                                                                      '<td>'+campos_nombre.nombre_producto+'</td>'+
-                                                                      '<td>'+campos_valorprod.valor_precio+'</td>'+
-                                                                      '<td>'+valor_parcial+'</td>'+
-                                                                      '<td> <input id="boton_eliminar" "type="button" onclick="eliminar_fila(this)" value="Eliminar" name="Eliminar" style="text-align: center;"/> </td>'+
+                                                                      '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+res_inventario[0].pk+'</td>'+
+                                                                      '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+res_nombre[0].pk+'</td>'+
+                                                                      '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+cantidad+'</td>'+
+                                                                      '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+campos_nombre.nombre_producto+'</td>'+
+                                                                      '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+campos_valorprod.valor_precio+'</td>'+
+                                                                      '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+valor_parcial+'</td>'+
+                                                                      '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;"> <input id="boton_eliminar" "type="button" onclick="eliminar_fila(this)" value="Eliminar" name="Eliminar" style="text-align: center; margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;"/> </td>'+
                                                                     '</tr>');
                     //$("#talk").prepend("<li><strong>"+json.codprod+"</strong> - <em> "+json.valorprod[0]+"</em> - <span> "+json.nombre[0]+"</span></li>");
                     console.log("success"); // Solo se comprueba mediante la consola, que el llamado fue correcto
+                    $('input#id_cantidad_venta').val(1);
                 },
 
                 // Si el response no tuvo exito
