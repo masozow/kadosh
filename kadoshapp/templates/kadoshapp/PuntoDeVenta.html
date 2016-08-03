@@ -173,6 +173,7 @@
 <div class="divider"></div>
 <div class="col l6 m12 s12">
     Código de autorización: {{form_cliente.codigo_autorizacion}}
+
 </div>
 <div class="col l6 m12 s12">
     <br/>
@@ -273,7 +274,7 @@
                                                                       '<td>'+campos_nombre.nombre_producto+'</td>'+
                                                                       '<td>'+campos_valorprod.valor_precio+'</td>'+
                                                                       '<td>'+valor_parcial+'</td>'+
-                                                                      '<td> <input id="boton_eliminar" "type="button" onclick="eliminar_fila(this)" value="Eliminar" name="Eliminar"/> </td>'+
+                                                                      '<td> <input id="boton_eliminar" "type="button" onclick="eliminar_fila(this)" value="Eliminar" name="Eliminar" style="text-align: center;"/> </td>'+
                                                                     '</tr>');
                     //$("#talk").prepend("<li><strong>"+json.codprod+"</strong> - <em> "+json.valorprod[0]+"</em> - <span> "+json.nombre[0]+"</span></li>");
                     console.log("success"); // Solo se comprueba mediante la consola, que el llamado fue correcto
