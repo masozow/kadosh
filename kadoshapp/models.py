@@ -371,7 +371,6 @@ class EstandarCliente(models.Model):
     categoria_cliente = models.CharField(max_length=45, blank=True, null=True)
     comprasminimas_cliente = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
     estado_estandarcliente = models.BooleanField(default=True)
-    tipo_cliente_idtipo_cliente = models.ForeignKey('TipoCliente', db_column='Tipo_cliente_idTipo_cliente')  # Field name made lowercase.
 
     def __str__(self):
         return '%s' % (self.categoria_cliente)
@@ -384,16 +383,15 @@ class EstandarCliente(models.Model):
 class EstandaresVendedor(models.Model):
     idestandares_vendedor = models.AutoField(db_column='idEstandares_vendedor', primary_key=True)  # Field name made lowercase.
     categoria_vendedor = models.CharField(max_length=45, blank=True, null=True)
-    ventasminimas_cliente = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
+    ventasminimas_vendedor = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
     estado_estandarvendedor = models.BooleanField(default=True)
-    puesto_idpuesto = models.ForeignKey('Puesto', db_column='Puesto_idPuesto')  # Field name made lowercase.
 
     def __str__(self):
         return '%s' % (self.categoria_vendedor)
 
     class Meta:
         managed = True
-        db_table = 'EstandarCliente'
+        db_table = 'Estandares_vendedor'
 
 
 class Estilo(models.Model):
@@ -739,6 +737,8 @@ class Puesto(models.Model):
     idpuesto = models.AutoField(db_column='idPuesto', primary_key=True)  # Field name made lowercase.
     nombre_puesto = models.CharField(max_length=50, blank=True, null=True)
     estado_puesto = models.BooleanField(default=True)
+    estandares_vendedor_idestandares_vendedor = models.ForeignKey('EstandaresVendedor', db_column='estandares_vendedor_idestandares_vendedor',null=True,blank=True)  # Field name made lowercase.
+
 
     def __str__(self):
         return '%s - %s' % (self.idpuesto,self.nombre_puesto)
@@ -795,6 +795,7 @@ class TipoCliente(models.Model):
     idtipo_cliente = models.AutoField(db_column='idTipo_cliente', primary_key=True)  # Field name made lowercase.
     nombre_tipocliente = models.CharField(db_column='nombre_tipoCliente', max_length=45, blank=True, null=True)  # Field name made lowercase.
     estado_tipocliente = models.BooleanField(db_column='estado_tipoCliente', default=True)  # Field name made lowercase.
+    estandarcliente_idestandarcliente = models.ForeignKey('EstandarCliente', db_column='estandarcliente_idestandarcliente',blank=True,null=True)  # Field name made lowercase.
 
     def __str__(self):
         return '%s - %s' % (self.idtipo_cliente,self.nombre_tipocliente)
