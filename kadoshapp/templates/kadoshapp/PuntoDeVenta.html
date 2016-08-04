@@ -272,6 +272,7 @@
           {
             e.preventDefault();
             obtener_producto('input#id_codigobarras_producto','#id_bodega_idbodega');
+            console.log($('#id_bodega_idbodega').val());
             //Enviar como parametro el id del elemento txtBox, y el id del dropdown de bodega
             //Importante editar tambien el "data :" en la definicion de la funcion
           }
@@ -301,10 +302,11 @@
             $.ajax({
                 url : "/Buscar/Producto/", // La URL que llama a la vista
                 type : "POST", // Metodo http para realizar el request (peticion al servidor)
-                data : { codigobarras_producto : $(codigo_buscado).val(), bodega_venta: $(bodega_que_vende+" option:selected").text()  }, // Datos enviados con el request en formato JSON
+                data : { codigobarras_producto : $(codigo_buscado).val(), bodega_idbodega: $(bodega_que_vende).val()  }, // Datos enviados con el request en formato JSON
 
                 // Si el response es correcto (si la respuesta del servidor es correcta)
                 success : function(json) {
+                    //console.log(json.recibido);
                     $(codigo_buscado).val(''); // Se limpia el campo del codigo del producto
                     var res_valorprod=JSON.parse(json.valorprod);
                     var res_inventario=JSON.parse(json.inventario);
@@ -347,7 +349,7 @@
             $.ajax({
                 url : "/Buscar/Producto/", // La URL que llama a la vista
                 type : "POST", // Metodo http para realizar el request (peticion al servidor)
-                data : { codigobarras_producto : $(codigo_buscado).val(), bodega_venta: $(bodega_que_vende+" option:selected").text()  }, // Datos enviados con el request en formato JSON
+                data : { codigobarras_producto : $(codigo_buscado).val(), id_bodega_idbodega: $(bodega_que_vende+" option:selected").text()  }, // Datos enviados con el request en formato JSON
                 success : function(json) {
                     //$(codigo_buscado).val(''); // Se limpia el campo del codigo del producto
                     var res_valorprod=JSON.parse(json.valorprod);

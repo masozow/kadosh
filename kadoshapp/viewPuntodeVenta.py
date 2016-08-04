@@ -45,18 +45,24 @@ def PuntoDeVenta(request):
 def BuscarProducto(request):
     if request.method == 'POST':
         txt_codigo_producto = request.POST.get('codigobarras_producto') #aquí llamar por el nombre del objeto (name), no por el id
-        id_bodega_que_vende = request.POST.get(' bodega_venta') #llamar por el nombre del objeto json que se envia como 'data' dentro de la consulta Ajax
+        id_bodega_que_vende = request.POST.get('bodega_idbodega') #llamar por el nombre del objeto json que se envia como 'data' dentro de la consulta Ajax
         #runeval(txt_codigo_producto) #se supone que evalua la variable y la envia al debugger
         #pdb.set_trace()  #estos son los breakpoints de django
 
         response_data = {} #declarando un diccionario vacio
         resp_producto=Producto.objects.filter(codigobarras_producto=txt_codigo_producto)
-        resp_inventario=InventarioProducto.objects.filter(producto_codigo_producto__in=resp_producto).order_by('-idinventario_producto')[:1]
-        #__in sirve para indicar que ese campo debe ser buscado dentro del objeto al que se hace referencia
+        #if id_bodega_que_vende is not None:
+        #response_data['recibido']=id_bodega_que_vende
+        resp_inventario=InventarioProducto.objects.filter(producto_codigo_producto__in=resp_producto,bodega_idbodega=id_bodega_que_vende).order_by('-idinventario_producto')[:1]
         resp_precio=Precio.objects.filter(producto_codigo_producto__in=resp_producto,estado_precio=1).order_by('-idprecio')[:1] #
         response_data['inventario']=serializers.serialize('json', list(resp_inventario), fields=('pk'))
         response_data['nombre']=serializers.serialize('json', list(resp_producto), fields=('nombre_producto'))
         response_data['valorprod']=serializers.serialize('json', list(resp_precio), fields=('valor_precio'))
+        #if not id_bodega_que_vende:
+
+        #    if resp_producto.exists() and resp_inventario.exists() and resp_precio.exists():
+
+        #__in sirve para indicar que ese campo debe ser buscado dentro del objeto al que se hace referencia
 
         return HttpResponse(
             json.dumps(response_data),
@@ -71,7 +77,7 @@ def BuscarProducto(request):
 def BuscarProductoCaracteristicas(request):
     if request.method == 'POST':
         txt_codigo_producto = request.POST.get('codigobarras_producto') #aquí llamar por el nombre del objeto (name), no por el id
-        id_bodega_que_vende = request.POST.get(' bodega_venta') #llamar por el nombre del objeto json que se envia como 'data' dentro de la consulta Ajax
+        id_bodega_que_vende = request.POST.get('bodega_idbodega') #llamar por el nombre del objeto json que se envia como 'data' dentro de la consulta Ajax
         #runeval(txt_codigo_producto) #se supone que evalua la variable y la envia al debugger
         #pdb.set_trace()  #estos son los breakpoints de django
 
