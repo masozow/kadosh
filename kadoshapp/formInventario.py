@@ -13,15 +13,15 @@ class Form_Inventario_Empleado(forms.ModelForm):
         model=Empleado
         fields=('codigo_autorización_empleado',)
 
-class Form_Inventario_Anque(forms.ModelForm):
-    class Meta:
-        model=Anaquel
-        fields=('bodega_idbodega',)
+#class Form_Inventario_Anque(forms.ModelForm):
+#    class Meta:
+#        model=Anaquel
+#        fields=('bodega_idbodega',)
 
 class Form_Inventario_InventarioProducto(forms.ModelForm):
     class Meta:
         model=InventarioProducto
-        fields=('anaquel_idanaquel',)
+        fields=('bodega_idbodega',)
 
 #class Form_Inventario_DetalleInventarioRealizado(forms.ModelForm):
 #    class Meta:

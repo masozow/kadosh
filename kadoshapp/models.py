@@ -23,18 +23,18 @@ class AjusteInventario(models.Model):
         db_table = 'Ajuste_inventario'
 
 
-class Anaquel(models.Model):
-    idanaquel = models.AutoField(db_column='idAnaquel', primary_key=True)  # Field name made lowercase.
-    bodega_idbodega = models.ForeignKey('Bodega', db_column='Bodega_idBodega')  # Field name made lowercase.
-    codigo_anaquel = models.CharField(max_length=45, blank=True, null=True,unique=True)
-    estado_anaquel = models.BooleanField(default=True)  # This field type is a guess.
-
-    def __str__(self):
-        return '%s (%s)' % (self.codigo_anaquel,self.bodega_idbodega.nombre_bodega)
-
-    class Meta:
-        managed = True
-        db_table = 'Anaquel'
+#class Anaquel(models.Model):
+#    idanaquel = models.AutoField(db_column='idAnaquel', primary_key=True)  # Field name made lowercase.
+#    bodega_idbodega = models.ForeignKey('Bodega', db_column='Bodega_idBodega')  # Field name made lowercase.
+#    codigo_anaquel = models.CharField(max_length=45, blank=True, null=True,unique=True)
+#    estado_anaquel = models.BooleanField(default=True)  # This field type is a guess.
+#
+#    def __str__(self):
+#        return '%s (%s)' % (self.codigo_anaquel,self.bodega_idbodega.nombre_bodega)
+#
+#    class Meta:
+#        managed = True
+#        db_table = 'Anaquel'
 
 
 class Bodega(models.Model):
@@ -487,7 +487,7 @@ class InventarioProducto(models.Model):
     existencia_maxima = models.IntegerField(blank=True, null=True)
     existencia_actual = models.IntegerField(blank=True, null=True)
     estado_inventario_producto = models.BooleanField(default=True)
-    anaquel_idanaquel = models.ForeignKey(Anaquel, db_column='Anaquel_idAnaquel')  # Field name made lowercase.
+    bodega_idbodega = models.ForeignKey(Bodega, db_column='bodega_idbodega')  # Field name made lowercase.
     fecha_creacioninventario = models.DateTimeField(db_column='fecha_creacionInventario', default=timezone.now)  # Field name made lowercase.
     producto_codigo_producto = models.ForeignKey('Producto', db_column='Producto_codigo_producto')  # Field name made lowercase.
     costo_unitario_inventarioproducto = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)

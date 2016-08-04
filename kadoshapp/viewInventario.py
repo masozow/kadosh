@@ -17,9 +17,9 @@ def Inventario(request):
         return render(request, 'kadoshapp/ingreso_mercaderia.html',{})
     else:
         form_inventario=Form_Inventario_InventarioProducto()
-        form_anaquel=Form_Inventario_Anque()
+        #form_anaquel=Form_Inventario_Anque()
         #form_detallainventario=Form_Inventario_DetalleInventarioRealizado()
         form_empleado=Form_Inventario_Empleado()
         form_ajusteinventario=Form_Inventario_AjusteInventario()
         #form_inventariorealizado=Form_Inventario_InventarioRealizado();
-    return render(request, 'kadoshapp/Inventario.html', {'form_inventario':form_inventario, 'form_anaquel':form_anaquel,  'form_empleado':form_empleado , 'form_ajusteinventario':form_ajusteinventario  })
+    return render(request, 'kadoshapp/Inventario.html', {'form_inventario':form_inventario, 'form_empleado':form_empleado , 'form_ajusteinventario':form_ajusteinventario  })

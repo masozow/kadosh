@@ -1,8 +1,45 @@
-/* Override a los Rows de materialize
-============================================================================*/
 .row{
+  /* Override a los Rows de materialize
+  ============================================================================*/
   margin-bottom: 0px !important;
 }
+
+
+/* Divisor vertical
+============================================================================*/
+
+.vertical-divider{
+	clear: both;
+	position: relative;
+}
+
+.vertical-divider:after {
+	clear: both;
+	content: " ";
+	display: block;
+	height: 0;
+	visibility: hidden;
+}
+
+.vertical-divider .column:not(:first-child):after, .vertical-divider .columns:not(:first-child):after{
+	background: #DDDDDD;
+	bottom: 0;
+	content: " ";
+	margin-left: -10px;
+	position: absolute;
+	top: 0;
+	width: 1px;
+}
+
+/* Very simple grid for example */
+.container { position: relative; width: 960px; margin: 20px auto; padding: 0; }
+
+.container .column, .container .columns { float: left; display: inline; margin-left: 10px; margin-right: 10px; }
+
+.container .one-third.column { width: 300px; }
+
+.container .two-thirds.column { width: 620px; }
+
 
 /* Select Field
    ========================================================================== */
@@ -156,6 +193,7 @@ nav .input-field input:focus, nav .input-field input[type=text]:valid, nav .inpu
   border: 1px solid gray !important;
   /*box-shadow: 1px 0px 0px #888888;*/
   border-radius: 8px !important;
+  background-color: white !important;
   box-shadow: none;
 }
 
@@ -306,6 +344,7 @@ textarea.materialize-textarea {
   box-shadow: none;
   box-sizing: content-box;
   transition: all 0.3s;
+  background-color: white !important;
 }
 
 input:not([type]):disabled, input:not([type])[readonly="readonly"],
@@ -336,7 +375,7 @@ textarea.materialize-textarea[readonly="readonly"] {
   color: rgba(0, 0, 0, 0.26);
   border-radius: 8px !important;
   border-bottom: 1px dotted rgba(0, 0, 0, 0.26);
-
+  background-color: white !important;
 }
 
 input:not([type]):disabled + label,

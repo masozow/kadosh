@@ -21,7 +21,7 @@
               Vendedor:{{form_Venta.vendedor_venta}}
             </div>
             <div class="col l3 m12 s12">
-              Bodega: {{form_bodega.bodega_idbodega}}
+              Bodega: {{form_InventarioProducto.bodega_idbodega}}
             </div>
             <div class="col l2 m12 s12">
               <br/>
@@ -277,6 +277,10 @@
           }
         });
 
+        function buscar_caractesristicas(boton){
+
+        }
+
         //Funcion para sumar la columna de una tabla
         //se le envia como primer parametro, el selector de la clase aplicada a la columna de la tabla_productos
         //luego como segundo, el nombre del 'number input' donde se escribira el resultado
@@ -337,6 +341,43 @@
                 }
             });
         };
+
+
+        function obtener_producto_caracteristicas(codigo_buscado,bodega_que_vende) {
+            $.ajax({
+                url : "/Buscar/Producto/", // La URL que llama a la vista
+                type : "POST", // Metodo http para realizar el request (peticion al servidor)
+                data : { codigobarras_producto : $(codigo_buscado).val(), bodega_venta: $(bodega_que_vende+" option:selected").text()  }, // Datos enviados con el request en formato JSON
+                success : function(json) {
+                    //$(codigo_buscado).val(''); // Se limpia el campo del codigo del producto
+                    var res_valorprod=JSON.parse(json.valorprod);
+                    var res_inventario=JSON.parse(json.inventario);
+                    var res_nombre=JSON.parse(json.nombre);
+                    var campos_valorprod =res_valorprod[0].fields;
+                    var campos_nombre =res_nombre[0].fields;
+                    var cantidad=$('input#id_cantidad_venta').val();
+                    var valor_parcial=cantidad*campos_valorprod.valor_precio;
+                    $('#tabla_productos > tbody:last-child').append('<tr>'+
+                                                                      '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+res_inventario[0].pk+'</td>'+
+                                                                      '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+res_nombre[0].pk+'</td>'+
+                                                                      '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+cantidad+'</td>'+
+                                                                      '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+campos_nombre.nombre_producto+'</td>'+
+                                                                      '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+campos_valorprod.valor_precio+'</td>'+
+                                                                      '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;" class="suma_valor_parcial">'+valor_parcial+'</td>'+
+                                                                      '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;"> <input id="boton_eliminar" "type="button" onclick="eliminar_fila(this)" value="Eliminar" name="Eliminar" style="text-align: center; margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;"/> </td>'+
+                                                                    '</tr>');
+                    $('input#id_valor_precio').val(campos_valorprod.valor_precio);
+                    $('input#id_cantidad_venta').val(1);
+                    sumar_valor_parcial(".suma_valor_parcial",'#id_total_venta');
+                },
+                error : function(xhr,errmsg,err) {
+                    $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Ha ocurrido un error: "+errmsg+
+                        " <a href='#' class='close'>&times;</a></div>");
+                    console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
+                }
+            });
+        };
+
     </script>
 
     <script type="text/javascript" src="{% static 'js/selectorStartsWith.js' %}"></script>

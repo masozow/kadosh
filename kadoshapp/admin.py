@@ -9,7 +9,7 @@ from .models import *
 
 
 admin.site.register(AjusteInventario)
-admin.site.register(Anaquel)
+#admin.site.register(Anaquel)
 admin.site.register(Bodega)
 admin.site.register(Caja)
 admin.site.register(CajaHasEmpleado)

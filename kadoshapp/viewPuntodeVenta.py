@@ -26,7 +26,7 @@ def PuntoDeVenta(request):
         form_cliente=Form_PuntoVenta_busquedas()
         form_estiloproducto=Form_PuntoVenta_EstiloProducto()
         form_promocionhasproducto=Form_PuntoVenta_PromocionHasProducto()
-        form_bodega=Form_PuntoVenta_Bodega()
+        #form_bodega=Form_PuntoVenta_Bodega()
     return render(request, 'kadoshapp/PuntoDeVenta.html', {
                     'form_Venta': form_Venta,
                     'form_DetalleVenta':form_DetalleVenta,
@@ -36,42 +36,55 @@ def PuntoDeVenta(request):
                     'form_Promocion':form_Promocion, 'form_Precio':form_Precio,
                     'form_cliente':form_cliente,
                     'form_estiloproducto':form_estiloproducto,
-                    'form_promocionhasproducto': form_promocionhasproducto,
-                    'form_bodega': form_bodega
+                    'form_promocionhasproducto': form_promocionhasproducto
+                    #'form_bodega': form_bodega
                     })
 
 
 #Vista para obtener solo el producto mediante Ajax
 def BuscarProducto(request):
     if request.method == 'POST':
-        #pdb.set_trace()
         txt_codigo_producto = request.POST.get('codigobarras_producto') #aquí llamar por el nombre del objeto (name), no por el id
+        id_bodega_que_vende = request.POST.get(' bodega_venta') #llamar por el nombre del objeto json que se envia como 'data' dentro de la consulta Ajax
         #runeval(txt_codigo_producto) #se supone que evalua la variable y la envia al debugger
         #pdb.set_trace()  #estos son los breakpoints de django
 
         response_data = {} #declarando un diccionario vacio
-        #response_data['recibido']=txt_codigo_producto
         resp_producto=Producto.objects.filter(codigobarras_producto=txt_codigo_producto)
         resp_inventario=InventarioProducto.objects.filter(producto_codigo_producto__in=resp_producto).order_by('-idinventario_producto')[:1]
         #__in sirve para indicar que ese campo debe ser buscado dentro del objeto al que se hace referencia
         resp_precio=Precio.objects.filter(producto_codigo_producto__in=resp_producto,estado_precio=1).order_by('-idprecio')[:1] #
-        #resp_productonombre=Producto.objects.filter(codigobarras_producto=txt_codigo_producto).only('nombre_producto')
-        #resp_productocodigo=Producto.objects.filter(codigobarras_producto=txt_codigo_producto).only('codigo_producto')
-
-        #response_data['codprod']=resp_productocodigo
-        #response_data['inventario']=resp_inventario
-        #response_data['nombre']=resp_productonombre
-        #response_data['valorprod']=resp_precio
-
-        #response_data = {'codprod': resp_productocodigo,'inventario':resp_inventario,'nombre':resp_productonombre,'valorprod':resp_precio}
-        #respuesta=serializers.serialize('json',response_data)
-        #response_data['codprod']=serializers.serialize('json', list(resp_producto), fields=('pk')) #serializers.serialize('json', resp_producto.only('codigo_producto'))#
         response_data['inventario']=serializers.serialize('json', list(resp_inventario), fields=('pk'))
         response_data['nombre']=serializers.serialize('json', list(resp_producto), fields=('nombre_producto'))
         response_data['valorprod']=serializers.serialize('json', list(resp_precio), fields=('valor_precio'))
 
         return HttpResponse(
-            #response_data,
+            json.dumps(response_data),
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
+
+def BuscarProductoCaracteristicas(request):
+    if request.method == 'POST':
+        txt_codigo_producto = request.POST.get('codigobarras_producto') #aquí llamar por el nombre del objeto (name), no por el id
+        id_bodega_que_vende = request.POST.get(' bodega_venta') #llamar por el nombre del objeto json que se envia como 'data' dentro de la consulta Ajax
+        #runeval(txt_codigo_producto) #se supone que evalua la variable y la envia al debugger
+        #pdb.set_trace()  #estos son los breakpoints de django
+
+        response_data = {} #declarando un diccionario vacio
+        resp_producto=Producto.objects.filter(codigobarras_producto=txt_codigo_producto)
+        resp_inventario=InventarioProducto.objects.filter(producto_codigo_producto__in=resp_producto).order_by('-idinventario_producto')[:1]
+        #__in sirve para indicar que ese campo debe ser buscado dentro del objeto al que se hace referencia
+        resp_precio=Precio.objects.filter(producto_codigo_producto__in=resp_producto,estado_precio=1).order_by('-idprecio')[:1] #
+        response_data['inventario']=serializers.serialize('json', list(resp_inventario), fields=('pk'))
+        response_data['nombre']=serializers.serialize('json', list(resp_producto), fields=('nombre_producto'))
+        response_data['valorprod']=serializers.serialize('json', list(resp_precio), fields=('valor_precio'))
+
+        return HttpResponse(
             json.dumps(response_data),
             content_type="application/json"
         )

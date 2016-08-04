@@ -23,6 +23,6 @@ def Compra(request):
         form_InventarioProducto=Form_Compra_InventarioProducto()
         form_Producto=Form_Compra_Producto()
         form_fotografia=Form_Compra_Fotografia()
-        form_anaquel=Form_Compra_Anaquel()
+        #form_anaquel=Form_Compra_Anaquel()
         form_TipoProducto=Form_Compra_TipoProducto()
-    return render(request, 'kadoshapp/Compra.html', {'form_Proveedor':form_Proveedor, 'form_Producto': form_Producto,'form_Detallecompra':form_Detallecompra, 'form_TipoProducto':form_TipoProducto,'form_fotografia':form_fotografia ,'form_InventarioProducto':form_InventarioProducto, 'form_anaquel':form_anaquel, 'form_Compra':form_Compra })
+    return render(request, 'kadoshapp/Compra.html', {'form_Proveedor':form_Proveedor, 'form_Producto': form_Producto,'form_Detallecompra':form_Detallecompra, 'form_TipoProducto':form_TipoProducto,'form_fotografia':form_fotografia ,'form_InventarioProducto':form_InventarioProducto, 'form_Compra':form_Compra })

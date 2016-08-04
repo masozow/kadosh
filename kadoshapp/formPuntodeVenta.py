@@ -25,7 +25,7 @@ class Form_PuntoVenta_DetalleVenta(forms.ModelForm):
 class Form_PuntoVenta_InventarioProducto(forms.ModelForm):
     class Meta:
         model=InventarioProducto
-        fields=('producto_codigo_producto',)
+        fields=('producto_codigo_producto','bodega_idbodega',)
 
 class Form_PuntoVenta_EstiloProducto(forms.ModelForm):
     class Meta:
@@ -61,7 +61,7 @@ class Form_PuntoVenta_Precio(forms.ModelForm):
             'valor_precio': forms.NumberInput(attrs={'readonly':'True'}) #es para que no se pueda escribir en el
         }
 
-class Form_PuntoVenta_Bodega(forms.ModelForm):
-    class Meta:
-        model=Anaquel
-        fields=('bodega_idbodega',)
+#class Form_PuntoVenta_Bodega(forms.ModelForm):
+#    class Meta:
+#        model=Anaquel
+#        fields=('bodega_idbodega',)

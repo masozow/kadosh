@@ -16,10 +16,11 @@ class Form_Compra_Compra(forms.ModelForm):
             'fecha_recepcion_compra': widgets.AdminDateWidget(), #este funcionó con todo el bloque de código que se agregó en el template
             'fecha_realizacion_compra': widgets.AdminDateWidget(),
             }
+
 class Form_Compra_InventarioProducto(forms.ModelForm):
     class Meta:
         model=InventarioProducto
-        fields=('producto_codigo_producto','anaquel_idanaquel','costo_unitario_inventarioproducto',)
+        fields=('producto_codigo_producto','costo_unitario_inventarioproducto','bodega_idbodega',)
 
 class Form_Compra_Producto(forms.ModelForm):
     class Meta:
@@ -36,10 +37,10 @@ class Form_Compra_Fotografia(forms.ModelForm):
         model=Fotografia
         fields=('nombre_fotografia','ruta_fotografia',)
 
-class Form_Compra_Anaquel(forms.ModelForm):
-    class Meta:
-        model=Anaquel
-        fields=('bodega_idbodega',)
+#class Form_Compra_Anaquel(forms.ModelForm):
+#    class Meta:
+#        model=Anaquel
+#        fields=('bodega_idbodega',)
 
 class Form_Compra_TipoProducto(forms.ModelForm):
     class Meta:
