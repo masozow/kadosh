@@ -20,4 +20,5 @@ url(r'^Venta/Anular/$', viewAnularVenta.AnularVenta, name='AnularVenta'),
 url(r'^Inventario/Nuevo/$', viewInventario.Inventario, name='Inventario'),
 url(r'^Promocion/Nuevo/$', viewPromocion.Promocion, name='Promocion'),
 url(r'^Buscar/Producto/$', viewPuntodeVenta.BuscarProducto, name='BusquedaProd'),
+url(r'^Buscar/ProductoCaracteristicas/$', viewPuntodeVenta.BuscarProductoCaracteristicas, name='BusquedaProdCar'),
 ]

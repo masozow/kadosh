@@ -38,6 +38,9 @@ class Form_PuntoVenta_TipoProducto(forms.ModelForm):
         fields=('marca_id_marca',)
 
 class Form_PuntoVenta_Producto(forms.ModelForm):
+    #def __init__(self, current_user, *args, **kwargs):
+    #    super(Form_PuntoVenta_Producto, self).__init__(*args, **kwargs)
+    #    self.fields['talla_idtalla'].queryset = self.fields['talla_idtalla'].queryset.exclude(talla_idtalla.estado_talla='0')
     class Meta:
         model=Producto
         exclude=('estado_producto','descripcion_producto',)

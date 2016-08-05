@@ -205,6 +205,12 @@
       //se puede resetear. Hay que hacer con cada dropdown donde se busque.
        var selectDefault = $("#id_cliente_idcliente").html();
 
+       var marcaDefault = $("#id_marca_id_marca").html();
+       var estiloDefault = $("#id_estilo_idestilo").html();
+       var tipoDefault = $("#id_tipo_producto_idtipo_producto").html();
+       var tallaDefault = $("#id_talla_idtalla").html();
+       var colorDefault = $("#id_color_idcolor").html();
+       var generoDefault = $("#id_genero_idgener").html();
         //Función que coloca el cursor en el textbox Nit del cliente, al momento de cargar la página
         //Similar al FormLoad
         $( document ).ready(function(){ //document indica toda la página, ready indica que ya se haya cargado el DOM
@@ -279,7 +285,7 @@
         });
 
         function buscar_caractesristicas(boton){
-
+          obtener_producto_caracteristicas('#id_codigoestilo_producto','#id_bodega_idbodega','#id_marca_id_marca','#id_tipo_producto_idtipo_producto','#id_talla_idtalla','#id_estilo_idestilo','#id_color_idcolor','#id_genero_idgener')
         }
 
         //Funcion para sumar la columna de una tabla
@@ -345,13 +351,26 @@
         };
 
 
-        function obtener_producto_caracteristicas(codigo_buscado,bodega_que_vende) {
+        function obtener_producto_caracteristicas(codigo_estilo_buscar,bodega_que_vende,marca_buscar,tipo_buscar,talla_buscar,estilo_buscar,color_buscar,genero_buscar) {
             $.ajax({
-                url : "/Buscar/Producto/", // La URL que llama a la vista
+                url : "/Buscar/ProductoCaracteristicas/", // La URL que llama a la vista
                 type : "POST", // Metodo http para realizar el request (peticion al servidor)
-                data : { codigobarras_producto : $(codigo_buscado).val(), id_bodega_idbodega: $(bodega_que_vende+" option:selected").text()  }, // Datos enviados con el request en formato JSON
+                data : { codigo_estilo_producto : $(codigo_estilo_buscar).val(), bodega_idbodega: $(bodega_que_vende+" option:selected").val(), marca_producto: $(marca_buscar+" option:selected").val(), tipo_producto: $(tipo_buscar+" option:selected").val(), estilo_producto: $(estilo_buscar+" option:selected").val(), color_producto: $(color_buscar+" option:selected").val(), talla_producto: $(talla_buscar+" option:selected").val(), genero_producto: $(genero_buscar+" option:selected").val()}, // Datos enviados con el request en formato JSON
                 success : function(json) {
+                  console.log(json.codigo_producto);
+                  console.log(json.bodega_producto);
+                  console.log(json.marca_producto);
+                  console.log(json.tipo_producto);
+                  console.log(json.estilo_producto);
+                  console.log(json.talla_producto);
+                  console.log(json.genero_producto);
+                  console.log(json.color_producto);
+                  console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+                  console.log(json.producto);
+                  console.log(json.inventario);
+                  console.log(json.valorprod);
                     //$(codigo_buscado).val(''); // Se limpia el campo del codigo del producto
+                    /*
                     var res_valorprod=JSON.parse(json.valorprod);
                     var res_inventario=JSON.parse(json.inventario);
                     var res_nombre=JSON.parse(json.nombre);
@@ -370,7 +389,7 @@
                                                                     '</tr>');
                     $('input#id_valor_precio').val(campos_valorprod.valor_precio);
                     $('input#id_cantidad_venta').val(1);
-                    sumar_valor_parcial(".suma_valor_parcial",'#id_total_venta');
+                    sumar_valor_parcial(".suma_valor_parcial",'#id_total_venta');*/
                 },
                 error : function(xhr,errmsg,err) {
                     $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Ha ocurrido un error: "+errmsg+
