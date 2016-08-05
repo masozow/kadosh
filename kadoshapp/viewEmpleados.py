@@ -11,12 +11,12 @@ from .formEmpleados import *
 
 def Empleados(request):
     if request.method=='POST':
-        form_empleado=Form_Empleados_Empleado(request.POST)
+        form_estandares=Form_Empleados_Estandares(request.POST)
         if form_empleados.is_valid():
-            ultimo_empleado=form_empleado.save()
+            ultima_categoria=form_estandares.save()
         return render(request, 'kadoshapp/ingreso_mercaderia.html',{})
-        else:
-            form_empleado=Form_Empleados_Empleado()
-            form_persona=Form_Empleados_Persona()
-
-        return render(request, 'kadoshapp/AnularVenta.html', {'form_persona':form_persona,  'form_empleado':form_empleado })
+    else:
+        form_empleado=Form_Empleados_Empleado()
+        form_persona=Form_Empleados_Persona()
+        form_estandares=Form_Empleados_Estandares()
+    return render(request, 'kadoshapp/Empleados.html', {'form_estandares':form_estandares,'form_persona':form_persona,  'form_empleado':form_empleado })

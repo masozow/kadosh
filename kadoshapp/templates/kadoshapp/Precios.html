@@ -1,0 +1,135 @@
+{% extends 'kadoshapp/base.html' %}
+{% load staticfiles %}
+{% block titulo %}
+ Precios
+{% endblock %}
+<!--se añadió la fila anterior-->
+    {% block styles %}
+      <link type="text/css" rel="stylesheet" href="{% static "css/formularios.css" %}"/>
+    {% endblock %}
+      {% block encabezado %}Asignar Precio{% endblock %}
+    {% block content %}
+    <form method="POST" class="post-form">
+      {% csrf_token %}
+
+
+      <div class="row" style="margin-bottom: 0px;">
+<div class="col l6 m12 s12">
+  <h6> Buscar Productos</h6>
+          <div class="col s6">
+            <label for="codigobarras_producto"><h6>Codigo de barras:</h6> </label>{{ form_producto.codigobarras_producto}}
+
+
+
+          <label for="marca_id_marca"><h6>Marca:</h6> </label>{{ form_producto.marca_id_marca}}
+          <label for="estilo_idestilo"><h6>Estilo:</h6> </label>{{ form_producto.estilo_idestilo}}
+          <label for="genero_idgener"><h6>Genero:</h6> </label>{{ form_producto.genero_idgener}}
+          <label for="talla_idtalla"><h6>Talla:</h6> </label>{{ form_producto.talla_idtalla}}
+          </div>
+          <div class="col s6">
+          <input type="checkbox" id="Mostrar" />
+            <label for="Mostrar"><h6>Mostrar caracteristicas producto</h6> </label>
+           <label for="codigoestilo_producto"><h6>Codigo estilo:</h6> </label>{{ form_producto.codigoestilo_producto}}
+
+          <label for="color_idcolor"><h6>Color:</h6> </label>{{ form_producto.color_idcolor}}
+          <button type="submit" class="btn btn-default">Buscar</button>
+          </div>
+
+          <div class="col s9">
+          <label for="producto_codigo_producto"><h6>Producto:</h6> </label>{{  form_InventarioProducto.producto_codigo_producto}}
+          </div>
+          <div class="col s3">
+          <button type="submit" class="btn btn-default">Elegir</button>
+        </div>
+
+        <div class="col s12">
+          <div class="grey lighten-2">
+          <table>
+            <thead>
+              <tr>
+                  <th data-field="Producto">Producto</th>
+                  <th data-field="Cantida">Cantidad</th>
+                  <th data-field="Descripcion">Descripcion</th>
+                  <th data-field="Valor">Valor</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td>Alvin</td>
+                <td>Eclair</td>
+                <td>$0.87</td>
+              </tr>
+              <tr>
+                <td>Alan</td>
+                <td>Jellybean</td>
+                <td>$3.76</td>
+              </tr>
+              <tr>
+                <td>Jonathan</td>
+                <td>Lollipop</td>
+                <td>$7.00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        </div>
+
+
+
+</div>
+
+        <div class="col l6 m12 s12">
+        <p class="blue-text text-darken-2">Codigo producto ####</p>
+        <div class="s12">
+          <div class="grey lighten-2">
+          <table>
+            <thead>
+              <tr>
+                  <th data-field="Cod">Cod</th>
+                  <th data-field="Precio">Precio</th>
+                  <th data-field="Fecha Inicial">Fecha Inicial</th>
+                  <th data-field="Fecha Final">Fecha Final</th>
+                  <th data-field="Estado">Estado</th>
+                  <th data-field="Autorizado">Autorizado</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td>Alvin</td>
+                <td>Eclair</td>
+                <td>$0.87</td>
+              </tr>
+              <tr>
+                <td>Alan</td>
+                <td>Jellybean</td>
+                <td>$3.76</td>
+              </tr>
+              <tr>
+                <td>Jonathan</td>
+                <td>Lollipop</td>
+                <td>$7.00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        </div>
+
+        <p class="blue-text text-darken-2">Codigo Precio seleccionado ####</p>
+          <label for="valor_precio"><h6>Monto Precio:</h6> </label>{{  form_precio.valor_precio}}
+          <label for="fechainicial_precio"><h6>Fecha inicial vigencia:</h6> </label>{{ form_precio.fechainicial_precio}}
+          <input type="date" class="datepicker" id="fechainicial_precio">
+          <label for="fechafinal_precio"><h6>Fecha final vigencia:</h6> </label>{{ form_precio.fechafinal_precio}}
+          <input type="date" class="datepicker" id="fechafinal_precio">
+
+        <button type="submit" class="save btn btn-default">Guardar Precio</button>
+        </div>
+
+
+      </div>
+
+
+
+    </form>
+    {% endblock %}

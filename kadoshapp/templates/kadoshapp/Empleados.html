@@ -1,0 +1,78 @@
+{% extends 'kadoshapp/base.html' %}
+{% load staticfiles %}
+{% block titulo %}
+ Empleados
+{% endblock %}
+<!--se añadió la fila anterior-->
+    {% block styles %}
+      <link type="text/css" rel="stylesheet" href="{% static "css/formularios.css" %}"/>
+    {% endblock %}
+      {% block encabezado %}Empleados{% endblock %}
+    {% block content %}
+    <form method="POST" class="post-form">
+      {% csrf_token %}
+      <div class="row" style="margin-bottom: 0px;">
+        <div class="col l6 m12 s12">
+        <label for="apellidos_persona"><h6>Apellidos del empleado:</h6> </label>{{ form_persona.apellidos_persona}}
+        <label for="nombres_persona"><h6>Nombres del empleado:</h6> </label>{{ form_persona.nombres_persona}}
+        <label for="puesto_idpuesto"><h6>Puesto: </h6> </label>{{ form_empleado.puesto_idpuesto}}
+        <button type="submit" class="btn btn-default">Buscar</button>
+      </div>
+
+        <div class="col l3 m12 s12">
+        <p class="blue-text text-darken-2">Codigo empleado seleccionado ####</p>
+          <label for="estandares_vendedor_idestandares_vendedor"><h6>Categoria: </h6> </label>{{ form_estandares.estandares_vendedor_idestandares_vendedor}}
+        <button type="submit" class="save btn btn-default">Cambiar Categoria</button>
+        </div>
+
+        <div class="col l3">
+          <p>Fotografia:</p>
+        <div class="card-panel teal">
+        <span>Aqui se visualiza la foto del empleado recordar  darle un tama;o estandar a la imagen</span>
+        </div>
+
+        </div>
+
+      </div>
+
+<div class="row" style="margin-bottom: 0px;">
+  <div class="row grey lighten-2">
+    <table>
+            <thead>
+              <tr>
+                 <th data-field="Cod">Cod</th>
+                  <th data-field="Nombre">Nombre</th>
+                  <th data-field="Puesto">Puesto</th>
+                  <th data-field="Motivo de baja">Motivo de baja</th>
+                  <th data-field="Fecha contratacion">Fecha contratacion</th>
+                  <th data-field="Fecha baja">Fecha baja</th>
+                  <th data-field="Ventas mes actual">Ventas mes actual</th>
+                  <th data-field="Categoria">Categoria</th>
+                  <th data-field="Ruta fotografia">Ruta fotografia</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Alvin</td>
+                <td>Eclair</td>
+                <td>$0.87</td>
+              </tr>
+              <tr>
+                <td>Alan</td>
+                <td>Jellybean</td>
+                <td>$3.76</td>
+              </tr>
+              <tr>
+                <td>Jonathan</td>
+                <td>Lollipop</td>
+                <td>$7.00</td>
+              </tr>
+              <tr>
+
+            </tbody>
+          </table>
+  </div>
+</div>
+
+    </form>
+    {% endblock %}
