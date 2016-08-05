@@ -126,7 +126,7 @@ def BuscarProductoCaracteristicas(request):
         resp_inventario=InventarioProducto.objects.filter(producto_codigo_producto__in=resp_producto,bodega_idbodega=id_bodega_que_vende).order_by('-idinventario_producto')[:1]
             #__in sirve para indicar que ese campo debe ser buscado dentro del objeto al que se hace referencia
         resp_precio=Precio.objects.filter(producto_codigo_producto__in=resp_producto,estado_precio=1).order_by('-idprecio')[:1] #
-        resp_foto=
+        #resp_foto=Establecimiento.objects.values('nombre', 'categoria__titulo')
         response_data['inventario']=serializers.serialize('json', list(resp_inventario), fields=('pk'))
         response_data['producto']=serializers.serialize('json', list(resp_producto))
         response_data['valorprod']=serializers.serialize('json', list(resp_precio), fields=('valor_precio'))
