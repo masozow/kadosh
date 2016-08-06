@@ -1,6 +1,6 @@
 from django.conf.urls import include, url
 from . import views
-from . import viewCliente, viewIngresoMercaPorProveedor, viewCompra, viewPuntodeVenta, viewTrasladoMercaderia, viewCierreCaja, viewAnularVenta, viewInventario, viewPromocion
+from . import viewAsignarCaja,viewListadoProductos,viewBusquedaMercaderia,viewPrecios,viewCliente, viewIngresoMercaPorProveedor, viewCompra, viewPuntodeVenta, viewTrasladoMercaderia, viewCierreCaja, viewAnularVenta, viewInventario, viewPromocion,viewEmpleados
 
 urlpatterns=[
 #urls para loguear
@@ -21,4 +21,9 @@ url(r'^Inventario/Nuevo/$', viewInventario.Inventario, name='Inventario'),
 url(r'^Promocion/Nuevo/$', viewPromocion.Promocion, name='Promocion'),
 url(r'^Buscar/Producto/$', viewPuntodeVenta.BuscarProducto, name='BusquedaProd'),
 url(r'^Buscar/ProductoCaracteristicas/$', viewPuntodeVenta.BuscarProductoCaracteristicas, name='BusquedaProdCar'),
+url(r'^Empleados/Categoria/$', viewEmpleados.Empleados, name='Empleados'),
+url(r'^Asignar/Precio/$', viewPrecios.Precios, name='Precios'),
+url(r'^Mercaderia/Busqueda/$', viewBusquedaMercaderia.BusquedaMerca, name='BusquedaMercaderia'),
+url(r'^Productos/Listado/$', viewListadoProductos.Listado, name='ListadoProductos'),
+url(r'^Asignar/Caja/$', viewAsignarCaja.Asignacion, name='AsignarCaja'),
 ]

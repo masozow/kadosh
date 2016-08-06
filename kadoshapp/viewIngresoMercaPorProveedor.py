@@ -22,6 +22,6 @@ def ingresodemercaderiaporProveedor(request):
         form_TipoProducto=Form_IngresoMercaderiaPorProveedor_TipoProducto()
         form_fotografia=Form_IngresoMercaderiaPorProveedor_Fotografia()
         form_InventarioProducto=Form_IngresoMercaderiaPorProveedor_InventarioProducto()
-        form_anaquel=Form_IngresoMercaderiaPorProveedor_Anaquel()
+        #form_anaquel=Form_IngresoMercaderiaPorProveedor_Anaquel()
         form_Compra=Form_IngresoMercaderiaPorProveedor_Compra()
-    return render(request, 'kadoshapp/IngresoMercaderiaPorProveedor.html', {'form_Producto': form_Producto,'form_Detallecompra':form_Detallecompra, 'form_TipoProducto':form_TipoProducto,'form_fotografia':form_fotografia ,'form_InventarioProducto':form_InventarioProducto, 'form_anaquel':form_anaquel, 'form_Compra':form_Compra })
+    return render(request, 'kadoshapp/IngresoMercaderiaPorProveedor.html', {'form_Producto': form_Producto,'form_Detallecompra':form_Detallecompra, 'form_TipoProducto':form_TipoProducto,'form_fotografia':form_fotografia ,'form_InventarioProducto':form_InventarioProducto,  'form_Compra':form_Compra })
