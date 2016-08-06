@@ -5,6 +5,7 @@
 {% block styles %}
 <style type="text/css">
 @import url(https://fonts.googleapis.com/css?family=Khula:700);
+
 body {
   background: white;
 }
@@ -14,18 +15,7 @@ body {
 .console-container {
 
   font-family:Khula;
-  font-size:4em;
-  text-align:center;
-  height:200px;
-  width:600px;
-  display:block;
-position:absolute;
-  color:white;
-  top:0;
-  bottom:0;
-  left:200px;
-  right:0;
-  margin:auto;
+  font-size:40px;
 }
 .console-underscore {
    display:inline-block;
@@ -33,14 +23,22 @@ position:absolute;
   top:-0.14em;
   left:10px;
 }
+@media screen and (max-width: 480px) {
+  .console-container {
 
+    font-family:Khula;
+    font-size:20px;}
+}
+h5{
+  color: white;
+}
 </style>
 {% endblock %}
 {% block extra_scripts %}
 
   <script type="text/javascript">
-  // function([string1, string2],target id,[color1,color2])
- consoleText(['KADOSH BIENVENIDO', 'KADOSH BIENVENIDO', 'KADOSH BIENVENIDO'], 'text',['tomato','rebeccapurple','lightblue']);
+  //function([string1, string2],target id,[color1,color2])
+ consoleText(['KADOSH BIENVENIDO', 'KADOSH BIENVENIDO', 'KADOSH BIENVENIDO'], 'text',['tomato','yellow','lightblue']);
 
 function consoleText(words, id, colors) {
   if (colors === undefined) colors = ['#fff'];
@@ -92,10 +90,133 @@ function consoleText(words, id, colors) {
 }
   </script>
 {% endblock %}
-  {% block encabezado %}Inicio{% endblock %}
+  {% block encabezado %}
+  <div class='console-container'>
+  <span id='text'>
+  </span>
+  <div class='console-underscore' id='console'>&#95;</div>
+  </div>
+
+  {% endblock %}
 {% block content %}
+<!--Vendedores-->
+<div class="row" style="margin-bottom: 0px";>
+    <div class="card horizontal light-green lighten-2">
+      <div class="card-stacked">
+        <div class="card-content">
+          <h5>Vendedores</h5>
+      <table>
+        <thead>
+          <tr>
+              <th data-field="id">Name</th>
+              <th data-field="name">Item Name</th>
+              <th data-field="price">Item Price</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>Alvin</td>
+            <td>Eclair</td>
+            <td>$0.87</td>
+          </tr>
+          <tr>
+            <td>Alan</td>
+            <td>Jellybean</td>
+            <td>$3.76</td>
+          </tr>
+          <tr>
+            <td>Jonathan</td>
+            <td>Lollipop</td>
+            <td>$7.00</td>
+          </tr>
+        </tbody>
+      </table>
+
+        </div>
+      </div>
+    </div>
+</div>
 
 
-<div class='console-container'><span id='text'></span><div class='console-underscore' id='console'>&#95;</div></div>
+<!--CLientes-->
+<div class="row" style="margin-bottom: 0px";>
+    <div class="card horizontal orange lighten-3">
+      <div class="card-stacked">
+        <div class="card-content">
+          <h5>Clientes</h5>
+      <table>
+        <thead>
+          <tr>
+              <th data-field="id">Name</th>
+              <th data-field="name">Item Name</th>
+              <th data-field="price">Item Price</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>Alvin</td>
+            <td>Eclair</td>
+            <td>$0.87</td>
+          </tr>
+          <tr>
+            <td>Alan</td>
+            <td>Jellybean</td>
+            <td>$3.76</td>
+          </tr>
+          <tr>
+            <td>Jonathan</td>
+            <td>Lollipop</td>
+            <td>$7.00</td>
+          </tr>
+        </tbody>
+      </table>
+
+        </div>
+      </div>
+    </div>
+</div>
+
+
+<!--Productos sin movimiento-->
+<div class="row" style="margin-bottom: 0px";>
+    <div class="card horizontal red lighten-3">
+      <div class="card-stacked">
+        <div class="card-content ">
+          <h5>Productos sin movimiento</h5>
+      <table>
+        <thead>
+          <tr>
+              <th data-field="id">Name</th>
+              <th data-field="name">Item Name</th>
+              <th data-field="price">Item Price</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>Alvin</td>
+            <td>Eclair</td>
+            <td>$0.87</td>
+          </tr>
+          <tr>
+            <td>Alan</td>
+            <td>Jellybean</td>
+            <td>$3.76</td>
+          </tr>
+          <tr>
+            <td>Jonathan</td>
+            <td>Lollipop</td>
+            <td>$7.00</td>
+          </tr>
+        </tbody>
+      </table>
+
+        </div>
+      </div>
+    </div>
+</div>
+
 
  {% endblock content %}
