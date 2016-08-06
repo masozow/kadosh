@@ -13,7 +13,6 @@ body {
   opacity:0;
 }
 .console-container {
-
   font-family:Khula;
   font-size:40px;
 }
@@ -29,16 +28,160 @@ body {
     font-family:Khula;
     font-size:20px;}
 }
-h5{
+
+/*css tabla*/
+.header {
   color: white;
+  font-size: 1.5em;
+  padding: 1rem;
+  text-align: center;
+  text-transform: uppercase;
 }
+
+.table-users {
+  border: 1px solid #327a81;
+  border-radius: 10px;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.1);
+  max-width: calc(100% - 2em);
+  margin: 1em auto;
+  overflow: hidden;
+  width: 800px;
+}
+
+table {
+  width: 100%;
+}
+table td, table th {
+  color: #212121;
+  padding: 10px;
+}
+table td {
+  text-align: center;
+  vertical-align: middle;
+}
+table td:last-child {
+  font-size: 0.95em;
+  line-height: 1.4;
+  text-align: left;
+}
+table th {
+  background-color: #daeff1;
+  font-weight: 300;
+}
+table tr:nth-child(2n) {
+  background-color: white;
+}
+table tr:nth-child(2n+1) {
+  background-color: #edf7f8;
+}
+
+@media screen and (max-width: 700px) {
+  table, tr, td {
+    display: block;
+  }
+
+  td:first-child {
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+    width: 100px;
+  }
+  td:not(:first-child) {
+    clear: both;
+    margin-left: 100px;
+    padding: 4px 20px 4px 90px;
+    position: relative;
+    text-align: left;
+  }
+  td:not(:first-child):before {
+    color: #91ced4;
+    content: '';
+    display: block;
+    left: 0;
+    position: absolute;
+  }/*
+  td:nth-child(2):before {
+    content: 'Name:';
+  }
+  td:nth-child(3):before {
+    content: 'Email:';
+  }
+  td:nth-child(4):before {
+    content: 'Phone:';
+  }
+  td:nth-child(5):before {
+    content: 'Comments:';
+  }*/
+
+  tr {
+    padding: 10px 0;
+    position: relative;
+  }
+  tr:first-child {
+    display: none;
+  }
+}
+@media screen and (max-width: 500px) {
+  .header {
+
+    font-size: 2em;
+    font-weight: 700;
+    padding: 0;
+    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1);
+  }
+
+
+
+  td:first-child {
+    background-color: #c8e7ea;
+    border-bottom: 1px solid #91ced4;
+    border-radius: 10px 10px 0 0;
+    position: relative;
+    top: 0;
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+    width: 100%;
+  }
+  td:not(:first-child) {
+    margin: 0;
+    padding: 5px 1em;
+    width: 100%;
+  }
+  td:not(:first-child):before {
+    font-size: .8em;
+    padding-top: 0.3em;
+    position: relative;
+  }
+  td:last-child {
+    padding-bottom: 1rem !important;
+  }
+
+  tr {
+    background-color: white !important;
+    border: 1px solid #6cbec6;
+    border-radius: 10px;
+    box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1);
+    margin: 0.5rem 0;
+    padding: 0;
+  }
+
+  .table-users {
+    border: none;
+    box-shadow: none;
+    overflow: visible;
+  }
+}
+
+/**/
+
 </style>
 {% endblock %}
 {% block extra_scripts %}
 
   <script type="text/javascript">
   //function([string1, string2],target id,[color1,color2])
- consoleText(['KADOSH BIENVENIDO', 'KADOSH BIENVENIDO', 'KADOSH BIENVENIDO'], 'text',['tomato','yellow','lightblue']);
+ consoleText(['KADOSH BIENVENIDO', 'KADOSH BIENVENIDO', 'KADOSH BIENVENIDO'], 'text',['yellow','orange','lightblue']);
 
 function consoleText(words, id, colors) {
   if (colors === undefined) colors = ['#fff'];
@@ -101,121 +244,110 @@ function consoleText(words, id, colors) {
 {% block content %}
 <!--Vendedores-->
 <div class="row" style="margin-bottom: 0px";>
-    <div class="card horizontal light-green lighten-2">
-      <div class="card-stacked">
-        <div class="card-content">
-          <h5>Vendedores</h5>
-      <table>
-        <thead>
-          <tr>
-              <th data-field="id">Name</th>
-              <th data-field="name">Item Name</th>
-              <th data-field="price">Item Price</th>
-          </tr>
-        </thead>
+  <div class="table-users">
+     <div class="header light-green darken-1 "> Vendedores</div>
 
-        <tbody>
-          <tr>
-            <td>Alvin</td>
-            <td>Eclair</td>
-            <td>$0.87</td>
-          </tr>
-          <tr>
-            <td>Alan</td>
-            <td>Jellybean</td>
-            <td>$3.76</td>
-          </tr>
-          <tr>
-            <td>Jonathan</td>
-            <td>Lollipop</td>
-            <td>$7.00</td>
-          </tr>
-        </tbody>
-      </table>
+     <table cellspacing="0">
+        <tr>
+           <th>Cod</th>
+           <th width="230">Nombre</th>
+           <th>Puesto</th>
+           <th>Ventas mes actual</th>
+           <th>Categoria actual</th>
+           <th>Categoria sugerida</th>
+        </tr>
 
-        </div>
-      </div>
-    </div>
+        <tr>
+
+           <td>Jane Doe</td>
+           <td>jane.doe@foo.com</td>
+           <td>01 800 2000</td>
+           <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </td>
+           <td>A</td>
+           <td>A</td>
+        </tr>
+
+
+
+
+     </table>
+  </div>
 </div>
 
 
 <!--CLientes-->
 <div class="row" style="margin-bottom: 0px";>
-    <div class="card horizontal orange lighten-3">
-      <div class="card-stacked">
-        <div class="card-content">
-          <h5>Clientes</h5>
-      <table>
-        <thead>
-          <tr>
-              <th data-field="id">Name</th>
-              <th data-field="name">Item Name</th>
-              <th data-field="price">Item Price</th>
-          </tr>
-        </thead>
+  <div class="table-users">
+     <div class="header orange darken-1"> Clientes</div>
 
-        <tbody>
-          <tr>
-            <td>Alvin</td>
-            <td>Eclair</td>
-            <td>$0.87</td>
-          </tr>
-          <tr>
-            <td>Alan</td>
-            <td>Jellybean</td>
-            <td>$3.76</td>
-          </tr>
-          <tr>
-            <td>Jonathan</td>
-            <td>Lollipop</td>
-            <td>$7.00</td>
-          </tr>
-        </tbody>
-      </table>
+     <table cellspacing="0">
+        <tr>
+          <th >Cod</th>
+          <th  width="230">Nombre</th>
+          <th >Correo electronico</th>
+          <th >Compras totales</th>
+          <th >Fecha cumpleaños</th>
+          <th >Cat. Actual</th>
+          <th >Cat. Sugerida</th>
+        </tr>
 
-        </div>
-      </div>
-    </div>
+        <tr>
+
+           <td>Jane Doe</td>
+           <td>jane.doe@foo.com</td>
+           <td>01 800 2000</td>
+           <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </td>
+        </tr>
+
+        <tr>
+
+           <td>John Doe</td>
+           <td>john.doe@foo.com</td>
+           <td>01 800 2000</td>
+           <td>Blanditiis, aliquid numquam iure voluptatibus ut maiores explicabo ducimus neque, nesciunt rerum perferendis, inventore.</td>
+        </tr>
+
+
+     </table>
+  </div>
 </div>
+
 
 
 <!--Productos sin movimiento-->
 <div class="row" style="margin-bottom: 0px";>
-    <div class="card horizontal red lighten-3">
-      <div class="card-stacked">
-        <div class="card-content ">
-          <h5>Productos sin movimiento</h5>
-      <table>
-        <thead>
-          <tr>
-              <th data-field="id">Name</th>
-              <th data-field="name">Item Name</th>
-              <th data-field="price">Item Price</th>
-          </tr>
-        </thead>
+  <div class="table-users">
+     <div class="header red darken-1"> Productos sin movimiento</div>
 
-        <tbody>
-          <tr>
-            <td>Alvin</td>
-            <td>Eclair</td>
-            <td>$0.87</td>
-          </tr>
-          <tr>
-            <td>Alan</td>
-            <td>Jellybean</td>
-            <td>$3.76</td>
-          </tr>
-          <tr>
-            <td>Jonathan</td>
-            <td>Lollipop</td>
-            <td>$7.00</td>
-          </tr>
-        </tbody>
-      </table>
+     <table cellspacing="0">
+        <tr>
+          <th >Cod</th>
+          <th  width="230">Nombre</th>
+          <th >Codigo barras</th>
+          <th >Codigo estilo</th>
+          <th >Ventas Mes actual</th>
+          <th >Ultima venta</th>
+        </tr>
 
-        </div>
-      </div>
-    </div>
+        <tr>
+
+           <td>Jane Doe</td>
+           <td>jane.doe@foo.com</td>
+           <td>01 800 2000</td>
+           <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </td>
+        </tr>
+
+        <tr>
+
+           <td>John Doe</td>
+           <td>john.doe@foo.com</td>
+           <td>01 800 2000</td>
+           <td>Blanditiis, aliquid numquam iure voluptatibus ut maiores explicabo ducimus neque, nesciunt rerum perferendis, inventore.</td>
+        </tr>
+
+
+     </table>
+  </div>
 </div>
 
 
