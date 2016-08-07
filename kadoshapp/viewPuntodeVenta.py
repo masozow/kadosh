@@ -160,18 +160,18 @@ def GuardarVenta(request):
         #post = Post(text=post_text, author=request.user)
         #post.save()
         #probar lo siguiente
-        #empleado=Empleado.objects.get(auth_user=request.user)
-        formulario=Venta(anotaciones_venta=rec_anotaciones_venta,cliente_idcliente=Cliente.objects.get(idcliente=rec_cliente_idcliente),tipo_pago_idtipo_pago=TipoPago.objects.get(idtipo_pago=rec_tipo_pago_idtipo_pago),contado_venta=rec_contado_venta,vendedor_venta=Empleado.objects.get(idempleado=rec_vendedor_venta),caja_idcaja=Caja.objects.get(idcaja=rec_caja_idcaja),es_cotizacion=rec_es_cotizacion,total_venta=rec_total_venta)
+        empleado=Empleado.objects.get(auth_user=request.user)
+        formulario=Venta(empleado_idempleado=empleado,anotaciones_venta=rec_anotaciones_venta,cliente_idcliente=Cliente.objects.get(idcliente=rec_cliente_idcliente),tipo_pago_idtipo_pago=TipoPago.objects.get(idtipo_pago=rec_tipo_pago_idtipo_pago),contado_venta=rec_contado_venta,vendedor_venta=Empleado.objects.get(idempleado=rec_vendedor_venta),caja_idcaja=Caja.objects.get(idcaja=rec_caja_idcaja),es_cotizacion=rec_es_cotizacion,total_venta=rec_total_venta)
         formulario.save()
         response_data = {} #declarando un diccionario vacio
         response_data['idventa']=formulario.pk
-        response_data['anotaciones']=formulario.anotaciones_venta
-        response_data['cliente']=fomrulario.cliente_idcliente
-        response_data['tipopago']=formulario.tipo_pago_idtipo_pago
-        response_data['contado']=formulario.contado_venta
-        response_data['vendedor']=formulario.vendedor_venta
-        response_data['caja']=formulario.caja_idcaja
-        response_data['cotizacion']=formulario.es_cotizacion
+        #response_data['anotaciones']=formulario.anotaciones_venta
+        #response_data['cliente']=formulario.cliente_idcliente
+        #response_data['tipopago']=formulario.tipo_pago_idtipo_pago
+        #response_data['contado']=formulario.contado_venta
+        #response_data['vendedor']=formulario.vendedor_venta
+        #response_data['caja']=formulario.caja_idcaja
+        #response_data['cotizacion']=formulario.es_cotizacion
         response_data['total']=formulario.total_venta
         #response_data['total']=serializers.serialize('json', list(rec_total_venta))
         return HttpResponse(

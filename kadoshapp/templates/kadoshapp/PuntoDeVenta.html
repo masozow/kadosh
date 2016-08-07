@@ -302,11 +302,12 @@
         //luego como segundo, el nombre del 'number input' donde se escribira el resultado
         function sumar_valor_parcial(clase, escribiraqui)
         {
-          var sum=0;
+          var sum=0.00;
           $(clase).each(function() {
               sum += parseFloat($(this).text());
           });
-          $(escribiraqui).val(sum);
+          $(escribiraqui).val(sum.toFixed(2));
+          parseFloat($(escribiraqui).val()).toFixed(2)
         }
 
     /*Espacio para Ajax
@@ -341,7 +342,7 @@
                                                                       '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+cantidad+'</td>'+
                                                                       '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+campos_nombre.nombre_producto+'</td>'+
                                                                       '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+campos_valorprod.valor_precio+'</td>'+
-                                                                      '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;" class="suma_valor_parcial">'+valor_parcial+'</td>'+
+                                                                      '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;" class="suma_valor_parcial">'+valor_parcial.toFixed(2)+'</td>'+
                                                                       '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;"> <input id="boton_eliminar" "type="button" onclick="eliminar_fila(this)" value="Eliminar" name="Eliminar" style="text-align: center; margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;"/> </td>'+
                                                                     '</tr>');
                     //$("#talk").prepend("<li><strong>"+json.codprod+"</strong> - <em> "+json.valorprod[0]+"</em> - <span> "+json.nombre[0]+"</span></li>");
@@ -420,6 +421,7 @@
                 success : function(json) {
                   console.log('Exito');
                   var res_idventa=json.idventa;
+                  /*
                   var res_anotaciones = json.anotaciones;
                   var res_cliente  = json.cliente;
                   var res_tipopago = json.tipopago;
@@ -427,15 +429,17 @@
                   var res_vendedor = json.vendedor;
                   var res_caja = json.caja;
                   var res_cotizacion = json.cotizacion;
+                  */
                   var res_total = json.total;
                   console.log('Venta:'+res_idventa);
-                  console.log(res_anotaciones);
+                  /*console.log(res_anotaciones);
                   console.log(res_cliente);
                   console.log(res_tipopago);
                   console.log('Al contado:'+res_contado);
                   console.log(res_vendedor);
                   console.log(res_caja);
                   console.log('Es cotizacion:'+res_cotizacion);
+                  */
                   console.log(res_total);
                   //console.log();
                   /*var res_fotografia=JSON.parse(json.fotografia);

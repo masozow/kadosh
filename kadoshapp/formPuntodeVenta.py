@@ -14,7 +14,7 @@ class Form_PuntoVenta_Venta(forms.ModelForm):
         model=Venta
         fields=('anotaciones_venta','cliente_idcliente','empleado_idempleado','tipo_pago_idtipo_pago','contado_venta','vendedor_venta','caja_idcaja','es_cotizacion','total_venta')
         widgets={
-            'total_venta': forms.NumberInput(attrs={'readonly':'True','step': '0.01'}) #es para que no se pueda escribir en el
+            'total_venta': forms.NumberInput(attrs={'readonly':'True','step': '0.01','value':'0.00', 'placeholder':'0.00'}) #es para que no se pueda escribir en el
             #'es_cotizacion': forms.CheckboxInput(attrs={'class': 'filled-in'}) #agregando clase CSS al checkbox, ya no fue necesario, se hizo con JQuery
         }
 
