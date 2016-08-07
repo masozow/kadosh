@@ -6,6 +6,9 @@ import pdb #para hacer el debugging
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
 from django.db.models import Q #para poder usar el operador | que funciona como OR
+from django.db.models import F #para hacer llamadas u operaciones en la BD, sin cargarlas en memoria (no las procesa django, sino directamente el SGBD)
+from collections import namedtuple #Sirve en la funcion de tuplas
+from decimal import Decimal #para hacer la conversion decimal a JSON
 
 
 from .models import *
@@ -123,16 +126,21 @@ def BuscarProductoCaracteristicas(request):
         response_data['genero_producto']=id_genero_producto
         #La Q en el siguiente queryset es importantisima, sin ella no funciona los OR, representados por el poerador |
         resp_producto=Producto.objects.filter(Q(codigoestilo_producto=txt_codigo_producto) | Q(marca_id_marca=id_marca_producto) | Q(estilo_idestilo=id_estilo_producto )| Q(tipo_producto_idtipo_producto=id_tipo_producto) | Q(talla_idtalla=id_talla_producto) | Q(color_idcolor=id_color_producto) | Q(genero_idgener=id_genero_producto))
-        resp_inventario=InventarioProducto.objects.filter(producto_codigo_producto__in=resp_producto,bodega_idbodega=id_bodega_que_vende).order_by('-idinventario_producto')[:1]
+        #resp_inventario=InventarioProducto.objects.filter(producto_codigo_producto__in=resp_producto,bodega_idbodega=id_bodega_que_vende).order_by('-idinventario_producto')[:1]
             #__in sirve para indicar que ese campo debe ser buscado dentro del objeto al que se hace referencia
-        resp_precio=Precio.objects.filter(producto_codigo_producto__in=resp_producto,estado_precio=1).order_by('-idprecio')[:1] #
-        #resp_foto=Establecimiento.objects.values('nombre', 'categoria__titulo')
-        response_data['inventario']=serializers.serialize('json', list(resp_inventario), fields=('pk'))
-        response_data['producto']=serializers.serialize('json', list(resp_producto))
-        response_data['valorprod']=serializers.serialize('json', list(resp_precio), fields=('valor_precio'))
+        #resp_precio=Precio.objects.filter(producto_codigo_producto__in=resp_producto,estado_precio=1).order_by('-idprecio')[:1] #
+        resp_consulta=consulta_sql_personalizada(id_bodega_que_vende,txt_codigo_producto,id_marca_producto,id_tipo_producto,id_estilo_producto,id_talla_producto,id_color_producto,id_genero_producto)
+        #A continuacion se usa una consulta SQL comun y corriente, prestar atencion al placeholder "%s" que es para un valor unico, y al parametro con el formato values_list('un_campo',flat=True), que hace que se envie un solo valor del resultado de ese queryset
+        #resp_foto=Fotografia.objects.raw('SELECT F.idfotografia,F.ruta_fotografia FROM Fotografia as F INNER JOIN Producto_has_Fotografia as PF on F.idfotografia=PF.fotografia_idfotografia WHERE PF.producto_codigo_producto=%s AND F.principal_fotografia=1',resp_producto.values_list('codigo_producto',flat=True))
+
+        #response_data['fotografia']=serializers.serialize('json', list(resp_foto))
+        #response_data['inventario']=serializers.serialize('json', list(resp_inventario), fields=('pk'))
+        #response_data['producto']=serializers.serialize('json', list(resp_producto))
+        response_data['consulta']=resp_consulta #serializers.serialize('json', list(resp_consulta))
+        #response_data['valorprod']=serializers.serialize('json', list(resp_precio), fields=('valor_precio'))
 
         return HttpResponse(
-            json.dumps(response_data),
+            json.dumps(response_data,default=default),
             content_type="application/json"
         )
     else:
@@ -140,3 +148,48 @@ def BuscarProductoCaracteristicas(request):
             json.dumps({"nothing to see": "this isn't happening"}),
             content_type="application/json"
         )
+
+
+
+def consulta_sql_personalizada(bodega,codestilo,marca,tipo,estilo,talla,color,genero):
+    from django.db import connection, transaction #importando librerias para manejar directamente la BD
+    #con esto se salta por completo la capa de los modelos de DJANGO
+    cursor = connection.cursor() #Todo se trabaja con cursores, aqui se abre la conexion
+
+    # Data modifying operation - commit required
+    #cursor.execute("UPDATE bar SET foo = 1 WHERE baz = %s", [self.baz])
+    #transaction.commit_unless_managed()
+
+
+    # Data retrieval operation - no commit required
+    cursor.execute("""SELECT IP.idInventario_producto,P.codigo_producto,P.codigoestilo_producto,P.nombre_producto,Pr.valor_precio
+                      FROM Producto as P
+                      INNER JOIN Inventario_producto as IP on P.codigo_producto=IP.Producto_codigo_producto
+                      INNER JOIN Precio as Pr on Pr.Producto_codigo_producto = P.codigo_producto
+                      WHERE IP.bodega_idbodega=%s
+                      AND (P.codigoestilo_producto=%s OR P.marca_idmarca = %s OR P.tipo_producto_idtipo_producto=%s OR P.estilo_idestilo=%s OR P.color_idcolor=%s OR P.genero_idgener=%s OR P.talla_idtalla=%s)""",[bodega,codestilo,marca,tipo,estilo,color,genero,talla])
+    row = dictfetchall(cursor)
+
+    return row
+
+#la siguiente funcion/metodo, sirve para devolver los datos en forma de diccionario
+def dictfetchall(cursor):
+    "Return all rows from a cursor as a dict"
+    columns = [col[0] for col in cursor.description]
+    return [
+        dict(zip(columns, row))
+        for row in cursor.fetchall()
+    ]
+
+#la siguiente funcion devuelve los datos en forma de tupla
+def namedtuplefetchall(cursor):
+    "Return all rows from a cursor as a namedtuple"
+    desc = cursor.description
+    nt_result = namedtuple('Result', [col[0] for col in desc])
+    return [nt_result(*row) for row in cursor.fetchall()]
+
+#sobrecargando la funcion default de JSON
+def default(obj):
+    if isinstance(obj, Decimal):
+        return str(obj)
+    raise TypeError

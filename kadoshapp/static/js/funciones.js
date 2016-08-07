@@ -137,3 +137,26 @@ function sumar_valor_parcial(clase, escribiraqui)
   $(escribiraqui).val(sum);
 }
 */
+
+//La siguiente funcion envia los datos del arreglo_parametros, que son objetos del DOM
+//hacia un View vinculado a la URL. El arreglo de parametros debe ser creado con los
+//id's de los elementos del DOM, en forma de string
+function obtener_con_ajax(arreglo_parametros,URL_del_view) {
+    var contenido_a_enviar='';
+    $.each( arreglo_parametros, function( index, value ){
+      contenido_a_enviar+= $(value).attr('id') +':'+$(value).val()+',';
+    });
+    $.ajax({
+        url : URL_del_view, // La URL que llama a la vista
+        type : "POST", // Metodo http para realizar el request (peticion al servidor)
+        data : { contenido_a_enviar[0:contenido_a_enviar.length-1] }, // Datos enviados con el request en formato JSON
+        success : function(json) {
+          return json;
+        },
+        error : function(xhr,errmsg,err) {
+            $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Ha ocurrido un error: "+errmsg+
+                " <a href='#' class='close'>&times;</a></div>");
+            console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
+        }
+    });
+};

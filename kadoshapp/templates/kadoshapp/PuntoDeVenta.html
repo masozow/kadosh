@@ -286,7 +286,31 @@
 
         function buscar_caractesristicas(boton){
           obtener_producto_caracteristicas('#id_codigoestilo_producto','#id_bodega_idbodega','#id_marca_id_marca','#id_tipo_producto_idtipo_producto','#id_talla_idtalla','#id_estilo_idestilo','#id_color_idcolor','#id_genero_idgener')
+
+          var parametros = ['#id_codigoestilo_producto','#id_bodega_idbodega','#id_marca_id_marca','#id_tipo_producto_idtipo_producto','#id_talla_idtalla','#id_estilo_idestilo','#id_color_idcolor','#id_genero_idgener'];
+          console.log(obtener_con_ajax(parametros,"/Buscar/ProductoCaracteristicas/"));
         }
+
+        function obtener_con_ajax(arreglo_parametros,URL_del_view) {
+            var contenido_a_enviar='';
+            $.each( arreglo_parametros, function( index, value ){
+              contenido_a_enviar+= $(value).attr('id') +':'+$(value).val()+',';
+            });
+            $.ajax({
+                url : URL_del_view, // La URL que llama a la vista
+                type : "POST", // Metodo http para realizar el request (peticion al servidor)
+                console.log(contenido_a_enviar[0:contenido_a_enviar.length-1]);
+                data : { contenido_a_enviar[0:contenido_a_enviar.length-1] }, // Datos enviados con el request en formato JSON
+                success : function(json) {
+                  return json;
+                },
+                error : function(xhr,errmsg,err) {
+                    $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Ha ocurrido un error: "+errmsg+
+                        " <a href='#' class='close'>&times;</a></div>");
+                    console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
+                }
+            });
+        };
 
         //Funcion para sumar la columna de una tabla
         //se le envia como primer parametro, el selector de la clase aplicada a la columna de la tabla_productos
@@ -357,40 +381,13 @@
                 type : "POST", // Metodo http para realizar el request (peticion al servidor)
                 data : { codigo_estilo_producto : $(codigo_estilo_buscar).val(), bodega_idbodega: $(bodega_que_vende+" option:selected").val(), marca_producto: $(marca_buscar+" option:selected").val(), tipo_producto: $(tipo_buscar+" option:selected").val(), estilo_producto: $(estilo_buscar+" option:selected").val(), color_producto: $(color_buscar+" option:selected").val(), talla_producto: $(talla_buscar+" option:selected").val(), genero_producto: $(genero_buscar+" option:selected").val()}, // Datos enviados con el request en formato JSON
                 success : function(json) {
-                  console.log(json.codigo_producto);
-                  console.log(json.bodega_producto);
-                  console.log(json.marca_producto);
-                  console.log(json.tipo_producto);
-                  console.log(json.estilo_producto);
-                  console.log(json.talla_producto);
-                  console.log(json.genero_producto);
-                  console.log(json.color_producto);
-                  console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
-                  console.log(json.producto);
-                  console.log(json.inventario);
-                  console.log(json.valorprod);
-                    //$(codigo_buscado).val(''); // Se limpia el campo del codigo del producto
-                    /*
-                    var res_valorprod=JSON.parse(json.valorprod);
-                    var res_inventario=JSON.parse(json.inventario);
-                    var res_nombre=JSON.parse(json.nombre);
-                    var campos_valorprod =res_valorprod[0].fields;
-                    var campos_nombre =res_nombre[0].fields;
-                    var cantidad=$('input#id_cantidad_venta').val();
-                    var valor_parcial=cantidad*campos_valorprod.valor_precio;
-                    $('#tabla_productos > tbody:last-child').append('<tr>'+
-                                                                      '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+res_inventario[0].pk+'</td>'+
-                                                                      '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+res_nombre[0].pk+'</td>'+
-                                                                      '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+cantidad+'</td>'+
-                                                                      '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+campos_nombre.nombre_producto+'</td>'+
-                                                                      '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+campos_valorprod.valor_precio+'</td>'+
-                                                                      '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;" class="suma_valor_parcial">'+valor_parcial+'</td>'+
-                                                                      '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;"> <input id="boton_eliminar" "type="button" onclick="eliminar_fila(this)" value="Eliminar" name="Eliminar" style="text-align: center; margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;"/> </td>'+
-                                                                    '</tr>');
-                    $('input#id_valor_precio').val(campos_valorprod.valor_precio);
-                    $('input#id_cantidad_venta').val(1);
-                    sumar_valor_parcial(".suma_valor_parcial",'#id_total_venta');*/
+                  $(id_producto_codigo_producto).empty();
+                  $.each(json.consulta, function(key,value) {
+                    $(id_producto_codigo_producto).append('<option value='+value.codigo_producto+'>'+value.codigo_producto +'|'+ value.idInventario_producto +'|'+ value.nombre_producto +'|'+ value.codigoestilo_producto +'|'+ value.valor_precio +'</option>');
+                    console.log(value);
+                  });
                 },
+
                 error : function(xhr,errmsg,err) {
                     $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Ha ocurrido un error: "+errmsg+
                         " <a href='#' class='close'>&times;</a></div>");
