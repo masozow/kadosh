@@ -7,7 +7,7 @@ urlpatterns=[
 url(r'^$','django.contrib.auth.views.login',
 {'template_name':'kadoshapp/login.html'}, name='login'),
 
-url(r'^$','django.contrib.auth.views.logout_then_login',
+url(r'^cerrar/$','django.contrib.auth.views.logout_then_login',
  name='logout'),
 url(r'^index/kadosh/', views.ingreso_mercaderia, name='ingreso_mercaderia'),
 url(r'^ingreso/cliente/$', viewCliente.registro_cliente, name='registroCliente'),
