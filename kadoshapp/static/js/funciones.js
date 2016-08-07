@@ -104,20 +104,22 @@ function comprobar_pasarsiguiente_mostrarmensaje(txtboxInicial,txtboxDestino,dro
   $( txtboxInicial ).keydown(function(e){ //Keydown es para que al presionarse la tecla haga algo.
                                                       //El parámetro "e" captura la tecla del teclado
     var keyCode = e.keyCode || e.which; //se declara una variable que capturará cualquiera de esos dos valores
-    if (e.keyCode==13) { //keycode obtiene el valor ascii de la tecla presionada
-      e.preventDefault(); //previene que se realice la acción por defecto que efectuaría el navegador con esa tecla
-      var text=$(dropDownBusqueda+" option:selected").text().split(parametrosplit);
-      var nit = $(txtboxInicial).val();
-      var nit_tratado=nit.replace(']', '');
-      if(text[posicionarreglosplit]===nit_tratado)
+    if (keyCode==13) { //keycode obtiene el valor ascii de la tecla presionada
+     e.preventDefault(); //previene que se realice la acción por defecto que efectuaría el navegador con esa tecla
+      var valor=$(dropDownBusqueda+" option:selected").val();
+      //var text=$(dropDownBusqueda+" option:selected").text().split(parametrosplit);
+      //var nit = $(txtboxInicial).val();
+      //var texto_tratado=text[posicionarreglosplit].replace(']', '');
+      //alert(texto_tratado);
+      if(valor==='')
       {
-        $(txtboxDestino).focus();
-      }
-      else {
         //$('input#id_nit_del_cliente').val('');
         //$(txtboxDestino).focus();
         $(dropDownBusqueda).html(selectDefault);
         alert(mensaje);
+      }
+      else {
+        $(txtboxDestino).focus();
       }
     }
     //$('input#id_nit_del_cliente').focus();
@@ -141,16 +143,26 @@ function sumar_valor_parcial(clase, escribiraqui)
 //La siguiente funcion envia los datos del arreglo_parametros, que son objetos del DOM
 //hacia un View vinculado a la URL. El arreglo de parametros debe ser creado con los
 //id's de los elementos del DOM, en forma de string
+//se llama asi:
+//var parametros=['#id_codigoestilo_producto','#id_bodega_idbodega','#id_marca_id_marca','#id_tipo_producto_idtipo_producto','#id_talla_idtalla','#id_estilo_idestilo','#id_color_idcolor','#id_genero_idgener'];
+//aun no funciona
+//var json_recibido = obtener_con_ajax(parametros,"/Buscar/ProductoCaracteristicas/");
+/*
 function obtener_con_ajax(arreglo_parametros,URL_del_view) {
-    var contenido_a_enviar='';
+    var contenido_a_enviar={};
     $.each( arreglo_parametros, function( index, value ){
-      contenido_a_enviar+= $(value).attr('id') +':'+$(value).val()+',';
+      var datos=$(value).attr('id') +':'+$(value).val()+',';
+      contenido_a_enviar[$(value).attr('id')] = $(value).val();
     });
+
+    console.log(JSON.stringify(contenido_a_enviar));
     $.ajax({
         url : URL_del_view, // La URL que llama a la vista
         type : "POST", // Metodo http para realizar el request (peticion al servidor)
-        data : { contenido_a_enviar[0:contenido_a_enviar.length-1] }, // Datos enviados con el request en formato JSON
+        data : contenido_a_enviar, // Datos enviados con el request en formato JSON
         success : function(json) {
+          console.log("xxxxxxxxxxxxxxx");
+          console.log(json.consulta);
           return json;
         },
         error : function(xhr,errmsg,err) {
@@ -160,3 +172,4 @@ function obtener_con_ajax(arreglo_parametros,URL_del_view) {
         }
     });
 };
+*/

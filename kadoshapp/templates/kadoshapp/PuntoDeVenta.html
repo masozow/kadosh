@@ -1,5 +1,6 @@
 {% extends 'kadoshapp/base.html' %}
 {% load staticfiles %}
+
 <!--se añadió la fila anterior-->
    {% block titulo %}
     Punto de venta
@@ -10,7 +11,7 @@
 
     {% block encabezado %}Punto de venta{% endblock %}
     {% block content %}
-        <form method="POST" class="post-form">
+        <form action="/Guardar/Venta/" id="formulario_venta" method="POST" class="post-form">
           {% csrf_token %}
         <div id="bloque_encabezado" style="background-color: #e6e6ff;">
           <div class="row" style="margin-bottom: 0px;">
@@ -25,8 +26,11 @@
             </div>
             <div class="col l2 m12 s12">
               <br/>
-              <input type="checkbox" id="es_cotizacion" />
-              <label style="font-size: 80%" for="es_cotizacion">Cotización</label>{{ form_Venta.es_cotizacion}}
+              <!--input class="filled-in" id="check_cotizacion" name="cotizacion_check" type="checkbox" />
+              <label style="font-size: 80%" for="check_cotizacion">Características del producto</label-->
+              <!--input type="checkbox" id="es_cotizacion" /-->
+              {{ form_Venta.es_cotizacion}}
+              <label style="font-size: 80%" for="id_es_cotizacion">Cotización</label>
             </div>
 
           </div>
@@ -77,8 +81,9 @@
         <ul id="talk">
         <div class="divider"></div>
         <div id="bloque_caracteristicas_producto">
-          <p style="color: #80bfff;"><b>Características del producto</b></p>
+
           <div class="col l6 m12 s12">
+            <p style="color: #80bfff;"><b>Características del producto</b></p>
               <div class="col  s6">
                 <label>Marca: </label>{{form_TipoProducto.marca_id_marca}}
                 <label>Tipo: </label>{{form_estiloproducto.tipo_producto_idtipo_producto}}
@@ -92,7 +97,7 @@
                 <label>Color: </label>{{form_Producto.color_idcolor}}
                 <label>Género: </label>{{form_Producto.genero_idgener}}
                 <br/>
-                <input class="save btn btn-default" id="boton_buscar_caracteristicas" type="button" onclick="buscar_caractesristicas(this)" value="Buscar" name="buscar_caracteristicas"/>
+                <input class="save btn btn-default" id="boton_buscar_caracteristicas" type="button" onclick="buscar_caracteristicas(this)" value="Buscar" name="btn_buscar_caracteristicas"/>
               </div>
 
           </div>
@@ -100,18 +105,14 @@
           <div class="col l6 m12 s12">
             <div class="row" style="margin-bottom: 0px;">
               <div class="col s12 m6">
-                <div class="card blue-grey darken-1">
-                  <div class="card-content white-text">
-                    <span class="card-title">Imagen</span>
-                  </div>
-                </div>
+                <img id="imagen_producto" src="~/archivos/pantalonazul.jpg" alt="Imagen del producto" style="width:150px;height:200px;">
               </div>
             </div>
           </div>
           <div class="row" style="margin-bottom: 0px;">
               <div class="col l6 m12 s12">
                   <label>Descripcion: </label>{{form_InventarioProducto.producto_codigo_producto}}
-                  <input class="save btn btn-default" id="boton_agregar_producto" type="button" onclick="agregar_producto(this)" value="Agregar" name="agregar_producto"/>
+                  <input class="save btn btn-default" id="boton_agregar_producto" type="button" onclick="agregar_producto(this)" value="Agregar" name="btn_agregar_producto"/>
               </div>
           </div>
     </div>
@@ -171,6 +172,10 @@
       </div>
       <div class="col l3 m12 s12">
         <label>Tipo de pago: </label>{{form_Venta.tipo_pago_idtipo_pago}}
+        <!--input type="checkbox" id="id_contado_venta" checked="checked" /-->
+        {{ form_Venta.contado_venta}}
+        <label style="font-size: 80%" for="id_contado_venta">Al contado</label>
+        <br/>
         <label>Anotaciones: </label>{{form_Venta.anotaciones_venta}}
         <br/>
         <button type="submit" class="save btn btn-default">Realizar Venta</button>
@@ -211,6 +216,11 @@
        var tallaDefault = $("#id_talla_idtalla").html();
        var colorDefault = $("#id_color_idcolor").html();
        var generoDefault = $("#id_genero_idgener").html();
+
+       //Para que funcione el clic en los checkbox del form de django:
+       //$('#id_es_cotizacion').on('click', handler);
+       //$('#id_contado_venta').on('click', handler);
+
         //Función que coloca el cursor en el textbox Nit del cliente, al momento de cargar la página
         //Similar al FormLoad
         $( document ).ready(function(){ //document indica toda la página, ready indica que ya se haya cargado el DOM
@@ -220,6 +230,8 @@
           $('#bloque_descuento').hide();
           $('#bloque_anular').hide();
           $('input#id_cantidad_venta').val(1);
+          $('input[type="checkbox"]').addClass("filled-in").addClass("filled-in"); //necesario para que se vean los checkbox
+
           //$('id_caja_idcajaselect').material_select();
         });
 
@@ -240,19 +252,7 @@
         click_ocultar_mostrar('check_promocion',"#bloque_promocion");
         click_ocultar_mostrar('check_descuento',"#bloque_descuento");
         click_ocultar_mostrar('check_anular',"#bloque_anular");
-/*
-        $( '#check_pornombre' ).on({
-            click: function() {
-              if(document.getElementById('#check_pornombre').checked) {
-                $(seoculta).show();
-              }
-              else {
-                $(seoculta).hide();
-              }
-            }
-        });
-      }
-      */
+
         //Funcion para buscar el nit del cliente:
         //el primer parametro es el id del txtbox y el segundo el id del dropdownlist
         //buscar_dropdown_startswith('input#id_nit_del_cliente','#id_cliente_idcliente');
@@ -268,7 +268,8 @@
         //y devuelve el dropdown a su estado original. Se le envia ademas el parametro para que se haga un split
         //del texto del elemento seleccionado en el dropdwon. Y otro parametro para saber que posicion del arreglo
         //resultante del split, es la que se usara para la comparacion
-        comprobar_pasarsiguiente_mostrarmensaje('input#id_nit_del_cliente','input#id_codigobarras_producto','#id_cliente_idcliente');
+        //(txtboxInicial,txtboxDestino,dropDownBusqueda,mensaje,parametrosplit,posicionarreglosplit)
+        comprobar_pasarsiguiente_mostrarmensaje('input#id_nit_del_cliente','input#id_codigobarras_producto','#id_cliente_idcliente','El cliente no existe',' ',0);
 
         //Función que realiza una acción al leer código de barras
         $( 'input#id_codigobarras_producto' ).keydown(function(e){
@@ -278,39 +279,23 @@
           {
             e.preventDefault();
             obtener_producto('input#id_codigobarras_producto','#id_bodega_idbodega');
-            console.log($('#id_bodega_idbodega').val());
+            //console.log($('#id_bodega_idbodega').val());
             //Enviar como parametro el id del elemento txtBox, y el id del dropdown de bodega
             //Importante editar tambien el "data :" en la definicion de la funcion
           }
         });
 
-        function buscar_caractesristicas(boton){
-          obtener_producto_caracteristicas('#id_codigoestilo_producto','#id_bodega_idbodega','#id_marca_id_marca','#id_tipo_producto_idtipo_producto','#id_talla_idtalla','#id_estilo_idestilo','#id_color_idcolor','#id_genero_idgener')
-
-          var parametros = ['#id_codigoestilo_producto','#id_bodega_idbodega','#id_marca_id_marca','#id_tipo_producto_idtipo_producto','#id_talla_idtalla','#id_estilo_idestilo','#id_color_idcolor','#id_genero_idgener'];
-          console.log(obtener_con_ajax(parametros,"/Buscar/ProductoCaracteristicas/"));
+        function buscar_caracteristicas(boton){
+          obtener_producto_caracteristicas('#id_codigoestilo_producto','#id_bodega_idbodega','#id_marca_id_marca','#id_tipo_producto_idtipo_producto','#id_talla_idtalla','#id_estilo_idestilo','#id_color_idcolor','#id_genero_idgener');
         }
 
-        function obtener_con_ajax(arreglo_parametros,URL_del_view) {
-            var contenido_a_enviar='';
-            $.each( arreglo_parametros, function( index, value ){
-              contenido_a_enviar+= $(value).attr('id') +':'+$(value).val()+',';
-            });
-            $.ajax({
-                url : URL_del_view, // La URL que llama a la vista
-                type : "POST", // Metodo http para realizar el request (peticion al servidor)
-                console.log(contenido_a_enviar[0:contenido_a_enviar.length-1]);
-                data : { contenido_a_enviar[0:contenido_a_enviar.length-1] }, // Datos enviados con el request en formato JSON
-                success : function(json) {
-                  return json;
-                },
-                error : function(xhr,errmsg,err) {
-                    $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Ha ocurrido un error: "+errmsg+
-                        " <a href='#' class='close'>&times;</a></div>");
-                    console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
-                }
-            });
-        };
+        //Llamando a la imagen con cada cambio en el dropdown de productos
+        $( "#id_producto_codigo_producto" ).change(function() {
+          //console.log($("#id_producto_codigo_producto option:selected").val());
+            obtener_imagen_producto("#id_producto_codigo_producto");
+            //alert( "Handler for .change() called." );
+        });
+
 
         //Funcion para sumar la columna de una tabla
         //se le envia como primer parametro, el selector de la clase aplicada a la columna de la tabla_productos
@@ -384,7 +369,7 @@
                   $(id_producto_codigo_producto).empty();
                   $.each(json.consulta, function(key,value) {
                     $(id_producto_codigo_producto).append('<option value='+value.codigo_producto+'>'+value.codigo_producto +'|'+ value.idInventario_producto +'|'+ value.nombre_producto +'|'+ value.codigoestilo_producto +'|'+ value.valor_precio +'</option>');
-                    console.log(value);
+                    //console.log(value);
                   });
                 },
 
@@ -395,6 +380,78 @@
                 }
             });
         };
+
+        function obtener_imagen_producto(producto_buscar) {
+            $.ajax({
+                url : "/Buscar/ImagenProducto/", // La URL que llama a la vista
+                type : "POST", // Metodo http para realizar el request (peticion al servidor)
+                data : { codigo_producto : $(producto_buscar+' option:selected').val()}, // Datos enviados con el request en formato JSON
+                success : function(json) {
+                  var res_fotografia=JSON.parse(json.fotografia);
+                  var campos_fotografia=res_fotografia[0].fields;
+                  console.log(JSON.stringify(campos_fotografia.ruta_fotografia));
+                  $("imagen_producto").attr('src',JSON.stringify(campos_fotografia.ruta_fotografia));
+                },
+
+                error : function(xhr,errmsg,err) {
+                    $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Ha ocurrido un error: "+errmsg+
+                        " <a href='#' class='close'>&times;</a></div>");
+                    console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
+                }
+            });
+        };
+
+        //anotaciones_venta,cliente_idcliente,tipo_pago_idtipo_pago,contado_venta,vendedor_venta,caja_idcaja,es_cotizacion,total_venta
+        //Esta parte es importantisima, lo que se envia es el ID del formulario completo
+        //es para hacer el commit sin actualizar la pagina, sino con ajax
+        //se previene que el boton de submit haga lo habitual (preventDefault)
+        //y se llama a la funcion de abajo, a la que guarda la venta
+        $('#formulario_venta').on('submit', function(event){
+            event.preventDefault();
+            console.log("form submitted!")  // sanity check
+            guardar_venta();
+        });
+
+        function guardar_venta() {
+            $.ajax({
+                url : "/Guardar/Venta/", // La URL que llama a la vista
+                type : "POST", // Metodo http para realizar el request (peticion al servidor)
+                data : { env_anotaciones_venta : $('#id_anotaciones_venta').val(), env_cliente_idcliente: $('#id_cliente_idcliente'+ ' option:selected').val(), env_tipo_pago_idtipo_pago: $('#id_tipo_pago_idtipo_pago'+ ' option:selected').val(), env_contado_venta: $('#id_contado_venta').is(':checked'), env_vendedor_venta: $('#id_vendedor_venta'+ ' option:selected').val(),  env_caja_idcaja: $('#id_caja_idcaja'+ ' option:selected').val(), env_es_cotizacion: $('#id_es_cotizacion').is(':checked'), env_total_venta: $('#id_total_venta').val()}, // Datos enviados con el request en formato JSON
+                success : function(json) {
+                  console.log('Exito');
+                  var res_idventa=json.idventa;
+                  var res_anotaciones = json.anotaciones;
+                  var res_cliente  = json.cliente;
+                  var res_tipopago = json.tipopago;
+                  var res_contado = json.contado;
+                  var res_vendedor = json.vendedor;
+                  var res_caja = json.caja;
+                  var res_cotizacion = json.cotizacion;
+                  var res_total = json.total;
+                  console.log('Venta:'+res_idventa);
+                  console.log(res_anotaciones);
+                  console.log(res_cliente);
+                  console.log(res_tipopago);
+                  console.log('Al contado:'+res_contado);
+                  console.log(res_vendedor);
+                  console.log(res_caja);
+                  console.log('Es cotizacion:'+res_cotizacion);
+                  console.log(res_total);
+                  //console.log();
+                  /*var res_fotografia=JSON.parse(json.fotografia);
+                  var campos_fotografia=res_fotografia[0].fields;
+                  console.log(JSON.stringify(campos_fotografia.ruta_fotografia));
+                  $("imagen_producto").attr('src',JSON.stringify(campos_fotografia.ruta_fotografia));*/
+                },
+
+                error : function(xhr,errmsg,err) {
+                    $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Ha ocurrido un error: "+errmsg+
+                        " <a href='#' class='close'>&times;</a></div>");
+                    console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
+                }
+            });
+        };
+
 
     </script>
 

@@ -64,11 +64,6 @@ def BuscarProducto(request):
         response_data['inventario']=serializers.serialize('json', list(resp_inventario), fields=('pk'))
         response_data['nombre']=serializers.serialize('json', list(resp_producto), fields=('nombre_producto'))
         response_data['valorprod']=serializers.serialize('json', list(resp_precio), fields=('valor_precio'))
-        #if not id_bodega_que_vende:
-
-        #    if resp_producto.exists() and resp_inventario.exists() and resp_precio.exists():
-
-        #__in sirve para indicar que ese campo debe ser buscado dentro del objeto al que se hace referencia
 
         return HttpResponse(
             json.dumps(response_data),
@@ -112,32 +107,13 @@ def BuscarProductoCaracteristicas(request):
         if not id_genero_producto:
             id_genero_producto=0
 
-        #runeval(txt_codigo_producto) #se supone que evalua la variable y la envia al debugger
-        #pdb.set_trace()  #estos son los breakpoints de django
-
         response_data = {} #declarando un diccionario vacio
-        response_data['codigo_producto']=txt_codigo_producto
-        response_data['bodega_producto']=id_bodega_que_vende
-        response_data['marca_producto']=id_marca_producto
-        response_data['estilo_producto']=id_estilo_producto
-        response_data['tipo_producto']=id_tipo_producto
-        response_data['talla_producto']=id_talla_producto
-        response_data['color_producto']=id_color_producto
-        response_data['genero_producto']=id_genero_producto
         #La Q en el siguiente queryset es importantisima, sin ella no funciona los OR, representados por el poerador |
-        resp_producto=Producto.objects.filter(Q(codigoestilo_producto=txt_codigo_producto) | Q(marca_id_marca=id_marca_producto) | Q(estilo_idestilo=id_estilo_producto )| Q(tipo_producto_idtipo_producto=id_tipo_producto) | Q(talla_idtalla=id_talla_producto) | Q(color_idcolor=id_color_producto) | Q(genero_idgener=id_genero_producto))
-        #resp_inventario=InventarioProducto.objects.filter(producto_codigo_producto__in=resp_producto,bodega_idbodega=id_bodega_que_vende).order_by('-idinventario_producto')[:1]
-            #__in sirve para indicar que ese campo debe ser buscado dentro del objeto al que se hace referencia
-        #resp_precio=Precio.objects.filter(producto_codigo_producto__in=resp_producto,estado_precio=1).order_by('-idprecio')[:1] #
+        #resp_producto=Producto.objects.filter(Q(codigoestilo_producto=txt_codigo_producto) | Q(marca_id_marca=id_marca_producto) | Q(estilo_idestilo=id_estilo_producto )| Q(tipo_producto_idtipo_producto=id_tipo_producto) | Q(talla_idtalla=id_talla_producto) | Q(color_idcolor=id_color_producto) | Q(genero_idgener=id_genero_producto))
         resp_consulta=consulta_sql_personalizada(id_bodega_que_vende,txt_codigo_producto,id_marca_producto,id_tipo_producto,id_estilo_producto,id_talla_producto,id_color_producto,id_genero_producto)
         #A continuacion se usa una consulta SQL comun y corriente, prestar atencion al placeholder "%s" que es para un valor unico, y al parametro con el formato values_list('un_campo',flat=True), que hace que se envie un solo valor del resultado de ese queryset
         #resp_foto=Fotografia.objects.raw('SELECT F.idfotografia,F.ruta_fotografia FROM Fotografia as F INNER JOIN Producto_has_Fotografia as PF on F.idfotografia=PF.fotografia_idfotografia WHERE PF.producto_codigo_producto=%s AND F.principal_fotografia=1',resp_producto.values_list('codigo_producto',flat=True))
-
-        #response_data['fotografia']=serializers.serialize('json', list(resp_foto))
-        #response_data['inventario']=serializers.serialize('json', list(resp_inventario), fields=('pk'))
-        #response_data['producto']=serializers.serialize('json', list(resp_producto))
-        response_data['consulta']=resp_consulta #serializers.serialize('json', list(resp_consulta))
-        #response_data['valorprod']=serializers.serialize('json', list(resp_precio), fields=('valor_precio'))
+        response_data['consulta']=resp_consulta
 
         return HttpResponse(
             json.dumps(response_data,default=default),
@@ -150,16 +126,72 @@ def BuscarProductoCaracteristicas(request):
         )
 
 
+def BuscarProductoImagenPrincipal(request):
+    if request.method == 'POST':
+        txt_codigo_producto = request.POST.get('codigo_producto')
+        response_data = {} #declarando un diccionario vacio
+        #A continuacion se usa una consulta SQL comun y corriente, prestar atencion al placeholder "%s" que es para un valor unico, y al parametro con el formato values_list('un_campo',flat=True), que hace que se envie un solo valor del resultado de ese queryset
+        resp_foto=Fotografia.objects.raw('SELECT F.idfotografia,F.ruta_fotografia FROM Fotografia as F INNER JOIN Producto_has_Fotografia as PF on F.idfotografia=PF.fotografia_idfotografia WHERE PF.producto_codigo_producto=%s AND F.principal_fotografia=1',txt_codigo_producto)[:1]
+        #resp_ruta_foto=Fotografia.objects.raw('SELECT F.idfotografia,F.ruta_fotografia FROM Fotografia as F INNER JOIN Producto_has_Fotografia as PF on F.idfotografia=PF.fotografia_idfotografia WHERE PF.producto_codigo_producto=%s AND F.principal_fotografia=1',txt_codigo_producto).url
+        response_data['fotografia']=serializers.serialize('json', list(resp_foto))
+        #response_data['ruta']=serializers.serialize('json', list(resp_ruta))
+        return HttpResponse(
+            json.dumps(response_data),
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
+
+
+def GuardarVenta(request):
+    if request.method == 'POST':
+        rec_anotaciones_venta = request.POST.get('env_anotaciones_venta')
+        rec_cliente_idcliente = request.POST.get('env_cliente_idcliente')
+        rec_tipo_pago_idtipo_pago = request.POST.get('env_tipo_pago_idtipo_pago')
+        rec_contado_venta = request.POST.get('env_contado_venta')
+        rec_vendedor_venta = request.POST.get('env_vendedor_venta')
+        rec_caja_idcaja = request.POST.get('env_caja_idcaja')
+        rec_es_cotizacion = request.POST.get('env_es_cotizacion')
+        rec_total_venta = request.POST.get('env_total_venta')
+
+        #post = Post(text=post_text, author=request.user)
+        #post.save()
+        #probar lo siguiente
+        #empleado=Empleado.objects.get(auth_user=request.user)
+        formulario=Venta(anotaciones_venta=rec_anotaciones_venta,cliente_idcliente=Cliente.objects.get(idcliente=rec_cliente_idcliente),tipo_pago_idtipo_pago=TipoPago.objects.get(idtipo_pago=rec_tipo_pago_idtipo_pago),contado_venta=rec_contado_venta,vendedor_venta=Empleado.objects.get(idempleado=rec_vendedor_venta),caja_idcaja=Caja.objects.get(idcaja=rec_caja_idcaja),es_cotizacion=rec_es_cotizacion,total_venta=rec_total_venta)
+        formulario.save()
+        response_data = {} #declarando un diccionario vacio
+        response_data['idventa']=formulario.pk
+        response_data['anotaciones']=formulario.anotaciones_venta
+        response_data['cliente']=fomrulario.cliente_idcliente
+        response_data['tipopago']=formulario.tipo_pago_idtipo_pago
+        response_data['contado']=formulario.contado_venta
+        response_data['vendedor']=formulario.vendedor_venta
+        response_data['caja']=formulario.caja_idcaja
+        response_data['cotizacion']=formulario.es_cotizacion
+        response_data['total']=formulario.total_venta
+        #response_data['total']=serializers.serialize('json', list(rec_total_venta))
+        return HttpResponse(
+            json.dumps(response_data),
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
 
 def consulta_sql_personalizada(bodega,codestilo,marca,tipo,estilo,talla,color,genero):
     from django.db import connection, transaction #importando librerias para manejar directamente la BD
-    #con esto se salta por completo la capa de los modelos de DJANGO
+                                                  #con esto se salta por completo la capa de los modelos de DJANGO
     cursor = connection.cursor() #Todo se trabaja con cursores, aqui se abre la conexion
 
     # Data modifying operation - commit required
     #cursor.execute("UPDATE bar SET foo = 1 WHERE baz = %s", [self.baz])
     #transaction.commit_unless_managed()
-
 
     # Data retrieval operation - no commit required
     cursor.execute("""SELECT IP.idInventario_producto,P.codigo_producto,P.codigoestilo_producto,P.nombre_producto,Pr.valor_precio
