@@ -5,10 +5,12 @@ import json
 import pdb #para hacer el debugging
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
 
 from .models import *
 from .formInventario import *
 #vista Inventario
+@login_required
 def Inventario(request):
     if request.method=='POST':
         form_inventario=Form_Inventario_InventarioProducto(request.POST)

@@ -5,11 +5,13 @@ import json
 import pdb #para hacer el debugging
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
 
 from .models import *
 from .formcompra import *
 
 #Vista de form de compra
+@login_required
 def Compra(request):
     if request.method=='POST':
         form_Compra=Form_Compra_Compra(request.POST)

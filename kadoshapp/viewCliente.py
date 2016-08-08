@@ -5,10 +5,11 @@ import json
 import pdb #para hacer el debugging
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
-
+from django.contrib.auth.decorators import login_required
 from .models import *
 from .formclientes import *
 
+@login_required
 def registro_cliente(request):
     if request.method == 'POST':
         form=Form_RegistroCliente_Persona(request.POST)

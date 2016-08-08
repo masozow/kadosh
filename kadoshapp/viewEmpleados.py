@@ -5,10 +5,11 @@ import json
 import pdb #para hacer el debugging
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
 
 from .models import *
 from .formEmpleados import *
-
+@login_required
 def Empleados(request):
     if request.method=='POST':
         form_estandares=Form_Empleados_Estandares(request.POST)

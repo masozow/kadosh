@@ -5,11 +5,12 @@ import json
 import pdb #para hacer el debugging
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
-
+from django.contrib.auth.decorators import login_required
 from .models import *
 from .formTrasladoMercaderia import *
 
 #CVista de Traslado de mercaderia
+@login_required
 def TrasladoMercaderia(request):
     if request.method=='POST':
         form_Traslado=Form_TrasladoMerca_TrasaladoMercaderia(request.POST)

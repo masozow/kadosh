@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.core import serializers
+from django.contrib.auth.decorators import login_required
 import json
 import pdb #para hacer el debugging
 from django.shortcuts import redirect
@@ -8,6 +9,7 @@ from django.shortcuts import get_object_or_404
 from .models import *
 from .formAnularVenta import *
 #vista Anular Venta
+@login_required
 def AnularVenta(request):
     if request.method=='POST':
         form_Venta=Form_AnulaVenta_Venta(request.POST)
