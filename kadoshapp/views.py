@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.core import serializers
 import json
 import pdb #para hacer el debugging
-
+from django.contrib.auth.decorators import login_required
 #from .models import Persona, Cliente, TipoCliente
 #from .forms import Form_RegistroCliente_Persona, Form_RegistroCliente_Cliente
 from django.shortcuts import redirect
@@ -35,5 +35,6 @@ from django.shortcuts import get_object_or_404
 
 
 # Creat your views here.
+@login_required
 def ingreso_mercaderia(request):
     return render(request, 'kadoshapp/ingreso_mercaderia.html',{})

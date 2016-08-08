@@ -5,10 +5,11 @@ import json
 import pdb #para hacer el debugging
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
-
+from django.contrib.auth.decorators import login_required
 from .models import *
 from .formPromocion import *
 #Vista de Promocion
+@login_required
 def Promocion(request):
     if request.method=='POST':
         form_promocion=Form_Promocion_Promocion(request.POST)
