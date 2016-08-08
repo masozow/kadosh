@@ -303,7 +303,7 @@ class DetalleVenta(models.Model):
     cantidad_venta = models.IntegerField(blank=True, null=True)
     valor_parcial_venta = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
     iddetalleventa = models.AutoField(db_column='idDetalleVenta', primary_key=True)  # Field name made lowercase.
-    descuento_iddescuento = models.ForeignKey(Descuento, db_column='Descuento_idDescuento')  # Field name made lowercase.
+    descuento_iddescuento = models.ForeignKey(Descuento, db_column='Descuento_idDescuento',blank=True,null=True)  # Field name made lowercase.
 
     def __str__(self):
         return 'Id: %s - Venta: %s - Lote: %s - Producto: %s' % (self.iddetalleventa,self.venta_idventa.idventa, self.inventario_producto_idinventario_producto.idinventario_producto, self.inventario_producto_idinventario_producto.producto_codigo_producto)
