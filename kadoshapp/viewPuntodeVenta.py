@@ -9,6 +9,7 @@ from django.db.models import Q #para poder usar el operador | que funciona como 
 from django.db.models import F #para hacer llamadas u operaciones en la BD, sin cargarlas en memoria (no las procesa django, sino directamente el SGBD)
 from collections import namedtuple #Sirve en la funcion de tuplas
 from decimal import Decimal #para hacer la conversion decimal a JSON
+import logging #para enviar datos al archivo Debug
 
 
 from .models import *
@@ -148,6 +149,7 @@ def BuscarProductoImagenPrincipal(request):
 
 def GuardarVenta(request):
     if request.method == 'POST':
+        #Guardando todos los datos que se recibieron a traves de Ajax:
         rec_anotaciones_venta = request.POST.get('env_anotaciones_venta')
         rec_cliente_idcliente = request.POST.get('env_cliente_idcliente')
         rec_tipo_pago_idtipo_pago = request.POST.get('env_tipo_pago_idtipo_pago')
@@ -156,24 +158,26 @@ def GuardarVenta(request):
         rec_caja_idcaja = request.POST.get('env_caja_idcaja')
         rec_es_cotizacion = request.POST.get('env_es_cotizacion')
         rec_total_venta = request.POST.get('env_total_venta')
+        rec_tabla=request.POST.get('tabla')
 
-        #post = Post(text=post_text, author=request.user)
-        #post.save()
-        #probar lo siguiente
         empleado=Empleado.objects.get(auth_user=request.user)
-        formulario=Venta(empleado_idempleado=empleado,anotaciones_venta=rec_anotaciones_venta,cliente_idcliente=Cliente.objects.get(idcliente=rec_cliente_idcliente),tipo_pago_idtipo_pago=TipoPago.objects.get(idtipo_pago=rec_tipo_pago_idtipo_pago),contado_venta=rec_contado_venta,vendedor_venta=Empleado.objects.get(idempleado=rec_vendedor_venta),caja_idcaja=Caja.objects.get(idcaja=rec_caja_idcaja),es_cotizacion=rec_es_cotizacion,total_venta=rec_total_venta)
-        formulario.save()
+        ventaNueva=Venta(empleado_idempleado=empleado,anotaciones_venta=rec_anotaciones_venta,cliente_idcliente=Cliente.objects.get(idcliente=rec_cliente_idcliente),tipo_pago_idtipo_pago=TipoPago.objects.get(idtipo_pago=rec_tipo_pago_idtipo_pago),contado_venta=rec_contado_venta,vendedor_venta=Empleado.objects.get(idempleado=rec_vendedor_venta),caja_idcaja=Caja.objects.get(idcaja=rec_caja_idcaja),es_cotizacion=rec_es_cotizacion,total_venta=rec_total_venta)
+        ventaNueva.save()
+
+        tablaJson=json.loads(rec_tabla)#el loads es necesario, si no los datos aparecen como un arreglo, incluidos los corchetes y las comas
         response_data = {} #declarando un diccionario vacio
-        response_data['idventa']=formulario.pk
-        #response_data['anotaciones']=formulario.anotaciones_venta
-        #response_data['cliente']=formulario.cliente_idcliente
-        #response_data['tipopago']=formulario.tipo_pago_idtipo_pago
-        #response_data['contado']=formulario.contado_venta
-        #response_data['vendedor']=formulario.vendedor_venta
-        #response_data['caja']=formulario.caja_idcaja
-        #response_data['cotizacion']=formulario.es_cotizacion
-        response_data['total']=formulario.total_venta
-        #response_data['total']=serializers.serialize('json', list(rec_total_venta))
+        #Iterando dentro de los arreglos de json:
+        for fila in tablaJson:
+            datos=[]
+            for elemento in fila:
+                datos.append(elemento)
+            detalleNuevo=DetalleVenta(venta_idventa=ventaNueva,inventario_producto_idinventario_producto=InventarioProducto(pk=datos[0]),cantidad_venta=datos[2],valor_parcial_venta=datos[5])
+            detalleNuevo.save()
+
+        #los siguientes datos son para revision solamente, asi se tiene una respuesta de exito en la consola
+        response_data['idventa']=ventaNueva.pk
+        response_data['total']=ventaNueva.total_venta
+
         return HttpResponse(
             json.dumps(response_data),
             content_type="application/json"
@@ -220,7 +224,7 @@ def namedtuplefetchall(cursor):
     nt_result = namedtuple('Result', [col[0] for col in desc])
     return [nt_result(*row) for row in cursor.fetchall()]
 
-#sobrecargando la funcion default de JSON
+#sobrecargando la funcion default de JSON, para poder enviar datos decimales
 def default(obj):
     if isinstance(obj, Decimal):
         return str(obj)

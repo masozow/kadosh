@@ -285,6 +285,7 @@
           }
         });
 
+        //Con esta funcion se buscan los productos de acuerdo a sus caracteristicas
         function buscar_caracteristicas(boton){
           obtener_producto_caracteristicas('#id_codigoestilo_producto','#id_bodega_idbodega','#id_marca_id_marca','#id_tipo_producto_idtipo_producto','#id_talla_idtalla','#id_estilo_idestilo','#id_color_idcolor','#id_genero_idgener');
         }
@@ -402,50 +403,41 @@
             });
         };
 
-        //anotaciones_venta,cliente_idcliente,tipo_pago_idtipo_pago,contado_venta,vendedor_venta,caja_idcaja,es_cotizacion,total_venta
+
         //Esta parte es importantisima, lo que se envia es el ID del formulario completo
-        //es para hacer el commit sin actualizar la pagina, sino con ajax
-        //se previene que el boton de submit haga lo habitual (preventDefault)
+        //es para hacer el commit sin actualizar la pagina, sino con ajax.
+        //Se previene que el boton de submit haga lo habitual (preventDefault)
         //y se llama a la funcion de abajo, a la que guarda la venta
         $('#formulario_venta').on('submit', function(event){
             event.preventDefault();
             console.log("form submitted!")  // sanity check
-            guardar_venta();
+            //A continuacion se obtienen todos los elementos de la tabla producto, en un arrelgo
+            var tbl = $('table#tabla_productos tr').get().map(function(row) {
+              return $(row).find('td').get().map(function(cell) {
+                return $(cell).html();
+              });
+            });
+
+            $.each(tbl, function(key,value) {
+              value.pop();//elimina el ultimo elemento del arreglo, en este caso, en la fila, el boton de eliminar
+            });
+            tbl.shift();//elimina el primer elemento de la tabla, que en este caso es un arreglo vacio
+            var tblJson=JSON.stringify(tbl); //Sin esto la tabla no se recibe bien en el View, es necesario
+            console.log('Toda la tabla:'+tblJson);
+            guardar_venta(tblJson);
         });
 
-        function guardar_venta() {
+        function guardar_venta(arreglo_tabla) {
             $.ajax({
                 url : "/Guardar/Venta/", // La URL que llama a la vista
                 type : "POST", // Metodo http para realizar el request (peticion al servidor)
-                data : { env_anotaciones_venta : $('#id_anotaciones_venta').val(), env_cliente_idcliente: $('#id_cliente_idcliente'+ ' option:selected').val(), env_tipo_pago_idtipo_pago: $('#id_tipo_pago_idtipo_pago'+ ' option:selected').val(), env_contado_venta: $('#id_contado_venta').is(':checked'), env_vendedor_venta: $('#id_vendedor_venta'+ ' option:selected').val(),  env_caja_idcaja: $('#id_caja_idcaja'+ ' option:selected').val(), env_es_cotizacion: $('#id_es_cotizacion').is(':checked'), env_total_venta: $('#id_total_venta').val()}, // Datos enviados con el request en formato JSON
+                data : { env_anotaciones_venta : $('#id_anotaciones_venta').val(), env_cliente_idcliente: $('#id_cliente_idcliente'+ ' option:selected').val(), env_tipo_pago_idtipo_pago: $('#id_tipo_pago_idtipo_pago'+ ' option:selected').val(), env_contado_venta: $('#id_contado_venta').is(':checked'), env_vendedor_venta: $('#id_vendedor_venta'+ ' option:selected').val(),  env_caja_idcaja: $('#id_caja_idcaja'+ ' option:selected').val(), env_es_cotizacion: $('#id_es_cotizacion').is(':checked'), env_total_venta: $('#id_total_venta').val(),tabla: arreglo_tabla}, // Datos enviados con el request en formato JSON
                 success : function(json) {
                   console.log('Exito');
                   var res_idventa=json.idventa;
-                  /*
-                  var res_anotaciones = json.anotaciones;
-                  var res_cliente  = json.cliente;
-                  var res_tipopago = json.tipopago;
-                  var res_contado = json.contado;
-                  var res_vendedor = json.vendedor;
-                  var res_caja = json.caja;
-                  var res_cotizacion = json.cotizacion;
-                  */
                   var res_total = json.total;
                   console.log('Venta:'+res_idventa);
-                  /*console.log(res_anotaciones);
-                  console.log(res_cliente);
-                  console.log(res_tipopago);
-                  console.log('Al contado:'+res_contado);
-                  console.log(res_vendedor);
-                  console.log(res_caja);
-                  console.log('Es cotizacion:'+res_cotizacion);
-                  */
                   console.log(res_total);
-                  //console.log();
-                  /*var res_fotografia=JSON.parse(json.fotografia);
-                  var campos_fotografia=res_fotografia[0].fields;
-                  console.log(JSON.stringify(campos_fotografia.ruta_fotografia));
-                  $("imagen_producto").attr('src',JSON.stringify(campos_fotografia.ruta_fotografia));*/
                 },
 
                 error : function(xhr,errmsg,err) {
