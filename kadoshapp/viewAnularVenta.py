@@ -1,15 +1,20 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.core import serializers
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 import json
 import pdb #para hacer el debugging
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
 from .models import *
 from .formAnularVenta import *
+def not_in_Caja_group(user):
+    if user:
+        return user.groups.filter(name='Caja').count() != 0
+    return False
 #vista Anular Venta
 @login_required
+@user_passes_test(not_in_Caja_group, login_url='denegado')
 def AnularVenta(request):
     if request.method=='POST':
         form_Venta=Form_AnulaVenta_Venta(request.POST)

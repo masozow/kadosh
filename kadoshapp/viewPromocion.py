@@ -5,11 +5,19 @@ import json
 import pdb #para hacer el debugging
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import *
 from .formPromocion import *
+
+#se define a que grupo no permitir acceso
+def not_in_Bodega_group(user):
+    if user:
+        return user.groups.filter(name='Bodega').count() != 0
+    return False
+
 #Vista de Promocion
 @login_required
+@user_passes_test(not_in_Bodega_group, login_url='denegado')
 def Promocion(request):
     if request.method=='POST':
         form_promocion=Form_Promocion_Promocion(request.POST)

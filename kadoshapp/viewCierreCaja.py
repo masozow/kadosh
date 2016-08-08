@@ -5,13 +5,18 @@ import json
 import pdb #para hacer el debugging
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
-from django.contrib.auth.decorators import login_required
-
+from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import *
 from .formCierreCaja import *
 
+def not_in_Caja_group(user):
+    if user:
+        return user.groups.filter(name='Caja').count() != 0
+    return False
+
 #vista CierreDeCaja
 @login_required
+@user_passes_test(not_in_Caja_group, login_url='denegado')
 def CierreDeCaja(request):
     if request.method=='POST':
         form_Cierrecaja=Form_CierreDeCaj_CierreDeCaja(request.POST)

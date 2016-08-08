@@ -5,13 +5,21 @@ import json
 import pdb #para hacer el debugging
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 
 from .models import *
 from .formcompra import *
 
-#Vista de form de compra
+#se define a que grupo no permitir acceso
+def not_in_Bodega_group(user):
+    if user:
+        return user.groups.filter(name='Bodega').count() != 0
+    return False
+
 @login_required
+#linea para no permitir acceso al grupo
+@user_passes_test(not_in_Bodega_group, login_url='denegado')
+#Vista de form de compra
 def Compra(request):
     if request.method=='POST':
         form_Compra=Form_Compra_Compra(request.POST)

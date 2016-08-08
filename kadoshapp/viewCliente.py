@@ -5,11 +5,16 @@ import json
 import pdb #para hacer el debugging
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import *
 from .formclientes import *
+def not_in_Caja_group(user):
+    if user:
+        return user.groups.filter(name='Caja').count() != 0
+    return False
 
 @login_required
+@user_passes_test(not_in_Caja_group, login_url='denegado')
 def registro_cliente(request):
     if request.method == 'POST':
         form=Form_RegistroCliente_Persona(request.POST)
