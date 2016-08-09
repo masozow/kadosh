@@ -1,20 +1,20 @@
 //Funcion para buscar en un dropdownlist de acuerdo al texto escrito en el textbox
 //busca el elemnto del dropdown que inicie con el texto del textbox/inputtext
-function buscar_dropdown_startswith(txtBox,cboBox){
+function buscar_dropdown_startswith(txtBox,cboBox,html_inicial){
   $( txtBox ).keyup(function(e){
     var nit = $(txtBox).val();
     if(e.keyCode=='8') //Si se borra algo, regresa el select al valor original (se hace esto porque se trababa antes)
     {
-      $(cboBox).html(selectDefault);
+      $(cboBox).html(html_inicial);
     }
     if(nit==='')
     {
     }
     else {
-      $(cboBox).html(selectDefault);
+      $(cboBox).html(html_inicial);
       $(cboBox+" option:starts-with("+nit+")").attr('selected', true);
       if($(cboBox+" option:starts-with("+nit+")").length==0){ //si el texto no coincide, se resetea el select
-        $(cboBox).html(selectDefault);
+        $(cboBox).html(html_inicial);
       }
     }
   });
@@ -25,33 +25,34 @@ function buscar_dropdown_startswith(txtBox,cboBox){
 //dependiendo del estado del checkbox enviado, puede buscar lo siguiente:
 //(checked=False)busca el elemento del dropdown que inicie con el texto del textbox/inputtext
 //(checked=True)busca el elemento del dropdown que contenga el texto del textbox/inputtext
-function buscar_dropdown_startswith_condicional(txtBox,cboBox,chkBox){
+//por último se envía el estado inicial de ese Combobox para que pueda ser restaurado
+function buscar_dropdown_startswith_condicional(txtBox,cboBox,chkBox,html_inicial){
   $( txtBox ).keyup(function(e){
     var nit = $(txtBox).val();
     if(e.keyCode=='8') //Si se borra algo, regresa el select al valor original (se hace esto porque se trababa antes)
     {
-      $(cboBox).html(selectDefault);
+      $(cboBox).html(html_inicial);
     }
     if(nit==='')
     {
     }
     else {
       if($(chkBox).is(':checked')) {
-        $(cboBox).html(selectDefault);
+        $(cboBox).html(html_inicial);
         $(cboBox+" option:contains("+nit+")").attr('selected', true);
         if($(cboBox+" option:contains("+nit+")").length==0){ //si el texto no coincide, se resetea el select
-          $(cboBox).html(selectDefault);
+          $(cboBox).html(html_inicial);
         }
       }
       else {
-        $(cboBox).html(selectDefault);
+        $(cboBox).html(html_inicial);
         $(cboBox+" option:starts-with("+nit+")").attr('selected', true);
         if($(cboBox+" option:starts-with("+nit+")").length==0){ //si el texto no coincide, se resetea el select
-          $(cboBox).html(selectDefault);
+          $(cboBox).html(html_inicial);
         }
       }
       /*
-      $(cboBox).html(selectDefault);
+      $(cboBox).html(selectClienteDefault);
       $(cboBox+" > option").filter(function () {
           var texto=cboBox.text.split(parametrosplit);
           console.log(texto);
@@ -63,7 +64,7 @@ function buscar_dropdown_startswith_condicional(txtBox,cboBox,chkBox){
       }).attr('selected', true);*/
       //$(cboBox+" option:starts-with("+nit+")").attr('selected', true);
       //if($(cboBox+" option:starts-with("+nit+")").length==0){ //si el texto no coincide, se resetea el select
-      //  $(cboBox).html(selectDefault);
+      //  $(cboBox).html(selectClienteDefault);
       //}
     }
   });
@@ -115,7 +116,7 @@ function comprobar_pasarsiguiente_mostrarmensaje(txtboxInicial,txtboxDestino,dro
       {
         //$('input#id_nit_del_cliente').val('');
         //$(txtboxDestino).focus();
-        $(dropDownBusqueda).html(selectDefault);
+        $(dropDownBusqueda).html(selectClienteDefault);
         alert(mensaje);
       }
       else {

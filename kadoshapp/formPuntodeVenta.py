@@ -5,10 +5,10 @@ from .models import *
 
 #Form Punto de Venta
 class Form_PuntoVenta_busquedas(forms.Form):
-    nit_del_cliente = forms.CharField(label='Buscar Nit',max_length=13)
+    nit_del_cliente = forms.CharField(label='Buscar Nit',max_length=50)
     nombre_delapromocion = forms.CharField(label='Nombre promocion',max_length=50)
-
     codigo_autorizacion = forms.CharField(label='Codigo de autorización',max_length=50)
+
 class Form_PuntoVenta_Venta(forms.ModelForm):
     class Meta:
         model=Venta
@@ -28,15 +28,15 @@ class Form_PuntoVenta_InventarioProducto(forms.ModelForm):
         model=InventarioProducto
         fields=('producto_codigo_producto','bodega_idbodega',)
 
-class Form_PuntoVenta_EstiloProducto(forms.ModelForm):
-    class Meta:
-        model=Producto
-        fields=('tipo_producto_idtipo_producto',)
+#class Form_PuntoVenta_EstiloProducto(forms.ModelForm):
+#    class Meta:
+#        model=Producto
+#        fields=('tipo_producto_idtipo_producto',)
 
-class Form_PuntoVenta_TipoProducto(forms.ModelForm):
-    class Meta:
-        model=Producto
-        fields=('marca_id_marca',)
+#class Form_PuntoVenta_TipoProducto(forms.ModelForm):
+#    class Meta:
+#        model=Producto
+#        fields=('marca_id_marca',)
 
 class Form_PuntoVenta_Producto(forms.ModelForm):
     #def __init__(self, current_user, *args, **kwargs):

@@ -20,29 +20,43 @@ def PuntoDeVenta(request):
         #form_Venta=Form_PuntoVenta_Venta(request.POST)
         #if form_Venta.is_valid():
         #    ultima_venta=form_Venta.save()
-        return render(request, 'kadoshapp/ingreso_mercaderia.html',{})
+        return render(request, 'kadoshapp/PuntoDeVenta.html',{})
     else:
         form_Venta=Form_PuntoVenta_Venta()
         form_DetalleVenta=Form_PuntoVenta_DetalleVenta()
         form_InventarioProducto=Form_PuntoVenta_InventarioProducto()
         form_Producto=Form_PuntoVenta_Producto()
-        form_TipoProducto=Form_PuntoVenta_TipoProducto()
+        #form_TipoProducto=Form_PuntoVenta_TipoProducto()
         form_Promocion=Form_PuntoVenta_Promocion()
         form_Precio=Form_PuntoVenta_Precio()
         form_cliente=Form_PuntoVenta_busquedas()
-        form_estiloproducto=Form_PuntoVenta_EstiloProducto()
+        #form_estiloproducto=Form_PuntoVenta_EstiloProducto()
         form_promocionhasproducto=Form_PuntoVenta_PromocionHasProducto()
+        #Se filtran los datos que pueden ser vistos en los DropDown/Comobobx
+        form_Venta.fields["vendedor_venta"].queryset = Empleado.objects.filter(puesto_idpuesto__nombre_puesto__contains='Ventas',estado_empleado=1)
+        #En la consulta anterior, se realizó un innerjoin, primero "puesto_idpuesto" es un campo de llave foránea hacia la tabla "Puesto",
+        #luego con el doble guión bajo "__" se le indica que en la Tabla foránea, se utilizará el campo "nombre_puesto"
+        #por último se le dice que busque los nombres que contengan la palabra "Ventas"
+        form_Venta.fields["caja_idcaja"].queryset = Caja.objects.filter(estado_caja=1)
+        form_InventarioProducto.fields["bodega_idbodega"].queryset = Bodega.objects.filter(estado_bodega=1)
+        form_Venta.fields["cliente_idcliente"].queryset = Cliente.objects.filter(estado_cliente=1)
+        form_Producto.fields["marca_id_marca"].queryset = Marca.objects.filter(estado_marca=1)
+        form_Producto.fields["tipo_producto_idtipo_producto"].queryset = TipoProducto.objects.filter(estado_tipoproducto=1)
+        form_Producto.fields["estilo_idestilo"].queryset = Estilo.objects.filter(estado_estilo=1)
+        form_Producto.fields["talla_idtalla"].queryset = Talla.objects.filter(estado_talla=1)
+        form_Producto.fields["color_idcolor"].queryset = Color.objects.filter(estado_color=1)
+        form_Producto.fields["genero_idgener"].queryset = Genero.objects.filter(estado_genero=1)
         #form_bodega=Form_PuntoVenta_Bodega()
     return render(request, 'kadoshapp/PuntoDeVenta.html', {
                     'form_Venta': form_Venta,
                     'form_DetalleVenta':form_DetalleVenta,
-                    'form_TipoProducto':form_TipoProducto,
+                    #'form_TipoProducto':form_TipoProducto,
                     'form_Producto':form_Producto ,
                     'form_InventarioProducto':form_InventarioProducto,
                     'form_Promocion':form_Promocion,
                     'form_Precio':form_Precio,
                     'form_cliente':form_cliente,
-                    'form_estiloproducto':form_estiloproducto,
+                    #'form_estiloproducto':form_estiloproducto,
                     'form_promocionhasproducto': form_promocionhasproducto
                     #'form_bodega': form_bodega
                     })
@@ -152,27 +166,39 @@ def GuardarVenta(request):
         #Guardando todos los datos que se recibieron a traves de Ajax:
         rec_anotaciones_venta = request.POST.get('env_anotaciones_venta')
         rec_cliente_idcliente = request.POST.get('env_cliente_idcliente')
+        if not rec_cliente_idcliente: #revisando que el id de cliente no este vacio
+            rec_cliente_idcliente=0
         rec_tipo_pago_idtipo_pago = request.POST.get('env_tipo_pago_idtipo_pago')
+        if not rec_tipo_pago_idtipo_pago: #revisando que el id del tipo de pago no este vacio
+            rec_tipo_pago_idtipo_pago=0
         rec_contado_venta = request.POST.get('env_contado_venta')
         rec_vendedor_venta = request.POST.get('env_vendedor_venta')
+        if not rec_vendedor_venta:
+            rec_vendedor_venta=0
         rec_caja_idcaja = request.POST.get('env_caja_idcaja')
+        if not rec_caja_idcaja:
+            rec_caja_idcaja=0
         rec_es_cotizacion = request.POST.get('env_es_cotizacion')
         rec_total_venta = request.POST.get('env_total_venta')
         rec_tabla=request.POST.get('tabla')
 
         empleado=Empleado.objects.get(auth_user=request.user)
         ventaNueva=Venta(empleado_idempleado=empleado,anotaciones_venta=rec_anotaciones_venta,cliente_idcliente=Cliente.objects.get(idcliente=rec_cliente_idcliente),tipo_pago_idtipo_pago=TipoPago.objects.get(idtipo_pago=rec_tipo_pago_idtipo_pago),contado_venta=rec_contado_venta,vendedor_venta=Empleado.objects.get(idempleado=rec_vendedor_venta),caja_idcaja=Caja.objects.get(idcaja=rec_caja_idcaja),es_cotizacion=rec_es_cotizacion,total_venta=rec_total_venta)
-        ventaNueva.save()
+        #ventaNueva.save()
 
         tablaJson=json.loads(rec_tabla)#el loads es necesario, si no los datos aparecen como un arreglo, incluidos los corchetes y las comas
         response_data = {} #declarando un diccionario vacio
         #Iterando dentro de los arreglos de json:
         for fila in tablaJson:
-            datos=[]
+            datos=[] #creando una lista
             for elemento in fila:
-                datos.append(elemento)
-            detalleNuevo=DetalleVenta(venta_idventa=ventaNueva,inventario_producto_idinventario_producto=InventarioProducto(pk=datos[0]),cantidad_venta=datos[2],valor_parcial_venta=datos[5])
-            detalleNuevo.save()
+                datos.append(elemento) #agregando datos a la lista
+            #if datos[0]=='0':  #si no hay codigo de inventario
+                #detalleNuevo=DetalleVenta(venta_idventa=ventaNueva,descuento_iddescuento=Descuento(iddescuento=datos[1]),cantidad_venta=datos[2],valor_parcial_venta=datos[5])
+            #else:
+                #detalleNuevo=DetalleVenta(venta_idventa=ventaNueva,inventario_producto_idinventario_producto=InventarioProducto(pk=datos[0]),cantidad_venta=datos[2],valor_parcial_venta=datos[5])
+            #InventarioProducto.objects.filter(pk=datos[1]).update(existencia_actual=F('existencia_actual') - datos[2]) #Haciendo un update a las existencias del inventario con esa PK
+            #detalleNuevo.save()
 
         #los siguientes datos son para revision solamente, asi se tiene una respuesta de exito en la consola
         response_data['idventa']=ventaNueva.pk
@@ -203,6 +229,7 @@ def consulta_sql_personalizada(bodega,codestilo,marca,tipo,estilo,talla,color,ge
                       INNER JOIN Inventario_producto as IP on P.codigo_producto=IP.Producto_codigo_producto
                       INNER JOIN Precio as Pr on Pr.Producto_codigo_producto = P.codigo_producto
                       WHERE IP.bodega_idbodega=%s
+                      AND P.estado_producto=1 AND IP.estado_inventario_producto=1 AND Pr.estado_precio=1
                       AND (P.codigoestilo_producto=%s OR P.marca_idmarca = %s OR P.tipo_producto_idtipo_producto=%s OR P.estilo_idestilo=%s OR P.color_idcolor=%s OR P.genero_idgener=%s OR P.talla_idtalla=%s)""",[bodega,codestilo,marca,tipo,estilo,color,genero,talla])
     row = dictfetchall(cursor)
 

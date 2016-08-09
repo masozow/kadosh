@@ -260,7 +260,7 @@ class Descuento(models.Model):
     autorizado_descuento = models.BooleanField(db_column='autorizado_descuento', default=False)
 
     def __str__(self):
-        return '%s - %s' % (self.iddescuento, self.descripcion_descuento)
+        return '%s-%s-%s' % (self.iddescuento, self.descripcion_descuento,self.monto_descuento)
 
     class Meta:
         managed = True
@@ -299,7 +299,7 @@ class DetalleCompra(models.Model):
 
 class DetalleVenta(models.Model):
     venta_idventa = models.ForeignKey('Venta', db_column='Venta_idVenta')  # Field name made lowercase.
-    inventario_producto_idinventario_producto = models.ForeignKey('InventarioProducto', db_column='Inventario_producto_idInventario_producto')  # Field name made lowercase.
+    inventario_producto_idinventario_producto = models.ForeignKey('InventarioProducto', db_column='Inventario_producto_idInventario_producto',blank=True,null=True)  # Field name made lowercase.
     cantidad_venta = models.IntegerField(blank=True, null=True)
     valor_parcial_venta = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
     iddetalleventa = models.AutoField(db_column='idDetalleVenta', primary_key=True)  # Field name made lowercase.
@@ -694,7 +694,7 @@ class Promocion(models.Model):
     estado_promocion = models.BooleanField(default=True)
 
     def __str__(self):
-        return '%s - %s - Fi: %s' % (self.idpromocion,self.nombre_promocion,self.fecha_inicialpromocion)
+        return '%s|%s|Fi:%s|%s' % (self.nombre_promocion,self.valor_promocion,self.fecha_inicialpromocion,self.idpromocion)
 
     class Meta:
         managed = True
