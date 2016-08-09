@@ -1,0 +1,23 @@
+{% extends 'kadoshapp/base.html' %}
+{% load staticfiles %}
+{% block titulo %}
+Acceso Denegado
+{% endblock %}
+<!--se añadió la fila anterior-->
+    {% block styles %}
+      <link type="text/css" rel="stylesheet" href="{% static "css/acceso.css" %}"/>
+    {% endblock %}
+      {% block encabezado %}Acceso Denegado{% endblock %}
+    {% block content %}
+
+      <div id='oopss'>
+  <div id='error-text'>
+  <span>Acceso Denegado</span>
+  <p>Consulte con el administrador</p><p class='hmpg'><a href='{% url 'kadoshapp.views.ingreso_mercaderia' %}' class="back">Regresar a inicio</a></p>
+  </div>
+  </div>
+
+
+
+
+  {% endblock %}

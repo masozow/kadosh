@@ -1,6 +1,6 @@
 from django.conf.urls import include, url
 from . import views
-from . import viewAsignarCaja,viewListadoProductos,viewBusquedaMercaderia,viewPrecios,viewCliente, viewIngresoMercaPorProveedor, viewCompra, viewPuntodeVenta, viewTrasladoMercaderia, viewCierreCaja, viewAnularVenta, viewInventario, viewPromocion,viewEmpleados
+from . import viewModificarCliente,viewAsignarCaja,viewListadoProductos,viewBusquedaMercaderia,viewPrecios,viewCliente, viewIngresoMercaPorProveedor, viewCompra, viewPuntodeVenta, viewTrasladoMercaderia, viewCierreCaja, viewAnularVenta, viewInventario, viewPromocion,viewEmpleados
 
 urlpatterns=[
 #urls para loguear
@@ -10,7 +10,9 @@ url(r'^$','django.contrib.auth.views.login',
 url(r'^cerrar/$','django.contrib.auth.views.logout_then_login',
  name='logout'),
 url(r'^index/kadosh/', views.ingreso_mercaderia, name='ingreso_mercaderia'),
+url(r'^Acceso/Denegado/', views.denegado, name='denegado'),
 url(r'^ingreso/cliente/$', viewCliente.registro_cliente, name='registroCliente'),
+url(r'^modificar/cliente/$', viewModificarCliente.mod_cliente, name='modcliente'),
 url(r'^ingreso/MercaderiaPoProveedor/$',viewIngresoMercaPorProveedor.ingresodemercaderiaporProveedor, name='IngresoMercaPorProveedor'),
 url(r'^ingreso/Compra/$', viewCompra.Compra, name='Compra'),
 url(r'^Realizacion/Venta/$', viewPuntodeVenta.PuntoDeVenta, name='PuntoDeVenta'),

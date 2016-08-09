@@ -38,3 +38,6 @@ from django.shortcuts import get_object_or_404
 @login_required
 def ingreso_mercaderia(request):
     return render(request, 'kadoshapp/ingreso_mercaderia.html',{})
+@login_required
+def denegado(request):
+    return render(request, 'kadoshapp/Denegado.html',{})

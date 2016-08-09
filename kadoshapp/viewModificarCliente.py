@@ -7,7 +7,7 @@ from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import *
-from .formclientes import *
+from .formModificarCliente import *
 def not_in_Caja_group(user):
     if user:
         return user.groups.filter(name='Caja').count() != 0
@@ -15,7 +15,7 @@ def not_in_Caja_group(user):
 
 @login_required
 @user_passes_test(not_in_Caja_group, login_url='denegado')
-def registro_cliente(request):
+def mod_cliente(request):
     if request.method == 'POST':
         form=Form_RegistroCliente_Persona(request.POST)
         if form.is_valid(): #validando a la persona
@@ -45,4 +45,5 @@ def registro_cliente(request):
     else:
         form=Form_RegistroCliente_Persona()
         sub_form=Form_RegistroCliente_Cliente()
-    return render(request, 'kadoshapp/Datos_cliente.html', {'form': form, 'sub_form':sub_form})
+        formbusqueda=Form_Cliente_busquedas()
+    return render(request, 'kadoshapp/ModificarCliente.html', {'form': form, 'sub_form':sub_form,'formbusqueda':formbusqueda})
