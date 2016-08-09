@@ -1,0 +1,131 @@
+{% extends 'kadoshapp/base.html' %}
+{% load staticfiles %}
+<!--se añadió la fila anterior-->
+{% block titulo %}
+ Modificacion clientes
+{% endblock %}
+    {% block styles %}
+      <link type="text/css" rel="stylesheet" href="{% static "css/formularios.css" %}">
+    {% endblock %}
+      {% block encabezado %} Modificacion clientes{% endblock %}
+    {% block content %}
+    <!--agregando esto para que funcione el DateField-->
+        <!--link rel="stylesheet" type="text/css" href="{% static 'static/admin/css/forms.css' %} "/>
+        <link rel="stylesheet" type="text/css" href="{% static 'static/admin/css/base.css' %} "/>
+        <link rel="stylesheet" type="text/css" href="{% static 'static/admin/css/global.css' %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'static/admin/css/widgets.css' %}"/>
+
+
+        <script type="text/javascript" src="/admin/jsi18n/"></script>
+        <script type="text/javascript" src="{% static 'admin/js/core.js' %}"></script>
+        <script type="text/javascript" src="{% static 'admin/js/admin/RelatedObjectLookups.js' %}"></script>
+        <script type="text/javascript" src="{% static 'admin/js/jquery.js' %}"></script>
+        <script type="text/javascript" src="{% static 'admin/js/jquery.init.js' %}"></script>
+        <script type="text/javascript" src="{% static 'admin/js/actions.js' %}"></script>
+        <script type="text/javascript" src="{% static 'admin/js/calendar.js' %}"></script>
+        <script type="text/javascript" src="{% static 'admin/js/admin/DateTimeShortcuts.js' %}"></script-->
+    <!--hasta acá, si funcionó, es para el widget del admin-->
+
+
+        <form method="POST" class="post-form">
+          {% csrf_token %}
+            <!--p><label>Nombres: </label>{{ form.nombres_persona }}</p-->
+
+              <div class="row" style="margin-bottom: 0px;">
+                <div  class="col l12 m12 s12">
+                  <label for="apellidos"><h6>Apellidos:</h6> </label>{{ formbusqueda.apellidos }}
+                  <label for="nombres"><h6>Nombres:</h6> </label>{{ formbusqueda.nombres }}
+                  <label for="nit_del_cliente"><h6>Nit:</h6> </label>{{ formbusqueda.nit_del_cliente }}
+  <button  type="button" class="save btn btn-default">Buscar</button>
+                </div>
+              </div>
+
+              <div class="row" style="margin-bottom: 0px;">
+                <div  class="col l12 m12 s12">
+
+
+
+      <table>
+        <thead>
+          <tr>
+              <th data-field="Id">Id</th>
+              <th data-field="nombre">Nombre</th>
+              <th data-field="tipo">Tipo</th>
+              <th data-field="fecha">Fecha de registro</th>
+                <th data-field="Comprasrealizadas">Compras realizadas</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>Alvin</td>
+            <td>Eclair</td>
+            <td>$0.87</td>
+          </tr>
+          <tr>
+            <td>Alan</td>
+            <td>Jellybean</td>
+            <td>$3.76</td>
+          </tr>
+          <tr>
+            <td>Jonathan</td>
+            <td>Lollipop</td>
+            <td>$7.00</td>
+          </tr>
+        </tbody>
+      </table>
+
+
+
+              </div>
+            </div>
+
+
+            <div class="row" style="margin-bottom: 0px;">
+              <div  class="col l6 m12 s12">
+              <div class"row">
+              <label for="dpi_persona"><h6>DPI:</h6> </label>{{ form.dpi_persona }}
+              </div>
+              <div class"row">
+              <label for="nombres_persona"><h6>Nombres:</h6> </label>{{ form.nombres_persona }}
+              </div>
+              <div class"row">
+                <label for="apellidos_persona"><h6>Apellidos:</h6> </label>{{ form.apellidos_persona }}
+              </div>
+              <div class"row">
+                <label for="telefonos_persona"><h6>Numero de Telefono/Celular:</h6> </label>{{ form.telefonos_persona }}
+              </div>
+                <div class"row">
+                    <label for="direccion_persona"><h6>Direccion:</h6> </label>{{ form.direccion_persona }}
+                </div>
+                <div class"row">
+                  <label for="fecha_nacimiento_persona"><h6>Fecha De Nacimiento dd/mm/yy:</h6> </label>{{ form.fecha_nacimiento_persona }}
+                </div>
+              <!--  {{ form.as_p }}-->
+              </div>
+              <div class="col l6 m12 s12">
+                <div class"row">
+                  <label for="nit_cliente"><h6>Nit:</h6> </label>{{ sub_form.nit_cliente }}
+                </div>
+                <div class"row">
+                  <label for="tipo_cliente_idtipo_cliente"><h6>Tipo de cliente:</h6> </label>{{ sub_form.tipo_cliente_idtipo_cliente }}
+                </div>
+                  <!--{{ sub_form.as_p }}-->
+              </div>
+            </div>
+
+
+
+            <button  type="submit" class="save btn btn-default">Guardar</button>
+        </form>
+        <!--script>
+          $(function() {
+            $( ".datepicker" ).datepicker({
+              changeMonth: true,
+              changeYear: true,
+              yearRange: "1900:2020",
+              // You can put more options here.
+            });
+          });
+        </script-->
+    {% endblock %}
