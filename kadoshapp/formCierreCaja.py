@@ -13,4 +13,4 @@ class Form_CierreDeCaj_CierreDeCaja(forms.ModelForm):
 class Form_CierreDeCaj_Empleado(forms.ModelForm):
     class Meta:
         model=Empleado
-        fields=('codigo_autorización_empleado',)
+        fields=('codigo_autorizacion_empleado',)

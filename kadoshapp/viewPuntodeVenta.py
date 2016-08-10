@@ -65,7 +65,7 @@ def PuntoDeVenta(request):
 #Vista para obtener solo el producto mediante Ajax
 def BuscarProducto(request):
     if request.method == 'POST':
-        txt_codigo_producto = request.POST.get('codigobarras_producto') #aquí llamar por el nombre del objeto (name), no por el id
+        txt_codigo_producto = request.POST.get('codigobarras_producto')
         id_bodega_que_vende = request.POST.get('bodega_idbodega') #llamar por el nombre del objeto json que se envia como 'data' dentro de la consulta Ajax
         #runeval(txt_codigo_producto) #se supone que evalua la variable y la envia al debugger
         #pdb.set_trace()  #estos son los breakpoints de django
@@ -92,7 +92,7 @@ def BuscarProducto(request):
 
 def BuscarProductoCaracteristicas(request):
     if request.method == 'POST':
-        txt_codigo_producto = request.POST.get('codigo_estilo_producto') #aquí llamar por el nombre del objeto (name), no por el id
+        txt_codigo_producto = request.POST.get('codigo_estilo_producto')
 
         id_bodega_que_vende = request.POST.get('bodega_idbodega') #llamar por el nombre del objeto json que se envia como 'data' dentro de la consulta Ajax
         if not id_bodega_que_vende:
@@ -184,7 +184,7 @@ def GuardarVenta(request):
 
         empleado=Empleado.objects.get(auth_user=request.user)
         ventaNueva=Venta(empleado_idempleado=empleado,anotaciones_venta=rec_anotaciones_venta,cliente_idcliente=Cliente.objects.get(idcliente=rec_cliente_idcliente),tipo_pago_idtipo_pago=TipoPago.objects.get(idtipo_pago=rec_tipo_pago_idtipo_pago),contado_venta=rec_contado_venta,vendedor_venta=Empleado.objects.get(idempleado=rec_vendedor_venta),caja_idcaja=Caja.objects.get(idcaja=rec_caja_idcaja),es_cotizacion=rec_es_cotizacion,total_venta=rec_total_venta)
-        #ventaNueva.save()
+        ventaNueva.save()
 
         tablaJson=json.loads(rec_tabla)#el loads es necesario, si no los datos aparecen como un arreglo, incluidos los corchetes y las comas
         response_data = {} #declarando un diccionario vacio
@@ -193,12 +193,18 @@ def GuardarVenta(request):
             datos=[] #creando una lista
             for elemento in fila:
                 datos.append(elemento) #agregando datos a la lista
-            #if datos[0]=='0':  #si no hay codigo de inventario
-                #detalleNuevo=DetalleVenta(venta_idventa=ventaNueva,descuento_iddescuento=Descuento(iddescuento=datos[1]),cantidad_venta=datos[2],valor_parcial_venta=datos[5])
-            #else:
-                #detalleNuevo=DetalleVenta(venta_idventa=ventaNueva,inventario_producto_idinventario_producto=InventarioProducto(pk=datos[0]),cantidad_venta=datos[2],valor_parcial_venta=datos[5])
-            #InventarioProducto.objects.filter(pk=datos[1]).update(existencia_actual=F('existencia_actual') - datos[2]) #Haciendo un update a las existencias del inventario con esa PK
-            #detalleNuevo.save()
+            if datos[0]=='0' and datos[1]=='0':  #si no hay codigo de inventario ni codigo de producto
+                separacion=datos[3].split("|")
+                #response_data['idventa']=separacion[0]
+                #response_data['total']=separacion[1]
+                detalleNuevo=DetalleVenta(venta_idventa=ventaNueva,promocion_idpromocion=Promocion(idpromocion=separacion[0]),cantidad_venta=datos[2],valor_parcial_venta=datos[5])
+            else:
+                if datos[0]=='0':
+                    detalleNuevo=DetalleVenta(venta_idventa=ventaNueva,descuento_iddescuento=Descuento(iddescuento=datos[1]),cantidad_venta=datos[2],valor_parcial_venta=datos[5])
+                else:
+                    detalleNuevo=DetalleVenta(venta_idventa=ventaNueva,inventario_producto_idinventario_producto=InventarioProducto(pk=datos[0]),cantidad_venta=datos[2],valor_parcial_venta=datos[5])
+            InventarioProducto.objects.filter(pk=datos[1]).update(existencia_actual=F('existencia_actual') - datos[2]) #Haciendo un update a las existencias del inventario con esa PK
+            detalleNuevo.save()
 
         #los siguientes datos son para revision solamente, asi se tiene una respuesta de exito en la consola
         response_data['idventa']=ventaNueva.pk

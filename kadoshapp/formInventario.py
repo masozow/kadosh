@@ -11,7 +11,7 @@ from .models import *
 class Form_Inventario_Empleado(forms.ModelForm):
     class Meta:
         model=Empleado
-        fields=('codigo_autorización_empleado',)
+        fields=('codigo_autorizacion_empleado',)
 
 #class Form_Inventario_Anque(forms.ModelForm):
 #    class Meta:

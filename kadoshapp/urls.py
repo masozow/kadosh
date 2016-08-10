@@ -25,6 +25,7 @@ url(r'^Buscar/Producto/$', viewPuntodeVenta.BuscarProducto, name='BusquedaProd')
 url(r'^Buscar/ProductoCaracteristicas/$', viewPuntodeVenta.BuscarProductoCaracteristicas, name='BusquedaProdCar'),
 url(r'^Buscar/ImagenProducto/$', viewPuntodeVenta.BuscarProductoImagenPrincipal, name='BusquedaProdImg'),
 url(r'^Empleados/Categoria/$', viewEmpleados.Empleados, name='Empleados'),
+url(r'^Buscar/Empleados/$', viewEmpleados.BuscarEmpleados, name='BusquedaEmpleados'),
 url(r'^Asignar/Precio/$', viewPrecios.Precios, name='Precios'),
 url(r'^Mercaderia/Busqueda/$', viewBusquedaMercaderia.BusquedaMerca, name='BusquedaMercaderia'),
 url(r'^Productos/Listado/$', viewListadoProductos.Listado, name='ListadoProductos'),

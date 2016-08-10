@@ -304,6 +304,7 @@ class DetalleVenta(models.Model):
     valor_parcial_venta = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
     iddetalleventa = models.AutoField(db_column='idDetalleVenta', primary_key=True)  # Field name made lowercase.
     descuento_iddescuento = models.ForeignKey(Descuento, db_column='Descuento_idDescuento',blank=True,null=True)  # Field name made lowercase.
+    promocion_idpromocion = models.ForeignKey('Promocion', db_column='Promocion_idPromocion',blank=True,null=True)  # Field name made lowercase.
 
     def __str__(self):
         return 'Id: %s - Venta: %s - Lote: %s - Producto: %s' % (self.iddetalleventa,self.venta_idventa.idventa, self.inventario_producto_idinventario_producto.idinventario_producto, self.inventario_producto_idinventario_producto.producto_codigo_producto)
@@ -333,11 +334,11 @@ class Empleado(models.Model):
     puesto_idpuesto = models.ForeignKey('Puesto', db_column='Puesto_idPuesto')  # Field name made lowercase.
     estado_empleado = models.BooleanField(default=True)
     fecha_contratacion_empleado = models.DateField(default=timezone.now)
-    codigo_autorización_empleado = models.CharField(max_length=45, blank=True, null=True)
+    codigo_autorizacion_empleado = models.CharField(max_length=45, blank=True, null=True)
     sucursal_idsucursal = models.ForeignKey('Sucursal', db_column='Sucursal_idSucursal')  # Field name made lowercase.
     fecha_baja_empleado = models.DateField(blank=True,null=True)
     motivo_baja_empleado = models.CharField(max_length=200, blank=True, null=True)
-    fotografia_empleado = models.ImageField(upload_to = settings.MEDIA_ROOT)
+    fotografia_empleado = models.ImageField(upload_to = '')
     auth_user = models.ForeignKey('auth.User')
 
     def __str__(self):
@@ -366,32 +367,32 @@ class Envio(models.Model):
         db_table = 'Envio'
 
 
-class EstandarCliente(models.Model):
-    idestandarcliente = models.AutoField(db_column='idEstandarCliente', primary_key=True)  # Field name made lowercase.
-    categoria_cliente = models.CharField(max_length=45, blank=True, null=True)
-    comprasminimas_cliente = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
-    estado_estandarcliente = models.BooleanField(default=True)
+#class EstandarCliente(models.Model):
+#    idestandarcliente = models.AutoField(db_column='idEstandarCliente', primary_key=True)  # Field name made lowercase.
+#    categoria_cliente = models.CharField(max_length=45, blank=True, null=True)
+#    comprasminimas_cliente = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
+#    estado_estandarcliente = models.BooleanField(default=True)
+#
+#    def __str__(self):
+#        return '%s' % (self.categoria_cliente)
+#
+#    class Meta:
+#        managed = True
+#        db_table = 'EstandarCliente'
 
-    def __str__(self):
-        return '%s' % (self.categoria_cliente)
 
-    class Meta:
-        managed = True
-        db_table = 'EstandarCliente'
-
-
-class EstandaresVendedor(models.Model):
-    idestandares_vendedor = models.AutoField(db_column='idEstandares_vendedor', primary_key=True)  # Field name made lowercase.
-    categoria_vendedor = models.CharField(max_length=45, blank=True, null=True)
-    ventasminimas_vendedor = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
-    estado_estandarvendedor = models.BooleanField(default=True)
-
-    def __str__(self):
-        return '%s' % (self.categoria_vendedor)
-
-    class Meta:
-        managed = True
-        db_table = 'Estandares_vendedor'
+#class EstandaresVendedor(models.Model):
+#    idestandares_vendedor = models.AutoField(db_column='idEstandares_vendedor', primary_key=True)  # Field name made lowercase.
+#    categoria_vendedor = models.CharField(max_length=45, blank=True, null=True)
+#    ventasminimas_vendedor = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
+#    estado_estandarvendedor = models.BooleanField(default=True)
+#
+#    def __str__(self):
+#        return '%s' % (self.categoria_vendedor)
+#
+#    class Meta:
+#        managed = True
+#        db_table = 'Estandares_vendedor'
 
 
 class Estilo(models.Model):
@@ -410,7 +411,7 @@ class Estilo(models.Model):
 class Fotografia(models.Model):
     idfotografia = models.AutoField(db_column='idFotografia', primary_key=True)  # Field name made lowercase.
     nombre_fotografia = models.CharField(max_length=45, blank=True, null=True,default='s/n')
-    ruta_fotografia = models.ImageField(upload_to = settings.MEDIA_ROOT)
+    ruta_fotografia = models.ImageField(upload_to = '') #settings.MEDIA_ROOT
     #ruta_fotografia = models.CharField(max_length=200, blank=True, null=True)
     estado_fotografia = models.BooleanField(default=True)
     principal_fotografia = models.BooleanField(default=False)
@@ -737,7 +738,8 @@ class Puesto(models.Model):
     idpuesto = models.AutoField(db_column='idPuesto', primary_key=True)  # Field name made lowercase.
     nombre_puesto = models.CharField(max_length=50, blank=True, null=True)
     estado_puesto = models.BooleanField(default=True)
-    estandares_vendedor_idestandares_vendedor = models.ForeignKey('EstandaresVendedor', db_column='estandares_vendedor_idestandares_vendedor',null=True,blank=True)  # Field name made lowercase.
+    #estandares_vendedor_idestandares_vendedor = models.ForeignKey('EstandaresVendedor', db_column='estandares_vendedor_idestandares_vendedor',null=True,blank=True)  # Field name made lowercase.
+    ventasminimas_vendedor=models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
 
 
     def __str__(self):
@@ -795,7 +797,8 @@ class TipoCliente(models.Model):
     idtipo_cliente = models.AutoField(db_column='idTipo_cliente', primary_key=True)  # Field name made lowercase.
     nombre_tipocliente = models.CharField(db_column='nombre_tipoCliente', max_length=45, blank=True, null=True)  # Field name made lowercase.
     estado_tipocliente = models.BooleanField(db_column='estado_tipoCliente', default=True)  # Field name made lowercase.
-    estandarcliente_idestandarcliente = models.ForeignKey('EstandarCliente', db_column='estandarcliente_idestandarcliente',blank=True,null=True)  # Field name made lowercase.
+    #estandarcliente_idestandarcliente = models.ForeignKey('EstandarCliente', db_column='estandarcliente_idestandarcliente',blank=True,null=True)  # Field name made lowercase.
+    comprasminimas_cliente=models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
 
     def __str__(self):
         return '%s - %s' % (self.idtipo_cliente,self.nombre_tipocliente)

@@ -35,4 +35,4 @@ class Form_AnulaVenta_DetalleVenta(forms.ModelForm):
 class Form_AnulaVenta_Empleado(forms.ModelForm):
     class Meta:
         model=Empleado
-        fields=('codigo_autorización_empleado',)
+        fields=('codigo_autorizacion_empleado',)

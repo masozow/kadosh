@@ -12,7 +12,8 @@ class Form_Empleados_Empleado(forms.ModelForm):
     class Meta:
         model=Empleado
         fields=('puesto_idpuesto',)
-class Form_Empleados_Estandares(forms.ModelForm):
-    class Meta:
-        model=Puesto
-        fields=('estandares_vendedor_idestandares_vendedor',)
+
+#class Form_Empleados_Estandares(forms.ModelForm):
+#    class Meta:
+#        model=Puesto
+#        fields=('estandares_vendedor_idestandares_vendedor',)

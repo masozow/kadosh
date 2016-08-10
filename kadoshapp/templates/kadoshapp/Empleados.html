@@ -7,29 +7,32 @@
     {% block styles %}
       <link type="text/css" rel="stylesheet" href="{% static "css/formularios.css" %}"/>
     {% endblock %}
-      {% block encabezado %}Empleados{% endblock %}
+
+    {% block encabezado %}Empleados{% endblock %}
+
     {% block content %}
-    <form method="POST" class="post-form">
+    <form id="formulario_empleados" method="POST" class="post-form">
       {% csrf_token %}
       <div class="row" style="margin-bottom: 0px;">
         <div class="col l6 m12 s12">
-        <label for="apellidos_persona"><h6>Apellidos del empleado:</h6> </label>{{ form_persona.apellidos_persona}}
-        <label for="nombres_persona"><h6>Nombres del empleado:</h6> </label>{{ form_persona.nombres_persona}}
-        <label for="puesto_idpuesto"><h6>Puesto: </h6> </label>{{ form_empleado.puesto_idpuesto}}
-        <button type="submit" class="btn btn-default">Buscar</button>
+        <label for="id_apellidos_persona"><h6>Apellidos del empleado:</h6> </label>{{ form_persona.apellidos_persona}}
+        <label for="id_nombres_persona"><h6>Nombres del empleado:</h6> </label>{{ form_persona.nombres_persona}}
+        <label for="id_puesto_idpuesto"><h6>Puesto: </h6> </label>{{ form_empleado.puesto_idpuesto}}
+        <input class="save btn btn-default" id="boton_buscar_empleados" type="button" onclick="buscar_empleados(this)" value="Buscar" name="btn_buscar_empleados"/>
       </div>
 
         <div class="col l3 m12 s12">
         <p class="blue-text text-darken-2">Codigo empleado seleccionado ####</p>
-          <label for="estandares_vendedor_idestandares_vendedor"><h6>Categoria: </h6> </label>{{ form_estandares.estandares_vendedor_idestandares_vendedor}}
-        <button type="submit" class="save btn btn-default">Cambiar Categoria</button>
+          <label for="estandares_vendedor_idestandares_vendedor"><h6>Puesto: </h6> </label>{{ form_empleado.puesto_idpuesto}}
+        <input class="save btn btn-default" id="boton_cambiar_categoria" type="button" onclick="cambiar_categoria(this)" value="Cambiar" name="btn_cambiar_categoria"/>
         </div>
 
         <div class="col l3">
-          <p>Fotografia:</p>
-        <div class="card-panel teal">
+          <br/>
+          <img id="id_fotografia_empleado" src="./botondjago.jpg" alt="Fotografía del empleado" style="width:150px;height:200px;">
+        <!--div class="card-panel teal">
         <span>Aqui se visualiza la foto del empleado recordar  darle un tama;o estandar a la imagen</span>
-        </div>
+        </div-->
 
         </div>
 
@@ -37,7 +40,7 @@
 
 <div class="row" style="margin-bottom: 0px;">
   <div class="row grey lighten-2">
-    <table>
+    <table id="tabla_empleados">
             <thead>
               <tr>
                  <th data-field="Cod">Cod</th>
@@ -47,32 +50,105 @@
                   <th data-field="Fecha contratacion">Fecha contratacion</th>
                   <th data-field="Fecha baja">Fecha baja</th>
                   <th data-field="Ventas mes actual">Ventas mes actual</th>
-                  <th data-field="Categoria">Categoria</th>
-                  <th data-field="Ruta fotografia">Ruta fotografia</th>
+                  <th data-field="Ruta fotografia" style="display:none;">Ruta fotografia</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Alvin</td>
-                <td>Eclair</td>
-                <td>$0.87</td>
-              </tr>
-              <tr>
-                <td>Alan</td>
-                <td>Jellybean</td>
-                <td>$3.76</td>
-              </tr>
-              <tr>
-                <td>Jonathan</td>
-                <td>Lollipop</td>
-                <td>$7.00</td>
-              </tr>
-              <tr>
-
             </tbody>
           </table>
   </div>
 </div>
 
     </form>
+    {% endblock %}
+
+
+    {% block extra_scripts %}
+    <script type="text/javascript" src="{% static 'js/funciones.js' %}"></script>
+    <script type="text/javascript">
+
+    /*Espacio para JQuery y busquedas dentro del DOM
+    ===========================================================================*/
+
+        //Similar al FormLoad
+        $( document ).ready(function(){ //document indica toda la página, ready indica que ya se haya cargado el DOM
+          //Función que coloca el cursor en el textbox Nit del cliente, al momento de cargar la página
+          $('input#id_apellidos_persona').focus(); //se accede al input con el id que está después de #, //.focus() indica que ahí se colocará el cursor
+        });
+
+        //var cantidadDefault= $("input#id_cantidad_venta").html();
+
+        //Para que funcione el boton de eliminar producto
+        function eliminar_fila(button){
+          $('#tabla_empleados').on('click', '#boton_eliminar', function(){
+              $(this).closest('tr').remove();
+              //sumar_valor_parcial(".suma_valor_parcial",'#id_total_venta');
+          });
+        }
+
+        //Con esta funcion se buscan los productos de acuerdo a sus caracteristicas
+        function buscar_empleados(boton){
+          obtener_empleados('#id_nombres_persona','#id_apellidos_persona','#id_puesto_idpuesto');
+        }
+
+        //Llamando a la imagen con cada cambio en el dropdown de productos
+        /*
+        $( "#id_producto_codigo_producto" ).change(function() {
+          //console.log($("#id_producto_codigo_producto option:selected").val());
+            obtener_imagen_producto("#id_producto_codigo_producto");
+            //alert( "Handler for .change() called." );
+        });
+        */
+
+
+    /*Espacio para Ajax
+    ============================================================================*/
+
+        function obtener_empleados(buscar_nombres,buscar_apellidos,buscar_puesto) {
+            $.ajax({
+                url : "/Buscar/Empleados/", // La URL que llama a la vista
+                type : "POST", // Metodo http para realizar el request (peticion al servidor)
+                data : { nombres : $(buscar_nombres).val(), nombres : $(buscar_apellidos).val(), puesto: $(buscar_puesto+" option:selected").val()}, // Datos enviados con el request en formato JSON
+
+                // Si el response es correcto (si la respuesta del servidor es correcta)
+                success : function(json) {
+                    //console.log(json)
+                    $.each(json, function(key,value) {
+                      //var campos=(value.fields);
+                      console.log(value);
+                      console.log(value.id);
+                      console.log(value.nombre);
+                      console.log(value.motivo_baja);
+                      console.log(value.puesto);
+                      console.log(value.fecha_contratacion);
+                      console.log(value.fecha_baja);
+                      console.log(value.ventas_mes);
+                      console.log(value.ruta_fotografia);
+                      $("#tabla_empleados > tbody").html("");
+                      $('#tabla_empleados > tbody:last-child').append('<tr>'+
+                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;" class="id_empleado">'+value.id+'</td>'+
+                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.nombre+'</td>'+
+                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.puesto+'</td>'+
+                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.motivo_baja+'</td>'+
+                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.fecha_contratacion+'</td>'+
+                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.fecha_baja+'</td>'+
+                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.ventas_mes+'</td>'+
+                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;display:none;">'+value.ruta_fotografia+'</td>'+
+                                                                      '</tr>');
+                    });
+                },
+                // Si el response no tuvo exito
+                error : function(xhr,errmsg,err) {
+                    $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Ha ocurrido un error: "+errmsg+
+                        " <a href='#' class='close'>&times;</a></div>"); // Se agrega el error al DOM
+                    console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
+                }
+            });
+        };
+
+
+    </script>
+
+    <script type="text/javascript" src="{% static 'js/selectorStartsWith.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/token.js' %}"></script>
     {% endblock %}
