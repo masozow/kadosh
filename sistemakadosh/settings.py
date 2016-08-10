@@ -17,7 +17,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.realpath(os.path.dirname(__file__))
 
 MEDIA_ROOT = PROJECT_ROOT + '/archivos/'
-MEDIA_URL = '/archivos_varios/'  #put whatever you want that when url is rendered it will be /archivos_varios/imagename.jpg
+MEDIA_URL = '/archivos/'  #put whatever you want that when url is rendered it will be /archivos_varios/imagename.jpg
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/

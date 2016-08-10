@@ -46,19 +46,15 @@ def PuntoDeVenta(request):
         form_Producto.fields["talla_idtalla"].queryset = Talla.objects.filter(estado_talla=1)
         form_Producto.fields["color_idcolor"].queryset = Color.objects.filter(estado_color=1)
         form_Producto.fields["genero_idgener"].queryset = Genero.objects.filter(estado_genero=1)
-        #form_bodega=Form_PuntoVenta_Bodega()
     return render(request, 'kadoshapp/PuntoDeVenta.html', {
                     'form_Venta': form_Venta,
                     'form_DetalleVenta':form_DetalleVenta,
-                    #'form_TipoProducto':form_TipoProducto,
                     'form_Producto':form_Producto ,
                     'form_InventarioProducto':form_InventarioProducto,
                     'form_Promocion':form_Promocion,
                     'form_Precio':form_Precio,
                     'form_cliente':form_cliente,
-                    #'form_estiloproducto':form_estiloproducto,
                     'form_promocionhasproducto': form_promocionhasproducto
-                    #'form_bodega': form_bodega
                     })
 
 

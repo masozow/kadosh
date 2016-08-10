@@ -13,6 +13,14 @@ class Form_Empleados_Empleado(forms.ModelForm):
         model=Empleado
         fields=('puesto_idpuesto',)
 
+class Form_Empleados_Puesto(forms.ModelForm):
+    class Meta:
+        model=Empleado
+        fields=('puesto_idpuesto',)
+        widgets={
+            'puesto_idpuesto': forms.Select(attrs={'id':'id_puesto_recomendado'})
+        }
+
 #class Form_Empleados_Estandares(forms.ModelForm):
 #    class Meta:
 #        model=Puesto

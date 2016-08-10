@@ -24,15 +24,14 @@ def not_in_Supervisor_group(user):
 @user_passes_test(not_in_Supervisor_group, login_url='denegado')
 def Empleados(request):
     if request.method=='POST':
-        #form_estandares=Form_Empleados_Estandares(request.POST)
-        #if form_empleados.is_valid():
-        #    ultima_categoria=form_estandares.save()
         return render(request, 'kadoshapp/Empleados.html',{})
     else:
         form_empleado=Form_Empleados_Empleado()
         form_persona=Form_Empleados_Persona()
-        #form_estandares=Form_Empleados_Estandares()
-    return render(request, 'kadoshapp/Empleados.html', {'form_persona':form_persona,  'form_empleado':form_empleado })
+        form_puesto=Form_Empleados_Puesto()
+        form_empleado.fields["puesto_idpuesto"].queryset = Puesto.objects.filter(estado_puesto=1)
+        form_puesto.fields["puesto_idpuesto"].queryset = Puesto.objects.filter(estado_puesto=1)
+    return render(request, 'kadoshapp/Empleados.html', {'form_puesto':form_puesto, 'form_persona':form_persona,  'form_empleado':form_empleado })
 
 
 @login_required
@@ -43,12 +42,6 @@ def BuscarEmpleados(request):
         rec_apellidos = request.POST.get('apellidos')
         rec_puesto = request.POST.get('puesto')
 
-        #if not rec_apellidos:
-        #    rec_apellidos=" "
-
-        #if not rec_nombres:
-        #    rec_nombres=" "
-
         if not rec_puesto:
             rec_puesto=0
 
@@ -56,15 +49,9 @@ def BuscarEmpleados(request):
         lista_resultado=[]
         resp_consulta=consulta_sql_personalizada(rec_nombres,rec_apellidos,rec_puesto)
 
-        for row in resp_consulta:
-        #    t = (row.id, row.nombre, row.puesto, row.motivo_baja,
-        #         DateTimeEncoder().encode(row.fecha_contratacion), DateTimeEncoder().encode(row.fecha_baja), row.ventas_mes,row.ruta_fotografia)
+        for row in resp_consulta: #esto tal vez no sea necesario
             lista_resultado.append(row)
-        #response_data['consulta']=serializers.serialize('json',resp_consulta)
 
-        #resp_empleados=Empleado.objects.filter(Q(persona_idpersona__nombres_persona__contains=rec_nombres) | Q(persona_idpersona__apellidos_persona__contains=rec_apellidos) | Q(puesto_idpuesto=rec_puesto)).values('pk','persona_idpersona__nombres_persona','puesto_idpuesto__nombre_puesto','motivo_baja_empleado','fecha_contratacion_empleado','fecha_baja_empleado')
-        #respuesta=serializers.serialize('json', list(resp_empleados))
-        #response_data= serializers.serialize('json', list(resp_consulta))
         return HttpResponse(
             json.dumps(lista_resultado,cls=DjangoJSONEncoder), #sin la parte de default los decimales no funcionan
             content_type="application/json"
@@ -75,11 +62,36 @@ def BuscarEmpleados(request):
             content_type="application/json"
         )
 
+
+
+@login_required
+@user_passes_test(not_in_Supervisor_group, login_url='denegado')
+def CambiarPuestoEmpleado(request):
+    if request.method == 'POST':
+        rec_empleado = request.POST.get('empleado')
+        rec_puesto = request.POST.get('puesto')
+
+        Empleado.objects.filter(pk=rec_empleado).update(puesto_idpuesto=Puesto(pk=rec_puesto))
+
+        response_data = {} #declarando un diccionario vacio
+        response_data["respuesta"]="Empleado actualizado con éxito"
+
+        return HttpResponse(
+            json.dumps(response_data),
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
+
+
 def consulta_sql_personalizada(nombres,apellidos,puesto):
     from django.db import connection, transaction
     cursor = connection.cursor()
 
-    cursor.execute("""select E.idEmpleado as id,CONCAT(Per.nombres_persona,' ',Per.apellidos_persona) as nombre,P.nombre_puesto as puesto,E.motivo_baja_empleado as motivo_baja,E.fecha_contratacion_empleado AS fecha_contratacion,E.fecha_baja_empleado as fecha_baja, SUM(V.total_venta) AS ventas_mes,E.fotografia_empleado as ruta_fotografia from Empleado as E
+    cursor.execute("""select E.idEmpleado as id,CONCAT(Per.nombres_persona,' ',Per.apellidos_persona) as nombre,P.nombre_puesto as puesto,E.motivo_baja_empleado as motivo_baja,E.fecha_contratacion_empleado AS fecha_contratacion,E.fecha_baja_empleado as fecha_baja, SUM(V.total_venta) AS ventas_mes,E.fotografia_empleado as ruta_fotografia,E.Puesto_idPuesto as idp from Empleado as E
                       inner join Puesto as P on E.Puesto_idPuesto=P.idPuesto
                       inner join Venta as V on V.vendedor_venta=E.idEmpleado
                       inner join Persona as Per on E.Persona_idPersona=Per.idPersona
@@ -109,10 +121,10 @@ def namedtuplefetchall(cursor):
     return [nt_result(*row) for row in cursor.fetchall()]
 
 #sobrecargando la funcion default de JSON, para poder enviar datos decimales
-def default(obj):
-    if isinstance(obj, Decimal):
-        return str(obj)
-    raise TypeError
+#def default(obj):
+#    if isinstance(obj, Decimal):
+#        return str(obj)
+#    raise TypeError
 
 #
 #class DateTimeEncoder(json.JSONEncoder):

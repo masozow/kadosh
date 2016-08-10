@@ -741,9 +741,13 @@ class Puesto(models.Model):
     #estandares_vendedor_idestandares_vendedor = models.ForeignKey('EstandaresVendedor', db_column='estandares_vendedor_idestandares_vendedor',null=True,blank=True)  # Field name made lowercase.
     ventasminimas_vendedor=models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
 
-
     def __str__(self):
-        return '%s - %s' % (self.idpuesto,self.nombre_puesto)
+        ventas=""
+        if not self.ventasminimas_vendedor:
+            ventas=" "
+        else:
+            ventas="-"+str(self.ventasminimas_vendedor)
+        return '%s-%s%s' % (self.idpuesto,self.nombre_puesto,ventas)
 
     class Meta:
         managed = True

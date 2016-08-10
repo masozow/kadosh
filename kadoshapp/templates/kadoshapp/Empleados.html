@@ -11,6 +11,12 @@
     {% block encabezado %}Empleados{% endblock %}
 
     {% block content %}
+    <style>
+    table tbody tr:hover {
+    background-color: #CCD9DE;
+    cursor: pointer;
+    }
+    </style>
     <form id="formulario_empleados" method="POST" class="post-form">
       {% csrf_token %}
       <div class="row" style="margin-bottom: 0px;">
@@ -22,14 +28,14 @@
       </div>
 
         <div class="col l3 m12 s12">
-        <p class="blue-text text-darken-2">Codigo empleado seleccionado ####</p>
-          <label for="estandares_vendedor_idestandares_vendedor"><h6>Puesto: </h6> </label>{{ form_empleado.puesto_idpuesto}}
-        <input class="save btn btn-default" id="boton_cambiar_categoria" type="button" onclick="cambiar_categoria(this)" value="Cambiar" name="btn_cambiar_categoria"/>
+        <p class="blue-text text-darken-2">Código empleado seleccionado: &nbsp;&nbsp; <label id="lbl_empleado" style="font-size:120%;"></label></p>
+          <label for="id_puesto_recomendado"><h6>Nuevo puesto: </h6> </label>{{ form_puesto.puesto_idpuesto}}
+        <input class="save btn btn-default" id="boton_cambiar_puesto" type="button" onclick="cambiar_puesto(this)" value="Cambiar" name="btn_cambiar_puesto"/>
         </div>
 
         <div class="col l3">
           <br/>
-          <img id="id_fotografia_empleado" src="./botondjago.jpg" alt="Fotografía del empleado" style="width:150px;height:200px;">
+          <img id="id_fotografia_empleado" src="../../archivos/pantalonazul_pXNLcuF.jpg" alt="Fotografía del empleado" style="width:150px;height:200px;">
         <!--div class="card-panel teal">
         <span>Aqui se visualiza la foto del empleado recordar  darle un tama;o estandar a la imagen</span>
         </div-->
@@ -50,6 +56,7 @@
                   <th data-field="Fecha contratacion">Fecha contratacion</th>
                   <th data-field="Fecha baja">Fecha baja</th>
                   <th data-field="Ventas mes actual">Ventas mes actual</th>
+                  <th data-field="ID Puesto" style="display:none;">ID Puesto</th>
                   <th data-field="Ruta fotografia" style="display:none;">Ruta fotografia</th>
               </tr>
             </thead>
@@ -70,6 +77,7 @@
     /*Espacio para JQuery y busquedas dentro del DOM
     ===========================================================================*/
 
+        var puestoDefault=$('#id_puesto_idpuesto')
         //Similar al FormLoad
         $( document ).ready(function(){ //document indica toda la página, ready indica que ya se haya cargado el DOM
           //Función que coloca el cursor en el textbox Nit del cliente, al momento de cargar la página
@@ -91,6 +99,9 @@
           obtener_empleados('#id_nombres_persona','#id_apellidos_persona','#id_puesto_idpuesto');
         }
 
+        function cambiar_puesto(boton){
+          actualizar_puesto($('#lbl_empleado').text(),$('#id_puesto_recomendado option:selected').val());
+        }
         //Llamando a la imagen con cada cambio en el dropdown de productos
         /*
         $( "#id_producto_codigo_producto" ).change(function() {
@@ -99,8 +110,24 @@
             //alert( "Handler for .change() called." );
         });
         */
-
-
+        /*
+        $("tbody tr").click(function () {
+          alert($(this).text());
+          //$('.selected').removeClass('selected');
+          //$(this).addClass("selected");
+          //var product = $('.p',this).html();
+        }
+        */
+        function seleccionar_fila(fila){
+          var datos = $(fila).find('td').get().map(function(cell) {
+              return $(cell).html();
+          });
+          $('#lbl_empleado').text(datos[0]);
+          $('#id_fotografia_empleado').attr("src", datos[8])
+          //var
+          console.log(datos);
+          //alert($(fila).text());
+        }
     /*Espacio para Ajax
     ============================================================================*/
 
@@ -114,18 +141,10 @@
                 success : function(json) {
                     //console.log(json)
                     $.each(json, function(key,value) {
-                      //var campos=(value.fields);
-                      console.log(value);
-                      console.log(value.id);
-                      console.log(value.nombre);
-                      console.log(value.motivo_baja);
-                      console.log(value.puesto);
-                      console.log(value.fecha_contratacion);
-                      console.log(value.fecha_baja);
-                      console.log(value.ventas_mes);
-                      console.log(value.ruta_fotografia);
+                      //Se borra la tabla
                       $("#tabla_empleados > tbody").html("");
-                      $('#tabla_empleados > tbody:last-child').append('<tr>'+
+                      //Se llena la tabla con datos
+                      $('#tabla_empleados > tbody:last-child').append('<tr onclick="seleccionar_fila(this)">'+
                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;" class="id_empleado">'+value.id+'</td>'+
                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.nombre+'</td>'+
                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.puesto+'</td>'+
@@ -133,6 +152,7 @@
                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.fecha_contratacion+'</td>'+
                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.fecha_baja+'</td>'+
                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.ventas_mes+'</td>'+
+                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;display:none;">'+value.idp+'</td>'+
                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;display:none;">'+value.ruta_fotografia+'</td>'+
                                                                       '</tr>');
                     });
@@ -146,6 +166,25 @@
             });
         };
 
+
+        function actualizar_puesto(idempleado,idpuesto) {
+            $.ajax({
+                url : "/Cambiar/Puesto/", // La URL que llama a la vista
+                type : "POST", // Metodo http para realizar el request (peticion al servidor)
+                data : { empleado : idempleado, puesto : idpuesto}, // Datos enviados con el request en formato JSON
+
+                // Si el response es correcto (si la respuesta del servidor es correcta)
+                success : function(json) {
+                  alert(json.respuesta);
+                },
+                // Si el response no tuvo exito
+                error : function(xhr,errmsg,err) {
+                    $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Ha ocurrido un error: "+errmsg+
+                        " <a href='#' class='close'>&times;</a></div>"); // Se agrega el error al DOM
+                    console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
+                }
+            });
+        };
 
     </script>
 
