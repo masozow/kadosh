@@ -53,6 +53,7 @@
             <p class="blue-text text-darken-2">Codigo Producto ####</p>
             <label for="cantidad_real_ajuste"><h6>Conteo Real:</h6> </label>{{ form_ajusteinventario.cantidad_real_ajuste}}
             <label for="motivo_idmotivo"><h6>Motivo Ajuste:</h6> </label>{{ form_ajusteinventario.motivo_idmotivo}}
+           <button type="submit" class="save btn btn-default">Guardar Ajuste</button>
           </div>
         </div>
 
@@ -98,7 +99,7 @@
            {{ form_detallainventario.as_p }}
            {{ form_ajusteinventario.as_p }}
            {{ form_anaquel.as_p }}-->
-           <button type="submit" class="save btn btn-default">Guardar</button>
+
        </form>
 
    {% endblock %}
