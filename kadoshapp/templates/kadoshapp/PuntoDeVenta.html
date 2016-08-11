@@ -366,6 +366,7 @@
           $('input#id_cantidad_venta').val(1);
           sumar_valor_parcial(".suma_valor_parcial",'#id_total_venta');
         }
+
         //Llamando a la imagen con cada cambio en el dropdown de productos
         $( "#id_producto_codigo_producto" ).change(function() {
           //console.log($("#id_producto_codigo_producto option:selected").val());
@@ -459,8 +460,7 @@
                 success : function(json) {
                   var res_fotografia=JSON.parse(json.fotografia);
                   var campos_fotografia=res_fotografia[0].fields;
-                  console.log(JSON.stringify(campos_fotografia.ruta_fotografia));
-                  $("imagen_producto").attr('src',JSON.stringify(campos_fotografia.ruta_fotografia));
+                  $('#imagen_producto').attr("src", "../../archivos"+campos_fotografia.ruta_fotografia.substr(1));
                 },
 
                 error : function(xhr,errmsg,err) {

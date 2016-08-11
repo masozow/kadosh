@@ -123,7 +123,7 @@
               return $(cell).html();
           });
           $('#lbl_empleado').text(datos[0]);
-          $('#id_fotografia_empleado').attr("src", datos[8])
+          $('#id_fotografia_empleado').attr("src", "../../archivos"+datos[8].substr(1));
           //var
           console.log(datos);
           //alert($(fila).text());
