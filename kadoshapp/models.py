@@ -490,7 +490,7 @@ class InventarioProducto(models.Model):
     fecha_creacioninventario = models.DateTimeField(db_column='fecha_creacionInventario', default=timezone.now)  # Field name made lowercase.
     producto_codigo_producto = models.ForeignKey('Producto', db_column='Producto_codigo_producto')  # Field name made lowercase.
     costo_unitario_inventarioproducto = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
-
+    #quitar el campo de arriba en cuanto se empiece a trabajar con compra
     def __str__(self):
         return '%s - P: %s - F: %s ' % (self.idinventario_producto, self.producto_codigo_producto, self.fecha_creacioninventario)
 
@@ -544,6 +544,7 @@ class Motivo(models.Model):
     idmotivo = models.AutoField(db_column='idMotivo', primary_key=True)  # Field name made lowercase.
     nombre_motivo = models.CharField(max_length=60, blank=True, null=True)
     estado_motivo = models.BooleanField(default=True)
+    traslado_motivo = models.BooleanField()
 
     def __str__(self):
         return '%s - %s' % (self.idmotivo, self.nombre_motivo)

@@ -95,10 +95,12 @@ function click_ocultar_mostrar(activador,seoculta){
 }
 
 
-//Función que comprueba si el dropdown tiene un elemento seleccionado y pasa al txtbox de destino,
-//de lo contrario muestra una alerta y devuelve el dropdown a su estado original.
-//(txtboxInicial,txtboxDestino,dropDownBusqueda,mensaje)
-function comprobar_pasarsiguiente_mostrarmensaje(txtboxInicial,txtboxDestino,dropDownBusqueda,mensaje)
+//Función que cmprueba si el texto del textbox es igual al del dropdown
+//si es asi pasa el cursor a otro textbox, de lo contrario muestra una alerta
+//y devuelve el dropdown a su estado original. Se le envia ademas el parametro para que se haga un split
+//del texto del elemento seleccionado en el dropdwon. Y otro parametro para saber que posicion del arreglo
+//resultante del split, es la que se usara para la comparacion
+function comprobar_pasarsiguiente_mostrarmensaje(txtboxInicial,txtboxDestino,dropDownBusqueda,mensaje,parametrosplit,posicionarreglosplit)
 {
   $( txtboxInicial ).keydown(function(e){ //Keydown es para que al presionarse la tecla haga algo.
                                                       //El parámetro "e" captura la tecla del teclado
@@ -106,8 +108,14 @@ function comprobar_pasarsiguiente_mostrarmensaje(txtboxInicial,txtboxDestino,dro
     if (keyCode==13) { //keycode obtiene el valor ascii de la tecla presionada
      e.preventDefault(); //previene que se realice la acción por defecto que efectuaría el navegador con esa tecla
       var valor=$(dropDownBusqueda+" option:selected").val();
+      //var text=$(dropDownBusqueda+" option:selected").text().split(parametrosplit);
+      //var nit = $(txtboxInicial).val();
+      //var texto_tratado=text[posicionarreglosplit].replace(']', '');
+      //alert(texto_tratado);
       if(valor==='')
       {
+        //$('input#id_nit_del_cliente').val('');
+        //$(txtboxDestino).focus();
         $(dropDownBusqueda).html(selectClienteDefault);
         alert(mensaje);
       }
@@ -115,6 +123,7 @@ function comprobar_pasarsiguiente_mostrarmensaje(txtboxInicial,txtboxDestino,dro
         $(txtboxDestino).focus();
       }
     }
+    //$('input#id_nit_del_cliente').focus();
   });
 }
 

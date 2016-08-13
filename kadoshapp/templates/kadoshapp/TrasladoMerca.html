@@ -11,8 +11,8 @@
     {% block content %}
 
 
-        <form method="POST" class="post-form">
-          {% csrf_token %}
+  <form action="/Traslado/Mercaderia/" id="formulario_traslado" method="POST" class="post-form">
+    {% csrf_token %}
       <div class="row" style="margin-bottom: 0px;">
         <div  class="col l6 m12 s12">
 
@@ -26,83 +26,239 @@
       </div>
       <div class="row" style="margin-bottom: 0px;">
         <div  class="col l6 m12 s12">
-          {{ form_cantidad.as_p }}
+          Cantidad: {{ form_cantidad.cantidad }}
         </div>
         <div  class="col l6 m12 s12">
-          <label for="codigobarras_producto"><h6>Codigo barras:</h6> </label>{{ form_Producto.codigobarras_producto}}
+          <label for="codigobarras_producto"><h6>Código de barras:</h6> </label>{{ form_Producto.codigobarras_producto}}
         </div>
 
       </div>
 
-<div class="row" style="margin-bottom: 0px;">
-    <div  class="col l12 m12 s12">
-      <input checked="checked" class="filled-in" id="check_mostrar" name="mostrar_check" type="checkbox" />
-      <label for="check_mostrar">Mostrar caracteristicas del producto:</label>
-    </div>
-</div>
       <div class="row" style="margin-bottom: 0px;">
-        <div  class="col l6 m12 s12">
-
-
-        <label for="marca_id_marca"><h6>Marca:</h6> </label>{{ form_TipoProducto.marca_id_marca}}
-          <label for="genero_idgener"><h6>Genero:</h6> </label>{{ form_Producto.genero_idgener}}
-            <label for="estilo_idestilo"><h6>Estilo:</h6> </label>{{ form_Producto.estilo_idestilo}}
-
-          </div>
-          <div class="col l6 m12 s12">
-         <label for="talla_idtalla"><h6>Talla:</h6> </label>{{ form_Producto.talla_idtalla}}
-          <label for="color_idcolor"><h6>Color:</h6> </label>{{ form_Producto.color_idcolor}}
-          </div>
           <div  class="col l12 m12 s12">
-          <label for="producto_codigo_producto"><h6>Descripcion Producto:</h6> </label>{{ form_InventarioProducto.producto_codigo_producto}}
+            <br/>
+            <input class="filled-in" id="check_mostrar" name="mostrar_check" type="checkbox" />
+            <label for="check_mostrar">Mostrar caracteristicas del producto</label>
+          </div>
+      </div>
+      <div class="divider"></div>
+      <div class="row" style="margin-bottom: 0px;">
+        <div id="bloque_caracteristicas_producto">
+          <div  class="col l6 m12 s12">
+          <label for="id_codigoestilo_producto"><h6>Código de estilo: </h6></label>{{form_Producto.codigoestilo_producto}}
+          <label for="id_marca_id_marca"><h6>Marca:</h6> </label>{{ form_Producto.marca_id_marca}}
+            <label for="id_genero_idgener"><h6>Género:</h6> </label>{{ form_Producto.genero_idgener}}
+              <label for="id_estilo_idestilo"><h6>Estilo:</h6> </label>{{ form_Producto.estilo_idestilo}}
+
+            </div>
+            <div class="col l6 m12 s12">
+           <label for="talla_idtalla"><h6>Talla:</h6> </label>{{ form_Producto.talla_idtalla}}
+            <label for="color_idcolor"><h6>Color:</h6> </label>{{ form_Producto.color_idcolor}}
+            <label for="id_tipo_producto_idtipo_producto"></h6>Tipo:</h6> </label>{{form_Producto.tipo_producto_idtipo_producto}}
+            <br/>
+            <input class="save btn btn-default" id="boton_buscar_caracteristicas" type="button" onclick="buscar_caracteristicas(this)" value="Buscar" name="btn_buscar_caracteristicas"/>
+            </div>
+            <div  class="col l9 m12 s12">
+              <label for="producto_codigo_producto"><h6>Descripción Producto:</h6> </label>{{ form_InventarioProducto.producto_codigo_producto}}
+              <br/>
+            </div>
+            <div  class="col l3 m12 s12">
+              <br/>
+              <input class="save btn btn-default" id="boton_agregar_producto" type="button" onclick="agregar_producto(this)" value="Agregar" name="btn_agregar_producto"/>
+              <br/>
+            </div>
         </div>
       </div>
-
-      <div class="row grey lighten-2">
-
-
-      <table>
-        <thead>
-          <tr>
-              <th data-field="id">Name</th>
-              <th data-field="name">Item Name</th>
-              <th data-field="price">Item Price</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr>
-            <td>Alvin</td>
-            <td>Eclair</td>
-            <td>$0.87</td>
-          </tr>
-          <tr>
-            <td>Alan</td>
-            <td>Jellybean</td>
-            <td>$3.76</td>
-          </tr>
-          <tr>
-            <td>Jonathan</td>
-            <td>Lollipop</td>
-            <td>$7.00</td>
-          </tr>
-        </tbody>
-      </table>
-
-
-
+      <div class="divider"></div>
+      <div class="row">
+        <div  class="col l10 m12 s12">
+          <table class="grey lighten-2" id="tabla_productos">
+            <thead>
+              <tr style="margin-bottom: 0px; margin-top: 0px; padding-top:0px; padding-botton:0px;">
+                  <th data-field="name" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">Cod</th>
+                  <th data-field="price" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">Cant</th>
+                  <th data-field="price" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;" width=300>Producto</th>
+                  <th data-field="price" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">Precio</th>
+                  <th data-field="price" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">Remover</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
       </div>
+      <div  class="col l2 m12 s12">
+        {{ form_Tabla.jsonfield}}
+        <button id="btn_guardar" name="boton_guardar" type="submit" class="save btn btn-default">Guardar</button>
+      </div>
+    </div>
 
 
-
-          <!--  {{ form_Traslado.as_p }}
-            {{ form_Producto.as_p }}
-            {{ form_TipoProducto.as_p }}
-            {{ form_InventarioProducto.as_p }}
-            {{ form_cantidad.as_p }}-->
-
-
-            <button type="submit" class="save btn btn-default">Guardar</button>
-        </form>
+   </form>
 
     {% endblock %}
+
+    {% block extra_scripts %}
+    <script type="text/javascript" src="{% static 'js/funciones.js' %}"></script>
+    <script type="text/javascript">
+
+    /*Espacio para JQuery y busquedas dentro del DOM
+    ===========================================================================*/
+
+      $( document ).ready(function(){ //document indica toda la página, ready indica que ya se haya cargado el DOM
+        //Función que coloca el cursor en el textbox Nit del cliente, al momento de cargar la página
+        $('input#id_codigobarras_producto').focus(); //se accede al input con el id que está después de #, //.focus() indica que ahí se colocará el cursor
+        $('#bloque_caracteristicas_producto').hide(); //.hide() oculta el elemento con ese id
+        $('input#id_cantidad').val(1);
+        $('#id_jsonfield').css('display','None'); //ocultando el campo que enviará los datos JSON como texto
+        $('input[type="checkbox"]').addClass("filled-in").addClass("filled-in"); //necesario para que se vean los checkbox
+        $('#id_producto_codigo_producto').empty();
+      });
+
+       click_ocultar_mostrar('check_mostrar',"#bloque_caracteristicas_producto");
+
+
+       //La siguiente función ejecuta varias acciones antes de  hacer el submit
+       $( '#formulario_traslado' ).submit(function( event ) {
+          //A continuacion se obtienen todos los elementos de la tabla producto, en un arrelgo
+          var tbl = $('table#tabla_productos tr').get().map(function(row) {
+            return $(row).find('td').get().map(function(cell) {
+              return $(cell).html();
+            });
+          });
+          $.each(tbl, function(key,value) {//se recorre la matriz resultante de la tabla
+            value.pop();//elimina el ultimo elemento del arreglo, en este caso, en la fila, el boton de eliminar
+          });
+          tbl.shift();//elimina el primer elemento de la tabla, que en este caso es un arreglo vacio
+          var tblJson=JSON.stringify(tbl); //Sin esto la tabla no se recibe bien en el View, es necesario
+          console.log('Toda la tabla:'+tblJson);
+          $('input[name=jsonfield]').val(tblJson); //guardando el valor del arreglo JSON en la tabla
+          //Las siguientes son validaciones para poder enviar la información correctamente
+          if($('#id_bodega_egreso option:selected').val()===""){
+            alert("Debe elegir la bodega origen");
+            event.preventDefault();
+          }
+          else if ($('#id_bodega_ingreso option:selected').val()==="") {
+            alert("Debe elegir la bodega destino");
+            event.preventDefault();
+          }
+          else if ($('#id_motivo_idmotivo option:selected').val()==="") {
+            alert("Debe elegir un motivo para el traslado");
+            event.preventDefault();
+          }
+          else if (tbl.length===0) {
+            alert("No ha elegido ningún producto");
+            console.log(tbl.length);
+            event.preventDefault();
+          }
+          //else{
+            //setTimeout(function(){ alert("Traslado realizado"); }, 3000);
+            //alert("Traslado realizado" );
+          //}
+        });
+
+       //Para que funcione el boton de eliminar producto
+       function eliminar_fila(button){
+         $('#tabla_productos').on('click', '#boton_eliminar', function(){
+             $(this).closest ('tr').remove ();
+            //sumar_valor_parcial(".suma_valor_parcial",'#id_total_venta');
+         });
+       }
+
+       //Función que realiza una acción al leer código de barras
+       $( 'input#id_codigobarras_producto' ).keydown(function(e){
+         var keyCode = e.keyCode || e.which; //la propiedad wich indica la tecla o el botón que se ha presionado específicamente
+                                             //puede ser del teclado o del mouse, normaliza dos eventos: event.keyCode y event.charCode
+         if(e.keyCode==13)
+         {
+           e.preventDefault();
+           obtener_producto('input#id_codigobarras_producto','#id_bodega_egreso');
+         }
+       });
+
+       //Con esta funcion se buscan los productos de acuerdo a sus caracteristicas
+       function buscar_caracteristicas(boton){
+         obtener_producto_caracteristicas('#id_codigoestilo_producto','#id_bodega_egreso','#id_marca_id_marca','#id_tipo_producto_idtipo_producto','#id_talla_idtalla','#id_estilo_idestilo','#id_color_idcolor','#id_genero_idgener');
+       }
+
+       //Esta funcion agrega el producto resultado de la busqueda por caracteristicas, a la tabla de productos
+       function agregar_producto(boton){
+         var elegido=$('#id_producto_codigo_producto option:selected').text();
+         var datos_producto=elegido.split('|');
+
+         var cantidad=$('input#id_cantidad_venta').val();
+         var valor_parcial=cantidad*parseFloat(datos_producto[4]);
+
+         $('#tabla_productos > tbody:last-child').append('<tr>'+
+                                                           '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+datos_producto[1]+'</td>'+
+                                                           '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+cantidad+'</td>'+
+                                                           '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+datos_producto[2]+'</td>'+
+                                                           '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+datos_producto[4]+'</td>'+
+                                                           '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;"> <input id="boton_eliminar" "type="button" onclick="eliminar_fila(this)" value="Eliminar" name="Eliminar" style="text-align: center; margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;"/> </td>'+
+                                                         '</tr>');
+         $('input#id_cantidad_venta').val(1);
+       }
+
+       /*Espacio para Ajax
+       ============================================================================*/
+           function obtener_producto(codigo_buscado,bodega_que_vende) {
+               $.ajax({
+                   url : "/Buscar/Producto/", // La URL que llama a la vista
+                   type : "POST", // Metodo http para realizar el request (peticion al servidor)
+                   data : { codigobarras_producto : $(codigo_buscado).val(), bodega_idbodega: $(bodega_que_vende).val()  }, // Datos enviados con el request en formato JSON
+
+                   // Si el response es correcto (si la respuesta del servidor es correcta)
+                   success : function(json) {
+                       //console.log(json.recibido);
+                       $(codigo_buscado).val(''); // Se limpia el campo del codigo del producto
+                       var res_valorprod=JSON.parse(json.valorprod);
+                       var res_inventario=JSON.parse(json.inventario);
+                       var res_nombre=JSON.parse(json.nombre);
+                       var campos_valorprod =res_valorprod[0].fields;
+                       var campos_nombre =res_nombre[0].fields;
+                       var cantidad=$('input#id_cantidad').val();
+                       var valor_parcial=cantidad*campos_valorprod.valor_precio;
+                       $('#tabla_productos > tbody:last-child').append('<tr>'+
+                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+res_nombre[0].pk+'</td>'+
+                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+cantidad+'</td>'+
+                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+campos_nombre.nombre_producto+'</td>'+
+                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+campos_valorprod.valor_precio+'</td>'+
+                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;"> <input id="boton_eliminar" "type="button" onclick="eliminar_fila(this)" value="Eliminar" name="Eliminar" style="text-align: center; margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;"/> </td>'+
+                                                                       '</tr>');
+                       $('input#id_cantidad_venta').val(1);
+                   },
+                   // Si el response no tuvo exito
+                   error : function(xhr,errmsg,err) {
+                       $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Ha ocurrido un error: "+errmsg+
+                           " <a href='#' class='close'>&times;</a></div>"); // Se agrega el error al DOM
+                       console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
+                   }
+               });
+           };
+
+           function obtener_producto_caracteristicas(codigo_estilo_buscar,bodega_que_vende,marca_buscar,tipo_buscar,talla_buscar,estilo_buscar,color_buscar,genero_buscar) {
+               $.ajax({
+                   url : "/Buscar/ProductoCaracteristicas/", // La URL que llama a la vista
+                   type : "POST", // Metodo http para realizar el request (peticion al servidor)
+                   data : { codigo_estilo_producto : $(codigo_estilo_buscar).val(), bodega_idbodega: $(bodega_que_vende+" option:selected").val(), marca_producto: $(marca_buscar+" option:selected").val(), tipo_producto: $(tipo_buscar+" option:selected").val(), estilo_producto: $(estilo_buscar+" option:selected").val(), color_producto: $(color_buscar+" option:selected").val(), talla_producto: $(talla_buscar+" option:selected").val(), genero_producto: $(genero_buscar+" option:selected").val()}, // Datos enviados con el request en formato JSON
+                   success : function(json) {
+                     $(id_producto_codigo_producto).empty();
+                     $.each(json.consulta, function(key,value) {
+                       $(id_producto_codigo_producto).append('<option value='+value.codigo_producto+'>'+ value.idInventario_producto +'|'+ value.codigo_producto +'|'+ value.nombre_producto +'|'+ value.codigoestilo_producto +'|'+ value.valor_precio +'</option>');
+                       //console.log(value);
+                     });
+                   },
+
+                   error : function(xhr,errmsg,err) {
+                       $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Ha ocurrido un error: "+errmsg+
+                           " <a href='#' class='close'>&times;</a></div>");
+                       console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
+                   }
+               });
+           };
+
+
+   </script>
+
+   <script type="text/javascript" src="{% static 'js/selectorStartsWith.js' %}"></script>
+   <script type="text/javascript" src="{% static 'js/token.js' %}"></script>
+   {% endblock %}

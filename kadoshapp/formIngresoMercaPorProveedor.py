@@ -27,7 +27,7 @@ class Form_IngresoMercaderiaPorProveedor_Fotografia(forms.ModelForm):
 class Form_IngresoMercaderiaPorProveedor_InventarioProducto(forms.ModelForm):
     class Meta:
         model=InventarioProducto
-        fields=('costo_unitario_inventarioproducto','bodega_idbodega',)
+        fields=('bodega_idbodega',)
 
 
 #class Form_IngresoMercaderiaPorProveedor_Anaquel(forms.ModelForm):

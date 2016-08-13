@@ -177,34 +177,41 @@ def GuardarVenta(request):
         rec_es_cotizacion = request.POST.get('env_es_cotizacion')
         rec_total_venta = request.POST.get('env_total_venta')
         rec_tabla=request.POST.get('tabla')
-
-        empleado=Empleado.objects.get(auth_user=request.user)
-        ventaNueva=Venta(empleado_idempleado=empleado,anotaciones_venta=rec_anotaciones_venta,cliente_idcliente=Cliente.objects.get(idcliente=rec_cliente_idcliente),tipo_pago_idtipo_pago=TipoPago.objects.get(idtipo_pago=rec_tipo_pago_idtipo_pago),contado_venta=rec_contado_venta,vendedor_venta=Empleado.objects.get(idempleado=rec_vendedor_venta),caja_idcaja=Caja.objects.get(idcaja=rec_caja_idcaja),es_cotizacion=rec_es_cotizacion,total_venta=rec_total_venta)
-        ventaNueva.save()
-
-        tablaJson=json.loads(rec_tabla)#el loads es necesario, si no los datos aparecen como un arreglo, incluidos los corchetes y las comas
         response_data = {} #declarando un diccionario vacio
-        #Iterando dentro de los arreglos de json:
-        for fila in tablaJson:
-            datos=[] #creando una lista
-            for elemento in fila:
-                datos.append(elemento) #agregando datos a la lista
-            if datos[0]=='0' and datos[1]=='0':  #si no hay codigo de inventario ni codigo de producto
-                separacion=datos[3].split("|")
-                #response_data['idventa']=separacion[0]
-                #response_data['total']=separacion[1]
-                detalleNuevo=DetalleVenta(venta_idventa=ventaNueva,promocion_idpromocion=Promocion(idpromocion=separacion[0]),cantidad_venta=datos[2],valor_parcial_venta=datos[5])
-            else:
-                if datos[0]=='0':
-                    detalleNuevo=DetalleVenta(venta_idventa=ventaNueva,descuento_iddescuento=Descuento(iddescuento=datos[1]),cantidad_venta=datos[2],valor_parcial_venta=datos[5])
-                else:
-                    detalleNuevo=DetalleVenta(venta_idventa=ventaNueva,inventario_producto_idinventario_producto=InventarioProducto(pk=datos[0]),cantidad_venta=datos[2],valor_parcial_venta=datos[5])
-            InventarioProducto.objects.filter(pk=datos[1]).update(existencia_actual=F('existencia_actual') - datos[2]) #Haciendo un update a las existencias del inventario con esa PK
-            detalleNuevo.save()
+        try:
+            empleado=Empleado.objects.get(auth_user=request.user)
+            ventaNueva=Venta(empleado_idempleado=empleado,anotaciones_venta=rec_anotaciones_venta,cliente_idcliente=Cliente.objects.get(idcliente=rec_cliente_idcliente),tipo_pago_idtipo_pago=TipoPago.objects.get(idtipo_pago=rec_tipo_pago_idtipo_pago),contado_venta=rec_contado_venta,vendedor_venta=Empleado.objects.get(idempleado=rec_vendedor_venta),caja_idcaja=Caja.objects.get(idcaja=rec_caja_idcaja),es_cotizacion=rec_es_cotizacion,total_venta=rec_total_venta)
+            ventaNueva.save()
 
-        #los siguientes datos son para revision solamente, asi se tiene una respuesta de exito en la consola
-        response_data['idventa']=ventaNueva.pk
-        response_data['total']=ventaNueva.total_venta
+            tablaJson=json.loads(rec_tabla)#el loads es necesario, si no los datos aparecen como un arreglo, incluidos los corchetes y las comas
+
+            #Iterando dentro de los arreglos de json:
+            for fila in tablaJson:
+                datos=[] #creando una lista
+                for elemento in fila:
+                    datos.append(elemento) #agregando datos a la lista
+                if datos[0]=='0' and datos[1]=='0':  #si no hay codigo de inventario ni codigo de producto, entonces es promocion
+                    separacion=datos[3].split("|")
+                    detalleNuevo=DetalleVenta(venta_idventa=ventaNueva,promocion_idpromocion=Promocion(idpromocion=separacion[0]),cantidad_venta=datos[2],valor_parcial_venta=datos[5])
+                    #El siguiente bloque de código es para actualizar las existencias de los inventarios de todos los productos en promoción
+                    productos_promocion=PromocionHasProducto.objects.filter(promocion_idpromocion=separacion[0])
+                    for prod in productos_promocion:
+                        cantidad_prod=prod.cantidad_productoenpromocion
+                        cantidad_real=cantidad_prod*datos[2]
+                        InventarioProducto.objects.filter(pk=prod.inventario_producto_idinventario_producto.pk).update(existencia_actual=F('existencia_actual') - cantidad_real)
+                    #Aquí termina el bloque de inventarios en promoción
+                else:
+                    if datos[0]=='0': #es un descuento descuento
+                        detalleNuevo=DetalleVenta(venta_idventa=ventaNueva,descuento_iddescuento=Descuento(iddescuento=datos[1]),cantidad_venta=datos[2],valor_parcial_venta=datos[5])
+                    else: #es un producto normal
+                        detalleNuevo=DetalleVenta(venta_idventa=ventaNueva,inventario_producto_idinventario_producto=InventarioProducto(pk=datos[0]),cantidad_venta=datos[2],valor_parcial_venta=datos[5])
+                        InventarioProducto.objects.filter(pk=datos[1]).update(existencia_actual=F('existencia_actual') - datos[2]) #Haciendo un update a las existencias del inventario con esa PK
+                detalleNuevo.save()
+            #los siguientes datos son para revision solamente, asi se tiene una respuesta de exito en la consola
+            response_data['idventa']=ventaNueva.pk
+            response_data['total']=ventaNueva.total_venta
+        except Exception as e:
+            response_data['idventa']="Ha ocurrido un error: "+str(e)
 
         return HttpResponse(
             json.dumps(response_data),

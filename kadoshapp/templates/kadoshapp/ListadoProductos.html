@@ -19,80 +19,108 @@ Listado Productos
     <label for="codigobarras_producto"><h6>Codigo de barras:</h6> </label>{{ form_producto.codigobarras_producto}}
     </div>
     <div class="col l6 s12 m12">
-      <input type="checkbox" id="Mostrar" />
-        <label for="Mostrar"><h6>Mostrar caracteristicas producto</h6> </label>
+      <input class="filled-in" id="check_mostrar" name="mostrar_check" type="checkbox" />
+      <label style="font-size: 80%" for="check_mostrar"><h6>Características del producto</h6></label>
     </div>
 </div>
-
-      <div class="row" style="margin-bottom: 0px;">
-
-
-          <div class="col l6 s12 m12">
-
-
-
-
-          <label for="marca_id_marca"><h6>Marca:</h6> </label>{{ form_producto.marca_id_marca}}
-          <label for="estilo_idestilo"><h6>Estilo:</h6> </label>{{ form_producto.estilo_idestilo}}
-          <label for="genero_idgener"><h6>Genero:</h6> </label>{{ form_producto.genero_idgener}}
-          <label for="talla_idtalla"><h6>Talla:</h6> </label>{{ form_producto.talla_idtalla}}
-          <label for="color_idcolor"><h6>Color:</h6> </label>{{ form_producto.color_idcolor}}
-          </div>
-          <div class="col l6 s12 m12">
-
-           <label for="codigoestilo_producto"><h6>Codigo estilo:</h6> </label>{{ form_producto.codigoestilo_producto}}
-
-
-          <button type="button" class="btn btn-default">Buscar</button>
-          </div>
-
-
+<div class="row" style="margin-bottom: 0px;">
+  <div id="bloque_caracteristicas_producto">
+    <div class="col l6 s12 m12">
+      <label for="id_codigoestilo_producto"><h6>Código de estilo:</h6> </label>{{ form_producto.codigoestilo_producto}}
+      <label for="id_marca_id_marca"><h6>Marca:</h6> </label>{{ form_producto.marca_id_marca}}
+      <label for="id_estilo_idestilo"><h6>Estilo:</h6> </label>{{ form_producto.estilo_idestilo}}
+      <label for="id_tipo_producto_idtipo_producto"><h6>Tipo:</h6> </label>{{form_producto.tipo_producto_idtipo_producto}}
+    </div>
+    <div class="col l6 s12 m12">
+      <label for="id_genero_idgener"><h6>Genero:</h6> </label>{{ form_producto.genero_idgener}}
+      <label for="id_talla_idtalla"><h6>Talla:</h6> </label>{{ form_producto.talla_idtalla}}
+      <label for="id_color_idcolor"><h6>Color:</h6> </label>{{ form_producto.color_idcolor}}
+      <br/>
+      <button type="button" class="btn btn-default">Buscar</button>
+    </div>
+  </div>
 </div>
-
-
-
 
       <div class="row" style="margin-bottom: 0px;">
         <h5>Productos</h5>
-        <div class="grey lighten-2">
-        <table>
-          <thead>
-            <tr>
-                <th data-field="Cod">Cod</th>
-                <th data-field="Producto">Producto</th>
-                <th data-field="Sucursal">Sucursal</th>
-                <th data-field="Bodega">Bodega</th>
-                <th data-field="Codigo Barras">Codigo Barras</th>
-                <th data-field="Existencia">Existencia</th>
-                <th data-field="Codigo estilo">Codigo estilo</th>
-                <th data-field="Costo">Costo</th>
-                <th data-field="Precio">Precio</th>
-            </tr>
-          </thead>
+          <div class="grey lighten-2">
+          <table>
+            <thead>
+              <tr>
+                  <th data-field="Cod">Cod</th>
+                  <th data-field="Producto">Producto</th>
+                  <th data-field="Sucursal">Sucursal</th>
+                  <th data-field="Bodega">Bodega</th>
+                  <th data-field="Codigo Barras">Codigo Barras</th>
+                  <th data-field="Existencia">Existencia</th>
+                  <th data-field="Codigo estilo">Codigo estilo</th>
+                  <th data-field="Costo">Costo</th>
+                  <th data-field="Precio">Precio</th>
+              </tr>
+            </thead>
 
-          <tbody>
-            <tr>
-              <td>Alvin</td>
-              <td>Eclair</td>
-              <td>$0.87</td>
-            </tr>
-            <tr>
-              <td>Alan</td>
-              <td>Jellybean</td>
-              <td>$3.76</td>
-            </tr>
-            <tr>
-              <td>Jonathan</td>
-              <td>Lollipop</td>
-              <td>$7.00</td>
-            </tr>
-          </tbody>
-        </table>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
       </div>
-      </div>
+  </form>
+    {% endblock %}
+
+    {% block extra_scripts %}
+    <script type="text/javascript" src="{% static 'js/funciones.js' %}"></script>
+    <script type="text/javascript">
+
+    /*Espacio para JQuery y busquedas dentro del DOM
+    ===========================================================================*/
+
+      //Es importante colocar esta linea antes de llamar a las funciones de busqueda
+      //dentro de dropdown, porque obtiene el estado por defecto del dropdown, asi
+      //se puede resetear. Hay que hacerlo con cada dropdown donde se busque.
+       var selectClienteDefault = $("#id_cliente_idcliente").html();
+       var selectPromocionDefault = $("#id_promocion_idpromocion").html();
+       var marcaDefault = $("#id_marca_id_marca").html();
+       var estiloDefault = $("#id_estilo_idestilo").html();
+       var tipoDefault = $("#id_tipo_producto_idtipo_producto").html();
+       var tallaDefault = $("#id_talla_idtalla").html();
+       var colorDefault = $("#id_color_idcolor").html();
+       var generoDefault = $("#id_genero_idgener").html();
+
+       //Obteniendo el estado inicial del Body, excluyendo dos DropDown
+//       var estado_inicial_cuerpo;
 
 
+        //Similar al FormLoad
+        $( document ).ready(function(){ //document indica toda la página, ready indica que ya se haya cargado el DOM
+          //Función que coloca el cursor en el textbox Nit del cliente, al momento de cargar la página
+          $('#bloque_caracteristicas_producto').hide(); //.hide() oculta el elemento con ese id
+          //$('input[type="checkbox"]').addClass("filled-in").addClass("filled-in"); //necesario para que se vean los checkbox
+          //$('#id_producto_codigo_producto').empty();
+//          estado_inicial_cuerpo=$("#formulario_venta").html();//$("#formulario_venta").clone().children('#id_bodega_idbodega').remove().children('#id_caja_idcaja').remove().end();
+          //$('id_caja_idcajaselect').material_select();
+        });
+
+        //var cantidadDefault= $("input#id_cantidad_venta").html();
+
+        //Para que funcione el boton de eliminar producto
+        function eliminar_fila(button){
+          $('#tabla_productos').on('click', '#boton_eliminar', function(){
+              $(this).closest ('tr').remove ();
+              sumar_valor_parcial(".suma_valor_parcial",'#id_total_venta');
+          });
+        }
+
+        //Funcion que oculta o muestra el elemento con el id del 2do parametro,
+        //al dar clic en el checkbox con el id del primer parametro
+        //aqui se envia el primer id como parametro sin #, solo el primero
+        click_ocultar_mostrar('check_mostrar',"#bloque_caracteristicas_producto");
 
 
-    </form>
+        /*Espacio para Ajax
+        ============================================================================*/
+
+    </script>
+
+    <script type="text/javascript" src="{% static 'js/selectorStartsWith.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/token.js' %}"></script>
     {% endblock %}
