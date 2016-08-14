@@ -119,6 +119,69 @@ Listado Productos
         /*Espacio para Ajax
         ============================================================================*/
 
+        function obtener_producto(codigo_buscado) {
+            $.ajax({
+                url : "/Buscar/Producto/", // La URL que llama a la vista
+                type : "POST", // Metodo http para realizar el request (peticion al servidor)
+                data : { codigobarras_producto : $(codigo_buscado).val()}, // Datos enviados con el request en formato JSON
+
+                // Si el response es correcto (si la respuesta del servidor es correcta)
+                success : function(json) {
+                    //console.log(json.recibido);
+                    $(codigo_buscado).val(''); // Se limpia el campo del codigo del producto
+                    var res_valorprod=JSON.parse(json.valorprod);
+                    var res_inventario=JSON.parse(json.inventario);
+                    var res_nombre=JSON.parse(json.nombre);
+                    var campos_valorprod =res_valorprod[0].fields;
+                    var campos_nombre =res_nombre[0].fields;
+                    var cantidad=$('input#id_cantidad_venta').val();
+                    var valor_parcial=cantidad*campos_valorprod.valor_precio;
+                    $('#tabla_productos > tbody:last-child').append('<tr>'+
+                                                                      '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+res_inventario[0].pk+'</td>'+
+                                                                      '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+res_nombre[0].pk+'</td>'+
+                                                                      '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+cantidad+'</td>'+
+                                                                      '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+campos_nombre.nombre_producto+'</td>'+
+                                                                      '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+campos_valorprod.valor_precio+'</td>'+
+                                                                      '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;" class="suma_valor_parcial">'+valor_parcial.toFixed(2)+'</td>'+
+                                                                      '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;"> <input id="boton_eliminar" "type="button" onclick="eliminar_fila(this)" value="Eliminar" name="Eliminar" style="text-align: center; margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;"/> </td>'+
+                                                                    '</tr>');
+                    $('input#id_valor_precio').val(campos_valorprod.valor_precio);
+                    //console.log("success"); // Solo se comprueba mediante la consola, que el llamado fue correcto
+                    $('input#id_cantidad_venta').val(1);
+                    sumar_valor_parcial(".suma_valor_parcial",'#id_total_venta');
+                },
+                // Si el response no tuvo exito
+                error : function(xhr,errmsg,err) {
+                    $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Ha ocurrido un error: "+errmsg+
+                        " <a href='#' class='close'>&times;</a></div>"); // Se agrega el error al DOM
+                    console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
+                }
+            });
+        };
+
+
+        function obtener_producto_caracteristicas(codigo_estilo_buscar,bodega_que_vende,marca_buscar,tipo_buscar,talla_buscar,estilo_buscar,color_buscar,genero_buscar) {
+            $.ajax({
+                url : "/Buscar/TodosProductosCaracteristicas/", // La URL que llama a la vista
+                type : "POST", // Metodo http para realizar el request (peticion al servidor)
+                data : { codigo_estilo_producto : $(codigo_estilo_buscar).val(), bodega_idbodega: $(bodega_que_vende+" option:selected").val(), marca_producto: $(marca_buscar+" option:selected").val(), tipo_producto: $(tipo_buscar+" option:selected").val(), estilo_producto: $(estilo_buscar+" option:selected").val(), color_producto: $(color_buscar+" option:selected").val(), talla_producto: $(talla_buscar+" option:selected").val(), genero_producto: $(genero_buscar+" option:selected").val()}, // Datos enviados con el request en formato JSON
+                success : function(json) {
+                  $(id_producto_codigo_producto).empty();
+                  $.each(json.consulta, function(key,value) {
+                    $(id_producto_codigo_producto).append('<option value='+value.codigo_producto+'>'+ value.idInventario_producto +'|'+ value.codigo_producto +'|'+ value.nombre_producto +'|'+ value.codigoestilo_producto +'|'+ value.valor_precio +'</option>');
+                    //console.log(value);
+                  });
+                },
+
+                error : function(xhr,errmsg,err) {
+                    $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Ha ocurrido un error: "+errmsg+
+                        " <a href='#' class='close'>&times;</a></div>");
+                    console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
+                }
+            });
+        };
+
+
     </script>
 
     <script type="text/javascript" src="{% static 'js/selectorStartsWith.js' %}"></script>

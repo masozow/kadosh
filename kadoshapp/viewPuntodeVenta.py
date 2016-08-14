@@ -26,11 +26,9 @@ def PuntoDeVenta(request):
         form_DetalleVenta=Form_PuntoVenta_DetalleVenta()
         form_InventarioProducto=Form_PuntoVenta_InventarioProducto()
         form_Producto=Form_PuntoVenta_Producto()
-        #form_TipoProducto=Form_PuntoVenta_TipoProducto()
         form_Promocion=Form_PuntoVenta_Promocion()
         form_Precio=Form_PuntoVenta_Precio()
         form_cliente=Form_PuntoVenta_busquedas()
-        #form_estiloproducto=Form_PuntoVenta_EstiloProducto()
         form_promocionhasproducto=Form_PuntoVenta_PromocionHasProducto()
         #Se filtran los datos que pueden ser vistos en los DropDown/Comobobx
         form_Venta.fields["vendedor_venta"].queryset = Empleado.objects.filter(puesto_idpuesto__nombre_puesto__contains='Ventas',estado_empleado=1)
