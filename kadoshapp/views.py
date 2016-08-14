@@ -41,3 +41,7 @@ def ingreso_mercaderia(request):
 @login_required
 def denegado(request):
     return render(request, 'kadoshapp/Denegado.html',{})
+#reporte Personas
+@login_required
+def Person(request):
+    return render(request, 'kadoshapp/personas.html',{})
