@@ -1,0 +1,19 @@
+{% extends 'kadoshapp/base.html'  %}
+{% load staticfiles %}
+{% block content %}
+<div class="row">
+    <div class="col l12 m12 s12">
+        <h1 class="page-header">Reporte</h1>
+    </div>
+</div>
+<div class="row">
+  <div class="col l6 m12 s12">
+   <a id="crear_detalle" href="{% url 'reporte_personas_excel' %}" class="btn btn-info btn-block">
+     <span class="glyphicon glyphicon-list-alt"></span>
+    </a>
+  </div>
+  </div>
+
+
+
+{% endblock %}
