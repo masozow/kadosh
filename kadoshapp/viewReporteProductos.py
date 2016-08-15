@@ -16,12 +16,17 @@ def ValuesQuerySetToDict(vqs):
     return [item for item in vqs]
 
 #Nuestra clase hereda de la vista genérica TemplateView
+<<<<<<< HEAD:kadoshapp/viewReportePersonas.py
 class ReportePersonas(TemplateView):
 #<<<<<<< HEAD
     #Usamos el método get para generar el archivo excel
 #=======
 #Usamos el método get para generar el archivo excel
 #>>>>>>> 312f50018efe00b15ef52c93c85ec12049087ea2
+=======
+class ReporteProductos(TemplateView):
+#Usamos el método get para generar el archivo excel
+>>>>>>> d85d0324416f69bb715c3369b4b44927b75508cc:kadoshapp/viewReporteProductos.py
     def get(self, request, *args, **kwargs):
         #Obtenemos todas las personas de nuestra base de datos
         productos = resultado=Producto.objects.filter(codigobarras_producto=123).values('pk',
@@ -77,7 +82,7 @@ class ReportePersonas(TemplateView):
             ws.cell(row=cont,column=9).value = producto['marca_id_marca__nombre_marca']
             cont = cont + 1
         #Establecemos el nombre del archivo
-        nombre_archivo ="ReportePersonasExcel.xlsx"
+        nombre_archivo ="ReporteProductos.xlsx"
         #Definimos que el tipo de respuesta a devolver es un archivo de microsoft excel
         response = HttpResponse(content_type="application/ms-excel")
         contenido = "attachment; filename={0}".format(nombre_archivo)

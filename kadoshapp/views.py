@@ -4,10 +4,6 @@ from django.core import serializers
 import json
 import pdb #para hacer el debugging
 from django.contrib.auth.decorators import login_required
-#para tablas
-from django_tables2 import RequestConfig
-from .models import Persona
-from .tables import PersonaTabla
 #from .models import Persona, Cliente, TipoCliente
 #from .forms import Form_RegistroCliente_Persona, Form_RegistroCliente_Cliente
 from django.shortcuts import redirect

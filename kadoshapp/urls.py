@@ -1,14 +1,13 @@
 from django.conf.urls import include, url
 from . import views
-from . import viewReportePersonas,viewModificarCliente,viewAsignarCaja,viewListadoProductos,viewBusquedaMercaderia,viewPrecios,viewCliente, viewIngresoMercaPorProveedor, viewCompra, viewPuntodeVenta, viewTrasladoMercaderia, viewCierreCaja, viewAnularVenta, viewInventario, viewPromocion,viewEmpleados
+from . import viewReporteProductos,viewModificarCliente,viewAsignarCaja,viewListadoProductos,viewBusquedaMercaderia,viewPrecios,viewCliente, viewIngresoMercaPorProveedor, viewCompra, viewPuntodeVenta, viewTrasladoMercaderia, viewCierreCaja, viewAnularVenta, viewInventario, viewPromocion,viewEmpleados
 from . import viewTablas
 urlpatterns=[
 #urls para loguear
 url(r'^$','django.contrib.auth.views.login',
 {'template_name':'kadoshapp/login.html'}, name='login'),
 
-url(r'^cerrar/$','django.contrib.auth.views.logout_then_login',
- name='logout'),
+url(r'^cerrar/$','django.contrib.auth.views.logout_then_login',name='logout'),
 url(r'^index/kadosh/', views.ingreso_mercaderia, name='ingreso_mercaderia'),
 url(r'^Acceso/Denegado/', views.denegado, name='denegado'),
 url(r'^ingreso/cliente/$', viewCliente.registro_cliente, name='registroCliente'),
@@ -32,11 +31,16 @@ url(r'^Mercaderia/Busqueda/$', viewBusquedaMercaderia.BusquedaMerca, name='Busqu
 url(r'^Productos/Listado/$', viewListadoProductos.Listado, name='ListadoProductos'),
 url(r'^Asignar/Caja/$', viewAsignarCaja.Asignacion, name='AsignarCaja'),
 url(r'^Guardar/Venta/$', viewPuntodeVenta.GuardarVenta, name='GuardarVenta'),
+url(r'^Buscar/TodosProductosCaracteristicas/$', viewListadoProductos.BuscarProductoCaracteristicasExtra, name='BuscarListadoProductos'),
 url(r'^Buscar/TodosProductosCaracteristicasExtra/$', viewListadoProductos.BuscarProductoCaracteristicasExtra, name='BuscarListadoProductos'),
 url(r'^Buscar/TodosProductosExtra/$', viewListadoProductos.BuscarProductoExtra, name='BuscarListadoProductos'),
-url(r'^reporte_personas_excel/$',viewReportePersonas.ReportePersonas.as_view(), name="reporte_personas_excel"),
 url(r'^Guardar/Venta/$', viewPuntodeVenta.GuardarVenta, name='GuardarVenta'),
+<<<<<<< HEAD
 url(r'^reporte_personas_excel/$',viewReportePersonas.ReportePersonas.as_view(), name="reporte_personas_excel"),
 url(r'^Reporte/Personas/', viewTablas.persona_lista, name='Rpersonas'),
 #url(r'^cotizaciones/$',viewCotizacion.ReportePersonas.as_view(), name="reporte_personas_excel"),
+=======
+url(r'^reporte_productos_excel/$',viewReporteProductos.ReporteProductos.as_view(), name="reporte_productos_excel"),
+url(r'^Reporte/Productos/', viewTablas.productos_lista, name='Rproductos'),
+>>>>>>> d85d0324416f69bb715c3369b4b44927b75508cc
 ]
