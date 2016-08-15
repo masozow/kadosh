@@ -10,23 +10,30 @@ from django.http.response import HttpResponse
 #from django.views.generic.list import ListView
 from .models import *
 
-#class Personas(ListView):
-#    model = Persona
-#    template_name = 'personas.html'
-#    context_object_name = 'personas'
+#El siguiente método convierte el resultado de "values" en un diccionario
+def ValuesQuerySetToDict(vqs):
+    return [item for item in vqs]
 
 #Nuestra clase hereda de la vista genérica TemplateView
-class ReportePersonas(TemplateView):
+class ReporteCotizacion(TemplateView):
 
     #Usamos el método get para generar el archivo excel
     def get(self, request, *args, **kwargs):
-        #Obtenemos todas las personas de nuestra base de datos
-        #personas = Persona.objects.all()
+
         #Creamos el libro de trabajo
+        context = self.get_context_data()
+        valor=context["json"]
         wb = Workbook()
         #Definimos como nuestra hoja de trabajo, la hoja activa, por defecto la primera del libro
         ws = wb.active
-        ventas=Venta.objects.filter(estado_venta=1).order_by(-)
+
+        venta=18
+        detalle=DetalleVenta.objects.filter(venta_idventa=5).values('inventario_producto_idinventario_producto__producto_codigo_producto',
+                                                                        'cantidad_venta',
+                                                                        'inventario_producto_idinventario_producto__producto_codigo_producto__nombre_producto',
+                                                                        'inventario_producto_idinventario_producto__producto_codigo_producto__marca_id_marca__nombre_marca',
+                                                                        'valor_parcial_venta')
+        detalle_diccionario=ValuesQuerySetToDict(detalle)
         #En la celda B1 ponemos el texto 'REPORTE DE PERSONAS'
         ws['B1'] = 'Kadosh'
         ws['B2'] = 'REPORTE DE PERSONAS'
@@ -42,17 +49,19 @@ class ReportePersonas(TemplateView):
 
 
         #Creamos los encabezados desde la celda B3 hasta la E3
-        ws['B4'] = 'ID'
-        ws['C4'] = 'NOMBRES'
-        ws['D4'] = 'APELLIDOS'
-        ws['E4'] = 'DPI'
+        ws['B4'] = 'Cod'
+        ws['C4'] = 'Cantidad'
+        ws['D4'] = 'Producto'
+        ws['D4'] = 'Marca'
+        ws['E4'] = 'Valor parcial'
         cont=5
         #Recorremos el conjunto de personas y vamos escribiendo cada uno de los datos en las celdas
-        for persona in personas:
-            ws.cell(row=cont,column=2).value = persona.idpersona
-            ws.cell(row=cont,column=3).value = persona.nombres_persona
-            ws.cell(row=cont,column=4).value = persona.apellidos_persona
-            ws.cell(row=cont,column=5).value = persona.dpi_persona
+        for det in detalle_diccionario:
+            ws.cell(row=cont,column=2).value = det['inventario_producto_idinventario_producto__producto_codigo_producto']
+            ws.cell(row=cont,column=3).value = det['cantidad_venta']
+            ws.cell(row=cont,column=4).value = det['inventario_producto_idinventario_producto__producto_codigo_producto__nombre_producto']
+            ws.cell(row=cont,column=5).value = det['inventario_producto_idinventario_producto__producto_codigo_producto__marca_id_marca__nombre_marca']
+            ws.cell(row=cont,column=6).value = det['valor_parcial_venta']
             cont = cont + 1
         #Establecemos el nombre del archivo
         nombre_archivo ="ReportePersonasExcel.xlsx"

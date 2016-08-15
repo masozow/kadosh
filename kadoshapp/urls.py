@@ -38,4 +38,5 @@ url(r'^reporte_personas_excel/$',viewReportePersonas.ReportePersonas.as_view(), 
 url(r'^Guardar/Venta/$', viewPuntodeVenta.GuardarVenta, name='GuardarVenta'),
 url(r'^reporte_personas_excel/$',viewReportePersonas.ReportePersonas.as_view(), name="reporte_personas_excel"),
 url(r'^Reporte/Personas/', viewTablas.persona_lista, name='Rpersonas'),
+#url(r'^cotizaciones/$',viewCotizacion.ReportePersonas.as_view(), name="reporte_personas_excel"),
 ]
