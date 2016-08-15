@@ -16,17 +16,17 @@ def ValuesQuerySetToDict(vqs):
     return [item for item in vqs]
 
 #Nuestra clase hereda de la vista genérica TemplateView
-<<<<<<< HEAD:kadoshapp/viewReportePersonas.py
-class ReportePersonas(TemplateView):
+
+#class ReportePersonas(TemplateView):
 #<<<<<<< HEAD
     #Usamos el método get para generar el archivo excel
 #=======
 #Usamos el método get para generar el archivo excel
 #>>>>>>> 312f50018efe00b15ef52c93c85ec12049087ea2
-=======
+
 class ReporteProductos(TemplateView):
 #Usamos el método get para generar el archivo excel
->>>>>>> d85d0324416f69bb715c3369b4b44927b75508cc:kadoshapp/viewReporteProductos.py
+#>>>>>>> d85d0324416f69bb715c3369b4b44927b75508cc:kadoshapp/viewReporteProductos.py
     def get(self, request, *args, **kwargs):
         #Obtenemos todas las personas de nuestra base de datos
         productos = resultado=Producto.objects.filter(codigobarras_producto=123).values('pk',

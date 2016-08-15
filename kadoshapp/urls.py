@@ -35,12 +35,9 @@ url(r'^Buscar/TodosProductosCaracteristicas/$', viewListadoProductos.BuscarProdu
 url(r'^Buscar/TodosProductosCaracteristicasExtra/$', viewListadoProductos.BuscarProductoCaracteristicasExtra, name='BuscarListadoProductos'),
 url(r'^Buscar/TodosProductosExtra/$', viewListadoProductos.BuscarProductoExtra, name='BuscarListadoProductos'),
 url(r'^Guardar/Venta/$', viewPuntodeVenta.GuardarVenta, name='GuardarVenta'),
-<<<<<<< HEAD
-url(r'^reporte_personas_excel/$',viewReportePersonas.ReportePersonas.as_view(), name="reporte_personas_excel"),
-url(r'^Reporte/Personas/', viewTablas.persona_lista, name='Rpersonas'),
+#url(r'^reporte_personas_excel/$',viewReportePersonas.ReportePersonas.as_view(), name="reporte_personas_excel"),
+#url(r'^Reporte/Personas/', viewTablas.persona_lista, name='Rpersonas'),
 #url(r'^cotizaciones/$',viewCotizacion.ReportePersonas.as_view(), name="reporte_personas_excel"),
-=======
 url(r'^reporte_productos_excel/$',viewReporteProductos.ReporteProductos.as_view(), name="reporte_productos_excel"),
 url(r'^Reporte/Productos/', viewTablas.productos_lista, name='Rproductos'),
->>>>>>> d85d0324416f69bb715c3369b4b44927b75508cc
 ]
