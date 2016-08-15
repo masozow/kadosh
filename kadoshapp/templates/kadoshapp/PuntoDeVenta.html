@@ -16,7 +16,7 @@
         <div id="bloque_encabezado" style="background-color: #e6e6ff;">
           <div class="row" style="margin-bottom: 0px;">
             <div class="col l3 m12 s12">
-                Elegir caja: {{form_Venta.caja_idcaja}}
+              Elegir caja: {{form_Venta.caja_idcaja}}
             </div>
             <div class="col l4 m12 s12">
               Vendedor:{{form_Venta.vendedor_venta}}
@@ -54,8 +54,8 @@
               <input class="filled-in" id="check_descuento" name="descuento_check" type="checkbox" />
               <label style="font-size: 80%" for="check_descuento">Descuento</label>
               <br/>
-              <input class="filled-in" id="check_anular" name="anular_check" type="checkbox" />
-              <label style="font-size: 80%" for="check_anular">Anular</label>
+              Venta:
+              <label style="font-size: 80%" id="resultado_venta"></label>
             </div>
 
       </div>
@@ -183,19 +183,6 @@
     </div>
   </div>
 
-<div class="divider"></div>
-<div class="row" style="margin-bottom: 0px;">
-  <div id="bloque_anular">
-    <div class="col l6 m12 s12">
-        Código de autorización: {{form_cliente.codigo_autorizacion}}
-
-    </div>
-    <div class="col l6 m12 s12">
-        <br/>
-        <button type="submit" class="save btn btn-default">Anular venta</button>
-    </div>
-  </div>
-</div>
 </form>
 
     {% endblock %}
@@ -219,9 +206,6 @@
        var colorDefault = $("#id_color_idcolor").html();
        var generoDefault = $("#id_genero_idgener").html();
 
-       //Obteniendo el estado inicial del Body, excluyendo dos DropDown
-//       var estado_inicial_cuerpo;
-
 
         //Similar al FormLoad
         $( document ).ready(function(){ //document indica toda la página, ready indica que ya se haya cargado el DOM
@@ -230,15 +214,11 @@
           $('#bloque_caracteristicas_producto').hide(); //.hide() oculta el elemento con ese id
           $('#bloque_promocion').hide();
           $('#bloque_descuento').hide();
-          $('#bloque_anular').hide();
           $('input#id_cantidad_venta').val(1);
           $('input[type="checkbox"]').addClass("filled-in").addClass("filled-in"); //necesario para que se vean los checkbox
           $('#id_producto_codigo_producto').empty();
-//          estado_inicial_cuerpo=$("#formulario_venta").html();//$("#formulario_venta").clone().children('#id_bodega_idbodega').remove().children('#id_caja_idcaja').remove().end();
-          //$('id_caja_idcajaselect').material_select();
         });
 
-        //var cantidadDefault= $("input#id_cantidad_venta").html();
 
         //Para que funcione el boton de eliminar producto
         function eliminar_fila(button){
@@ -381,6 +361,60 @@
           parseFloat($(escribiraqui).val()).toFixed(2)
         }
 
+        //Esta parte es importantisima, lo que se envia es el ID del formulario completo
+        //es para hacer el commit sin actualizar la pagina, sino con ajax.
+        //Se previene que el boton de submit haga lo habitual (preventDefault)
+        //y se llama a la funcion de abajo, a la que guarda la venta
+        $('#formulario_venta').on('submit', function(event){
+            event.preventDefault();
+            console.log($('#id_total_venta').val());
+            if ($('#id_caja_idcaja').val()===''){
+              alert('Debe elegir una caja válida');
+            }
+            else if ($('#id_vendedor_venta').val()===''){
+              alert('Debe elegir un vendedor válido');
+            }
+            else if ($('#id_bodega_idbodega').val()===''){
+              alert('Debe elegir una bodega válida');
+            }
+            else if ($('#id_cliente_idcliente').val()===''){
+              alert('Debe elegir un cliente válido');
+            }
+            else if ($('#id_total_venta').val()==='0.00' || $('#id_total_venta').val()==='' ){
+              alert('La venta está vacía, agregue por lo menos un producto');
+            }
+            else if ($('#id_tipo_pago_idtipo_pago').val()===''){
+              alert('Debe elegir un tipo de pago válido');
+            }
+            else {
+              console.log("form submitted!")  // sanity check
+              //A continuacion se obtienen todos los elementos de la tabla producto, en un arrelgo
+              var tbl = $('table#tabla_productos tr').get().map(function(row) {
+                return $(row).find('td').get().map(function(cell) {
+                  return $(cell).html();
+                });
+              });
+
+              $.each(tbl, function(key,value) {//se recorre la matriz resultante de la tabla
+                value.pop();//elimina el ultimo elemento del arreglo, en este caso, en la fila, el boton de eliminar
+              });
+              tbl.shift();//elimina el primer elemento de la tabla, que en este caso es un arreglo vacio
+              var tblJson=JSON.stringify(tbl); //Sin esto la tabla no se recibe bien en el View, es necesario
+              guardar_venta(tblJson);  //Esto debe estar descomentado, si no nunca se guarda la venta
+              //A continuación se resetean todos los controles, excepto los que se encuentran dentro de "not"
+              $('#formulario_venta').find('input, textarea, select').not("#boton_agregar_descuento,#id_bodega_idbodega, #id_caja_idcaja, #boton_buscar_caracteristicas, #boton_agregar_producto, #id_cantidad_venta, #boton_agregar_promocion").val("");
+              $('#formulario_venta').find(':checkbox').not('#id_contado_venta').prop('checked', false); //buscando todos los checkbox del form, excepto el de venta al contado, y seteandolos a falso
+              $('#id_contado_venta').prop('checked', true); //seteando a true el checkbox de venta al contado
+              $("#tabla_productos > tbody").html(""); //Se borra la tabla de productos
+              $('#bloque_promocion').hide(); //Se oculta el bloque
+              $('#bloque_descuento').hide(); //Se oculta el bloque
+              $('input#id_cantidad_venta').val(1); //Se pone valor de uno a la cantidad
+              $('#bloque_caracteristicas_producto').hide(); //Se oculta el bloque
+              if ($('#id_es_cotizacion').is(':checked')) {
+                alert("Es una cotización");
+              }
+            }
+        });
     /*Espacio para Ajax
     ============================================================================*/
         function obtener_producto(codigo_buscado,bodega_que_vende) {
@@ -464,31 +498,6 @@
             });
         };
 
-
-        //Esta parte es importantisima, lo que se envia es el ID del formulario completo
-        //es para hacer el commit sin actualizar la pagina, sino con ajax.
-        //Se previene que el boton de submit haga lo habitual (preventDefault)
-        //y se llama a la funcion de abajo, a la que guarda la venta
-        $('#formulario_venta').on('submit', function(event){
-            event.preventDefault();
-            console.log("form submitted!")  // sanity check
-            //A continuacion se obtienen todos los elementos de la tabla producto, en un arrelgo
-            var tbl = $('table#tabla_productos tr').get().map(function(row) {
-              return $(row).find('td').get().map(function(cell) {
-                return $(cell).html();
-              });
-            });
-
-            $.each(tbl, function(key,value) {//se recorre la matriz resultante de la tabla
-              value.pop();//elimina el ultimo elemento del arreglo, en este caso, en la fila, el boton de eliminar
-            });
-            tbl.shift();//elimina el primer elemento de la tabla, que en este caso es un arreglo vacio
-            var tblJson=JSON.stringify(tbl); //Sin esto la tabla no se recibe bien en el View, es necesario
-            //guardar_venta(tblJson);
-            //A continuación se resetean todos los controles, excepto los que se encuentran dentro de "not"
-            $('#formulario_venta').find('input, textarea, select').not("#id_bodega_idbodega, #id_caja_idcaja, #boton_buscar_caracteristicas, #boton_agregar_producto, #id_cantidad_venta, #boton_agregar_promocion").val("");
-            $("#tabla_productos > tbody").html(""); //Se borra la tabla de productos
-        });
 
         function guardar_venta(arreglo_tabla) {
             $.ajax({

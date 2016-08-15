@@ -165,3 +165,29 @@ function obtener_con_ajax(arreglo_parametros,URL_del_view) {
     });
 };
 */
+/*
+function lista_desplegable(select_enviado){
+  document.getElementById(select_enviado).addEventListener('click', onClickHandler);
+  document.getElementById(select_enviado).addEventListener('mousedown', onMouseDownHandler);
+
+  function onMouseDownHandler(e){
+  	var el = e.currentTarget;
+
+      if(el.hasAttribute('size') && el.getAttribute('size') == '1'){
+      	e.preventDefault();
+      }
+  }
+  function onClickHandler(e) {
+   	var el = e.currentTarget;
+
+      if (el.getAttribute('size') == '1') {
+          el.className += " selectOpen";
+          el.setAttribute('size', '3');
+      }
+      else {
+          el.className = '';
+          el.setAttribute('size', '1');
+      }
+  }
+}
+*/

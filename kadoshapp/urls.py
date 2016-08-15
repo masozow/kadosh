@@ -32,7 +32,13 @@ url(r'^Mercaderia/Busqueda/$', viewBusquedaMercaderia.BusquedaMerca, name='Busqu
 url(r'^Productos/Listado/$', viewListadoProductos.Listado, name='ListadoProductos'),
 url(r'^Asignar/Caja/$', viewAsignarCaja.Asignacion, name='AsignarCaja'),
 url(r'^Guardar/Venta/$', viewPuntodeVenta.GuardarVenta, name='GuardarVenta'),
+<<<<<<< HEAD
 url(r'^Buscar/TodosProductosCaracteristicas/$', viewListadoProductos.BuscarProductoCaracteristicasExtra, name='BuscarListadoProductos'),
+=======
+url(r'^Buscar/TodosProductosCaracteristicasExtra/$', viewListadoProductos.BuscarProductoCaracteristicasExtra, name='BuscarListadoProductos'),
+url(r'^Buscar/TodosProductosExtra/$', viewListadoProductos.BuscarProductoExtra, name='BuscarListadoProductos'),
+url(r'^reporte_personas_excel/$',viewReportePersonas.ReportePersonas.as_view(), name="reporte_personas_excel"),
+>>>>>>> baf5f955de433f942e3af4222302ee30184a8390
 url(r'^Guardar/Venta/$', viewPuntodeVenta.GuardarVenta, name='GuardarVenta'),
 url(r'^reporte_productos_excel/$',viewReporteProductos.ReporteProductos.as_view(), name="reporte_productos_excel"),
 url(r'^Reporte/Productos/', viewTablas.productos_lista, name='Rproductos'),
