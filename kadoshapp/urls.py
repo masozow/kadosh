@@ -1,7 +1,7 @@
 from django.conf.urls import include, url
 from . import views
 from . import viewReportePersonas,viewModificarCliente,viewAsignarCaja,viewListadoProductos,viewBusquedaMercaderia,viewPrecios,viewCliente, viewIngresoMercaPorProveedor, viewCompra, viewPuntodeVenta, viewTrasladoMercaderia, viewCierreCaja, viewAnularVenta, viewInventario, viewPromocion,viewEmpleados
-
+from . import viewTablas
 urlpatterns=[
 #urls para loguear
 url(r'^$','django.contrib.auth.views.login',
@@ -37,5 +37,5 @@ url(r'^Buscar/TodosProductosExtra/$', viewListadoProductos.BuscarProductoExtra, 
 url(r'^reporte_personas_excel/$',viewReportePersonas.ReportePersonas.as_view(), name="reporte_personas_excel"),
 url(r'^Guardar/Venta/$', viewPuntodeVenta.GuardarVenta, name='GuardarVenta'),
 url(r'^reporte_personas_excel/$',viewReportePersonas.ReportePersonas.as_view(), name="reporte_personas_excel"),
-url(r'^Reporte/Personas/', views.Person, name='Rpersonas'),
+url(r'^Reporte/Personas/', viewTablas.persona_lista, name='Rpersonas'),
 ]

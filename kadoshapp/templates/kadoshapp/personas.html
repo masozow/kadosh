@@ -1,5 +1,9 @@
 {% extends 'kadoshapp/base.html'  %}
+{% load django_tables2 %}
 {% load staticfiles %}
+{% block styles %}
+  <link rel="stylesheet" href="{{ STATIC_URL }}django_tables2/themes/paleblue/css/screen.css" />
+{% endblock %}
 {% block content %}
 <div class="row">
     <div class="col l12 m12 s12">
@@ -9,11 +13,11 @@
 <div class="row">
   <div class="col l6 m12 s12">
    <a id="crear_detalle" href="{% url 'reporte_personas_excel' %}" class="btn btn-info btn-block">
-     <span class="glyphicon glyphicon-list-alt"></span>
+     <span class="glyphicon glyphicon-list-alt">Descargar</span>
     </a>
   </div>
   </div>
 
 
-
+{% render_table reporte1 %}
 {% endblock %}
