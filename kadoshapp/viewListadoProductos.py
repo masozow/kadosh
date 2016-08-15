@@ -8,11 +8,17 @@ from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
 from .models import *
 from .formListadoProductos import *
+from django.core.serializers.json import DjangoJSONEncoder #para decofificar todos los datos de MySql
+from django.db.models import Q #para poder usar el operador | que funciona como OR
 
 def not_in_Bodega_group(user):
     if user:
         return user.groups.filter(name='Bodega').count() != 0
     return False
+
+#El siguiente método convierte el resultado de "values" en un diccionario
+def ValuesQuerySetToDict(vqs):
+    return [item for item in vqs]
 
 @login_required
 @user_passes_test(not_in_Bodega_group, login_url='denegado')
@@ -35,29 +41,19 @@ def BuscarProductoExtra(request):
         #pdb.set_trace()  #estos son los breakpoints de django
 
         response_data = {} #declarando un diccionario vacio
-        #resultado=Producto.objects.filter(codigobarras_producto=123,inventarioproducto__detallecompra_pk=DetalleCompra.objects.filter(pk=F(inventarioproducto__detallecompra__pk)).order_by(pk)[:1]).values('pk','nombre_producto','inventarioproducto__bodega_idbodega__nombre_bodega','codigobarras_producto','inventarioproducto__existencia_actual','codigoestilo_producto','precio__valor_precio',F('inventarioproducto__detallecompra__valor_parcial_compra')/F('inventarioproducto__detallecompra__valor_cantidad_compra')).order_by('-inventarioproducto__detallecompra__pk')
-
-        resultado=Producto.objects.filter(codigobarras_producto=123).values('pk',
-                                                                            'nombre_producto',
-                                                                            'inventarioproducto__bodega_idbodega__nombre_bodega',
-                                                                            'codigobarras_producto',
-                                                                            'inventarioproducto__existencia_actual',
-                                                                            'codigoestilo_producto',
-                                                                            'precio__valor_precio'  #        F(inventarioproducto__detallecompra__valor_parcial_compra)
-                                                                            ).order_by('-inventarioproducto__detallecompra__pk')
-        resp_producto=Producto.objects.filter(codigobarras_producto=txt_codigo_producto)
-        #if id_bodega_que_vende is not None:
-        #response_data['recibido']=id_bodega_que_vende
-        resp_inventario=InventarioProducto.objects.filter(producto_codigo_producto__in=resp_producto,bodega_idbodega=id_bodega_que_vende).order_by('-idinventario_producto')[:1]
-        resp_precio=Precio.objects.filter(producto_codigo_producto__in=resp_producto,estado_precio=1).order_by('-idprecio')[:1] #
-        #Cod 	Producto 	Sucursal 	Bodega 	Codigo Barras 	Existencia 	Codigo estilo 	Costo 	Precio
-
-        response_data['inventario']=serializers.serialize('json', list(resp_inventario), fields=('pk'))
-        response_data['nombre']=serializers.serialize('json', list(resp_producto), fields=('nombre_producto'))
-        response_data['valorprod']=serializers.serialize('json', list(resp_precio), fields=('valor_precio'))
-
+        resultado=Producto.objects.filter(codigobarras_producto=txt_codigo_producto).values('pk',
+                                                                                            'nombre_producto',
+                                                                                            'inventarioproducto__bodega_idbodega__nombre_bodega',
+                                                                                            'codigobarras_producto',
+                                                                                            'inventarioproducto__existencia_actual',
+                                                                                            'codigoestilo_producto',
+                                                                                            'precio__valor_precio',
+                                                                                            'marca_id_marca__nombre_marca')
+                                                                            #'inventarioproducto__detallecompra__valor_parcial_compra'
+                                                                            #).order_by('-inventarioproducto__detallecompra__pk')
+        resultado_diccionario=ValuesQuerySetToDict(resultado)
         return HttpResponse(
-            json.dumps(response_data),
+            json.dumps(resultado_diccionario,cls=DjangoJSONEncoder),
             content_type="application/json"
         )
     else:
@@ -99,16 +95,20 @@ def BuscarProductoCaracteristicasExtra(request):
         if not id_genero_producto:
             id_genero_producto=0
 
-        response_data = {} #declarando un diccionario vacio
-        #La Q en el siguiente queryset es importantisima, sin ella no funciona los OR, representados por el poerador |
-        #resp_producto=Producto.objects.filter(Q(codigoestilo_producto=txt_codigo_producto) | Q(marca_id_marca=id_marca_producto) | Q(estilo_idestilo=id_estilo_producto )| Q(tipo_producto_idtipo_producto=id_tipo_producto) | Q(talla_idtalla=id_talla_producto) | Q(color_idcolor=id_color_producto) | Q(genero_idgener=id_genero_producto))
-        resp_consulta=consulta_sql_personalizada(id_bodega_que_vende,txt_codigo_producto,id_marca_producto,id_tipo_producto,id_estilo_producto,id_talla_producto,id_color_producto,id_genero_producto)
-        #A continuacion se usa una consulta SQL comun y corriente, prestar atencion al placeholder "%s" que es para un valor unico, y al parametro con el formato values_list('un_campo',flat=True), que hace que se envie un solo valor del resultado de ese queryset
-        #resp_foto=Fotografia.objects.raw('SELECT F.idfotografia,F.ruta_fotografia FROM Fotografia as F INNER JOIN Producto_has_Fotografia as PF on F.idfotografia=PF.fotografia_idfotografia WHERE PF.producto_codigo_producto=%s AND F.principal_fotografia=1',resp_producto.values_list('codigo_producto',flat=True))
-        response_data['consulta']=resp_consulta
 
+        #La Q en el siguiente queryset es importantisima, sin ella no funciona los OR, representados por el operador |
+        resultado=Producto.objects.filter(Q(codigoestilo_producto=txt_codigo_producto) | Q(marca_id_marca=id_marca_producto) | Q(estilo_idestilo=id_estilo_producto )| Q(tipo_producto_idtipo_producto=id_tipo_producto) | Q(talla_idtalla=id_talla_producto) | Q(color_idcolor=id_color_producto) | Q(genero_idgener=id_genero_producto)).values('pk',
+                                                                                                                                                                                                                                                                                                                                                      'nombre_producto',
+                                                                                                                                                                                                                                                                                                                                                      'inventarioproducto__bodega_idbodega__nombre_bodega',
+                                                                                                                                                                                                                                                                                                                                                      'codigobarras_producto',
+                                                                                                                                                                                                                                                                                                                                                      'inventarioproducto__existencia_actual',
+                                                                                                                                                                                                                                                                                                                                                      'codigoestilo_producto',
+                                                                                                                                                                                                                                                                                                                                                      'precio__valor_precio',
+                                                                                                                                                                                                                                                                                                                                                      'marca_id_marca__nombre_marca')
+
+        resultado_diccionario=ValuesQuerySetToDict(resultado)
         return HttpResponse(
-            json.dumps(response_data,default=default),
+            json.dumps(resultado_diccionario,cls=DjangoJSONEncoder),
             content_type="application/json"
         )
     else:

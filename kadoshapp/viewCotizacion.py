@@ -7,24 +7,26 @@ from openpyxl.styles import Font, Color,Fill
 from openpyxl.worksheet.properties import WorksheetProperties, PageSetupProperties
 #Nos devuelve un objeto resultado, en este caso un archivo de excel
 from django.http.response import HttpResponse
-from django.views.generic.list import ListView
+#from django.views.generic.list import ListView
 from .models import *
-class Personas(ListView):
-    model = Persona
-    template_name = 'personas.html'
-    context_object_name = 'personas'
+
+#class Personas(ListView):
+#    model = Persona
+#    template_name = 'personas.html'
+#    context_object_name = 'personas'
 
 #Nuestra clase hereda de la vista genérica TemplateView
 class ReportePersonas(TemplateView):
+
     #Usamos el método get para generar el archivo excel
     def get(self, request, *args, **kwargs):
         #Obtenemos todas las personas de nuestra base de datos
-        personas = Persona.objects.all()
+        #personas = Persona.objects.all()
         #Creamos el libro de trabajo
         wb = Workbook()
         #Definimos como nuestra hoja de trabajo, la hoja activa, por defecto la primera del libro
         ws = wb.active
-
+        ventas=Venta.objects.filter(estado_venta=1).order_by(-)
         #En la celda B1 ponemos el texto 'REPORTE DE PERSONAS'
         ws['B1'] = 'Kadosh'
         ws['B2'] = 'REPORTE DE PERSONAS'

@@ -180,7 +180,6 @@ def GuardarVenta(request):
             empleado=Empleado.objects.get(auth_user=request.user)
             ventaNueva=Venta(empleado_idempleado=empleado,anotaciones_venta=rec_anotaciones_venta,cliente_idcliente=Cliente.objects.get(idcliente=rec_cliente_idcliente),tipo_pago_idtipo_pago=TipoPago.objects.get(idtipo_pago=rec_tipo_pago_idtipo_pago),contado_venta=rec_contado_venta,vendedor_venta=Empleado.objects.get(idempleado=rec_vendedor_venta),caja_idcaja=Caja.objects.get(idcaja=rec_caja_idcaja),es_cotizacion=rec_es_cotizacion,total_venta=rec_total_venta)
             ventaNueva.save()
-
             tablaJson=json.loads(rec_tabla)#el loads es necesario, si no los datos aparecen como un arreglo, incluidos los corchetes y las comas
 
             #Iterando dentro de los arreglos de json:
@@ -196,20 +195,24 @@ def GuardarVenta(request):
                     for prod in productos_promocion:
                         cantidad_prod=prod.cantidad_productoenpromocion
                         cantidad_real=cantidad_prod*datos[2]
-                        InventarioProducto.objects.filter(pk=prod.inventario_producto_idinventario_producto.pk).update(existencia_actual=F('existencia_actual') - cantidad_real)
+                        if not rec_es_cotizacion: #solo si no es cotizacion se va a actualizar las existencias
+                            InventarioProducto.objects.filter(pk=prod.inventario_producto_idinventario_producto.pk).update(existencia_actual=F('existencia_actual') - cantidad_real)
                     #Aquí termina el bloque de inventarios en promoción
                 else:
-                    if datos[0]=='0': #es un descuento descuento
+                    if datos[0]=='0': #sí es un descuento
                         detalleNuevo=DetalleVenta(venta_idventa=ventaNueva,descuento_iddescuento=Descuento(iddescuento=datos[1]),cantidad_venta=datos[2],valor_parcial_venta=datos[5])
                     else: #es un producto normal
                         detalleNuevo=DetalleVenta(venta_idventa=ventaNueva,inventario_producto_idinventario_producto=InventarioProducto(pk=datos[0]),cantidad_venta=datos[2],valor_parcial_venta=datos[5])
-                        InventarioProducto.objects.filter(pk=datos[1]).update(existencia_actual=F('existencia_actual') - datos[2]) #Haciendo un update a las existencias del inventario con esa PK
+                        if not rec_es_cotizacion:  #solo si no es cotizacion se va a actualizar las existencias
+                            InventarioProducto.objects.filter(pk=datos[1]).update(existencia_actual=F('existencia_actual') - datos[2]) #Haciendo un update a las existencias del inventario con esa PK
                 detalleNuevo.save()
             #los siguientes datos son para revision solamente, asi se tiene una respuesta de exito en la consola
             response_data['idventa']=ventaNueva.pk
             response_data['total']=ventaNueva.total_venta
         except Exception as e:
             response_data['idventa']="Ha ocurrido un error: "+str(e)
+        if rec_es_cotizacion:
+            response_data['idventa']=response_data['idventa']+'(Cotización)'
 
         return HttpResponse(
             json.dumps(response_data),
@@ -220,6 +223,9 @@ def GuardarVenta(request):
             json.dumps({"nothing to see": "this isn't happening"}),
             content_type="application/json"
         )
+
+
+
 
 def consulta_sql_personalizada(bodega,codestilo,marca,tipo,estilo,talla,color,genero):
     from django.db import connection, transaction #importando librerias para manejar directamente la BD

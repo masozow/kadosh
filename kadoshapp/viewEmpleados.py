@@ -53,7 +53,7 @@ def BuscarEmpleados(request):
             lista_resultado.append(row)
 
         return HttpResponse(
-            json.dumps(lista_resultado,cls=DjangoJSONEncoder), #sin la parte de default los decimales no funcionan
+            json.dumps(lista_resultado,cls=DjangoJSONEncoder),
             content_type="application/json"
         )
     else:
