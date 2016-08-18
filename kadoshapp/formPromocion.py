@@ -4,7 +4,8 @@ from django.forms import extras
 from .models import *
 #forms para Promocion espero ahora si aparezca
 class form_Promocion_Cantidad(forms.Form):
-    cantida = forms.IntegerField(label='cantidad')
+    cantidad = forms.IntegerField(label='cantidad')
+
 class Form_Promocion_Producto(forms.ModelForm):
     class Meta:
         model=Producto

@@ -22,11 +22,10 @@ class ReporteCotizacion(TemplateView):
 
     #Usamos el método get para generar el archivo excel
     def get(self, request, *args, **kwargs):
-
-        #Creamos el libro de trabajo
         variable= self.request.GET.get('numero_de_venta')
         #context = self.get_context_data()
         #valor=context["numero_de_venta"]
+        #Creamos el libro de trabajo
         wb = Workbook()
         #Definimos como nuestra hoja de trabajo, la hoja activa, por defecto la primera del libro
         ws = wb.active
@@ -53,7 +52,7 @@ class ReporteCotizacion(TemplateView):
                                                             'fecha_venta',
                                                             'total_venta')
         venta_diccionario=ValuesQuerySetToDict(venta)
-        #En la celda B1 ponemos el texto 'REPORTE DE PERSONAS'
+        
         venta_simple=venta_diccionario[0]
         ws['A1'] = 'Kadosh'
         ws['A3'] = 'Cotización'

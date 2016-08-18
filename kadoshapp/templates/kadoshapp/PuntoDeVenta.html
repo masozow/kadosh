@@ -46,8 +46,8 @@
               <input class="filled-in" id="check_mostrar" name="mostrar_check" type="checkbox" />
               <label style="font-size: 80%" for="check_mostrar">Características del producto</label>
               <br/>
-              <input class="filled-in" id="check_promocion" name="promocion_check" type="checkbox" />
-              <label style="font-size: 80%" for="check_promocion">Es promoción</label>
+              <!--input class="filled-in" id="check_promocion" name="promocion_check" type="checkbox" />
+              <label style="font-size: 80%" for="check_promocion">Es promoción</label-->
             </div>
             <div class="col l2 m12 s12">
               <br/>
@@ -118,7 +118,7 @@
     </div>
   </div>
   <div class="divider"></div>
-  <div class="row" style="margin-bottom: 0px;">
+  <!--div class="row" style="margin-bottom: 0px;">
     <div id="bloque_promocion">
       <p style="color: #80bfff;"><b>Promoción</b></p>
       <div class="col l4 m12 s12">
@@ -133,7 +133,7 @@
         <input class="save btn btn-default" id="boton_agregar_promocion" type="button" onclick="agregar_promocion(this)" value="Agregar" name="btn_agregar_promocion"/>
       </div>
     </div>
-  </div>
+  </div-->
 
 
   <div class="divider"></div>
@@ -212,7 +212,7 @@
           //Función que coloca el cursor en el textbox Nit del cliente, al momento de cargar la página
           $('input#id_nit_del_cliente').focus(); //se accede al input con el id que está después de #, //.focus() indica que ahí se colocará el cursor
           $('#bloque_caracteristicas_producto').hide(); //.hide() oculta el elemento con ese id
-          $('#bloque_promocion').hide();
+          //$('#bloque_promocion').hide();
           $('#bloque_descuento').hide();
           $('input#id_cantidad_venta').val(1);
           $('input[type="checkbox"]').addClass("filled-in").addClass("filled-in"); //necesario para que se vean los checkbox
@@ -233,7 +233,7 @@
         //al dar clic en el checkbox con el id del primer parametro
         //aqui se envia el primer id como parametro sin #, solo el primero
         click_ocultar_mostrar('check_mostrar',"#bloque_caracteristicas_producto");
-        click_ocultar_mostrar('check_promocion',"#bloque_promocion");
+        //click_ocultar_mostrar('check_promocion',"#bloque_promocion");
         click_ocultar_mostrar('check_descuento',"#bloque_descuento");
         click_ocultar_mostrar('check_anular',"#bloque_anular");
 
@@ -423,7 +423,7 @@
               $('#formulario_venta').find(':checkbox').not('#id_contado_venta,#id_es_cotizacion').prop('checked', false); //buscando todos los checkbox del form, excepto el de venta al contado, y seteandolos a falso
               $('#id_contado_venta').prop('checked', true); //seteando a true el checkbox de venta al contado
               $("#tabla_productos > tbody").html(""); //Se borra la tabla de productos
-              $('#bloque_promocion').hide(); //Se oculta el bloque
+              //$('#bloque_promocion').hide(); //Se oculta el bloque
               $('#bloque_descuento').hide(); //Se oculta el bloque
               $('input#id_cantidad_venta').val(1); //Se pone valor de uno a la cantidad
               $('#bloque_caracteristicas_producto').hide(); //Se oculta el bloque
