@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.core import serializers
 import json
+import pytz
+import datetime #para que se pueda dar formato a la fecha
 import pdb #para hacer el debugging
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
@@ -11,6 +13,7 @@ from django.db.models import F #para hacer llamadas u operaciones en la BD, sin 
 from collections import namedtuple #Sirve en la funcion de tuplas
 from decimal import Decimal #para hacer la conversion decimal a JSON
 import logging #para enviar datos al archivo Debug
+from django.core.serializers.json import DjangoJSONEncoder #para decofificar todos los datos de MySql
 
 from .models import *
 from .formPrecios import *
@@ -19,13 +22,16 @@ def not_in_Supervisor_group(user):
         return user.groups.filter(name='Supervisor').count() != 0
     return False
 
+def ValuesQuerySetToDict(vqs):
+    return [item for item in vqs]
+
 @login_required
 @user_passes_test(not_in_Supervisor_group, login_url='denegado')
 def Precios(request):
     if request.method=='POST':
-        form_precio=Form_Precios_Precio(request.POST)
-        if form_precio.is_valid():
-            ultimo_precios=form_precio.save()
+        #form_precio=Form_Precios_Precio(request.POST)
+        #if form_precio.is_valid():
+            #ultimo_precios=form_precio.save()
         return render(request, 'kadoshapp/ingreso_mercaderia.html',{})
     else:
         form_producto=Form_Precios_Producto()
@@ -33,8 +39,12 @@ def Precios(request):
         form_InventarioProducto=Form_Precios_InventarioProducto
     return render(request, 'kadoshapp/Precios.html', {'form_InventarioProducto':form_InventarioProducto,'form_precio':form_precio,  'form_producto':form_producto })
 
-def BuscarProductoCaracteristicas(request):
+#Vista para obtener solo el producto mediante Ajax
+@login_required
+@user_passes_test(not_in_Supervisor_group, login_url='denegado')
+def BuscarProducto(request):
     if request.method == 'POST':
+        txt_codigo_barras = request.POST.get('codigobarras_producto')
         txt_codigo_producto = request.POST.get('codigo_estilo_producto')
 
         id_bodega_que_vende = request.POST.get('bodega_idbodega') #llamar por el nombre del objeto json que se envia como 'data' dentro de la consulta Ajax
@@ -65,16 +75,12 @@ def BuscarProductoCaracteristicas(request):
         if not id_genero_producto:
             id_genero_producto=0
 
-        response_data = {} #declarando un diccionario vacio
-        #La Q en el siguiente queryset es importantisima, sin ella no funciona los OR, representados por el poerador |
-        #resp_producto=Producto.objects.filter(Q(codigoestilo_producto=txt_codigo_producto) | Q(marca_id_marca=id_marca_producto) | Q(estilo_idestilo=id_estilo_producto )| Q(tipo_producto_idtipo_producto=id_tipo_producto) | Q(talla_idtalla=id_talla_producto) | Q(color_idcolor=id_color_producto) | Q(genero_idgener=id_genero_producto))
-        resp_consulta=consulta_sql_personalizada(id_bodega_que_vende,txt_codigo_producto,id_marca_producto,id_tipo_producto,id_estilo_producto,id_talla_producto,id_color_producto,id_genero_producto)
-        #A continuacion se usa una consulta SQL comun y corriente, prestar atencion al placeholder "%s" que es para un valor unico, y al parametro con el formato values_list('un_campo',flat=True), que hace que se envie un solo valor del resultado de ese queryset
-        #resp_foto=Fotografia.objects.raw('SELECT F.idfotografia,F.ruta_fotografia FROM Fotografia as F INNER JOIN Producto_has_Fotografia as PF on F.idfotografia=PF.fotografia_idfotografia WHERE PF.producto_codigo_producto=%s AND F.principal_fotografia=1',resp_producto.values_list('codigo_producto',flat=True))
-        response_data['consulta']=resp_consulta
-
+        resp_producto=Producto.objects.filter(Q(codigobarras_producto=txt_codigo_barras)|Q(codigoestilo_producto=txt_codigo_producto) | Q(marca_id_marca=id_marca_producto) | Q(estilo_idestilo=id_estilo_producto )| Q(tipo_producto_idtipo_producto=id_tipo_producto) | Q(talla_idtalla=id_talla_producto) | Q(color_idcolor=id_color_producto) | Q(genero_idgener=id_genero_producto),estado_producto=1).values('pk','nombre_producto','codigobarras_producto','codigoestilo_producto','marca_id_marca__nombre_marca','genero_idgener__nombre_genero','talla_idtalla__nombre_talla','color_idcolor__nombre_color')
+        if not resp_producto:
+            resp_producto=Producto.objects.all().values('pk','nombre_producto','codigobarras_producto','codigoestilo_producto','marca_id_marca__nombre_marca','genero_idgener__nombre_genero','talla_idtalla__nombre_talla','color_idcolor__nombre_color')
+        producto_diccionario=ValuesQuerySetToDict(resp_producto)
         return HttpResponse(
-            json.dumps(response_data,default=default),
+            json.dumps(producto_diccionario,cls=DjangoJSONEncoder),
             content_type="application/json"
         )
     else:
@@ -83,45 +89,66 @@ def BuscarProductoCaracteristicas(request):
             content_type="application/json"
         )
 
-def consulta_sql_personalizada(bodega,codestilo,marca,tipo,estilo,talla,color,genero):
-    from django.db import connection, transaction #importando librerias para manejar directamente la BD
-                                                  #con esto se salta por completo la capa de los modelos de DJANGO
-    cursor = connection.cursor() #Todo se trabaja con cursores, aqui se abre la conexion
+@login_required
+@user_passes_test(not_in_Supervisor_group, login_url='denegado')
+def BuscarPrecio(request):
+    if request.method == 'POST':
+        cod_producto = request.POST.get('cod_producto')
+        resp_precio=Precio.objects.filter(producto_codigo_producto=Producto(pk=cod_producto)).values('pk','fechainicial_precio','fechafinal_precio','estado_precio','valor_precio','producto_codigo_producto')
+        precio_diccionario=ValuesQuerySetToDict(resp_precio)
+        return HttpResponse(
+            json.dumps(precio_diccionario,cls=DjangoJSONEncoder),
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
 
-    # Data modifying operation - commit required
-    #cursor.execute("UPDATE bar SET foo = 1 WHERE baz = %s", [self.baz])
-    #transaction.commit_unless_managed()
-
-    # Data retrieval operation - no commit required
-    cursor.execute("""SELECT IP.idInventario_producto,P.codigo_producto,P.codigoestilo_producto,P.nombre_producto,Pr.valor_precio
-                      FROM Producto as P
-                      INNER JOIN Inventario_producto as IP on P.codigo_producto=IP.Producto_codigo_producto
-                      INNER JOIN Precio as Pr on Pr.Producto_codigo_producto = P.codigo_producto
-                      WHERE IP.bodega_idbodega=%s
-                      AND P.estado_producto=1 AND IP.estado_inventario_producto=1 AND Pr.estado_precio=1
-                      AND (P.codigoestilo_producto=%s OR P.marca_idmarca = %s OR P.tipo_producto_idtipo_producto=%s OR P.estilo_idestilo=%s OR P.color_idcolor=%s OR P.genero_idgener=%s OR P.talla_idtalla=%s)""",[bodega,codestilo,marca,tipo,estilo,color,genero,talla])
-    row = dictfetchall(cursor)
-
-    return row
-
-#la siguiente funcion/metodo, sirve para devolver los datos en forma de diccionario
-def dictfetchall(cursor):
-    "Return all rows from a cursor as a dict"
-    columns = [col[0] for col in cursor.description]
-    return [
-        dict(zip(columns, row))
-        for row in cursor.fetchall()
-    ]
-
-#la siguiente funcion devuelve los datos en forma de tupla
-def namedtuplefetchall(cursor):
-    "Return all rows from a cursor as a namedtuple"
-    desc = cursor.description
-    nt_result = namedtuple('Result', [col[0] for col in desc])
-    return [nt_result(*row) for row in cursor.fetchall()]
-
-#sobrecargando la funcion default de JSON, para poder enviar datos decimales
-def default(obj):
-    if isinstance(obj, Decimal):
-        return str(obj)
-    raise TypeError
+@login_required
+@user_passes_test(not_in_Supervisor_group, login_url='denegado')
+def GuardarPrecio(request):
+    if request.method == 'POST':
+        cod_precio = request.POST.get('cod_precio')
+        fechaini = request.POST.get('fechaini')
+        fechafin = request.POST.get('fechafin')
+        est_precio = request.POST.get('est_precio')
+        val_precio = request.POST.get('val_precio')
+        prod = request.POST.get('producto')
+        if est_precio=="true":
+            est_precio=1
+        elif est_precio=="false":
+            est_precio=0
+        try:
+            fini=fechaini.split('/')
+            fechaini_real=datetime.datetime(int(fini[2]),int(fini[1]),int(fini[0]),0,0,0,tzinfo=pytz.UTC)
+            ffin=fechafin.split('/')
+            fechafin_real=None
+            if len(ffin)>1:
+                fechafin_real=datetime.datetime(int(ffin[2]),int(ffin[1]),int(ffin[0]),23,59,59,tzinfo=pytz.UTC)
+            if not cod_precio:
+                precio=Precio(fechainicial_precio=fechaini_real,fechafinal_precio=fechafin_real,estado_precio=est_precio,valor_precio=val_precio,producto_codigo_producto=Producto(pk=int(prod)))
+                resultado="Nuevo precio para el producto seleccionado"
+            else:
+                precio=Precio(pk=int(cod_precio),fechainicial_precio=fechaini_real,fechafinal_precio=fechafin_real,estado_precio=est_precio,valor_precio=val_precio,producto_codigo_producto=Producto(pk=int(prod)))
+                resultado="Precio del producto actualizado"
+            precio.save()
+        except Exception as e:
+            resultado="Error: "+str(e)
+        #form_precio=Form_Precios_Precio(request.POST)
+        #if form_precio.is_valid():
+        #    try:
+        #        form_precio.is_valid()
+        #        resultado="formulario guardado"
+        #    except Exception as e:
+        #        resultado="Error: "+str(e)
+        return HttpResponse(
+            json.dumps(resultado,cls=DjangoJSONEncoder),
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )

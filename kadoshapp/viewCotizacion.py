@@ -52,7 +52,7 @@ class ReporteCotizacion(TemplateView):
                                                             'fecha_venta',
                                                             'total_venta')
         venta_diccionario=ValuesQuerySetToDict(venta)
-        
+
         venta_simple=venta_diccionario[0]
         ws['A1'] = 'Kadosh'
         ws['A3'] = 'Cotización'
@@ -132,7 +132,7 @@ class ReporteCotizacion(TemplateView):
         ws.column_dimensions["F"].width = 5.0
         ws.column_dimensions["H"].width = 13.0
         #############probando insertar imagene
-        #img = Image('../../archivos/blusapolo.jpg')#,size=(75,100)
+        #img = Image('/archivos/blusapolo.jpg')#,size=(75,100)
         #img.anchor(ws.cell('J1'))
         #ws.add_image(img)
 

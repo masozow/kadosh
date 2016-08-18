@@ -1,4 +1,5 @@
 from django import forms
+from django.forms import widgets
 from django.contrib.admin import widgets
 from django.forms import extras
 from .models import *
@@ -7,14 +8,15 @@ class Form_Precios_Producto(forms.ModelForm):
     class Meta:
         model=Producto
         exclude=('estado_producto','descripcion_producto',)
+        
 class Form_Precios_Precio(forms.ModelForm):
     class Meta:
         model=Precio
-        fields=('valor_precio',)
+        exclude=('nombre_precio',)
         widgets = {
-            'fechainicial_precio': widgets.AdminDateWidget(), #este funcionó con todo el bloque de código que se agregó en el template
-            'fechafinal_precio': widgets.AdminDateWidget(),
-            }
+           'fechainicial_precio': forms.DateInput(attrs={'class': 'datepicker'}),
+           'fechafinal_precio': forms.DateInput(attrs={'class': 'datepicker'})
+        }
 class Form_Precios_InventarioProducto(forms.ModelForm):
     class Meta:
         model=InventarioProducto
