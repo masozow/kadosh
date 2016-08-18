@@ -44,6 +44,7 @@ def PuntoDeVenta(request):
         form_Producto.fields["talla_idtalla"].queryset = Talla.objects.filter(estado_talla=1)
         form_Producto.fields["color_idcolor"].queryset = Color.objects.filter(estado_color=1)
         form_Producto.fields["genero_idgener"].queryset = Genero.objects.filter(estado_genero=1)
+        form_DetalleVenta.fields["descuento_iddescuento"].queryset=Descuento.objects.filter(estado_descuento=1,autorizado_descuento=1)
     return render(request, 'kadoshapp/PuntoDeVenta.html', {
                     'form_Venta': form_Venta,
                     'form_DetalleVenta':form_DetalleVenta,
@@ -65,7 +66,7 @@ def BuscarProducto(request):
         #pdb.set_trace()  #estos son los breakpoints de django
 
         response_data = {} #declarando un diccionario vacio
-        resp_producto=Producto.objects.filter(codigobarras_producto=txt_codigo_producto)
+        resp_producto=Producto.objects.filter(codigobarras_producto=txt_codigo_producto,estado_producto=1)
         #if id_bodega_que_vende is not None:
         #response_data['recibido']=id_bodega_que_vende
         resp_inventario=InventarioProducto.objects.filter(producto_codigo_producto__in=resp_producto,bodega_idbodega=id_bodega_que_vende).order_by('-idinventario_producto')[:1]
@@ -175,6 +176,15 @@ def GuardarVenta(request):
         rec_es_cotizacion = request.POST.get('env_es_cotizacion')
         rec_total_venta = request.POST.get('env_total_venta')
         rec_tabla=request.POST.get('tabla')
+        if rec_es_cotizacion=='true':
+            rec_es_cotizacion=1
+        else:
+            rec_es_cotizacion=0
+        if rec_contado_venta=='true':
+            rec_contado_venta=1
+        else:
+            rec_contado_venta=0
+
         response_data = {} #declarando un diccionario vacio
         try:
             empleado=Empleado.objects.get(auth_user=request.user)
@@ -211,9 +221,6 @@ def GuardarVenta(request):
             response_data['total']=ventaNueva.total_venta
         except Exception as e:
             response_data['idventa']="Ha ocurrido un error: "+str(e)
-        if rec_es_cotizacion:
-            response_data['idventa']=response_data['idventa']+'(Cotización)'
-
         return HttpResponse(
             json.dumps(response_data),
             content_type="application/json"
@@ -223,8 +230,6 @@ def GuardarVenta(request):
             json.dumps({"nothing to see": "this isn't happening"}),
             content_type="application/json"
         )
-
-
 
 
 def consulta_sql_personalizada(bodega,codestilo,marca,tipo,estilo,talla,color,genero):

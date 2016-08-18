@@ -105,6 +105,7 @@ function comprobar_pasarsiguiente_mostrarmensaje(txtboxInicial,txtboxDestino,dro
     var keyCode = e.keyCode || e.which; //se declara una variable que capturará cualquiera de esos dos valores
     if (keyCode==13) { //keycode obtiene el valor ascii de la tecla presionada
      e.preventDefault(); //previene que se realice la acción por defecto que efectuaría el navegador con esa tecla
+     
       var valor=$(dropDownBusqueda+" option:selected").val();
       if(valor==='')
       {

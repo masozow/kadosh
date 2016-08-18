@@ -105,7 +105,7 @@
           <div class="col l6 m12 s12">
             <div class="row" style="margin-bottom: 0px;">
               <div class="col s12 m6">
-                <img id="imagen_producto" src="../../archivos/botondjago.jpg" alt="Imagen del producto" style="width:150px;height:200px;">
+                <img id="imagen_producto" src="../../archivos/vacia2.jpg" alt="Imagen del producto" style="width:150px;height:200px;">
               </div>
             </div>
           </div>
@@ -216,6 +216,7 @@
           $('#bloque_descuento').hide();
           $('input#id_cantidad_venta').val(1);
           $('input[type="checkbox"]').addClass("filled-in").addClass("filled-in"); //necesario para que se vean los checkbox
+          //$('input[type="select"]').addClass("browser-default").addClass("browser-default");
           $('#id_producto_codigo_producto').empty();
         });
 
@@ -258,15 +259,27 @@
           if(e.keyCode==13)
           {
             e.preventDefault();
-            obtener_producto('input#id_codigobarras_producto','#id_bodega_idbodega');
-            //Enviar como parametro el id del elemento txtBox, y el id del dropdown de bodega
-            //Importante editar tambien el "data :" en la definicion de la funcion
+            if($('#id_bodega_idbodega').val()==='')
+            {
+              alert('Debe elegir una bodega válida');
+            }
+            else {
+              obtener_producto('input#id_codigobarras_producto','#id_bodega_idbodega');
+              //Enviar como parametro el id del elemento txtBox, y el id del dropdown de bodega
+              //Importante editar tambien el "data :" en la definicion de la funcion
+            }
           }
         });
 
         //Con esta funcion se buscan los productos de acuerdo a sus caracteristicas
         function buscar_caracteristicas(boton){
-          obtener_producto_caracteristicas('#id_codigoestilo_producto','#id_bodega_idbodega','#id_marca_id_marca','#id_tipo_producto_idtipo_producto','#id_talla_idtalla','#id_estilo_idestilo','#id_color_idcolor','#id_genero_idgener');
+          if($('#id_bodega_idbodega').val()===''){
+            alert('Debe elegir una bodega válida');
+          }
+          else {
+            obtener_producto_caracteristicas('#id_codigoestilo_producto','#id_bodega_idbodega','#id_marca_id_marca','#id_tipo_producto_idtipo_producto','#id_talla_idtalla','#id_estilo_idestilo','#id_color_idcolor','#id_genero_idgener');
+          }
+
         }
 
 
@@ -341,11 +354,14 @@
         }
 
         //Llamando a la imagen con cada cambio en el dropdown de productos
-        $( "#id_producto_codigo_producto" ).change(function() {
+        //$(document).on('change',"#id_producto_codigo_producto",function(){
+        //      obtener_imagen_producto("#id_producto_codigo_producto","#imagen_producto");
+        //});
+        //$( "#id_producto_codigo_producto" ).change(function() {
           //console.log($("#id_producto_codigo_producto option:selected").val());
-            obtener_imagen_producto("#id_producto_codigo_producto");
+
             //alert( "Handler for .change() called." );
-        });
+        //});
 
 
         //Funcion para sumar la columna de una tabla
@@ -387,36 +403,35 @@
               alert('Debe elegir un tipo de pago válido');
             }
             else {
-              console.log("form submitted!")  // sanity check
+              console.log("form submitted!");  // sanity check
               //A continuacion se obtienen todos los elementos de la tabla producto, en un arrelgo
               var tbl = $('table#tabla_productos tr').get().map(function(row) {
                 return $(row).find('td').get().map(function(cell) {
                   return $(cell).html();
                 });
               });
-
               $.each(tbl, function(key,value) {//se recorre la matriz resultante de la tabla
                 value.pop();//elimina el ultimo elemento del arreglo, en este caso, en la fila, el boton de eliminar
               });
               tbl.shift();//elimina el primer elemento de la tabla, que en este caso es un arreglo vacio
               var tblJson=JSON.stringify(tbl); //Sin esto la tabla no se recibe bien en el View, es necesario
-              guardar_venta(tblJson);  //Esto debe estar descomentado, si no nunca se guarda la venta
+
+              guardar_venta(tblJson);
+
               //A continuación se resetean todos los controles, excepto los que se encuentran dentro de "not"
               $('#formulario_venta').find('input, textarea, select').not("#boton_agregar_descuento,#id_bodega_idbodega, #id_caja_idcaja, #boton_buscar_caracteristicas, #boton_agregar_producto, #id_cantidad_venta, #boton_agregar_promocion").val("");
-              $('#formulario_venta').find(':checkbox').not('#id_contado_venta').prop('checked', false); //buscando todos los checkbox del form, excepto el de venta al contado, y seteandolos a falso
+              $('#formulario_venta').find(':checkbox').not('#id_contado_venta,#id_es_cotizacion').prop('checked', false); //buscando todos los checkbox del form, excepto el de venta al contado, y seteandolos a falso
               $('#id_contado_venta').prop('checked', true); //seteando a true el checkbox de venta al contado
               $("#tabla_productos > tbody").html(""); //Se borra la tabla de productos
               $('#bloque_promocion').hide(); //Se oculta el bloque
               $('#bloque_descuento').hide(); //Se oculta el bloque
               $('input#id_cantidad_venta').val(1); //Se pone valor de uno a la cantidad
               $('#bloque_caracteristicas_producto').hide(); //Se oculta el bloque
-              if ($('#id_es_cotizacion').is(':checked')) {
-                alert("Es una cotización");
-              }
             }
         });
     /*Espacio para Ajax
     ============================================================================*/
+
         function obtener_producto(codigo_buscado,bodega_que_vende) {
             $.ajax({
                 url : "/Buscar/Producto/", // La URL que llama a la vista
@@ -469,6 +484,10 @@
                     $(id_producto_codigo_producto).append('<option value='+value.codigo_producto+'>'+ value.idInventario_producto +'|'+ value.codigo_producto +'|'+ value.nombre_producto +'|'+ value.codigoestilo_producto +'|'+ value.valor_precio +'</option>');
                     //console.log(value);
                   });
+                  //console.log('Antes de asginar');
+                  $(id_producto_codigo_producto)[0].selectedIndex = 0;
+                  //$(id_producto_codigo_producto).val($(id_producto_codigo_producto+" option:first").val());
+                  //console.log('Despues de asignar');
                 },
 
                 error : function(xhr,errmsg,err) {
@@ -476,10 +495,16 @@
                         " <a href='#' class='close'>&times;</a></div>");
                     console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
                 }
+            }).done(function( data ) {
+              //console.log('terminado el ajax');
+              $("#id_producto_codigo_producto").bind('change', function() {
+                //console.log('buscando la imagen');
+                  obtener_imagen_producto("#id_producto_codigo_producto","#imagen_producto");
+              });
             });
         };
 
-        function obtener_imagen_producto(producto_buscar) {
+        function obtener_imagen_producto(producto_buscar,destino_imagen) {
             $.ajax({
                 url : "/Buscar/ImagenProducto/", // La URL que llama a la vista
                 type : "POST", // Metodo http para realizar el request (peticion al servidor)
@@ -487,7 +512,7 @@
                 success : function(json) {
                   var res_fotografia=JSON.parse(json.fotografia);
                   var campos_fotografia=res_fotografia[0].fields;
-                  $('#imagen_producto').attr("src", "../../archivos"+campos_fotografia.ruta_fotografia.substr(1));
+                  $(destino_imagen).attr("src", "../../archivos"+campos_fotografia.ruta_fotografia.substr(1));
                 },
 
                 error : function(xhr,errmsg,err) {
@@ -498,7 +523,7 @@
             });
         };
 
-
+        var resul_venta=0; //aquí se guarda el id del resultado de la venta, es importante no borrarlo, porque esto se le envía al archivo de excel
         function guardar_venta(arreglo_tabla) {
             $.ajax({
                 url : "/Guardar/Venta/", // La URL que llama a la vistaboton_agregar_producto
@@ -509,9 +534,9 @@
                   var res_idventa=json.idventa;
                   var res_total = json.total;
                   console.log('Venta:'+res_idventa);
+                  resul_venta=res_idventa;
                   console.log(res_total);
-                  //$('#formulario_venta').html();
-                  //$('#formulario_venta').html(estado_inicial_cuerpo);
+                  $("#resultado_venta").text(res_idventa);
                 },
 
                 error : function(xhr,errmsg,err) {
@@ -519,9 +544,15 @@
                         " <a href='#' class='close'>&times;</a></div>");
                     console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
                 }
+            }).done(function( data ) {
+              console.log("Se completó el ajax");
+              if ($('#id_es_cotizacion').is(':checked')) {
+                console.log("Se revisó el check");
+                $(location).attr('href', '/cotizaciones?numero_de_venta='+resul_venta);
+                $('#id_es_cotizacion').prop('checked', false);
+              }
             });
         };
-
 
     </script>
 
