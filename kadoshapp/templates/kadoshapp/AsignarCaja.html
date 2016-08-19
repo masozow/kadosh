@@ -1,69 +1,33 @@
 {% extends 'kadoshapp/base.html' %}
 {% load staticfiles %}
 {% block titulo %}
-Asignar Cajar
+Registrar gasto
 {% endblock %}
 <!--se añadió la fila anterior-->
     {% block styles %}
       <link type="text/css" rel="stylesheet" href="{% static "css/formularios.css" %}"/>
     {% endblock %}
-      {% block encabezado %}Asignar Caja{% endblock %}
+      {% block encabezado %}Registrar gasto{% endblock %}
     {% block content %}
-    <form method="POST" class="post-form">
+    <form method="POST" class="post-form" id="form_gasto">
       {% csrf_token %}
-
-<div class="row" style="margin-bottom: 0px;">
-  <div class="col l6 s12 m12">
-      <label for="caja_idcaja"><h6>Caja:</h6> </label>{{ form_caja.caja_idcaja}}
-      <label for="empleado_idempleado"><h6>Empleado:</h6> </label>{{ form_caja.empleado_idempleado}}
-      <button type="submit" class="save btn btn-default">Asignar</button>
-  </div>
-  <div class="col l6 s12 m12">
-    <p class="blue-text text-darken-2">Asignacion seleccionada ####</p>
-      <button type="button" class=" btn btn-default">Desasignar</button>
-  </div>
-</div>
-<div class="row" style="margin-bottom: 0px;">
-  <table class="bordered">
-        <thead>
-          <tr>
-              <th data-field="Cod.Asig">Cod.Asig</th>
-              <th data-field="Caja">Caja</th>
-              <th data-field="Empleado">Empleado</th>
-              <th data-field="Fecha asignacion">Fecha Asignacion</th>
-              <th data-field="Fecha desasignacion">Fecha desasignacion</th>
-                <th data-field="Estado asignacion">Estado asignacion</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr>
-            <td>Alvin</td>
-            <td>Eclair</td>
-            <td>$0.87</td>
-          </tr>
-          <tr>
-            <td>Alan</td>
-            <td>Jellybean</td>
-            <td>$3.76</td>
-          </tr>
-          <tr>
-            <td>Jonathan</td>
-            <td>Lollipop</td>
-            <td>$7.00</td>
-          </tr>
-        </tbody>
-      </table>
-
-</div>
-
-
-
-
-
-
-
-
-
+      <div class="row" style="margin-bottom: 0px;">
+        <div class="col l6 s12 m12">
+            <label for="id_caja_idcaja"><h6>Caja:</h6> </label>{{ form_gasto.caja_idcaja}}
+            <label for="id_monto_gasto"><h6>Monto del gasto:</h6> </label>{{ form_gasto.monto_gasto}}
+            <label for="id_motivo_gasto"><h6>Motivo del gasto:</h6> </label>{{ form_gasto.motivo_gasto}}
+            <button type="submit" class="btn tooltipped" data-position="right" data-delay="10" data-tooltip="Los datos que guarde no podrán ser modificados">Guardar</button>
+        </div>
+      </div>
     </form>
+  {% endblock %}
+  {% block extra_scripts %}
+  <script type="text/javascript" src="{% static 'js/funciones.js' %}"></script>
+  <script type="text/javascript">
+    $( "#id_monto_gasto" ).click(function() {
+      Materialize.toast('Decimales separados por coma', 4000);
+    });
+  </script>
+  <script type="text/javascript" src="{% static 'js/selectorStartsWith.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/token.js' %}"></script>
   {% endblock %}

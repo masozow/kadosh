@@ -426,8 +426,8 @@ class Fotografia(models.Model):
 
 class Gastos(models.Model):
     idgastos = models.AutoField(db_column='idGastos', primary_key=True)  # Field name made lowercase.
-    monto_gasto = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
-    motivo_gasto = models.CharField(max_length=60, blank=True, null=True)
+    monto_gasto = models.DecimalField(max_digits=12, decimal_places=2)
+    motivo_gasto = models.CharField(max_length=60)
     momento_gasto = models.DateTimeField(default=timezone.now)
     caja_idcaja = models.ForeignKey('Caja', db_column='Caja_idCaja')
 
