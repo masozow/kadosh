@@ -29,6 +29,7 @@ class ReporteProductos(TemplateView):
         genero= self.request.GET.get('genero_idgener')
         codigoEstilo= self.request.GET.get('codigoestilo_producto')
 
+
          #el not indica que la cadena está vacía, o que la variable es null
         if not marca:
             marca=0
@@ -42,33 +43,26 @@ class ReporteProductos(TemplateView):
             color=0
         if not genero:
             genero=0
-        if not codigoEstilo and not codigobarras  and marca==0 and estilo==0 and tipo==0 and talla==0 and color==0 and genero==0:
-			#Cuando todos los parámetros van vacíos
 
+        marca_int=int(marca)
+        estilo_int=int(estilo)
+        tipo_int=int(tipo)
+        talla_int=int(talla)
+        color_int=int(color)
+        genero_int=int(genero)
 
+        productos=Producto.objects.filter(Q(codigobarras_producto=codigobarras)|Q(codigoestilo_producto=codigoEstilo) | Q(marca_id_marca=marca_int) | Q(estilo_idestilo=estilo_int )| Q(tipo_producto_idtipo_producto=tipo_int) | Q(talla_idtalla=talla_int) | Q(color_idcolor=color_int) | Q(genero_idgener=genero_int)).values('pk','nombre_producto','codigobarras_producto','codigoestilo_producto','precio__valor_precio','marca_id_marca__nombre_marca','tipo_producto_idtipo_producto__nombre_tipoproducto','talla_idtalla__nombre_talla','color_idcolor__nombre_color','genero_idgener__nombre_genero').annotate(cantidad_vendida=Sum('inventarioproducto__detalleventa__cantidad_venta'),total_ventas=Sum('inventarioproducto__detalleventa__valor_parcial_venta'))
+        if not productos:
             productos=Producto.objects.all().values('pk',
-                                                        'nombre_producto',
-                                                        'codigobarras_producto',
-                                                        'codigoestilo_producto',
-                                                        'precio__valor_precio',
-                                                        'marca_id_marca__nombre_marca',
-                                                        'tipo_producto_idtipo_producto__nombre_tipoproducto',
-                                                        'talla_idtalla__nombre_talla',
-                                                        'color_idcolor__nombre_color',
-                                                        'genero_idgener__nombre_genero').annotate(cantidad_vendida=Sum('inventarioproducto__detalleventa__cantidad_venta'),total_ventas=Sum('inventarioproducto__detalleventa__valor_parcial_venta'))
-        else:
-            marca_int=int(marca)
-            estilo_int=int(estilo)
-            tipo_int=int(tipo)
-            talla_int=int(talla)
-            color_int=int(color)
-            genero_int=int(genero)
-		   #Cuando existe por lo menos un parámetro (los números dentro de filter deben reemplazarse por los parámetros que envía el usuario)
-            productos=Producto.objects.filter(Q(codigobarras_producto=codigobarras)|Q(codigoestilo_producto=codigoEstilo) | Q(marca_id_marca=marca_int) | Q(estilo_idestilo=estilo_int )| Q(tipo_producto_idtipo_producto=tipo_int) | Q(talla_idtalla=talla_int) | Q(color_idcolor=color_int) | Q(genero_idgener=genero_int)).values('pk','nombre_producto','codigobarras_producto','codigoestilo_producto','precio__valor_precio','marca_id_marca__nombre_marca','tipo_producto_idtipo_producto__nombre_tipoproducto','talla_idtalla__nombre_talla','color_idcolor__nombre_color','genero_idgener__nombre_genero').annotate(cantidad_vendida=Sum('inventarioproducto__detalleventa__cantidad_venta'),total_ventas=Sum('inventarioproducto__detalleventa__valor_parcial_venta'))
-
-
-
-
+                                                    'nombre_producto',
+                                                    'codigobarras_producto',
+                                                    'codigoestilo_producto',
+                                                    'precio__valor_precio',
+                                                    'marca_id_marca__nombre_marca',
+                                                    'tipo_producto_idtipo_producto__nombre_tipoproducto',
+                                                    'talla_idtalla__nombre_talla',
+                                                    'color_idcolor__nombre_color',
+                                                    'genero_idgener__nombre_genero').annotate(cantidad_vendida=Sum('inventarioproducto__detalleventa__cantidad_venta'),total_ventas=Sum('inventarioproducto__detalleventa__valor_parcial_venta'))
 
         nuevos_productos=ValuesQuerySetToDict(productos)
         #Creamos el libro de trabajo
@@ -106,6 +100,7 @@ class ReporteProductos(TemplateView):
         ws['K5'] = 'Genero'
         ws['L5'] = 'Cantidad Vendida'
         ws['M5'] = 'Total De Ventas'
+
         cont=6
         #Recorremos el conjunto de personas y vamos escribiendo cada uno de los datos en las celdas
         for producto in nuevos_productos:
