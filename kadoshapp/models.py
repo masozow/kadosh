@@ -86,7 +86,7 @@ class CierreDeCaja(models.Model):
     caja_idcaja = models.ForeignKey(Caja, db_column='Caja_idCaja')  # Field name made lowercase.
     empleado_idempleado = models.ForeignKey('Empleado', db_column='Empleado_idEmpleado')  # Field name made lowercase.
     fecha_cierredecaja = models.DateField(db_column='fecha_cierreDeCaja', default=timezone.now)  # Field name made lowercase.
-    total_real_cierredecaja = models.DecimalField(db_column='total_real_cierreDeCaja', max_digits=12, decimal_places=2, blank=True, null=True)  # Field name made lowercase.
+    total_real_cierredecaja = models.DecimalField(db_column='total_real_cierreDeCaja', max_digits=12, decimal_places=2)  # Field name made lowercase.
     total_calculado_cierredecaja = models.DecimalField(db_column='total_calculado_cierreDeCaja', max_digits=12, decimal_places=2, blank=True, null=True)  # Field name made lowercase.
     finalizado_cierredecaja = models.BooleanField(db_column='finalizado_cierreDeCaja', default=True)
     total_efectivo_cierredecaja = models.DecimalField(db_column='total_efectivo_cierreDeCaja', max_digits=12, decimal_places=2, blank=True, null=True)  # Field name made lowercase.
