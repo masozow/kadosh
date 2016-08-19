@@ -60,7 +60,8 @@
 <script type="text/javascript">
 
 var ruta;//variable donde se guardará la ruta
-function cambiar_ruta(){
+function cambiar_ruta(){ //esta función cambiará la ruta que se envía al view
+  //ahora aquí se obtienen los valores de todos los elementos
   ruta=$('#id_codigobarras_producto').val()+'&marca_id_marca='+$('#id_marca_id_marca option:selected').val()+'&codigoestilo_producto='+$('#id_codigoestilo_producto').val()+'&estilo_idestilo='+$('#id_estilo_idestilo option:selected').val()+'&tipo_producto_idtipo_producto='+$('#id_tipo_producto_idtipo_producto option:selected').val()+'&talla_idtalla='+$('#id_talla_idtalla option:selected').val()+'&color_idcolor='+$('#id_color_idcolor option:selected').val()+'&genero_idgener='+$('#id_genero_idgener option:selected').val();
 }
 $('#id_codigobarras_producto').change(function(){//cuando un elemento especifico cambia su valor, en este caso un textbox
@@ -74,7 +75,6 @@ $("select").change(function (){ //cuando cualquier combobox=select cambia su val
 });
 
 function descargar(boton){
-  console.log($('#id_codigobarras_producto').val());
   $(location).attr('href', '/reporte_productos_excel?codigobarras_producto='+ruta);
 }
 
