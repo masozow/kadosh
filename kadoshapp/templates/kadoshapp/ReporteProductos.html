@@ -58,8 +58,24 @@
 
 {% block extra_scripts %}
 <script type="text/javascript">
+
+var ruta;//variable donde se guardará la ruta
+function cambiar_ruta(){
+  ruta=$('#id_codigobarras_producto').val()+'&marca_id_marca='+$('#id_marca_id_marca option:selected').val()+'&codigoestilo_producto='+$('#id_codigoestilo_producto').val()+'&estilo_idestilo='+$('#id_estilo_idestilo option:selected').val()+'&tipo_producto_idtipo_producto='+$('#id_tipo_producto_idtipo_producto option:selected').val()+'&talla_idtalla='+$('#id_talla_idtalla option:selected').val()+'&color_idcolor='+$('#id_color_idcolor option:selected').val()+'&genero_idgener='+$('#id_genero_idgener option:selected').val();
+}
+$('#id_codigobarras_producto').change(function(){//cuando un elemento especifico cambia su valor, en este caso un textbox
+  cambiar_ruta();
+});
+$('#id_codigoestilo_producto').change(function(){ //cuando un elemento especifico cambia su valor, en este caso un textbox
+  cambiar_ruta();
+});
+$("select").change(function (){ //cuando cualquier combobox=select cambia su valor
+    cambiar_ruta();
+});
+
 function descargar(boton){
-  $(location).attr('href', '/reporte_productos_excel?codigobarras_producto='+$('#id_codigobarras_producto').val()+'&marca_id_marca='+$('#id_marca_id_marca option:selected').val()+'&codigoestilo_producto='+$('#id_codigoestilo_producto').val()+'&estilo_idestilo='+$('#id_estilo_idestilo option:selected').val()+'&tipo_producto_idtipo_producto='+$('#id_tipo_producto_idtipo_producto option:selected').val()+'&talla_idtalla='+$('#id_talla_idtalla option:selected').val()+'&color_idcolor='+$('#id_color_idcolor option:selected').val()+'&genero_idgener='+$('#id_genero_idgener option:selected').val() );
+  console.log($('#id_codigobarras_producto').val());
+  $(location).attr('href', '/reporte_productos_excel?codigobarras_producto='+ruta);
 }
 
 </script>
