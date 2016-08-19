@@ -3,7 +3,10 @@ from django.contrib.admin import widgets
 from django.forms import extras
 from .models import *
 
-class Form_Asignar_CajaHasEmpleado(forms.ModelForm):
+class Form_Gastos(forms.ModelForm):
     class Meta:
-        model=CajaHasEmpleado
-        fields=('caja_idcaja','empleado_idempleado',)
+        model=Gastos
+        fields=('monto_gasto','motivo_gasto','caja_idcaja',)
+        widgets={
+            'monto_gasto': forms.NumberInput(attrs={'min': 0})
+        }

@@ -43,7 +43,7 @@
 
          <div class="row" style="margin-bottom: 0px;">
            <div class="col l6 m12 s12">
-              <input class="btn tooltipped" data-position="right" data-delay="50" data-tooltip="Buscar ventas" id="boton_buscar" type="button" onclick="buscar(this)" value="Buscar" name="btn_buscar"/>
+              <input class="btn tooltipped" data-position="right" data-delay="50" data-tooltip="Si dos o más datos no concuerdan entre sí, solo se buscará a uno de ellos, ignorando a cualquier otro" id="boton_buscar" type="button" onclick="buscar(this)" value="Buscar" name="btn_buscar"/>
            </div>
         </div>
 
@@ -98,6 +98,9 @@
          Materialize.toast('Escriba el nit incluyendo el guión', 4000);
        });
 
+       $( "#id_venta_idventa" ).change(function() {
+         $("#lbl_venta").text($("#id_venta_idventa option:selected").val());
+       });
 
        //Con esta funcion se buscan los productos de acuerdo a sus caracteristicas
        function buscar(boton){
