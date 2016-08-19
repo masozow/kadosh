@@ -11,10 +11,9 @@ class Form_AnulaVenta_busquedas(forms.Form):
 class Form_AnulaVenta_Venta(forms.ModelForm):
     class Meta:
         model=Venta
-        fields=('idventa','empleado_idempleado',)
+        fields=('idventa','empleado_idempleado','fecha_venta')
         widgets = {
-            'fecha_venta': widgets.AdminDateWidget(), #este funcionó con todo el bloque de código que se agregó en el template
-
+            'fecha_venta': forms.DateInput(attrs={'class': 'datepicker'}), # widgets.AdminDateWidget(), #este funcionó con todo el bloque de código que se agregó en el template
             }
 
 class Form_AnulaVenta_Cliente(forms.ModelForm):
@@ -25,7 +24,7 @@ class Form_AnulaVenta_Cliente(forms.ModelForm):
 class Form_AnulaVenta_Persona(forms.ModelForm):
     class Meta:
         model=Persona
-        fields=('nombres_persona',)
+        fields=('nombres_persona','apellidos_persona')
 
 class Form_AnulaVenta_DetalleVenta(forms.ModelForm):
     class Meta:
@@ -36,3 +35,6 @@ class Form_AnulaVenta_Empleado(forms.ModelForm):
     class Meta:
         model=Empleado
         fields=('codigo_autorizacion_empleado',)
+        widgets={
+            'codigo_autorizacion_empleado':forms.PasswordInput()
+        }

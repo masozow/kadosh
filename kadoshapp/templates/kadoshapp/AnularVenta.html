@@ -10,80 +10,68 @@
    {% endblock %}
   {% block encabezado %}Anular Venta{% endblock %}
    {% block content %}
+   <style>
+   table tbody tr:hover {
+   background-color: #CCD9DE;
+   cursor: pointer;
+   }
+   </style>
 
-
-
-
-       <form method="POST" class="post-form">
+       <form method="POST" class="post-form" id="formulario_anular" action="/Anulacion/Venta/">
          {% csrf_token %}
          <div class="row" style="margin-bottom: 0px;">
-           <div class="col l12 m12 s12">
-             <label for="fecha_venta"><h6>Fecha de Venta:</h6> </label>{{ form_Venta.fecha_venta}}
-               <input type="date" class="datepicker" id="fecha_venta">
-
+           <div class="col l6 m12 s12">
+               <label for="id_fecha_venta"><h6>Fecha de Venta:</h6> </label>{{ form_Venta.fecha_venta}}
+           </div>
+           <div class="col l6 m12 s12">
+             <label for="venta_idventa"><h6>Numero Venta:</h6> </label>{{ form_DetalleVenta.venta_idventa}}
            </div>
          </div>
 
 
          <div class="row" style="margin-bottom: 0px;">
-          <div class="col l6 m12 s12">
-         <label for="nit_cliente"><h6>Nit de Cliente:</h6> </label>{{ form_Cliente.nit_cliente}}
-           <label for="venta_idventa"><h6>Numero Venta:</h6> </label>{{ form_DetalleVenta.venta_idventa}}
-
-
-          </div>
-          <div class="col l6 m12 s12">
-            <label for="nombres_persona"><h6>Nombre de Cliente:</h6> </label>{{ form_persona.nombres_persona}}
-
-        </div>
+            <div class="col l4 m12 s12">
+               <label for="id_nit_cliente"><h6>Nit de Cliente:</h6> </label>{{ form_Cliente.nit_cliente}}
+            </div>
+            <div class="col l4 m12 s12">
+                <label for="id_nombres_persona"><h6>Nombres del cliente:</h6> </label>{{ form_persona.nombres_persona}}
+            </div>
+            <div class="col l4 m12 s12">
+                <label for="id_nombres_persona"><h6>Apellidos del cliente:</h6> </label>{{ form_persona.apellidos_persona}}
+            </div>
          </div>
 
          <div class="row" style="margin-bottom: 0px;">
            <div class="col l6 m12 s12">
-           </div>
-           <div class="col l6 m12 s12">
-              <button type="button" class=" btn btn-default">Buscar</button>
+              <input class="btn tooltipped" data-position="right" data-delay="50" data-tooltip="Buscar ventas" id="boton_buscar" type="button" onclick="buscar(this)" value="Buscar" name="btn_buscar"/>
            </div>
         </div>
 
-         <div class="row grey lighten-2">
-           <table>
-                   <thead>
-                     <tr>
-                         <th data-field="id">Name</th>
-                         <th data-field="name">Item Name</th>
-                         <th data-field="price">Item Price</th>
-                     </tr>
-                   </thead>
-
-                   <tbody>
-                     <tr>
-                       <td>Alvin</td>
-                       <td>Eclair</td>
-                       <td>$0.87</td>
-                     </tr>
-                     <tr>
-                       <td>Alan</td>
-                       <td>Jellybean</td>
-                       <td>$3.76</td>
-                     </tr>
-                     <tr>
-                       <td>Jonathan</td>
-                       <td>Lollipop</td>
-                       <td>$7.00</td>
-                     </tr>
-                   </tbody>
-                 </table>
+         <div class="row">
+           <table id="tabla_venta" class="grey lighten-2">
+             <thead>
+               <tr>
+                   <th data-field="Número">Número</th>
+                   <th data-field="Cliente">Cliente</th>
+                   <th data-field="Fecha">Fecha</th>
+                   <th data-field="Vendedor">Cod.Vendedor</th>
+                   <th data-field="Cajero">Cod.Cajero</th>
+                   <th data-field="Total">Total</th>
+               </tr>
+             </thead>
+             <tbody>
+             </tbody>
+           </table>
          </div>
                 <div class="row" style="margin-bottom: 0px;">
-                  <p class="blue-text text-darken-2">Numero de venta seleccionada ####</p>
+                  <p class="blue-text text-darken-2">Número de venta seleccionada: <label id="lbl_venta" class="mietiqueta"></label></p>
                 </div>
          <div class="row" style="margin-bottom: 0px;">
            <div class="col l6 m12 s12">
              <label for="id_empleado_idempleado"><h6>Empleado autoriza:</h6> </label>{{ form_Venta.empleado_idempleado}}
            </div>
            <div class="col l6 m12 s12">
-             <label for="id_codigo_autorizacion_empleado"><h6>Codigo Autorizacion:</h6> </label>{{ form_empleado.codigo_autorizacion_empleado}}
+             <label for="id_codigo_autorizacion_empleado"><h6>Codigo de autorización:</h6> </label>{{ form_empleado.codigo_autorizacion_empleado}}
            </div>
          </div>
 
@@ -91,7 +79,112 @@
            {{ form_Cliente.as_p }}
            {{ form_DetalleVenta.as_p }}
            {{ form_empleado.as_p }}-->
-           <button type="submit" class="save btn btn-default">Anular</button>
+           <button type="submit" class="btn tooltipped" data-position="right" data-delay="50" data-tooltip="Se anulará la venta" id="boton_anular" name="btn_anular">Anular</button>
        </form>
 
+   {% endblock %}
+   {% block extra_scripts %}
+   <script type="text/javascript" src="{% static 'js/funciones.js' %}"></script>
+   <script type="text/javascript">
+
+   /*Espacio para JQuery y busquedas dentro del DOM
+   ===========================================================================*/
+     //Similar al FormLoad
+       $( document ).ready(function(){ //document indica toda la página, ready indica que ya se haya cargado el DOM
+         $('#id_fecha_venta').val('');
+       });
+
+       $("#id_nit_cliente").click(function() {
+         Materialize.toast('Escriba el nit incluyendo el guión', 4000);
+       });
+
+
+       //Con esta funcion se buscan los productos de acuerdo a sus caracteristicas
+       function buscar(boton){
+           obtener_venta($("#id_venta_idventa option:selected").val(),$('#id_apellidos_persona').val(),$('#id_nombres_persona').val(),$('#id_fecha_venta').val(),$('#id_nit_cliente').val());
+           $("#lbl_venta").text("");
+       }
+
+       //esta funcion se activa al dar clic sobre una fila de la tabla
+       function seleccionar_fila(fila){
+         var datos = $(fila).find('td').get().map(function(cell) {
+             return $(cell).html();
+         });
+         $('#lbl_venta').text(datos[0]);
+       }
+
+       //evitando que se actualice la página, guardando el precio y limpiando los items
+
+       $('#formulario_anular').on('submit', function(event){
+           event.preventDefault();
+           anular_venta($("#lbl_venta").text(),$("#id_empleado_idempleado option:selected").val(),$("#id_codigo_autorizacion_empleado").val());
+
+           //$('#formulario_precio').find('input, textarea, select').not("#boton_buscar, #boton_guardar").val("");
+           //$('#formulario_precio').find('.mietiqueta').text("");
+           //$("#tabla_venta > tbody").html("");
+       });
+
+   /*Espacio para Ajax
+   ============================================================================*/
+
+       function obtener_venta(num_venta,ape_cliente,nom_cliente,fventa,nitcliente) {
+           $.ajax({
+               url : "/Buscar/Venta/", // La URL que llama a la vista
+               type : "POST", // Metodo http para realizar el request (peticion al servidor)
+               data : { numeroventa:num_venta,apellidos:ape_cliente,nombres:nom_cliente,fecha:fventa,nit:nitcliente}, // Datos enviados con el request en formato JSON
+
+               // Si el response es correcto (si la respuesta del servidor es correcta)
+               success : function(json) {
+                   $("#tabla_venta > tbody").html("");
+                   //console.log(json);
+                   $.each(json, function(key,value) {
+                     $('#tabla_venta > tbody:last-child').append('<tr onclick="seleccionar_fila(this)">'+
+                                                                       '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.pk+'</td>'+
+                                                                       '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.cliente_idcliente__persona_idpersona__nombres_persona+' '+value.cliente_idcliente__persona_idpersona__apellidos_persona +'</td>'+
+                                                                       '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.fecha_venta+'</td>'+
+                                                                       '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.vendedor_venta__pk+'</td>'+
+                                                                       '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.empleado_idempleado__pk+'</td>'+
+                                                                       '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.total_venta+'</td>'+
+                                                                     '</tr>');
+                   });
+               },
+               // Si el response no tuvo exito
+               error : function(xhr,errmsg,err) {
+                   $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Ha ocurrido un error: "+errmsg+
+                       " <a href='#' class='close'>&times;</a></div>"); // Se agrega el error al DOM
+                   console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
+               }
+           });
+       };
+       var res;
+       function anular_venta(venta,empleado,autorizacion) {
+           $.ajax({
+               url : "/Anulacion/Venta/", // La URL que llama a la vista
+               type : "POST", // Metodo http para realizar el request (peticion al servidor)
+               data : { cod_venta : venta, cod_empleado : empleado, codigo : autorizacion}, // Datos enviados con el request en formato JSON
+               // Si el response es correcto (si la respuesta del servidor es correcta)
+               success : function(json) {
+                   res=json;
+                   alert(json);
+               },
+               // Si el response no tuvo exito
+               error : function(xhr,errmsg,err) {
+                   $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Ha ocurrido un error: "+errmsg+
+                       " <a href='#' class='close'>&times;</a></div>"); // Se agrega el error al DOM
+                   console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
+               }
+           }).done(function( data ) {
+             if (res==="Venta anulada") {
+               $("#id_codigo_autorizacion_empleado").val("");
+               $("#id_empleado_idempleado").val("");
+               location.reload();
+             }
+           });
+       };
+
+
+   </script>
+
+   <script type="text/javascript" src="{% static 'js/selectorStartsWith.js' %}"></script>
+   <script type="text/javascript" src="{% static 'js/token.js' %}"></script>
    {% endblock %}

@@ -153,7 +153,7 @@
 
         //Con esta funcion se buscan los productos de acuerdo a sus caracteristicas
         function buscar_caracteristicas(boton){
-            obtener_producto('input#id_codigobarras_producto','#id_codigoestilo_producto','#id_bodega_idbodega','#id_marca_id_marca','#id_tipo_producto_idtipo_producto','#id_talla_idtalla','#id_estilo_idestilo','#id_color_idcolor','#id_genero_idgener');
+            obtener_producto('input#id_codigobarras_producto','#id_codigoestilo_producto','#id_marca_id_marca','#id_tipo_producto_idtipo_producto','#id_talla_idtalla','#id_estilo_idestilo','#id_color_idcolor','#id_genero_idgener');
             $("#lbl_producto").text("");
             $("#lbl_precio").text("");
             $("#tabla_precios > tbody").html("");
@@ -202,7 +202,7 @@
         //evitando que se actualice la página, guardando el precio y limpiando los items
         $('#formulario_precio').on('submit', function(event){
             event.preventDefault();
-            guardar_precio($('#lbl_precio').text(),$('#id_valor_precio').val(),$('#id_fechainicial_precio').val(),$('#id_fechafinal_precio').val(),$('#id_estado_precio').is(':checked'),$('#lbl_producto').text())
+            guardar_precio($('#lbl_precio').text(),$('#id_valor_precio').val(),$('#id_fechainicial_precio').val(),$('#id_fechafinal_precio').val(),$('#id_estado_precio').is(':checked'),$('#lbl_producto').text());
             $('#formulario_precio').find('input, textarea, select').not("#boton_buscar_caracteristicas,#boton_limpiar_datos, #boton_guardar").val("");
             $('#formulario_precio').find('.mietiqueta').text("");
             $('#formulario_precio').find(':checkbox').not('#id_estado_precio').prop('checked', false); //buscando todos los checkbox del form, excepto el de venta al contado, y seteandolos a falso
@@ -215,11 +215,11 @@
     /*Espacio para Ajax
     ============================================================================*/
 
-        function obtener_producto(codigo_buscado,codigo_estilo_buscar,bodega_que_vende,marca_buscar,tipo_buscar,talla_buscar,estilo_buscar,color_buscar,genero_buscar) {
+        function obtener_producto(codigo_buscado,codigo_estilo_buscar,marca_buscar,tipo_buscar,talla_buscar,estilo_buscar,color_buscar,genero_buscar) {
             $.ajax({
                 url : "/Buscar/Producto/Precio/", // La URL que llama a la vista
                 type : "POST", // Metodo http para realizar el request (peticion al servidor)
-                data : { codigobarras_producto : $(codigo_buscado).val(), codigo_estilo_producto : $(codigo_estilo_buscar).val(), bodega_idbodega: $(bodega_que_vende+" option:selected").val(), marca_producto: $(marca_buscar+" option:selected").val(), tipo_producto: $(tipo_buscar+" option:selected").val(), estilo_producto: $(estilo_buscar+" option:selected").val(), color_producto: $(color_buscar+" option:selected").val(), talla_producto: $(talla_buscar+" option:selected").val(), genero_producto: $(genero_buscar+" option:selected").val()}, // Datos enviados con el request en formato JSON
+                data : { codigobarras_producto : $(codigo_buscado).val(), codigo_estilo_producto : $(codigo_estilo_buscar).val(), marca_producto: $(marca_buscar+" option:selected").val(), tipo_producto: $(tipo_buscar+" option:selected").val(), estilo_producto: $(estilo_buscar+" option:selected").val(), color_producto: $(color_buscar+" option:selected").val(), talla_producto: $(talla_buscar+" option:selected").val(), genero_producto: $(genero_buscar+" option:selected").val()}, // Datos enviados con el request en formato JSON
 
                 // Si el response es correcto (si la respuesta del servidor es correcta)
                 success : function(json) {
