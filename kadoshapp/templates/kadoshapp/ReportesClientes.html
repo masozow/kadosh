@@ -33,7 +33,7 @@
       </div>
   </div>
   {{ form_check.checkbo}}
-  <label for="id_checkbo"><h6>ni idea</h6> </label>
+  <label for="id_checkbo"><h6>Agrupar por mes</h6> </label>
 
 
   <button type="submit" class="save btn btn-default">Buscar</button>
@@ -64,9 +64,15 @@
 {% endblock %}
 
 {% block extra_scripts %}
-<!--
-<script type="text/javascript">
 
+<script type="text/javascript">
+$( document ).ready(function(){ //document indica toda la página, ready indica que ya se haya cargado el DOM
+
+  $('input[type="checkbox"]').addClass("filled-in");
+
+});
+
+/*
 var ruta;//variable donde se guardará la ruta
 function cambiar_ruta(){
   ruta=$('#id_codigobarras_producto').val()+'&marca_id_marca='+$('#id_marca_id_marca option:selected').val()+'&codigoestilo_producto='+$('#id_codigoestilo_producto').val()+'&estilo_idestilo='+$('#id_estilo_idestilo option:selected').val()+'&tipo_producto_idtipo_producto='+$('#id_tipo_producto_idtipo_producto option:selected').val()+'&talla_idtalla='+$('#id_talla_idtalla option:selected').val()+'&color_idcolor='+$('#id_color_idcolor option:selected').val()+'&genero_idgener='+$('#id_genero_idgener option:selected').val();
@@ -85,7 +91,6 @@ function descargar(boton){
   console.log($('#id_codigobarras_producto').val());
   $(location).attr('href', '/reporte_productos_excel?codigobarras_producto='+ruta);
 }
-
+*/
 </script>
 {% endblock %}
--->

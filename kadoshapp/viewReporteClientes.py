@@ -12,6 +12,7 @@ from django.db.models import Q #para poder usar el operador | que funciona como 
 from django.db.models import F #para hacer llamadas u operaciones en la BD, sin cargarlas en memoria (no las procesa django, sino directamente el SGBD)
 from .formReporteClientes import *
 @login_required
+
 def Clientes(request):
     if request.method == 'POST':
         form_fecha=Form_Busqueda_Fechas(request.POST)
@@ -24,8 +25,10 @@ def Clientes(request):
         fecha2=fechafini #debe ser la fecha más grande
         fecha1_split=fecha1.split('/')
         fecha2_split=fecha2.split('/')
-
-        if request.POST["checkbo"]:
+        box = request.POST.get('checkbo', False)
+        if not cliente:
+            cliente=0
+        if box:
             compras_clientes = qs.filter(cliente_idcliente=cliente,fecha_venta__range=(datetime.datetime(int(fecha1_split[2]),int(fecha1_split[1]), int(fecha1_split[0]),0,0,0,tzinfo=pytz.UTC), datetime.datetime(int(fecha2_split[2]),int(fecha2_split[1]), int(fecha2_split[0]),23,59,59,tzinfo=pytz.UTC))).values('month','cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('month','total_ventas') #este y funciona con las horas
             if not compras_clientes:
                 compras_clientes= qs.filter(fecha_venta__range=(datetime.datetime(int(fecha1_split[2]),int(fecha1_split[1]), int(fecha1_split[0]),0,0,0,tzinfo=pytz.UTC), datetime.datetime(int(fecha2_split[2]),int(fecha2_split[1]), int(fecha2_split[0]),23,59,59,tzinfo=pytz.UTC))).values('month','cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('month','total_ventas') #este y funciona con las horas
