@@ -227,9 +227,6 @@
                     $(codigo_buscado).val(''); // Se limpia el campo del codigo del producto
                     $("#tabla_productos > tbody").html("");
                     $.each(json, function(key,value) {
-                      $.each(value, function(key,value) {
-                        console.log(value);
-                      });
                       $('#tabla_productos > tbody:last-child').append('<tr onclick="seleccionar_fila(this)">'+
                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.pk+'</td>'+
                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.codigobarras_producto+'</td>'+

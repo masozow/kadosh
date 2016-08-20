@@ -8,35 +8,114 @@
       <link type="text/css" rel="stylesheet" href="{% static "css/formularios.css" %}"/>
     {% endblock %}
       {% block encabezado %}Cierre De Caja{% endblock %}
+
     {% block content %}
 
 
-        <form method="POST" class="post-form">
-          {% csrf_token %}
-     <div class="row" style="margin-bottom: 0px;">
-       <div class=" col l6 m12 s12">
-           <label for="caja_idcaja"><h6>Numero de caja:</h6> </label>{{ form_Cierrecaja.caja_idcaja}}
+    <form method="POST" class="post-form">
+      {% csrf_token %}
+      <div class="row" style="margin-bottom: 0px;">
+         <div class=" col l6 m12 s12">
+             <label for="caja_idcaja"><h6>Numero de caja:</h6> </label>  {{ form_Cierrecaja.caja_idcaja}}
+             <label for="total_calculado_cierredecaja"><h6>Total calculado:</h6> </label>{{ form_Cierrecaja.total_calculado_cierredecaja}}
+             <label for="total_efectivo_cierredecaja"><h6>Total efectivo:</h6> </label>{{ form_Cierrecaja.total_efectivo_cierredecaja}}
+             <label for="total_cheque_cierredecaja"><h6>Total cheque:</h6> </label>{{ form_Cierrecaja.total_cheque_cierredecaja}}
+             <label for="total_tarjeta_cierredecaja"><h6>Total tarjeta:</h6> </label>{{ form_Cierrecaja.total_tarjeta_cierredecaja}}
+             <label for="total_egresos_cierredecaja"><h6>Total egresos:</h6> </label>{{ form_Cierrecaja.total_egresos_cierredecaja}}
 
-           <label for="total_calculado_cierredecaja"><h6>Total calculado:</h6> </label>{{ form_Cierrecaja.total_calculado_cierredecaja}}
-           <label for="total_efectivo_cierredecaja"><h6>Total efectivo:</h6> </label>{{ form_Cierrecaja.total_efectivo_cierredecaja}}
-           <label for="total_cheque_cierredecaja"><h6>Total cheque:</h6> </label>{{ form_Cierrecaja.total_cheque_cierredecaja}}
-           <label for="total_tarjeta_cierredecaja"><h6>Total tarjeta:</h6> </label>{{ form_Cierrecaja.total_tarjeta_cierredecaja}}
-
-           <label for="total_real_cierredecaja"><h6>Total Cierre:</h6> </label>{{ form_Cierrecaja.total_real_cierredecaja}}
-      </div>
-      <div class=" col l6 m12 s12">
-         <label for="empleado_idempleado"><h6>Empleado que autoriza:</h6> </label>{{ form_Cierrecaja.empleado_idempleado}}
-          <label for="id_codigo_autorizacion_empleado"><h6>Codigo de autorizacion:</h6> </label>{{ form_empleado.codigo_autorizacion_empleado}}
-          <label for="total_egresos_cierredecaja"><h6>Total egresos:</h6> </label>{{ form_Cierrecaja.total_egresos_cierredecaja}}
-
-    </div>
-
+        </div>
+        <div class=" col l6 m12 s12">
+            <label for="empleado_idempleado"><h6>Empleado que autoriza:</h6> </label>{{ form_Cierrecaja.empleado_idempleado}}
+            <label for="id_codigo_autorizacion_empleado"><h6>Codigo de autorizacion:</h6> </label>{{ form_empleado.codigo_autorizacion_empleado}}
+            <label for="total_real_cierredecaja"><h6>Efectivo contabilizado:</h6> </label>{{ form_Cierrecaja.total_real_cierredecaja}}
+            <button type="submit" class="btn tooltipped" data-position="right" data-delay="50" data-tooltip="Los datos que guarde no podrán ser modificados">Guardar</button>
+            {% if form_Cierrecaja.errors %}
+            </br>
+            <label class="mietiqueta">Olvidó algunos datos</label>
+            {% endif %}
+        </div>
      </div>
-          <!--  {{ form_Cierrecaja.as_p }}
-            {{ form_empleado.as_p }}-->
 
 
-            <button type="submit" class="save btn btn-default">Guardar</button>
-        </form>
 
+  </form>
+
+    {% endblock %}
+
+    {% block extra_scripts %}
+    <script type="text/javascript" src="{% static 'js/funciones.js' %}"></script>
+    <script type="text/javascript">
+    /*Espacio para JQuery y busquedas dentro del DOM
+    ===========================================================================*/
+    $('#id_caja_idcaja').change(function(){ //cuando un elemento especifico cambia su valor, en este caso un textbox
+      obtener_ingresosegresos($('#id_caja_idcaja option:selected').val());
+    });
+    $('#inputId').prop('readonly', true);
+    $( document ).ready(function(){
+      $('#id_total_calculado_cierredecaja').prop('readonly',true);
+      $('#id_total_efectivo_cierredecaja').prop('readonly',true);
+      $('#id_total_cheque_cierredecaja').prop('readonly',true);
+      $('#id_total_tarjeta_cierredecaja').prop('readonly',true);
+      $('#id_total_egresos_cierredecaja').prop('readonly',true);
+      Materialize.toast('Si los datos no se borran al guardar, es porque alguno de ellos no es correcto', 7000);
+    });
+    $( "#id_total_real_cierredecaja" ).click(function() {
+      Materialize.toast('Decimales separados por coma', 4000);
+    });
+
+    /*Espacio para Ajax
+    ============================================================================*/
+
+    function obtener_ingresosegresos(cod_caja) {
+        $.ajax({
+            url : "/Buscar/Cierre/", // La URL que llama a la vista
+            type : "POST", // Metodo http para realizar el request (peticion al servidor)
+            data : { caja : cod_caja}, // Datos enviados con el request en formato JSON
+            // Si el response es correcto (si la respuesta del servidor es correcta)
+            success : function(json) {
+              var grantotal=parseFloat(json.efectivo[0].total_efectivo)+parseFloat(json.cheque[0].total_cheque)+parseFloat(json.tarjeta[0].total_tarjeta)-parseFloat(json.gastos[0].total_gastos);
+              $('#id_total_calculado_cierredecaja').val(grantotal);
+              $('#id_total_efectivo_cierredecaja').val(json.efectivo[0].total_efectivo);
+              $('#id_total_cheque_cierredecaja').val(json.cheque[0].total_cheque);
+              $('#id_total_tarjeta_cierredecaja').val(json.tarjeta[0].total_tarjeta);
+              $('#id_total_egresos_cierredecaja').val(json.gastos[0].total_gastos);
+              console.log(json.gastos[0].total_gastos);
+              console.log(json.efectivo[0].total_efectivo);
+              console.log(json.tarjeta[0].total_tarjeta);
+              console.log(json.cheque[0].total_cheque);
+            },
+            // Si el response no tuvo exito
+            error : function(xhr,errmsg,err) {
+                $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Ha ocurrido un error: "+errmsg+
+                    " <a href='#' class='close'>&times;</a></div>"); // Se agrega el error al DOM
+                console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
+            }
+        });
+    };
+
+    function guardar_precio(precio,valor,inicial,final,estado,prod) {
+        $.ajax({
+            url : "/Guardar/Precio/", // La URL que llama a la vistaboton_agregar_producto
+            type : "POST", // Metodo http para realizar el request (peticion al servidor)
+            data : { cod_precio:precio,fechaini:inicial,fechafin:final,est_precio:estado,val_precio:valor,producto:prod}, // Datos enviados con el request en formato JSON
+            success : function(json) {
+              alert(json);
+            },
+            error : function(xhr,errmsg,err) {
+                $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Ha ocurrido un error: "+errmsg+
+                    " <a href='#' class='close'>&times;</a></div>");
+                console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
+            }
+        });
+    };
+
+
+
+    /*
+      $( "#id_monto_gasto" ).click(function() {
+        Materialize.toast('Decimales separados por coma', 4000);
+      });*/
+    </script>
+    <script type="text/javascript" src="{% static 'js/selectorStartsWith.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/token.js' %}"></script>
     {% endblock %}

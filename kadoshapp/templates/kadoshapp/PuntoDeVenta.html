@@ -26,13 +26,9 @@
             </div>
             <div class="col l2 m12 s12">
               <br/>
-              <!--input class="filled-in" id="check_cotizacion" name="cotizacion_check" type="checkbox" />
-              <label style="font-size: 80%" for="check_cotizacion">Características del producto</label-->
-              <!--input type="checkbox" id="es_cotizacion" /-->
               {{ form_Venta.es_cotizacion}}
               <label style="font-size: 80%" for="id_es_cotizacion">Cotización</label>
             </div>
-
           </div>
 
           <div class="row" style="margin-bottom: 0px;">
@@ -57,24 +53,22 @@
               Venta:
               <label style="font-size: 80%" id="resultado_venta"></label>
             </div>
+         </div>
 
-      </div>
-
-      <div class="row" style="margin-bottom: 0px;">
-      <div class="col l2 m12 s12">
-      Cantidad:{{form_DetalleVenta.cantidad_venta}}
-
-      </div>
-      <div class="col l4 m12 s12">
-      Código Barras:{{ form_Producto.codigobarras_producto }}
-      </div>
-      <div class="col l3 m12 s12">
-        Valor:{{form_Precio.valor_precio}}
-      </div>
-      <div class="col l3 m12 s12">
-        Total:{{form_Venta.total_venta}}
-      </div>
-      </div>
+        <div class="row" style="margin-bottom: 0px;">
+          <div class="col l2 m12 s12">
+            Cantidad:{{form_DetalleVenta.cantidad_venta}}
+          </div>
+          <div class="col l4 m12 s12">
+            Código Barras:{{ form_Producto.codigobarras_producto }}
+          </div>
+          <div class="col l3 m12 s12">
+            Valor:{{form_Precio.valor_precio}}
+          </div>
+          <div class="col l3 m12 s12">
+            Total:{{form_Venta.total_venta}}
+          </div>
+        </div>
     </div>
 
       <div class="row" style="margin-bottom: 0px;">
