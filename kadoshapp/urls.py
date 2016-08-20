@@ -45,4 +45,5 @@ url(r'^Guardar/Venta/$', viewPuntodeVenta.GuardarVenta, name='GuardarVenta'),
 url(r'^cotizaciones/$',viewCotizacion.ReporteCotizacion.as_view(), name="reporte_cotizacion_excel"),
 url(r'^reporte_productos_excel/$',viewReporteProductos.ReporteProductos.as_view(), name="reporte_productos_excel"),
 url(r'^Reporte/Productos/', viewTablas.productos_lista, name='Rproductos'),
+url(r'^Reporte/Clientes/', viewTablas.productos_lista, name='Rclientes'),
 ]
