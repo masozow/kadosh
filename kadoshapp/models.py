@@ -12,8 +12,8 @@ class AjusteInventario(models.Model):
     inventario_producto_idinventario_producto = models.ForeignKey('InventarioProducto', db_column='Inventario_producto_idInventario_producto')  # Field name made lowercase.
     motivo_idmotivo = models.ForeignKey('Motivo', db_column='Motivo_idMotivo')  # Field name made lowercase.
     fecha_horaajuste = models.DateTimeField(db_column='fecha_horaAjuste', default=timezone.now)  # Field name made lowercase.
-    empleado_idempleado = models.ForeignKey('Empleado', db_column='Empleado_idEmpleado')
-    cantidad_real_ajuste = models.IntegerField(blank=False, null=True)
+    empleado_idempleado = models.ForeignKey('Empleado', db_column='Empleado_idEmpleado',blank=True,null=True)
+    cantidad_real_ajuste = models.IntegerField()
 
     def __str__(self):
         return '%s) %s' % (self.idajuste_inventario,self.inventario_producto_idinventario_producto)

@@ -28,9 +28,6 @@
             <label for="empleado_idempleado"><h6>Empleado que autoriza:</h6> </label>{{ form_Cierrecaja.empleado_idempleado}}
             <label for="id_codigo_autorizacion_empleado"><h6>Codigo de autorizacion:</h6> </label>{{ form_empleado.codigo_autorizacion_empleado}}
             <label for="total_real_cierredecaja"><h6>Efectivo contabilizado:</h6> </label>{{ form_Cierrecaja.total_real_cierredecaja}}
-            {% if form_empleado.errors %}
-              <h1>ERRORRRRRR same email again???</h1>
-            {% endif %}
             <button type="submit" class="btn tooltipped" data-position="right" data-delay="50" data-tooltip="Los datos que guarde no podrán ser modificados">Guardar</button>
             {% if form_Cierrecaja.errors %}
             </br>

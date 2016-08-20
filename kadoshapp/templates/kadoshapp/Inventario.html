@@ -9,97 +9,162 @@
    {% endblock %}
      {% block encabezado %}Inventario{% endblock %}
    {% block content %}
-
-
-       <form method="POST" class="post-form">
+   <style>
+     table tbody tr:hover {
+     background-color: #CCD9DE;
+     cursor: pointer;
+     }
+   </style>
+    <form method="POST" class="post-form">
          {% csrf_token %}
-         <div class="row" style="margin-bottom: 0px;">
+      <div class="row" style="margin-bottom: 0px;">
           <div class=" col l6 m12 s12">
             <div class="col s6">
-              <label for="bodega_idbodega"><h6>Bodega:</h6> </label>{{ form_inventario.bodega_idbodega}}
+              Bodega:{{ form_inventario.bodega_idbodega}}
+              Marca: {{form_Producto.marca_id_marca}}
+              Tipo: {{form_Producto.tipo_producto_idtipo_producto}}
+              Talla: {{form_Producto.talla_idtalla}}
+              Estilo: {{form_Producto.estilo_idestilo}}
             </div>
             <div class="col s6">
+              Código Barras:{{ form_Producto.codigobarras_producto }}
+              Código de estilo:{{form_Producto.codigoestilo_producto}}
+              Color: {{form_Producto.color_idcolor}}
+              Género: {{form_Producto.genero_idgener}}
+              <br/>
+              <input class="btn tooltipped" data-position="bottom" data-delay="5" data-tooltip="Puede buscar solo con la bodega, pero sí quiere ser más específico use las demás opciones" id="boton_buscar_caracteristicas" type="button" onclick="buscar_caracteristicas(this)" value="Buscar" name="btn_buscar_caracteristicas"/>
             </div>
-            <table>
-      <thead>
-        <tr>
-            <th data-field="id">Name</th>
-            <th data-field="name">Item Name</th>
-            <th data-field="price">Item Price</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <tr>
-          <td>Alvin</td>
-          <td>Eclair</td>
-          <td>$0.87</td>
-        </tr>
-        <tr>
-          <td>Alan</td>
-          <td>Jellybean</td>
-          <td>$3.76</td>
-        </tr>
-        <tr>
-          <td>Jonathan</td>
-          <td>Lollipop</td>
-          <td>$7.00</td>
-        </tr>
-      </tbody>
-    </table>
-
           </div>
           <div class=" col l6 m12 s12">
-            <p class="blue-text text-darken-2">Codigo Producto ####</p>
-            <label for="cantidad_real_ajuste"><h6>Conteo Real:</h6> </label>{{ form_ajusteinventario.cantidad_real_ajuste}}
-            <label for="motivo_idmotivo"><h6>Motivo Ajuste:</h6> </label>{{ form_ajusteinventario.motivo_idmotivo}}
-           <button type="submit" class="save btn btn-default">Guardar Ajuste</button>
+                <p class="blue-text text-darken-2">Codigo producto: <label class="mietiqueta" id="lbl_producto"></label></p>
+                <label for="id_inventario_producto_idinventario_producto"><h6>ID inventario:</h6> </label>{{ form_ajusteinventario.inventario_producto_idinventario_producto}}
+                <label for="id_cantidad_real_ajuste"><h6>Conteo Real:</h6> </label>{{ form_ajusteinventario.cantidad_real_ajuste}}
+                <label for="id_motivo_idmotivo"><h6>Motivo Ajuste:</h6> </label>{{ form_ajusteinventario.motivo_idmotivo}}
+                <br/>
+               <button type="submit" class="btn tooltipped" data-position="right" data-delay="5" data-tooltip="Los datos que guarde no podrán ser modificados">Guardar ajuste</button>
+               {% if form_ajusteinventario.errors %}
+               </br>
+               <label class="mietiqueta">Olvidó algunos datos</label>
+               {% endif %}
+               {% if errorForm %}
+                  </br>
+                  <label class="mietiqueta">{{errorForm}}</label>
+               {% endif %}
           </div>
         </div>
+      <div class="row" style="margin-bottom: 0px;">
+          <table id="tabla_productos" class="grey lighten-2">
+            <thead>
+              <tr>
+                <th data-field="Inv">Inv</th>
+                <th data-field="Cod">Cod</th>
+                <th data-field="Producto" width="400">Producto</th>
+                <th data-field="Marca">Marca</th>
+                <th data-field="Existencia">Existencia</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+     </form>
+
+   {% endblock %}
+
+   {% block extra_scripts %}
+   <script type="text/javascript" src="{% static 'js/funciones.js' %}"></script>
+   <script type="text/javascript">
+
+   /*Espacio para JQuery y busquedas dentro del DOM
+   ===========================================================================*/
+
+     //Es importante colocar esta linea antes de llamar a las funciones de busqueda
+     //dentro de dropdown, porque obtiene el estado por defecto del dropdown, asi
+     //se puede resetear. Hay que hacerlo con cada dropdown donde se busque.
+      var selectClienteDefault = $("#id_cliente_idcliente").html();
+      var selectPromocionDefault = $("#id_promocion_idpromocion").html();
+      var marcaDefault = $("#id_marca_id_marca").html();
+      var estiloDefault = $("#id_estilo_idestilo").html();
+      var tipoDefault = $("#id_tipo_producto_idtipo_producto").html();
+      var tallaDefault = $("#id_talla_idtalla").html();
+      var colorDefault = $("#id_color_idcolor").html();
+      var generoDefault = $("#id_genero_idgener").html();
+
+      //Obteniendo el estado inicial del Body, excluyendo dos DropDown
+   //       var estado_inicial_cuerpo;
 
 
-        <div class="row" style="margin-bottom: 0px;">
-        <h5> Ajustes Realizados</h5>
-          <div class=" col l12 m12 s12">
+       //Similar al FormLoad
+       $( document ).ready(function(){ //document indica toda la página, ready indica que ya se haya cargado el DOM
+         $('#id_codigobarras_producto').focus();
+         $('#bloque_caracteristicas_producto').hide(); //.hide() oculta el elemento con ese id
+       });
 
-          </div>
-       </div>
-       <div class="row" style="margin-bottom: 0px;">
-         <table>
-        <thead>
-          <tr>
-              <th data-field="id">Name</th>
-              <th data-field="name">Item Name</th>
-              <th data-field="price">Item Price</th>
-          </tr>
-        </thead>
 
-        <tbody>
-          <tr>
-            <td>Alvin</td>
-            <td>Eclair</td>
-            <td>$0.87</td>
-          </tr>
-          <tr>
-            <td>Alan</td>
-            <td>Jellybean</td>
-            <td>$3.76</td>
-          </tr>
-          <tr>
-            <td>Jonathan</td>
-            <td>Lollipop</td>
-            <td>$7.00</td>
-          </tr>
-        </tbody>
-      </table>
-      </div>
-          <!-- {{ form_inventariorealizado.as_p }}
-           {{ form_empleado.as_p }}
-           {{ form_inventario.as_p }}
-           {{ form_detallainventario.as_p }}
-           {{ form_ajusteinventario.as_p }}
-           {{ form_anaquel.as_p }}-->
 
-       </form>
+       function seleccionar_fila(fila){
+         var datos = $(fila).find('td').get().map(function(cell) {
+             return $(cell).html();
+         });
+         $('#lbl_producto').text(datos[1]);
+         $("#id_inventario_producto_idinventario_producto").val(datos[0]);
+         /* estos dos trabajan juntos
+         $('#id_inventario_producto_idinventario_producto option:selected').removeAttr('selected');
+         $('#id_inventario_producto_idinventario_producto option:eq('+datos[0]+')').attr("selected",true);
+         */
+       }
 
+
+
+       //Función que realiza una acción al leer código de barras
+       $( 'input#id_codigobarras_producto' ).keydown(function(e){
+         var keyCode = e.keyCode || e.which; //la propiedad wich indica la tecla o el botón que se ha presionado específicamente
+                                             //puede ser del teclado o del mouse, normaliza dos eventos: event.keyCode y event.charCode
+         if(e.keyCode==13)
+         {
+           e.preventDefault();
+           obtener_producto_caracteristicas('#id_codigobarras_producto','#id_codigoestilo_producto','#id_bodega_idbodega','#id_marca_id_marca','#id_tipo_producto_idtipo_producto','#id_talla_idtalla','#id_estilo_idestilo','#id_color_idcolor','#id_genero_idgener');
+           //Enviar como parametro el id del elemento txtBox, y el id del dropdown de bodega
+           //Importante editar tambien el "data :" en la definicion de la funcion
+         }
+       });
+
+       function buscar_caracteristicas(boton){
+         obtener_producto_caracteristicas('#id_codigobarras_producto','#id_codigoestilo_producto','#id_bodega_idbodega','#id_marca_id_marca','#id_tipo_producto_idtipo_producto','#id_talla_idtalla','#id_estilo_idestilo','#id_color_idcolor','#id_genero_idgener');
+       }
+
+       /*Espacio para Ajax
+       ============================================================================*/
+
+       function obtener_producto_caracteristicas(codigo_barras_buscar,codigo_estilo_buscar,bodega_que_vende,marca_buscar,tipo_buscar,talla_buscar,estilo_buscar,color_buscar,genero_buscar) {
+           $.ajax({
+               url : "/Buscar/ProductosInventario/", // La URL que llama a la vista
+               type : "POST", // Metodo http para realizar el request (peticion al servidor)
+               data : { codigo_barras: $(codigo_barras_buscar).val(), codigo_estilo_producto : $(codigo_estilo_buscar).val(), bodega_idbodega: $(bodega_que_vende+" option:selected").val(), marca_producto: $(marca_buscar+" option:selected").val(), tipo_producto: $(tipo_buscar+" option:selected").val(), estilo_producto: $(estilo_buscar+" option:selected").val(), color_producto: $(color_buscar+" option:selected").val(), talla_producto: $(talla_buscar+" option:selected").val(), genero_producto: $(genero_buscar+" option:selected").val()}, // Datos enviados con el request en formato JSON
+               success : function(json) {
+                 $("#tabla_productos > tbody").html("");
+                 $.each(json, function(key,value) {
+                 $('#tabla_productos > tbody:last-child').append('<tr onclick="seleccionar_fila(this)">'+
+                                                                 '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.inventarioproducto__pk+'</td>'+
+                                                                 '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.pk+'</td>'+
+                                                                 '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.nombre_producto+' -- '+value.genero_idgener__nombre_genero+' ['+value.talla_idtalla__nombre_talla+'] '+value.color_idcolor__nombre_color+' ['+value.codigoestilo_producto+']'+'</td>'+
+                                                                 '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.marca_id_marca__nombre_marca+'</td>'+
+                                                                 '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.inventarioproducto__existencia_actual+'</td>'+
+                                                                 '</tr>')
+                 });
+               },
+
+               error : function(xhr,errmsg,err) {
+                   $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Ha ocurrido un error: "+errmsg+
+                       " <a href='#' class='close'>&times;</a></div>");
+                   console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
+               }
+           });
+       };
+
+
+   </script>
+
+   <script type="text/javascript" src="{% static 'js/selectorStartsWith.js' %}"></script>
+   <script type="text/javascript" src="{% static 'js/token.js' %}"></script>
    {% endblock %}
