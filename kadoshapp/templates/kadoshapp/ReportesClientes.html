@@ -10,16 +10,37 @@
 {% endblock %}
 {% block encabezado %}Reporte Clientes{% endblock %}
 {% block content %}
-<form action="/Reporte/Productos/" id="formulario_reporte1" method="POST" class="post-form">
+<form action="/Reporte/Clientes/" id="formulario_reporte2" method="POST" class="post-form">
   {% csrf_token %}
 <div class="row" style="margin-bottom: 0px;">
-<div class="col l12 m12 s12">
-<h6> Caracteristicas de busqueda</h6>
-
-<button type="submit" class="save btn btn-default">Buscar</button>
-
-  </div>
+  <h6> Caracteristicas de busqueda</h6>
+<div class="col l6 m12 s12">
+    <label for="id_fechainicial_precio"><h6>Fecha inicial:</h6> </label>{{ form_fecha.fechainicial_precio}}
 </div>
+<div class="col l6 m12 s12">
+
+  <label for="id_fechafinal_precio"><h6>Fecha final:</h6> </label>{{ form_fecha.fechafinal_precio}}
+</div>
+</div>
+<div class="row" style="margin-bottom: 0px;">
+<div class="col l6 m12 s12">
+<label for="cliente_idcliente"><h6>Cliente:</h6> </label>{{ form_cliente.cliente_idcliente}}
+</div>
+<div class="col l6 m12 s12">
+  <div class="row">
+      <div class="col l12 m12 s12">
+          <h1 class="page-header"></h1>
+      </div>
+  </div>
+  {{ form_check.checkbo}}
+  <label for="id_checkbo"><h6>ni idea</h6> </label>
+
+
+  <button type="submit" class="save btn btn-default">Buscar</button>
+</div>
+</div>
+
+
 
 <div class="row">
     <div class="col l12 m12 s12">
@@ -38,9 +59,12 @@
 
  </form>
 
+{% render_table reporte1 %}
+
 {% endblock %}
 
 {% block extra_scripts %}
+<!--
 <script type="text/javascript">
 
 var ruta;//variable donde se guardará la ruta
@@ -64,3 +88,4 @@ function descargar(boton){
 
 </script>
 {% endblock %}
+-->

@@ -49,5 +49,6 @@ def productos_lista(request):
         form_producto=Form_Busqueda_Producto()
         consulta=Producto.objects.all()
         reporte1=ProductosTabla(consulta)
-        RequestConfig(request).configure(reporte1)
+        #RequestConfig(request).configure(reporte1)
+        RequestConfig(request, paginate={'per_page': 25}).configure(reporte1)
         return render(request,'kadoshapp/ReporteProductos.html',{'reporte1':reporte1,'form_producto':form_producto})
