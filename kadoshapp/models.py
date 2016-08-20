@@ -623,6 +623,7 @@ class Persona(models.Model):
     fecha_nacimiento_persona = models.DateField(blank=True, null=True)
     dpi_persona = models.CharField(max_length=13, blank=True, null=True)
     estado_persona = models.BooleanField(default=True)
+    correoelectronico_persona = models.CharField(max_length=60, blank=True, null=True)
 
     def __str__(self):
         return '%s - %s %s' % (self.idpersona, self.nombres_persona,self.apellidos_persona)

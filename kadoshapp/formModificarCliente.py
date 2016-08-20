@@ -5,11 +5,11 @@ from django.forms import extras
 
 
 class Form_Cliente_busquedas(forms.Form):
-    nombres = forms.CharField(label='Buscar Nit',max_length=13)
-    apellidos = forms.CharField(label='Buscar Nit',max_length=13)
-    nit_del_cliente = forms.CharField(label='Buscar Nit',max_length=13)
-    id_persona = forms.CharField(label='ID Persona',max_length=15,widget=forms.TextInput(attrs={'readonly':'readonly'}))
-    id_cliente = forms.CharField(label='ID Cliente',max_length=20,widget=forms.TextInput(attrs={'readonly':'readonly'}))
+    nombres = forms.CharField(label='Buscar Nit',max_length=13,required=False)
+    apellidos = forms.CharField(label='Buscar Nit',max_length=13,required=False)
+    nit_del_cliente = forms.CharField(label='Buscar Nit',max_length=13,required=False)
+    id_persona = forms.CharField(label='ID Persona',max_length=15,widget=forms.TextInput(attrs={'readonly':'readonly'}),required=False)
+    id_cliente = forms.CharField(label='ID Cliente',max_length=20,widget=forms.TextInput(attrs={'readonly':'readonly'}),required=False)
 
 
 class Form_RegistroCliente_Persona(forms.ModelForm):
@@ -29,7 +29,7 @@ class Form_RegistroCliente_Cliente(forms.ModelForm):
     class Meta:
         #opciones=TipoCliente.objects.filter(estado_tipocliente=1)
         model=Cliente
-        exclude=('persona_idpersona','estado_cliente','fecha_registro_cliente',)
+        exclude=('estado_cliente','fecha_registro_cliente',)
         #Personalizando las caracteristicas de los campos
         #widgets = {#widgets se utiliza para colocar ciertos controles html en lugar de textbox,
                     #como campos de fecha, radiobutton, checkbox, DropDownList(select en html), etc
