@@ -15,14 +15,15 @@
     cursor: pointer;
     }
     </style>
-    <form method="POST" class="post-form">
+    <form method="POST" class="post-form" id="formulario_cliente">
       {% csrf_token %}
       <div class="row" style="margin-bottom: 0px;">
         <div  class="col l4 m12 s12">
-          <label for="id_apellidos_persona"><h6>Apellidos:</h6> </label>{{ formbusqueda.apellidos }}
+          <label for="nombres"><h6>Nombres:</h6> </label>{{ formbusqueda.nombres }}
+
         </div>
         <div  class="col l4 m12 s12">
-          <label for="nombres"><h6>Nombres:</h6> </label>{{ formbusqueda.nombres }}
+          <label for="id_apellidos_persona"><h6>Apellidos:</h6> </label>{{ formbusqueda.apellidos }}
         </div>
         <div  class="col l4 m12 s12">
           <label for="nit_del_cliente"><h6>Nit:</h6> </label>{{ formbusqueda.nit_del_cliente }}
@@ -33,7 +34,7 @@
         </div>
         <div  class="col l4 m12 s12">
           <br/>
-          <input class="save btn btn-default" id="boton_buscar_cliente" type="button" onclick="buscar_cliente(this)" value="Buscar" name="btn_buscar_cliente"/>
+          <input  class="btn tooltipped" data-position="right" data-delay="50" data-tooltip="Puede usar únicamente parte del nombre o parte del apellido" id="boton_buscar_cliente" type="button" onclick="buscar_cliente(this)" value="Buscar" name="btn_buscar_cliente"/>
         </div>
       </div>
 
@@ -42,11 +43,14 @@
         <table id="tabla_cliente" class="grey lighten-2">
           <thead>
             <tr>
-                <th data-field="IdCliente">IdCliente</th>
-                <th data-field="IdPersona">IdPersona</th>
-                <th data-field="Nombre">Nombre</th>
+                <th data-field="IdCliente">IdCli</th>
+                <th data-field="IdPersona">IdPer</th>
+                <th data-field="DPI">DPI</th>
+                <th data-field="Nit">Nit</th>
+                <th data-field="Nombre" width="300">Nombre</th>
                 <th data-field="Tipo">Tipo</th>
                 <th data-field="Fecha">Fecha de registro</th>
+                <th data-field="Fecha de nacimiento">Fecha de nacimiento</th>
             </tr>
           </thead>
           <tbody>
@@ -87,12 +91,15 @@
               </div>
               <div class="col l6 m12 s12">
                 <div class"row">
+                  <label for="id_correoelectronico_persona"><h6>Correo electrónico:</h6> </label>{{ form.correoelectronico_persona }}
+                </div>
+                <div class"row">
                   <label for="nit_cliente"><h6>Nit:</h6> </label>{{ sub_form.nit_cliente }}
                 </div>
                 <div class"row">
                   <label for="tipo_cliente_idtipo_cliente"><h6>Tipo de cliente:</h6> </label>{{ sub_form.tipo_cliente_idtipo_cliente }}
                   <br/>
-                  <button  type="submit" class="save btn btn-default">Guardar</button>
+                  <button class="save btn btn-default"  type="submit" >Guardar</button>
                 </div>
                   <!--{{ sub_form.as_p }}-->
               </div>
@@ -120,14 +127,27 @@
           fechainiDefault=$('#id_fechafinal_precio').html();
         });
 
-        $( "#id_valor_precio" ).click(function() {
-          Materialize.toast('Decimales separados por coma', 4000);
+        $( "#id_nit_del_cliente" ).click(function() {
+          Materialize.toast('Si el NIT, los nombres y los apellidos quedan vacíos, se buscarán los clientes sin NIT', 4000);
         });
 
         //Con esta funcion se buscan los productos de acuerdo a sus caracteristicas
         function buscar_cliente(boton){
+            $("#tabla_cliente > tbody").html("");
             obtener_cliente('#id_nit_del_cliente','#id_nombres','#id_apellidos');
             $("#id_id_cliente").val("");
+            $("#id_id_persona").val("");
+            $("#id_nombres_persona").val("");
+            $("#id_apellidos_persona").val("");
+            $("#id_dpi_persona").val("");
+            $("#id_fecha_nacimiento_persona_day").val("");
+            $("#id_fecha_nacimiento_persona_month").val("");
+            $("#id_fecha_nacimiento_persona_year").val("");
+            $("#id_direccion_persona").val("");
+            $("#id_telefonos_persona").val("");
+            $("#id_correoelectronico_persona").val("");
+            $("#id_nit_cliente").val("");
+            $("#id_tipo_cliente_idtipo_cliente").val("");
             $("#id_id_persona").val("");
         }
 
@@ -138,49 +158,40 @@
           });
           $("#id_id_cliente").val(datos[0]);
           $("#id_id_persona").val(datos[1]);
+          Materialize.toast('Se modificará el cliente seleccionado', 4000);
+          obtener_clienteespecifico(datos[0],datos[1]);
         }
 
-        //esta funcion se activa al dar clic sobre una fila de la tabla producto
-        function seleccionar_fila_precio(fila){
-          var datos = $(fila).find('td').get().map(function(cell) {
-              return $(cell).html();
-          });
-          Materialize.toast('Se modificará el cliente seleccionado', 4000);
-        }
 
         //evitando que se actualice la página, guardando el precio y limpiando los items
-        $('#formulario_precio').on('submit', function(event){
-            event.preventDefault();
-            guardar_precio($('#lbl_precio').text(),$('#id_valor_precio').val(),$('#id_fechainicial_precio').val(),$('#id_fechafinal_precio').val(),$('#id_estado_precio').is(':checked'),$('#lbl_producto').text());
-            $('#formulario_precio').find('input, textarea, select').not("#boton_buscar_caracteristicas,#boton_limpiar_datos, #boton_guardar").val("");
-            $('#formulario_precio').find('.mietiqueta').text("");
-            $('#formulario_precio').find(':checkbox').not('#id_estado_precio').prop('checked', false); //buscando todos los checkbox del form, excepto el de venta al contado, y seteandolos a falso
-            $('#id_estado_precio').prop('checked', true);
-            $('#bloque_caracteristicas_producto').hide();
-            $("#tabla_precios > tbody").html("");
-            $("#tabla_productos > tbody").html("");
-        });
+        /*$('#formulario_cliente').on('submit', function(event){
+            //event.preventDefault();
+            console.log($(this).serialize());
+        });*/
 
     /*Espacio para Ajax
     ============================================================================*/
 
         function obtener_cliente(id_nit,id_nombre,id_apellido) {
             $.ajax({
-                url : "/Sistemakadosh/Buscar/Cliente/", // La URL que llama a la vista
+                url : "/Buscar/Cliente/", // La URL que llama a la vista
                 type : "POST", // Metodo http para realizar el request (peticion al servidor)
                 data : { nit : $(id_nit).val(), nombre : $(id_nombre).val(), apellido: $(id_apellido).val()}, // Datos enviados con el request en formato JSON
 
                 // Si el response es correcto (si la respuesta del servidor es correcta)
                 success : function(json) {
-                    //console.log(json.recibido);
                     $("#tabla_cliente > tbody").html("");
                     $.each(json, function(key,value) {
                       $('#tabla_cliente > tbody:last-child').append('<tr onclick="seleccionar_fila(this)">'+
                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.pk+'</td>'+
                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.persona_idpersona__pk+'</td>'+
+                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.persona_idpersona__dpi_persona+'</td>'+
+                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.nit_cliente+'</td>'+
                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.persona_idpersona__nombres_persona+' '+value.persona_idpersona__apellidos_persona+'</td>'+
                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.tipo_cliente_idtipo_cliente__nombre_tipocliente+'</td>'+
                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.fecha_registro_cliente+'</td>'+
+                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.persona_idpersona__fecha_nacimiento_persona+'</td>'+
+
                                                                       '</tr>');
                     });
                 },
@@ -193,38 +204,30 @@
             });
         };
 
-        function obtener_precio(cod_prod) {
+        function obtener_clienteespecifico(id_cliente,id_persona) {
             $.ajax({
-                url : "/Buscar/Precio/", // La URL que llama a la vista
+                url : "/Buscar/ClienteEspecifico/", // La URL que llama a la vista
                 type : "POST", // Metodo http para realizar el request (peticion al servidor)
-                data : { cod_producto : cod_prod}, // Datos enviados con el request en formato JSON
+                data : { cliente : id_cliente, persona : id_persona}, // Datos enviados con el request en formato JSON
+
                 // Si el response es correcto (si la respuesta del servidor es correcta)
                 success : function(json) {
-                    $("#tabla_precios > tbody").html("");
                     $.each(json, function(key,value) {
-                      if (value.fechafinal_precio===null)
-                      {
-                        value.fechafinal_precio='';
+                      $('#id_dpi_persona').val(value.persona_idpersona__dpi_persona);
+                      $('#id_nombres_persona').val(value.persona_idpersona__nombres_persona);
+                      $('#id_apellidos_persona').val(value.persona_idpersona__apellidos_persona);
+                      var fecha=value.persona_idpersona__fecha_nacimiento_persona;
+                      var fechas=fecha.split('-');
+                      if(fechas.length>1){
+                          $('#id_fecha_nacimiento_persona_year').val(parseInt(fechas[0]));
+                          $('#id_fecha_nacimiento_persona_month').val(parseInt(fechas[1]));
+                          $('#id_fecha_nacimiento_persona_day').val(parseInt(fechas[2]));
                       }
-                      else {
-                        value.fechafinal_precio=value.fechafinal_precio.substring(0,10);
-                      }
-                      if (value.estado_precio===true)
-                      {
-                        value.estado_precio='Activo'
-                      }
-                      else {
-                        value.estado_precio='Inactivo'
-                      }
-
-                      $('#tabla_precios > tbody:last-child').append('<tr onclick="seleccionar_fila_precio(this)">'+
-                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.pk+'</td>'+
-                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.valor_precio+'</td>'+
-                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.fechainicial_precio.substring(0,10)+'</td>'+
-                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.fechafinal_precio+'</td>'+
-                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.estado_precio+'</td>'+
-                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.producto_codigo_producto+'</td>'+
-                                                                      '</tr>');
+                      $('#id_correoelectronico_persona').val(value.persona_idpersona__correoelectronico_persona);
+                      $('#id_direccion_persona').val(value.persona_idpersona__direccion_persona);
+                      $('#id_telefonos_persona').val(value.persona_idpersona__telefonos_persona);
+                      $('#id_nit_cliente').val(value.nit_cliente);
+                      $('#id_tipo_cliente_idtipo_cliente').val(value.tipo_cliente_idtipo_cliente__pk);
                     });
                 },
                 // Si el response no tuvo exito
@@ -235,23 +238,6 @@
                 }
             });
         };
-
-        function guardar_precio(precio,valor,inicial,final,estado,prod) {
-            $.ajax({
-                url : "/Guardar/Precio/", // La URL que llama a la vistaboton_agregar_producto
-                type : "POST", // Metodo http para realizar el request (peticion al servidor)
-                data : { cod_precio:precio,fechaini:inicial,fechafin:final,est_precio:estado,val_precio:valor,producto:prod}, // Datos enviados con el request en formato JSON
-                success : function(json) {
-                  alert(json);
-                },
-                error : function(xhr,errmsg,err) {
-                    $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Ha ocurrido un error: "+errmsg+
-                        " <a href='#' class='close'>&times;</a></div>");
-                    console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
-                }
-            });
-        };
-
 
     </script>
 
