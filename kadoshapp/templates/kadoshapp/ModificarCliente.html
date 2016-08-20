@@ -9,82 +9,65 @@
     {% endblock %}
       {% block encabezado %} Modificacion clientes{% endblock %}
     {% block content %}
-    <!--agregando esto para que funcione el DateField-->
-        <!--link rel="stylesheet" type="text/css" href="{% static 'static/admin/css/forms.css' %} "/>
-        <link rel="stylesheet" type="text/css" href="{% static 'static/admin/css/base.css' %} "/>
-        <link rel="stylesheet" type="text/css" href="{% static 'static/admin/css/global.css' %}"/>
-        <link rel="stylesheet" type="text/css" href="{% static 'static/admin/css/widgets.css' %}"/>
+    <style>
+    table tbody tr:hover {
+    background-color: #CCD9DE;
+    cursor: pointer;
+    }
+    </style>
+    <form method="POST" class="post-form">
+      {% csrf_token %}
+      <div class="row" style="margin-bottom: 0px;">
+        <div  class="col l4 m12 s12">
+          <label for="id_apellidos_persona"><h6>Apellidos:</h6> </label>{{ formbusqueda.apellidos }}
+        </div>
+        <div  class="col l4 m12 s12">
+          <label for="nombres"><h6>Nombres:</h6> </label>{{ formbusqueda.nombres }}
+        </div>
+        <div  class="col l4 m12 s12">
+          <label for="nit_del_cliente"><h6>Nit:</h6> </label>{{ formbusqueda.nit_del_cliente }}
+        </div>
+      </div>
+      <div class="row" style="margin-bottom: 0px;">
+        <div  class="col l8 m12 s12">
+        </div>
+        <div  class="col l4 m12 s12">
+          <br/>
+          <input class="save btn btn-default" id="boton_buscar_cliente" type="button" onclick="buscar_cliente(this)" value="Buscar" name="btn_buscar_cliente"/>
+        </div>
+      </div>
 
-
-        <script type="text/javascript" src="/admin/jsi18n/"></script>
-        <script type="text/javascript" src="{% static 'admin/js/core.js' %}"></script>
-        <script type="text/javascript" src="{% static 'admin/js/admin/RelatedObjectLookups.js' %}"></script>
-        <script type="text/javascript" src="{% static 'admin/js/jquery.js' %}"></script>
-        <script type="text/javascript" src="{% static 'admin/js/jquery.init.js' %}"></script>
-        <script type="text/javascript" src="{% static 'admin/js/actions.js' %}"></script>
-        <script type="text/javascript" src="{% static 'admin/js/calendar.js' %}"></script>
-        <script type="text/javascript" src="{% static 'admin/js/admin/DateTimeShortcuts.js' %}"></script-->
-    <!--hasta acá, si funcionó, es para el widget del admin-->
-
-
-        <form method="POST" class="post-form">
-          {% csrf_token %}
-            <!--p><label>Nombres: </label>{{ form.nombres_persona }}</p-->
-
-              <div class="row" style="margin-bottom: 0px;">
-                <div  class="col l12 m12 s12">
-                  <label for="apellidos"><h6>Apellidos:</h6> </label>{{ formbusqueda.apellidos }}
-                  <label for="nombres"><h6>Nombres:</h6> </label>{{ formbusqueda.nombres }}
-                  <label for="nit_del_cliente"><h6>Nit:</h6> </label>{{ formbusqueda.nit_del_cliente }}
-  <button  type="button" class="save btn btn-default">Buscar</button>
-                </div>
-              </div>
-
-              <div class="row" style="margin-bottom: 0px;">
-                <div  class="col l12 m12 s12">
-
-
-
-      <table>
-        <thead>
-          <tr>
-              <th data-field="Id">Id</th>
-              <th data-field="nombre">Nombre</th>
-              <th data-field="tipo">Tipo</th>
-              <th data-field="fecha">Fecha de registro</th>
-                <th data-field="Comprasrealizadas">Compras realizadas</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr>
-            <td>Alvin</td>
-            <td>Eclair</td>
-            <td>$0.87</td>
-          </tr>
-          <tr>
-            <td>Alan</td>
-            <td>Jellybean</td>
-            <td>$3.76</td>
-          </tr>
-          <tr>
-            <td>Jonathan</td>
-            <td>Lollipop</td>
-            <td>$7.00</td>
-          </tr>
-        </tbody>
-      </table>
-
-
-
-              </div>
-            </div>
-
+    <div class="row" style="margin-bottom: 0px;">
+      <div  class="col l12 m12 s12">
+        <table id="tabla_cliente" class="grey lighten-2">
+          <thead>
+            <tr>
+                <th data-field="IdCliente">IdCliente</th>
+                <th data-field="IdPersona">IdPersona</th>
+                <th data-field="Nombre">Nombre</th>
+                <th data-field="Tipo">Tipo</th>
+                <th data-field="Fecha">Fecha de registro</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
             <div class="row" style="margin-bottom: 0px;">
               <div  class="col l6 m12 s12">
               <div class"row">
-              <label for="dpi_persona"><h6>DPI:</h6> </label>{{ form.dpi_persona }}
+                <div  class="col s6">
+                  ID persona:{{ formbusqueda.id_persona }}
+                </div>
+                <div  class="col s6">
+                  ID cliente:{{ formbusqueda.id_cliente }}
+                  <br/>
+                </div>
+              </div>
+              <div class"row">
+              <label for="id_dpi_persona"><h6>DPI:</h6> </label>{{ form.dpi_persona }}
               </div>
               <div class"row">
               <label for="nombres_persona"><h6>Nombres:</h6> </label>{{ form.nombres_persona }}
@@ -101,7 +84,6 @@
                 <div class"row">
                   <label for="fecha_nacimiento_persona"><h6>Fecha De Nacimiento dd/mm/yy:</h6> </label>{{ form.fecha_nacimiento_persona }}
                 </div>
-              <!--  {{ form.as_p }}-->
               </div>
               <div class="col l6 m12 s12">
                 <div class"row">
@@ -109,23 +91,170 @@
                 </div>
                 <div class"row">
                   <label for="tipo_cliente_idtipo_cliente"><h6>Tipo de cliente:</h6> </label>{{ sub_form.tipo_cliente_idtipo_cliente }}
+                  <br/>
+                  <button  type="submit" class="save btn btn-default">Guardar</button>
                 </div>
                   <!--{{ sub_form.as_p }}-->
               </div>
             </div>
 
-
-
-            <button  type="submit" class="save btn btn-default">Guardar</button>
         </form>
-        <!--script>
-          $(function() {
-            $( ".datepicker" ).datepicker({
-              changeMonth: true,
-              changeYear: true,
-              yearRange: "1900:2020",
-              // You can put more options here.
-            });
+    {% endblock %}
+
+    {% block extra_scripts %}
+    <script type="text/javascript" src="{% static 'js/funciones.js' %}"></script>
+    <script type="text/javascript">
+
+    /*Espacio para JQuery y busquedas dentro del DOM
+    ===========================================================================*/
+      var fechainiDefault;
+      //Similar al FormLoad
+        $( document ).ready(function(){ //document indica toda la página, ready indica que ya se haya cargado el DOM
+          $('#bloque_caracteristicas_producto').hide(); //.hide() oculta el elemento con ese id
+          $('input[type="checkbox"]').addClass("filled-in").addClass("filled-in"); //necesario para que se vean los checkbox
+          //$('input[type="select"]').addClass("browser-default").addClass("browser-default");
+          $('#id_producto_codigo_producto').empty();
+          $('input#id_codigobarras_producto').focus();
+          //$('input[type="checkbox"]').prop('checked', false);
+          //console.log($('#Form_Precios_Precio').serializeArray()) ;
+          fechainiDefault=$('#id_fechafinal_precio').html();
+        });
+
+        $( "#id_valor_precio" ).click(function() {
+          Materialize.toast('Decimales separados por coma', 4000);
+        });
+
+        //Con esta funcion se buscan los productos de acuerdo a sus caracteristicas
+        function buscar_cliente(boton){
+            obtener_cliente('#id_nit_del_cliente','#id_nombres','#id_apellidos');
+            $("#id_id_cliente").val("");
+            $("#id_id_persona").val("");
+        }
+
+        //esta funcion se activa al dar clic sobre una fila de la tabla
+        function seleccionar_fila(fila){
+          var datos = $(fila).find('td').get().map(function(cell) {
+              return $(cell).html();
           });
-        </script-->
+          $("#id_id_cliente").val(datos[0]);
+          $("#id_id_persona").val(datos[1]);
+        }
+
+        //esta funcion se activa al dar clic sobre una fila de la tabla producto
+        function seleccionar_fila_precio(fila){
+          var datos = $(fila).find('td').get().map(function(cell) {
+              return $(cell).html();
+          });
+          Materialize.toast('Se modificará el cliente seleccionado', 4000);
+        }
+
+        //evitando que se actualice la página, guardando el precio y limpiando los items
+        $('#formulario_precio').on('submit', function(event){
+            event.preventDefault();
+            guardar_precio($('#lbl_precio').text(),$('#id_valor_precio').val(),$('#id_fechainicial_precio').val(),$('#id_fechafinal_precio').val(),$('#id_estado_precio').is(':checked'),$('#lbl_producto').text());
+            $('#formulario_precio').find('input, textarea, select').not("#boton_buscar_caracteristicas,#boton_limpiar_datos, #boton_guardar").val("");
+            $('#formulario_precio').find('.mietiqueta').text("");
+            $('#formulario_precio').find(':checkbox').not('#id_estado_precio').prop('checked', false); //buscando todos los checkbox del form, excepto el de venta al contado, y seteandolos a falso
+            $('#id_estado_precio').prop('checked', true);
+            $('#bloque_caracteristicas_producto').hide();
+            $("#tabla_precios > tbody").html("");
+            $("#tabla_productos > tbody").html("");
+        });
+
+    /*Espacio para Ajax
+    ============================================================================*/
+
+        function obtener_cliente(id_nit,id_nombre,id_apellido) {
+            $.ajax({
+                url : "/Sistemakadosh/Buscar/Cliente/", // La URL que llama a la vista
+                type : "POST", // Metodo http para realizar el request (peticion al servidor)
+                data : { nit : $(id_nit).val(), nombre : $(id_nombre).val(), apellido: $(id_apellido).val()}, // Datos enviados con el request en formato JSON
+
+                // Si el response es correcto (si la respuesta del servidor es correcta)
+                success : function(json) {
+                    //console.log(json.recibido);
+                    $("#tabla_cliente > tbody").html("");
+                    $.each(json, function(key,value) {
+                      $('#tabla_cliente > tbody:last-child').append('<tr onclick="seleccionar_fila(this)">'+
+                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.pk+'</td>'+
+                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.persona_idpersona__pk+'</td>'+
+                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.persona_idpersona__nombres_persona+' '+value.persona_idpersona__apellidos_persona+'</td>'+
+                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.tipo_cliente_idtipo_cliente__nombre_tipocliente+'</td>'+
+                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.fecha_registro_cliente+'</td>'+
+                                                                      '</tr>');
+                    });
+                },
+                // Si el response no tuvo exito
+                error : function(xhr,errmsg,err) {
+                    $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Ha ocurrido un error: "+errmsg+
+                        " <a href='#' class='close'>&times;</a></div>"); // Se agrega el error al DOM
+                    console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
+                }
+            });
+        };
+
+        function obtener_precio(cod_prod) {
+            $.ajax({
+                url : "/Buscar/Precio/", // La URL que llama a la vista
+                type : "POST", // Metodo http para realizar el request (peticion al servidor)
+                data : { cod_producto : cod_prod}, // Datos enviados con el request en formato JSON
+                // Si el response es correcto (si la respuesta del servidor es correcta)
+                success : function(json) {
+                    $("#tabla_precios > tbody").html("");
+                    $.each(json, function(key,value) {
+                      if (value.fechafinal_precio===null)
+                      {
+                        value.fechafinal_precio='';
+                      }
+                      else {
+                        value.fechafinal_precio=value.fechafinal_precio.substring(0,10);
+                      }
+                      if (value.estado_precio===true)
+                      {
+                        value.estado_precio='Activo'
+                      }
+                      else {
+                        value.estado_precio='Inactivo'
+                      }
+
+                      $('#tabla_precios > tbody:last-child').append('<tr onclick="seleccionar_fila_precio(this)">'+
+                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.pk+'</td>'+
+                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.valor_precio+'</td>'+
+                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.fechainicial_precio.substring(0,10)+'</td>'+
+                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.fechafinal_precio+'</td>'+
+                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.estado_precio+'</td>'+
+                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.producto_codigo_producto+'</td>'+
+                                                                      '</tr>');
+                    });
+                },
+                // Si el response no tuvo exito
+                error : function(xhr,errmsg,err) {
+                    $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Ha ocurrido un error: "+errmsg+
+                        " <a href='#' class='close'>&times;</a></div>"); // Se agrega el error al DOM
+                    console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
+                }
+            });
+        };
+
+        function guardar_precio(precio,valor,inicial,final,estado,prod) {
+            $.ajax({
+                url : "/Guardar/Precio/", // La URL que llama a la vistaboton_agregar_producto
+                type : "POST", // Metodo http para realizar el request (peticion al servidor)
+                data : { cod_precio:precio,fechaini:inicial,fechafin:final,est_precio:estado,val_precio:valor,producto:prod}, // Datos enviados con el request en formato JSON
+                success : function(json) {
+                  alert(json);
+                },
+                error : function(xhr,errmsg,err) {
+                    $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Ha ocurrido un error: "+errmsg+
+                        " <a href='#' class='close'>&times;</a></div>");
+                    console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
+                }
+            });
+        };
+
+
+    </script>
+
+    <script type="text/javascript" src="{% static 'js/selectorStartsWith.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/token.js' %}"></script>
     {% endblock %}

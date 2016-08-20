@@ -2,12 +2,15 @@ from django import forms
 from .models import Persona,Cliente,TipoCliente
 from django.contrib.admin import widgets
 from django.forms import extras
-#form Cliente
+
 
 class Form_Cliente_busquedas(forms.Form):
     nombres = forms.CharField(label='Buscar Nit',max_length=13)
     apellidos = forms.CharField(label='Buscar Nit',max_length=13)
     nit_del_cliente = forms.CharField(label='Buscar Nit',max_length=13)
+    id_persona = forms.CharField(label='ID Persona',max_length=15,widget=forms.TextInput(attrs={'readonly':'readonly'}))
+    id_cliente = forms.CharField(label='ID Cliente',max_length=20,widget=forms.TextInput(attrs={'readonly':'readonly'}))
+
 
 class Form_RegistroCliente_Persona(forms.ModelForm):
     class Meta:
