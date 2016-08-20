@@ -2,7 +2,7 @@ from django.conf.urls import include, url
 from . import views
 from . import viewReporteProductos,viewModificarCliente,viewAsignarCaja,viewListadoProductos,viewBusquedaMercaderia,viewPrecios,viewCliente, viewIngresoMercaPorProveedor, viewCompra, viewPuntodeVenta, viewTrasladoMercaderia, viewCierreCaja, viewAnularVenta, viewInventario, viewPromocion,viewEmpleados, viewCotizacion
 from . import viewTablas
-from . import viewReporteClientes
+from . import viewReporteClientes,viewReporteClientesExcel
 urlpatterns=[
 #urls para loguear
 url(r'^$','django.contrib.auth.views.login',
@@ -50,4 +50,5 @@ url(r'^cotizaciones/$',viewCotizacion.ReporteCotizacion.as_view(), name="reporte
 url(r'^reporte_productos_excel/$',viewReporteProductos.ReporteProductos.as_view(), name="reporte_productos_excel"),
 url(r'^Reporte/Productos/', viewTablas.productos_lista, name='Rproductos'),
 url(r'^Reporte/Clientes/', viewReporteClientes.Clientes, name='Rclientes'),
+url(r'^reporte_clientes_excel/$',viewReporteClientesExcel.ReporteCliente.as_view(), name="reporte_clientes_excel"),
 ]
