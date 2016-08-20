@@ -1,0 +1,91 @@
+{% extends 'kadoshapp/base.html'  %}
+{% load django_tables2 %}
+{% load staticfiles %}
+{% block titulo %}
+ Reporte Clientes
+{% endblock %}
+{% block styles %}
+  <link type="text/css" rel="stylesheet" href="{% static "css/formularios.css" %}"/>
+  <link rel="stylesheet" href="{{ STATIC_URL }}django_tables2/themes/paleblue/css/screen.css" />
+{% endblock %}
+{% block encabezado %}Reporte Clientes{% endblock %}
+{% block content %}
+<form action="/Reporte/Clientes/" id="formulario_reporte2" method="POST" class="post-form">
+  {% csrf_token %}
+<div class="row" style="margin-bottom: 0px;">
+  <h6> Caracteristicas de busqueda</h6>
+<div class="col l6 m12 s12">
+    <label for="id_fechainicial_precio"><h6>Fecha inicial:</h6> </label>{{ form_fecha.fechainicial_precio}}
+</div>
+<div class="col l6 m12 s12">
+
+  <label for="id_fechafinal_precio"><h6>Fecha final:</h6> </label>{{ form_fecha.fechafinal_precio}}
+</div>
+</div>
+<div class="row" style="margin-bottom: 0px;">
+<div class="col l6 m12 s12">
+<label for="cliente_idcliente"><h6>Cliente:</h6> </label>{{ form_cliente.cliente_idcliente}}
+</div>
+<div class="col l6 m12 s12">
+  <div class="row">
+      <div class="col l12 m12 s12">
+          <h1 class="page-header"></h1>
+      </div>
+  </div>
+  {{ form_check.checkbo}}
+  <label for="id_checkbo"><h6>ni idea</h6> </label>
+
+
+  <button type="submit" class="save btn btn-default">Buscar</button>
+</div>
+</div>
+
+
+
+<div class="row">
+    <div class="col l12 m12 s12">
+        <h1 class="page-header"></h1>
+    </div>
+</div>
+<div class="row">
+  <div class="col l6 m12 s12">
+    <!--
+     <a id="crear_detalle" href="{% url 'reporte_productos_excel' %}"  class="btn btn-info btn-block">
+     <span class="glyphicon glyphicon-list-alt">Descargar</span>
+   </a>-->
+   <input class="save btn btn-default" id="boton_descargar" type="button" onclick="descargar(this)" value="Descargar" name="btn_descargar"/>
+  </div>
+  </div>
+
+ </form>
+
+{% render_table reporte1 %}
+
+{% endblock %}
+
+{% block extra_scripts %}
+<!--
+<script type="text/javascript">
+
+var ruta;//variable donde se guardará la ruta
+function cambiar_ruta(){
+  ruta=$('#id_codigobarras_producto').val()+'&marca_id_marca='+$('#id_marca_id_marca option:selected').val()+'&codigoestilo_producto='+$('#id_codigoestilo_producto').val()+'&estilo_idestilo='+$('#id_estilo_idestilo option:selected').val()+'&tipo_producto_idtipo_producto='+$('#id_tipo_producto_idtipo_producto option:selected').val()+'&talla_idtalla='+$('#id_talla_idtalla option:selected').val()+'&color_idcolor='+$('#id_color_idcolor option:selected').val()+'&genero_idgener='+$('#id_genero_idgener option:selected').val();
+}
+$('#id_codigobarras_producto').change(function(){//cuando un elemento especifico cambia su valor, en este caso un textbox
+  cambiar_ruta();
+});
+$('#id_codigoestilo_producto').change(function(){ //cuando un elemento especifico cambia su valor, en este caso un textbox
+  cambiar_ruta();
+});
+$("select").change(function (){ //cuando cualquier combobox=select cambia su valor
+    cambiar_ruta();
+});
+
+function descargar(boton){
+  console.log($('#id_codigobarras_producto').val());
+  $(location).attr('href', '/reporte_productos_excel?codigobarras_producto='+ruta);
+}
+
+</script>
+{% endblock %}
+-->
