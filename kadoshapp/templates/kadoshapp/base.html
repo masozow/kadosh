@@ -63,8 +63,8 @@
                     <div class="collection">
                     <a href="{% url 'kadoshapp.viewCompra.Compra' %}" class="white-text text-white waves-effect waves-light collection-item  cyan lighten-1 center-align">Compra</a>
                     <a href="{% url 'kadoshapp.viewTrasladoMercaderia.TrasladoMercaderia' %}" class="white-text text-white waves-effect waves-light collection-item  cyan lighten-1 center-align">Traslado de mercaderia</a>
-                    <a href="{% url 'kadoshapp.viewPromocion.Promocion' %}" class="white-text text-white waves-effect waves-light collection-item  cyan lighten-1 center-align">Ofertas</a>
-                    <a href="{% url 'kadoshapp.viewBusquedaMercaderia.BusquedaMerca' %}" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align ">Busqueda mercaderia</a>
+                    <!--a href="{% url 'kadoshapp.viewPromocion.Promocion' %}" class="white-text text-white waves-effect waves-light collection-item  cyan lighten-1 center-align">Ofertas</a-->
+                    <!--a href="{% url 'kadoshapp.viewBusquedaMercaderia.BusquedaMerca' %}" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align ">Busqueda mercaderia</a-->
                     <a href="{% url 'kadoshapp.viewListadoProductos.Listado' %}" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align ">Listado productos</a>
                     <a href="{% url 'kadoshapp.viewPrecios.Precios' %}" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align ">Precios</a>
                   </div>
@@ -81,6 +81,7 @@
                     <a href= "{% url 'kadoshapp.viewAnularVenta.AnularVenta' %}" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Anular venta</a>
                     <a href="{% url 'kadoshapp.viewCierreCaja.CierreDeCaja' %}"  class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Cierre de caja</a>
                     <a href="{% url 'kadoshapp.viewAsignarCaja.RegistrarGasto' %}"  class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Registrar gasto</a>
+                    <a href= "{% url 'kadoshapp.viewModificarVenta.ModificarVenta' %}" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Modificar venta</a>
                   </div>
                   </div>
                 </li><!-- Fin-->
@@ -89,7 +90,7 @@
                 <li><!-- Clientes-->
                   <div class="collapsible-header white-text text-white waves-effect waves-light">
                       <img class="responsive-img" src="{% static "imagenes/cliente.png" %}">
-                    Persona</div>
+                    Personas</div>
                   <div class="collapsible-body"><!-- Sub Elemntos--->
                     <div class="collection">
                     <a href="{% url 'kadoshapp.viewCliente.registro_cliente' %}"  class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Nuevo cliente</a>
@@ -156,8 +157,8 @@
           <div class="collection">
           <a href="{% url 'kadoshapp.viewCompra.Compra' %}" class="white-text text-white waves-effect waves-light collection-item  cyan lighten-1 center-align">Compra</a>
           <a href="{% url 'kadoshapp.viewTrasladoMercaderia.TrasladoMercaderia' %}" class="white-text text-white waves-effect waves-light collection-item  cyan lighten-1 center-align">Traslado de mercaderia</a>
-          <a href="{% url 'kadoshapp.viewPromocion.Promocion' %}" class="white-text text-white waves-effect waves-light collection-item  cyan lighten-1 center-align">Ofertas</a>
-          <a href="{% url 'kadoshapp.viewBusquedaMercaderia.BusquedaMerca' %}" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align ">Busqueda mercaderia</a>
+          <!--a href="{% url 'kadoshapp.viewPromocion.Promocion' %}" class="white-text text-white waves-effect waves-light collection-item  cyan lighten-1 center-align">Ofertas</a>
+          <a href="{% url 'kadoshapp.viewBusquedaMercaderia.BusquedaMerca' %}" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align ">Busqueda mercaderia</a-->
           <a href="{% url 'kadoshapp.viewListadoProductos.Listado' %}" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align ">Listado productos</a>
           <a href="{% url 'kadoshapp.viewPrecios.Precios' %}" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align ">Precios</a>
         </div>
@@ -174,6 +175,7 @@
           <a href= "{% url 'kadoshapp.viewAnularVenta.AnularVenta' %}" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Anular venta</a>
           <a href="{% url 'kadoshapp.viewCierreCaja.CierreDeCaja' %}"  class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Cierre de caja</a>
           <a href="{% url 'kadoshapp.viewAsignarCaja.RegistrarGasto' %}"  class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Registrar gasto</a>
+          <a href= "{% url 'kadoshapp.viewModificarVenta.ModificarVenta' %}" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Modificar venta</a>
         </div>
         </div>
       </li><!-- Fin-->
@@ -182,7 +184,7 @@
       <li><!-- Clientes-->
         <div class="collapsible-header white-text text-white waves-effect waves-light">
             <img class="responsive-img" src="{% static "imagenes/cliente.png" %}">
-          Persona</div>
+          Personas</div>
         <div class="collapsible-body"><!-- Sub Elemntos--->
           <div class="collection">
           <a href="{% url 'kadoshapp.viewCliente.registro_cliente' %}"  class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Nuevo cliente</a>

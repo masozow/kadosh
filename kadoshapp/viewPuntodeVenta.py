@@ -36,8 +36,8 @@ def PuntoDeVenta(request):
         #luego con el doble guión bajo "__" se le indica que en la Tabla foránea, se utilizará el campo "nombre_puesto"
         #por último se le dice que busque los nombres que contengan la palabra "Ventas"
         form_Venta.fields["caja_idcaja"].queryset = Caja.objects.filter(estado_caja=1)
-        form_InventarioProducto.fields["bodega_idbodega"].queryset = Bodega.objects.filter(estado_bodega=1)
         form_Venta.fields["cliente_idcliente"].queryset = Cliente.objects.filter(estado_cliente=1)
+        form_InventarioProducto.fields["bodega_idbodega"].queryset = Bodega.objects.filter(estado_bodega=1)
         form_Producto.fields["marca_id_marca"].queryset = Marca.objects.filter(estado_marca=1)
         form_Producto.fields["tipo_producto_idtipo_producto"].queryset = TipoProducto.objects.filter(estado_tipoproducto=1)
         form_Producto.fields["estilo_idestilo"].queryset = Estilo.objects.filter(estado_estilo=1)
