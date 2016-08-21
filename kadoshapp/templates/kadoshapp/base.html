@@ -106,9 +106,8 @@
                     Reportes</div>
                   <div class="collapsible-body"><!-- Sub Elemntos--->
                     <div class="collection">
-                    <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Ventas</a>
-                    <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Proveedores</a>
-                    <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Clientes</a>
+                    <a href="{% url 'kadoshapp.ViewReporteVentas.Ventas' %}" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Ventas</a>
+                    <a href="{% url 'kadoshapp.viewReporteClientes.Clientes' %}" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Clientes</a>
                     <a href="{% url 'kadoshapp.viewTablas.productos_lista' %}" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Productos</a>
                   </div>
                   </div>
@@ -200,9 +199,8 @@
           Reportes</div>
         <div class="collapsible-body"><!-- Sub Elemntos--->
           <div class="collection">
-          <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Ventas</a>
-          <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Proveedores</a>
-          <a href="#!" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Clientes</a>
+            <a href="{% url 'kadoshapp.ViewReporteVentas.Ventas' %}" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Ventas</a>
+            <a href="{% url 'kadoshapp.viewReporteClientes.Clientes' %}" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Clientes</a>
             <a href="{% url 'kadoshapp.viewTablas.productos_lista' %}" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Productos</a>
         </div>
         </div>

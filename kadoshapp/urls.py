@@ -3,6 +3,7 @@ from . import views
 from . import viewReporteProductos,viewModificarCliente,viewAsignarCaja,viewListadoProductos,viewBusquedaMercaderia,viewPrecios,viewCliente, viewIngresoMercaPorProveedor, viewCompra, viewPuntodeVenta, viewTrasladoMercaderia, viewCierreCaja, viewAnularVenta, viewInventario, viewPromocion,viewEmpleados, viewCotizacion,viewModificarVenta
 from . import viewTablas
 from . import viewReporteClientes,viewReporteClientesExcel
+from . import ViewReporteVentas, ViewReporteVentasExcel
 urlpatterns=[
 #urls para loguear
 url(r'^$','django.contrib.auth.views.login',
@@ -59,4 +60,6 @@ url(r'^reporte_productos_excel/$',viewReporteProductos.ReporteProductos.as_view(
 url(r'^Reporte/Productos/', viewTablas.productos_lista, name='Rproductos'),
 url(r'^Reporte/Clientes/', viewReporteClientes.Clientes, name='Rclientes'),
 url(r'^reporte_clientes_excel/$',viewReporteClientesExcel.ReporteCliente.as_view(), name="reporte_clientes_excel"),
+url(r'^Reporte/Ventas/', ViewReporteVentas.Ventas, name='RVentas'),
+url(r'^reporte_ventas_excel/$',ViewReporteVentasExcel.ReporteVentas.as_view(), name="reporte_ventas_excel"),
 ]

@@ -10,5 +10,11 @@ class ProductosTabla(tables.Table):
 class ClientesTabla(tables.Table):
     class Meta:
         model = Cliente
-        fields=('month','cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__persona_idpersona__apellidos_persona','total_ventas',)
+        fields=('cliente_idcliente__pk','cliente_idcliente__nit_cliente','cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__persona_idpersona__apellidos_persona','month','total_ventas',)
+        attrs = {'class': 'paleblue'}
+
+class VentasTabla(tables.Table):
+    class Meta:
+        model = Venta
+        fields=('vendedor_venta__persona_idpersona__nombres_persona','vendedor_venta__persona_idpersona__apellidos_persona','month','total_ventas',)
         attrs = {'class': 'paleblue'}
