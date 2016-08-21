@@ -54,21 +54,21 @@ class ReporteCliente(TemplateView):
         fecha1_split=fecha1.split('/')
         fecha2_split=fecha2.split('/')
 
-        compras_clientes=qs.values('month','cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('month') #este y funciona con las horas
+        compras_clientes=qs.values('month','cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__nit_cliente','cliente_idcliente__pk','cliente_idcliente__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('month') #este y funciona con las horas
         pormes=False
         if len(fecha1_split)>1 and len(fecha2_split)>1:
             if checo=="true":
                 pormes=True
-                compras_clientes = qs.filter(cliente_idcliente=int(cliente),fecha_venta__range=(datetime.datetime(int(fecha1_split[2]),int(fecha1_split[1]), int(fecha1_split[0]),0,0,0,tzinfo=pytz.UTC), datetime.datetime(int(fecha2_split[2]),int(fecha2_split[1]), int(fecha2_split[0]),23,59,59,tzinfo=pytz.UTC))).values('month','cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('month') #este y funciona con las horas
+                compras_clientes = qs.filter(cliente_idcliente=int(cliente),fecha_venta__range=(datetime.datetime(int(fecha1_split[2]),int(fecha1_split[1]), int(fecha1_split[0]),0,0,0,tzinfo=pytz.UTC), datetime.datetime(int(fecha2_split[2]),int(fecha2_split[1]), int(fecha2_split[0]),23,59,59,tzinfo=pytz.UTC))).values('month','cliente_idcliente__nit_cliente','cliente_idcliente__pk','cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('month') #este y funciona con las horas
                 if not compras_clientes:
-                    compras_clientes= qs.filter(fecha_venta__range=(datetime.datetime(int(fecha1_split[2]),int(fecha1_split[1]), int(fecha1_split[0]),0,0,0,tzinfo=pytz.UTC), datetime.datetime(int(fecha2_split[2]),int(fecha2_split[1]), int(fecha2_split[0]),23,59,59,tzinfo=pytz.UTC))).values('month','cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('month') #este y funciona con las horas
+                    compras_clientes= qs.filter(fecha_venta__range=(datetime.datetime(int(fecha1_split[2]),int(fecha1_split[1]), int(fecha1_split[0]),0,0,0,tzinfo=pytz.UTC), datetime.datetime(int(fecha2_split[2]),int(fecha2_split[1]), int(fecha2_split[0]),23,59,59,tzinfo=pytz.UTC))).values('month','cliente_idcliente__nit_cliente','cliente_idcliente__pk','cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('month') #este y funciona con las horas
             else:
-                compras_clientes = Venta.objects.filter(cliente_idcliente=int(cliente),fecha_venta__range=(datetime.datetime(int(fecha1_split[2]),int(fecha1_split[1]), int(fecha1_split[0]),0,0,0,tzinfo=pytz.UTC), datetime.datetime(int(fecha2_split[2]),int(fecha2_split[1]), int(fecha2_split[0]),23,59,59,tzinfo=pytz.UTC))).values('cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('total_ventas')
+                compras_clientes = Venta.objects.filter(cliente_idcliente=int(cliente),fecha_venta__range=(datetime.datetime(int(fecha1_split[2]),int(fecha1_split[1]), int(fecha1_split[0]),0,0,0,tzinfo=pytz.UTC), datetime.datetime(int(fecha2_split[2]),int(fecha2_split[1]), int(fecha2_split[0]),23,59,59,tzinfo=pytz.UTC))).values('cliente_idcliente__nit_cliente','cliente_idcliente__pk','cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('total_ventas')
                 if not compras_clientes:
-                    compras_clientes = Venta.objects.filter(fecha_venta__range=(datetime.datetime(int(fecha1_split[2]),int(fecha1_split[1]), int(fecha1_split[0]),0,0,0,tzinfo=pytz.UTC), datetime.datetime(int(fecha2_split[2]),int(fecha2_split[1]), int(fecha2_split[0]),23,59,59,tzinfo=pytz.UTC))).values('cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('total_ventas')
+                    compras_clientes = Venta.objects.filter(fecha_venta__range=(datetime.datetime(int(fecha1_split[2]),int(fecha1_split[1]), int(fecha1_split[0]),0,0,0,tzinfo=pytz.UTC), datetime.datetime(int(fecha2_split[2]),int(fecha2_split[1]), int(fecha2_split[0]),23,59,59,tzinfo=pytz.UTC))).values('cliente_idcliente__nit_cliente','cliente_idcliente__pk','cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('total_ventas')
 
         if not compras_clientes:
-            compras_clientes=qs.values('month','cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('month') #este y funciona con las horas
+            compras_clientes=qs.values('cliente_idcliente__nit_cliente','cliente_idcliente__pk','month','cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('month') #este y funciona con las horas
 
         repo_clientes=ValuesQuerySetToDict(compras_clientes)
 
@@ -77,7 +77,7 @@ class ReporteCliente(TemplateView):
         #Definimos como nuestra hoja de trabajo, la hoja activa, por defecto la primera del libro
         ws = wb.active
         #En la celda B1 ponemos el texto 'REPORTE DE PERSONAS'
-        ws['B1'] =  checo#'Kadosh'
+        ws['B1'] = 'Kadosh'
         ws['B2'] = 'REPORTE DE PRODUCTOS'
 
         ws['B3'] = datetime.datetime.now()
@@ -105,7 +105,8 @@ class ReporteCliente(TemplateView):
         #Recorremos el conjunto de personas y vamos escribiendo cada uno de los datos en las celdas
         for client in repo_clientes:
             if pormes:
-                ws.cell(row=cont,column=2).value = client['month']
+                fecha=client['month'].month #strftime('%B')
+                ws.cell(row=cont,column=2).value = fecha
             ws.cell(row=cont,column=3).value = client['cliente_idcliente__persona_idpersona__nombres_persona']
             ws.cell(row=cont,column=4).value = client['cliente_idcliente__persona_idpersona__apellidos_persona']
             ws.cell(row=cont,column=5).value = client['total_ventas']
