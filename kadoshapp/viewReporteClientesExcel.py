@@ -41,7 +41,7 @@ class ReporteCliente(TemplateView):
         #recibo los datos
         fechaini = self.request.GET.get('fechainicial_precio')
         fechafini = self.request.GET.get('fechafinal_precio')
-        cliente = self.request.POST.get('cliente_idcliente')
+        cliente = self.request.GET.get('cliente_idcliente')
         checo=str(self.request.GET.get('checkbo'))
 
         if not cliente:

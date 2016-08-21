@@ -43,6 +43,7 @@ url(r'^Buscar/ClienteEspecifico/$', viewModificarCliente.BuscarClienteEspecifico
 url(r'^Cambiar/Puesto/$', viewEmpleados.CambiarPuestoEmpleado, name='PuestoEmpleados'),
 url(r'^Asignar/Precio/$', viewPrecios.Precios, name='Precios'),
 url(r'^Mercaderia/Busqueda/$', viewBusquedaMercaderia.BusquedaMerca, name='BusquedaMercaderia'),
+url(r'^Subir/Imagen/$', viewCompra.SubirImagen, name='SubiendoImagen'),
 url(r'^Productos/Listado/$', viewListadoProductos.Listado, name='ListadoProductos'),
 url(r'^Registrar/Gasto/$', viewAsignarCaja.RegistrarGasto, name='RegitrarGasto'),
 url(r'^Guardar/Venta/$', viewPuntodeVenta.GuardarVenta, name='GuardarVenta'),

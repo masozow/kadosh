@@ -412,7 +412,6 @@ class Fotografia(models.Model):
     idfotografia = models.AutoField(db_column='idFotografia', primary_key=True)  # Field name made lowercase.
     nombre_fotografia = models.CharField(max_length=45, blank=True, null=True,default='s/n')
     ruta_fotografia = models.ImageField(upload_to = '') #settings.MEDIA_ROOT
-    #ruta_fotografia = models.CharField(max_length=200, blank=True, null=True)
     estado_fotografia = models.BooleanField(default=True)
     principal_fotografia = models.BooleanField(default=False)
 

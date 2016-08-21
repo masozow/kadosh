@@ -4,6 +4,10 @@
   margin-bottom: 0px !important;
 }
 
+textarea{
+  background-color: #FFFFFF !important;
+}
+
 /* Mi clase para etiquetas de código
 ============================================================================*/
 .mietiqueta{

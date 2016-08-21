@@ -10,121 +10,311 @@
       {% block encabezado %}Compras{% endblock %}
     {% block content %}
 
-        <form method="POST" class="post-form">
+        <form method="POST" class="post-form" enctype="multipart/form-data" id="formulario_compra">
           {% csrf_token %}
-        <div class="row" style="margin-bottom: 0px;">
-            <div  class="col l6 m12 s12">
-                <div class="col s6">
-                <label for="proveedor_idproveedor"><h6>Nombre Proveedor:</h6> </label>{{ form_Proveedor.nombre_proveedor}}
-                <label for="nit_proveedor"><h6>Nit Proveedor:</h6> </label>{{ form_Proveedor.nit_proveedor}}
-                <label for="casa_matriz"><h6>Casa matriz:</h6> </label>{{ form_Compra.casa_matriz}}
-              </div>
+        <div id="bloque_encabezado" style="background-color:#eeeedd;border-radius:10px;">
+          <div class="row" style="margin-bottom: 0px;">
+              <div class="col l6 m12 s12">
+                <div class="row" style="margin-bottom: 0px;">
                   <div class="col s6">
-                  <label for="proveedor_idproveedor"><h6>Proveedor:</h6> </label>{{ form_Compra.proveedor_idproveedor}}
+                    <label for="proveedor_idproveedor"><h6>Nombre Proveedor:</h6> </label>{{ form_Proveedor.nombre_proveedor}}
+                    <label for="nit_proveedor"><h6>Nit Proveedor:</h6> </label>{{ form_Proveedor.nit_proveedor}}
+                    <br/>
+                  </div>
+                  <div class="col s6">
+                    <label for="proveedor_idproveedor"><h6>Proveedor:</h6> </label>{{ form_Compra.proveedor_idproveedor}}
+                    </br>
+                    <input class="btn tooltipped" data-position="right" data-delay="5" data-tooltip="Crear nuevo proveedor" id="boton_agregar_proveedor" type="button" onclick="agregar_proveedor(this)" value="Nuevo" name="btn_agregar_proveedor"/>
+                  </div>
+                </div>
+                <div class="row" style="margin-bottom: 0px;">
+                  <div class="col s6">
+                    <label for="proveedor_idproveedor"><h6>Nombre casa matriz:</h6> </label>{{ form_Proveedor.nombre_proveedor}}
+                    <label for="nit_proveedor"><h6>Nit casa matriz:</h6> </label>{{ form_Proveedor.nit_proveedor}}
+                    <br/>
+                  </div>
+                  <div class="col s6">
+                    <label for="casa_matriz"><h6>Casa matriz:</h6> </label>{{ form_Compra.casa_matriz}}
+                  </br>
+                  <input class="btn tooltipped" data-position="right" data-delay="5" data-tooltip="Crear nueva casa matriz" id="boton_agregar_casamatriz" type="button" onclick="agregar_casamatriz(this)" value="Nueva" name="btn_agregar_casamatriz"/>
+                  </div>
+                </div>
+
+              </div>
+              <div  class="col l6 m12 s12">
+                <div class="col s6">
+                  <label for="numero_guia"><h6>Numero de guía:</h6> </label>{{ form_Compra.numero_guia}}
+                  <label for="empleado_recibio"><h6>Empleado que recibió:</h6> </label>{{ form_Compra.empleado_recibio}}
+                  <label for="empleado_reviso"><h6>Empleado que revisó:</h6> </label>{{ form_Compra.empleado_reviso}}
+                  {{ form_Compra.entregada_compra}}
+                  <label for="id_entregada_compra"><h6>Compra entregada</h6> </label>
+                  <br/>
+                  <br/>
+                </div>
+                <div class="col s6">
+                  <label for="fecha_recepcion_compra"><h6>Fecha recepción:</h6> </label>{{ form_Compra.fecha_recepcion_compra}}
+                  <!--input type="date" class="datepicker" id="fecha_recepcion_compra"-->
+                  <label for="fecha_realizacion_compra"><h6>Fecha compra:</h6> </label>{{ form_Compra.fecha_realizacion_compra}}
+                  <!--input type="date" class="datepicker" id="fecha_realizacion_compra"-->
+                  {{ form_Compra.vrf_compra}}
+                  <label for="id_vrf_compra"><h6>VRF</h6></label>
                 </div>
             </div>
-            <div  class="col l6 m12 s12">
-              <div class="col s6">
-                <label for="numero_guia"><h6>Numero de guia:</h6> </label>{{ form_Compra.numero_guia}}
-                <label for="empleado_recibio"><h6>Empleado que recibio:</h6> </label>{{ form_Compra.empleado_recibio}}
-                <label for="empleado_reviso"><h6>Empleado que reviso:</h6> </label>{{ form_Compra.empleado_reviso}}
-
-            <input type="checkbox" id="entregada_compra" />
-            <label for="entregada_compra"><h6>Compra Entregada</h6> </label>{{ form_Compra.entregada_compra}}
-
-
-              </div>
-              <div class="col s6">
-
-                <label for="fecha_recepcion_compra"><h6>Fecha recepcion:</h6> </label>{{ form_Compra.fecha_recepcion_compra}}
-                <input type="date" class="datepicker" id="fecha_recepcion_compra">
-
-
-                <label for="fecha_realizacion_compra"><h6>Fecha compra:</h6> </label>{{ form_Compra.fecha_realizacion_compra}}
-                <input type="date" class="datepicker" id="fecha_realizacion_compra">
-
-                <input type="checkbox" id="vrf_compra" />
-                <label for="vrf_compra"><h6>VRF</h6> </label>{{ form_Compra.vrf_compra}}
-              </div>
-
           </div>
         </div>
+        <div id="bloque_caracteristicas_producto" style="background-color:#ddeee1;border-radius:10px;">
           <div class="row" style="margin-bottom: 0px;">
-
-          <div  class="col l6 m12 s12">
-            <div class="col s6">
-            <label for="cantidad_compra"><h6>Cantidad:</h6> </label>{{ form_Detallecompra.cantidad_compra}}
-            <label for="codigoestilo_producto"><h6>Codigo estilo:</h6> </label>{{ form_Producto.codigoestilo_producto}}
-            <label for="genero_idgener"><h6>Genero:</h6> </label>{{ form_Producto.genero_idgener}}
-            <label for="talla_idtalla"><h6>Talla:</h6> </label>{{ form_Producto.talla_idtalla}}
+            <div  class="col l6 m12 s12">
+              <div class="col s12">
+                <label for="bodega_idbodega"><h6>Bodega:</h6> </label>{{ form_InventarioProducto.bodega_idbodega}}
+              </div>
+              <div class="col s6">
+                <label for="cantidad_compra"><h6>Cantidad:</h6> </label>{{ form_Detallecompra.cantidad_compra}}
+                <label for="codigoestilo_producto"><h6>Código estilo:</h6> </label>{{ form_Producto.codigoestilo_producto}}
+                <label for="id_tipo_producto_idtipo_producto"><h6>Tipo:</h6> </label>{{ form_Producto.tipo_producto_idtipo_producto}}
+                <label for="genero_idgener"><h6>Genero:</h6> </label>{{ form_Producto.genero_idgener}}
+                <label for="talla_idtalla"><h6>Talla:</h6> </label>{{ form_Producto.talla_idtalla}}
+              </div>
+              <div class="col s6">
+                  <label for="id_codigobarras_producto"><h6>Código de barras:</h6> </label>{{ form_Producto.codigobarras_producto}}
+                  <label for="id_marca_id_marca"><h6>Marca:</h6> </label>{{ form_TipoProducto.marca_id_marca}}
+                  <label for="id_estilo_idestilo"><h6>Estilo:</h6> </label>{{ form_Producto.estilo_idestilo}}
+                  <label for="id_color_idcolor"><h6>Color:</h6> </label>{{ form_Producto.color_idcolor}}
+                  <br/>
+                  <input class="btn tooltipped" data-position="right" data-delay="5" data-tooltip="Se buscará el producto para evitar repetición de datos." id="boton_buscar_producto" type="button" onclick="buscar_producto(this)" value="Buscar" name="btn_buscar_producto"/>
+              </div>
+              <div class="col s12">
+                <br/>
+              </div>
             </div>
-            <div class="col s6">
-              <label for="codigobarras_producto"><h6>Codigo de barras:</h6> </label>{{ form_Producto.codigobarras_producto}}
-
-            <label for="marca_id_marca"><h6>Marca:</h6> </label>{{ form_TipoProducto.marca_id_marca}}
-            <label for="estilo_idestilo"><h6>Estilo:</h6> </label>{{ form_Producto.estilo_idestilo}}
-            <label for="color_idcolor"><h6>Color:</h6> </label>{{ form_Producto.color_idcolor}}
+            <div class="col l6 m12 s12">
+                  <label for="descripcion_producto"><h6>Descripcion:</h6> </label>{{ form_Producto.descripcion_producto}}
+                  <label for="nombre_fotografia"><h6>Nombre Fotografia:</h6> </label>{{ form_fotografia.nombre_fotografia}}
+                  <label for="ruta_fotografia"><h6>Ruta:</h6> </label>{{ form_fotografia.ruta_fotografia}}
+                  <!--label for="id_producto_codigo_producto"><h6>Producto:</h6> </label>{{  form_InventarioProducto.producto_codigo_producto}}<br/-->
+                  <label for="id_nombre_producto"><h6>Nombre producto:</h6> </label>{{  form_Producto.nombre_producto}}
+                  <label for="costo_unitario_inventarioproducto"><h6>Costo:</h6> </label>{{ form_InventarioProducto.costo_unitario_inventarioproducto}}
+                  <br/>
+                  <br/>
+                  <input class="btn tooltipped" data-position="right" data-delay="5" data-tooltip="El producto se guardará al presionar este botón. Revise bien los datos." id="boton_agregar_producto" type="button" onclick="agregar_producto(this)" value="Agregar" name="btn_agregar_producto"/>
+                  <br/>
             </div>
-            <div class="col s12">
-              <label for="producto_codigo_producto"><h6>Producto:</h6> </label>{{  form_InventarioProducto.producto_codigo_producto}}
-              <label for="nombre_producto"><h6>Nombre producto:</h6> </label>{{  form_Producto.nombre_producto}}
-              <label for="descripcion_producto"><h6>Descripcion:</h6> </label>{{ form_Producto.descripcion_producto}}
-
-              <label for="nombre_fotografia"><h6>Nombre Fotografia:</h6> </label>{{ form_fotografia.nombre_fotografia}}
-              <label for="ruta_fotografia"><h6>Ruta:</h6> </label>{{ form_fotografia.ruta_fotografia}}
-              <label for="bodega_idbodega"><h6>Bodega:</h6> </label>{{ form_InventarioProducto.bodega_idbodega}}
-              <label for="costo_unitario_inventarioproducto"><h6>Costo:</h6> </label>{{ form_InventarioProducto.costo_unitario_inventarioproducto}}
-
           </div>
-
+          <br/>
+        </div>
+        <div class="row" style="margin-bottom: 0px;">
+          <div  class="col l12 m12 s12">
+              <table id="tabla_productos" class="grey lighten-2">
+                <thead>
+                  <tr style="margin-bottom: 0px; margin-top: 0px; padding-top:0px; padding-botton:0px;">
+                      <th data-field="Cod" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">Cod</th>
+                      <th data-field="Cod.Barras" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">Cod.Barras</th>
+                      <th data-field="Producto" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">Producto</th>
+                      <th data-field="Cod.Estilo" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">Cod.Estilo</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+          </div>
+        </div>
+        <div class="row" style="margin-bottom: 0px;">
+          <div  class="col l6 m12 s12">
+            <label for="tipo_pago_idtipo_pago"><h6>Tipo de pago:</h6> </label>{{ form_Compra.tipo_pago_idtipo_pago}}
           </div>
           <div  class="col l6 m12 s12">
-          <h6>Productos agregados a la compra</h6>
-      <div class="grey lighten-2">
-      <table>
-        <thead>
-          <tr>
-              <th data-field="id">Name</th>
-              <th data-field="name">Item Name</th>
-              <th data-field="price">Item Price</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr>
-            <td>Alvin</td>
-            <td>Eclair</td>
-            <td>$0.87</td>
-          </tr>
-          <tr>
-            <td>Alan</td>
-            <td>Jellybean</td>
-            <td>$3.76</td>
-          </tr>
-          <tr>
-            <td>Jonathan</td>
-            <td>Lollipop</td>
-            <td>$7.00</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-<label for="tipo_pago_idtipo_pago"><h6>Tipo de Pago</h6> </label>{{ form_Compra.tipo_pago_idtipo_pago}}
-
-
-          </div>
-          </div>
-        <!--  {{ form_Compra.as_p }}
-          {{ form_Producto.as_p }}
-          {{ form_Detallecompra.as_p }}
-          {{ form_TipoProducto.as_p }}
-          {{ form_fotografia.as_p }}
-          {{ form_InventarioProducto.as_p }}
-          {{ form_anaquel.as_p }}-->
-
-
+            <br/>
             <button type="submit" class="save btn btn-default">Guardar</button>
-        </form>
+          </div>
+        </div>
+      </form>
 
+    {% endblock %}
+    {% block extra_scripts %}
+    <script type="text/javascript" src="{% static 'js/funciones.js' %}"></script>
+    <script type="text/javascript">
+
+    /*Espacio para JQuery y busquedas dentro del DOM
+    ===========================================================================*/
+
+      $( document ).ready(function(){ //document indica toda la página, ready indica que ya se haya cargado el DOM
+        //Función que coloca el cursor en el textbox Nit del cliente, al momento de cargar la página
+        //$('input#id_codigobarras_producto').focus(); //se accede al input con el id que está después de #, //.focus() indica que ahí se colocará el cursor
+        $('#bloque_caracteristicas_producto').find('select').val(1);
+        $('input#id_cantidad').val(1);
+        $('#id_jsonfield').css('display','None'); //ocultando el campo que enviará los datos JSON como texto
+        $('input[type="checkbox"]').addClass("filled-in").addClass("filled-in"); //necesario para que se vean los checkbox
+        //$('#id_producto_codigo_producto').empty();
+      });
+
+       click_ocultar_mostrar('check_mostrar',"#bloque_caracteristicas_producto");
+
+
+       //La siguiente función ejecuta varias acciones antes de  hacer el submit
+       $( '#formulario_traslado' ).submit(function( event ) {
+          //A continuacion se obtienen todos los elementos de la tabla producto, en un arrelgo
+          var tbl = $('table#tabla_productos tr').get().map(function(row) {
+            return $(row).find('td').get().map(function(cell) {
+              return $(cell).html();
+            });
+          });
+          $.each(tbl, function(key,value) {//se recorre la matriz resultante de la tabla
+            value.pop();//elimina el ultimo elemento del arreglo, en este caso, en la fila, el boton de eliminar
+          });
+          tbl.shift();//elimina el primer elemento de la tabla, que en este caso es un arreglo vacio
+          var tblJson=JSON.stringify(tbl); //Sin esto la tabla no se recibe bien en el View, es necesario
+          console.log('Toda la tabla:'+tblJson);
+          $('input[name=jsonfield]').val(tblJson); //guardando el valor del arreglo JSON en la tabla
+          //Las siguientes son validaciones para poder enviar la información correctamente
+          if($('#id_bodega_egreso option:selected').val()===""){
+            alert("Debe elegir la bodega origen");
+            event.preventDefault();
+          }
+          else if ($('#id_bodega_ingreso option:selected').val()==="") {
+            alert("Debe elegir la bodega destino");
+            event.preventDefault();
+          }
+          else if ($('#id_motivo_idmotivo option:selected').val()==="") {
+            alert("Debe elegir un motivo para el traslado");
+            event.preventDefault();
+          }
+          else if (tbl.length===0) {
+            alert("No ha elegido ningún producto");
+            console.log(tbl.length);
+            event.preventDefault();
+          }
+          //else{
+            //setTimeout(function(){ alert("Traslado realizado"); }, 3000);
+            //alert("Traslado realizado" );
+          //}
+        });
+
+       //Para que funcione el boton de eliminar producto
+       function eliminar_fila(button){
+         $('#tabla_productos').on('click', '#boton_eliminar', function(){
+             $(this).closest ('tr').remove ();
+            //sumar_valor_parcial(".suma_valor_parcial",'#id_total_venta');
+         });
+       }
+
+       //Función que realiza una acción al leer código de barras
+       $( 'input#id_codigobarras_producto' ).keydown(function(e){
+         var keyCode = e.keyCode || e.which; //la propiedad wich indica la tecla o el botón que se ha presionado específicamente
+                                             //puede ser del teclado o del mouse, normaliza dos eventos: event.keyCode y event.charCode
+         if(e.keyCode==13)
+         {
+           e.preventDefault();
+           obtener_producto('input#id_codigobarras_producto','#id_bodega_egreso');
+         }
+       });
+
+       function buscar_producto(boton){
+         obtener_producto('input#id_codigobarras_producto','#id_codigoestilo_producto','#id_marca_id_marca','#id_tipo_producto_idtipo_producto','#id_talla_idtalla','#id_estilo_idestilo','#id_color_idcolor','#id_genero_idgener');
+       }
+
+       //Con esta funcion se buscan los productos de acuerdo a sus caracteristicas
+       function buscar_caracteristicas(boton){
+         obtener_producto_caracteristicas('#id_codigoestilo_producto','#id_bodega_egreso','#id_marca_id_marca','#id_tipo_producto_idtipo_producto','#id_talla_idtalla','#id_estilo_idestilo','#id_color_idcolor','#id_genero_idgener');
+       }
+
+       //Esta funcion agrega el producto resultado de la busqueda por caracteristicas, a la tabla de productos
+       function agregar_producto(boton){
+         subir_imagen('#id_ruta_fotografia');
+         /*
+         var elegido=$('#id_producto_codigo_producto option:selected').text();
+         var datos_producto=elegido.split('|');
+
+         var cantidad=$('input#id_cantidad_venta').val();
+         var valor_parcial=cantidad*parseFloat(datos_producto[4]);
+
+         $('#tabla_productos > tbody:last-child').append('<tr>'+
+                                                           '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+datos_producto[1]+'</td>'+
+                                                           '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+cantidad+'</td>'+
+                                                           '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+datos_producto[2]+'</td>'+
+                                                           '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+datos_producto[4]+'</td>'+
+                                                           '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;"> <input id="boton_eliminar" "type="button" onclick="eliminar_fila(this)" value="Eliminar" name="Eliminar" style="text-align: center; margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;"/> </td>'+
+                                                         '</tr>');
+         $('input#id_cantidad_venta').val(1);
+         */
+       }
+
+       /*Espacio para Ajax
+       ============================================================================*/
+       function obtener_producto(codigo_buscado,codigo_estilo_buscar,marca_buscar,tipo_buscar,talla_buscar,estilo_buscar,color_buscar,genero_buscar) {
+           $.ajax({
+               url : "/Buscar/Producto/Precio/", // La URL que llama a la vista
+               type : "POST", // Metodo http para realizar el request (peticion al servidor)
+               data : { codigobarras_producto : $(codigo_buscado).val(), codigo_estilo_producto : $(codigo_estilo_buscar).val(), marca_producto: $(marca_buscar+" option:selected").val(), tipo_producto: $(tipo_buscar+" option:selected").val(), estilo_producto: $(estilo_buscar+" option:selected").val(), color_producto: $(color_buscar+" option:selected").val(), talla_producto: $(talla_buscar+" option:selected").val(), genero_producto: $(genero_buscar+" option:selected").val()}, // Datos enviados con el request en formato JSON
+
+               // Si el response es correcto (si la respuesta del servidor es correcta)
+               success : function(json) {
+
+
+                   $("#tabla_productos > tbody").html("");
+                   $.each(json, function(key,value) {
+                     console.log(value);
+                     $('#tabla_productos > tbody:last-child').append('<tr onclick="seleccionar_fila(this)">'+
+                                                                       '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.pk+'</td>'+
+                                                                       '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.codigobarras_producto+'</td>'+
+                                                                       '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.nombre_producto+'-'+value.marca_id_marca__nombre_marca+'-'+value.genero_idgener__nombre_genero+'-'+value.talla_idtalla__nombre_talla+'-'+value.color_idcolor__nombre_color+'</td>'+
+                                                                       '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.codigoestilo_producto+'</td>'+
+                                                                     '</tr>');
+                   });
+               },
+               // Si el response no tuvo exito
+               error : function(xhr,errmsg,err) {
+                   $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Ha ocurrido un error: "+errmsg+
+                       " <a href='#' class='close'>&times;</a></div>"); // Se agrega el error al DOM
+                   console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
+               }
+           });
+       };
+
+           function obtener_producto_caracteristicas(codigo_estilo_buscar,bodega_que_vende,marca_buscar,tipo_buscar,talla_buscar,estilo_buscar,color_buscar,genero_buscar) {
+               $.ajax({
+                   url : "/Buscar/ProductoCaracteristicas/", // La URL que llama a la vista
+                   type : "POST", // Metodo http para realizar el request (peticion al servidor)
+                   data : { codigo_estilo_producto : $(codigo_estilo_buscar).val(), bodega_idbodega: $(bodega_que_vende+" option:selected").val(), marca_producto: $(marca_buscar+" option:selected").val(), tipo_producto: $(tipo_buscar+" option:selected").val(), estilo_producto: $(estilo_buscar+" option:selected").val(), color_producto: $(color_buscar+" option:selected").val(), talla_producto: $(talla_buscar+" option:selected").val(), genero_producto: $(genero_buscar+" option:selected").val()}, // Datos enviados con el request en formato JSON
+                   success : function(json) {
+                     $(id_producto_codigo_producto).empty();
+                     $.each(json.consulta, function(key,value) {
+                       $(id_producto_codigo_producto).append('<option value='+value.codigo_producto+'>'+ value.idInventario_producto +'|'+ value.codigo_producto +'|'+ value.nombre_producto +'|'+ value.codigoestilo_producto +'|'+ value.valor_precio +'</option>');
+                       //console.log(value);
+                     });
+                   },
+
+                   error : function(xhr,errmsg,err) {
+                       $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Ha ocurrido un error: "+errmsg+
+                           " <a href='#' class='close'>&times;</a></div>");
+                       console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
+                   }
+               });
+           };
+
+           function subir_imagen(imagen){
+             var data = new FormData($('form').get(0));
+              $.ajax({
+                  url: "/Subir/Imagen/",
+                  type: "POST",
+                  data: data,
+                  cache: false,
+                  processData: false,
+                  contentType: false,
+                  success: function(json){
+                    console.log(json);
+                  },
+                  // Si el response no tuvo exito
+                  error : function(xhr,errmsg,err) {
+                      $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Ha ocurrido un error: "+errmsg+
+                          " <a href='#' class='close'>&times;</a></div>"); // Se agrega el error al DOM
+                      console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
+                  }
+              });
+           }
+
+
+    </script>
+
+    <script type="text/javascript" src="{% static 'js/selectorStartsWith.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/token.js' %}"></script>
     {% endblock %}
