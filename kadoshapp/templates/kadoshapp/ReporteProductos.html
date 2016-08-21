@@ -59,6 +59,11 @@
 {% block extra_scripts %}
 <script type="text/javascript">
 
+$( document ).ready(function(){ //document indica toda la página, ready indica que ya se haya cargado el DOM
+  $('input[type="checkbox"]').addClass("filled-in");
+  cambiar_ruta();
+});
+
 var ruta;//variable donde se guardará la ruta
 function cambiar_ruta(){ //esta función cambiará la ruta que se envía al view
   //ahora aquí se obtienen los valores de todos los elementos
