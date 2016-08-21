@@ -72,25 +72,26 @@ $( document ).ready(function(){ //document indica toda la página, ready indica 
 
 });
 
-/*
+
 var ruta;//variable donde se guardará la ruta
 function cambiar_ruta(){
-  ruta=$('#id_codigobarras_producto').val()+'&marca_id_marca='+$('#id_marca_id_marca option:selected').val()+'&codigoestilo_producto='+$('#id_codigoestilo_producto').val()+'&estilo_idestilo='+$('#id_estilo_idestilo option:selected').val()+'&tipo_producto_idtipo_producto='+$('#id_tipo_producto_idtipo_producto option:selected').val()+'&talla_idtalla='+$('#id_talla_idtalla option:selected').val()+'&color_idcolor='+$('#id_color_idcolor option:selected').val()+'&genero_idgener='+$('#id_genero_idgener option:selected').val();
+  ruta=$('#id_fechainicial_precio').val()+'&fechafinal_precio='+$('#id_fechafinal_precio').val() +'&cliente_idcliente='+$('#id_cliente_idcliente option:selected').val()+'&checkbo='+$('#id_checkbo').is(':checked');
 }
-$('#id_codigobarras_producto').change(function(){//cuando un elemento especifico cambia su valor, en este caso un textbox
+$('#id_fechainicial_precio').change(function(){//cuando un elemento especifico cambia su valor, en este caso un textbox
   cambiar_ruta();
 });
-$('#id_codigoestilo_producto').change(function(){ //cuando un elemento especifico cambia su valor, en este caso un textbox
+/*+'&fechafinal_precio='+$('#id_fechafinal_precio').val()*/
+/*
+$('#id_fechafinal_precio').change(function(){ //cuando un elemento especifico cambia su valor, en este caso un textbox
   cambiar_ruta();
-});
+});*/
 $("select").change(function (){ //cuando cualquier combobox=select cambia su valor
     cambiar_ruta();
 });
 
 function descargar(boton){
-  console.log($('#id_codigobarras_producto').val());
-  $(location).attr('href', '/reporte_productos_excel?codigobarras_producto='+ruta);
+  console.log($('#id_fechainicial_precio').val());
+  $(location).attr('href', '/reporte_clientes_excel?fechainicial_precio='+ruta);
 }
-*/
 </script>
 {% endblock %}
