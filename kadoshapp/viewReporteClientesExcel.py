@@ -30,27 +30,33 @@ class ReporteCliente(TemplateView):
         cliente = self.request.POST.get('cliente_idcliente')
         checo=self.request.POST.get('checkbo')
 
+        if not cliente:
+            cliente=0
+
         truncate_date = connection.ops.date_trunc_sql('month', 'fecha_venta') #se obtiene solo el mes de la venta
         qs = Venta.objects.extra({'month':truncate_date}) # se añade un nuevo campo/columna que tendrá de nombre "month" y tendrá como datos "truncate_date" que en este caso es el mes
-        fecha1=fechaini #debe ser la fecha más pequeña
-        fecha2=fechafini #debe ser la fecha más grande
+        fecha1=str(fechaini) #debe ser la fecha más pequeña
+        fecha2=str(fechafini) #debe ser la fecha más grande
         fecha1_split=fecha1.split('/')
         fecha2_split=fecha2.split('/')
-        compras_clientes=Cliente.objects.all()
-        if len(fecha1_split)>1 and len(fecha2_split)>1:
 
-            if not cliente:
-                cliente=0
-            if checo=="true":
-                compras_clientes = qs.filter(cliente_idcliente=cliente,fecha_venta__range=(datetime.datetime(int(fecha1_split[2]),int(fecha1_split[1]), int(fecha1_split[0]),0,0,0,tzinfo=pytz.UTC), datetime.datetime(int(fecha2_split[2]),int(fecha2_split[1]), int(fecha2_split[0]),23,59,59,tzinfo=pytz.UTC))).values('month','cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('month','total_ventas') #este y funciona con las horas
+        compras_clientes=qs.values('month','cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('month') #este y funciona con las horas
+
+        if len(fecha1_split)>1 and len(fecha2_split)>1:
+            if checo:
+                compras_clientes = qs.filter(cliente_idcliente=int(cliente),fecha_venta__range=(datetime.datetime(int(fecha1_split[2]),int(fecha1_split[1]), int(fecha1_split[0]),0,0,0,tzinfo=pytz.UTC), datetime.datetime(int(fecha2_split[2]),int(fecha2_split[1]), int(fecha2_split[0]),23,59,59,tzinfo=pytz.UTC))).values('month','cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('month') #este y funciona con las horas
                 if not compras_clientes:
-                    compras_clientes = qs.filter(fecha_venta__range=(datetime.datetime(int(fecha1_split[2]),int(fecha1_split[1]), int(fecha1_split[0]),0,0,0,tzinfo=pytz.UTC), datetime.datetime(int(fecha2_split[2]),int(fecha2_split[1]), int(fecha2_split[0]),23,59,59,tzinfo=pytz.UTC))).values('month','cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('month','total_ventas') #este y funciona con las horas
+                    compras_clientes= qs.filter(fecha_venta__range=(datetime.datetime(int(fecha1_split[2]),int(fecha1_split[1]), int(fecha1_split[0]),0,0,0,tzinfo=pytz.UTC), datetime.datetime(int(fecha2_split[2]),int(fecha2_split[1]), int(fecha2_split[0]),23,59,59,tzinfo=pytz.UTC))).values('month','cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('month') #este y funciona con las horas
             else:
                 compras_clientes = Venta.objects.filter(cliente_idcliente=cliente,fecha_venta__range=(datetime.datetime(int(fecha1_split[2]),int(fecha1_split[1]), int(fecha1_split[0]),0,0,0,tzinfo=pytz.UTC), datetime.datetime(int(fecha2_split[2]),int(fecha2_split[1]), int(fecha2_split[0]),23,59,59,tzinfo=pytz.UTC))).values('cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('total_ventas')
                 if not compras_clientes:
                     compras_clientes = Venta.objects.filter(fecha_venta__range=(datetime.datetime(int(fecha1_split[2]),int(fecha1_split[1]), int(fecha1_split[0]),0,0,0,tzinfo=pytz.UTC), datetime.datetime(int(fecha2_split[2]),int(fecha2_split[1]), int(fecha2_split[0]),23,59,59,tzinfo=pytz.UTC))).values('cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('total_ventas')
 
+        if not compras_clientes:
+            compras_clientes=qs.values('month','cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('month') #este y funciona con las horas
+
         repo_clientes=ValuesQuerySetToDict(compras_clientes)
+
         #Creamos el libro de trabajo
         wb = Workbook()
         #Definimos como nuestra hoja de trabajo, la hoja activa, por defecto la primera del libro
@@ -82,14 +88,13 @@ class ReporteCliente(TemplateView):
 
         cont=5
         #Recorremos el conjunto de personas y vamos escribiendo cada uno de los datos en las celdas
-        for cliente in repo_clientes:
-            ws.cell(row=cont,column=2).value = cliente['month']
-            ws.cell(row=cont,column=3).value = cliente['cliente_idcliente__persona_idpersona__nombres_persona']
-            ws.cell(row=cont,column=4).value = cliente['cliente_idcliente__persona_idpersona__apellidos_persona']
-            ws.cell(row=cont,column=5).value = cliente['total_ventas']
-
-
+        for client in repo_clientes:
+            ws.cell(row=cont,column=2).value = client['month']
+            ws.cell(row=cont,column=3).value = client['cliente_idcliente__persona_idpersona__nombres_persona']
+            ws.cell(row=cont,column=4).value = client['cliente_idcliente__persona_idpersona__apellidos_persona']
+            ws.cell(row=cont,column=5).value = client['total_ventas']
             cont = cont + 1
+
         #Establecemos el nombre del archivo
         nombre_archivo ="ReporteClientes.xlsx"
         #Definimos que el tipo de respuesta a devolver es un archivo de microsoft excel

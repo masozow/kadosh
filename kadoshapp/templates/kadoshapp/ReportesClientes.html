@@ -67,17 +67,24 @@
 
 <script type="text/javascript">
 $( document ).ready(function(){ //document indica toda la página, ready indica que ya se haya cargado el DOM
-
+  $('#id_fechafinal_precio').val($('#id_fechainicial_precio').val());
   $('input[type="checkbox"]').addClass("filled-in");
-
+  cambiar_ruta();
 });
 
 
 var ruta;//variable donde se guardará la ruta
 function cambiar_ruta(){
   ruta=$('#id_fechainicial_precio').val()+'&fechafinal_precio='+$('#id_fechafinal_precio').val() +'&cliente_idcliente='+$('#id_cliente_idcliente option:selected').val()+'&checkbo='+$('#id_checkbo').is(':checked');
+  console.log(ruta);
 }
 $('#id_fechainicial_precio').change(function(){//cuando un elemento especifico cambia su valor, en este caso un textbox
+  cambiar_ruta();
+});
+$('#id_checkbo').change(function(){//cuando un elemento especifico cambia su valor, en este caso un textbox
+  cambiar_ruta();
+});
+$('#id_fechafinal_precio').change(function(){//cuando un elemento especifico cambia su valor, en este caso un textbox
   cambiar_ruta();
 });
 /*+'&fechafinal_precio='+$('#id_fechafinal_precio').val()*/
