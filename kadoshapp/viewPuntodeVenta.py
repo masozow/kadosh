@@ -10,7 +10,11 @@ from django.db.models import F #para hacer llamadas u operaciones en la BD, sin 
 from collections import namedtuple #Sirve en la funcion de tuplas
 from decimal import Decimal #para hacer la conversion decimal a JSON
 import logging #para enviar datos al archivo Debug
+<<<<<<< HEAD
 from django.core.serializers.json import DjangoJSONEncoder #para decofificar todos los datos de MySql
+=======
+from django.contrib.auth.decorators import login_required, user_passes_test
+>>>>>>> 89f44f95c7e38c5940a9c6e77a75d425c8a827c4
 
 from .models import *
 from .formPuntodeVenta import *
@@ -19,6 +23,12 @@ def ValuesQuerySetToDict(vqs):
     return [item for item in vqs]
 
 #Vista de Punto de Venta
+def not_in_Caja_group(user):
+    if user:
+        return user.groups.filter(name='Caja').count() != 0
+    return False
+@login_required
+@user_passes_test(not_in_Caja_group, login_url='denegado')
 def PuntoDeVenta(request):
     if request.method=='POST':
         #form_Venta=Form_PuntoVenta_Venta(request.POST)

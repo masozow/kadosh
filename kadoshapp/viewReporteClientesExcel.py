@@ -35,6 +35,7 @@ def to_dict(instance):
     return data
 
 #Nuestra clase hereda de la vista genérica TemplateView
+
 class ReporteCliente(TemplateView):
 
     def get(self, request, *args, **kwargs):
