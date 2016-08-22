@@ -1,6 +1,6 @@
 from django.conf.urls import include, url
 from . import views
-from . import viewReporteProductos,viewModificarCliente,viewAsignarCaja,viewListadoProductos,viewBusquedaMercaderia,viewPrecios,viewCliente, viewIngresoMercaPorProveedor, viewCompra, viewPuntodeVenta, viewTrasladoMercaderia, viewCierreCaja, viewAnularVenta, viewInventario, viewPromocion,viewEmpleados, viewCotizacion,viewModificarVenta
+from . import ViewProducto,ViewTrabajador,viewReporteProductos,viewModificarCliente,viewAsignarCaja,viewListadoProductos,viewBusquedaMercaderia,viewPrecios,viewCliente, viewIngresoMercaPorProveedor, viewCompra, viewPuntodeVenta, viewTrasladoMercaderia, viewCierreCaja, viewAnularVenta, viewInventario, viewPromocion,viewEmpleados, viewCotizacion,viewModificarVenta
 from . import viewTablas
 from . import viewReporteClientes,viewReporteClientesExcel
 from . import ViewReporteVentas, ViewReporteVentasExcel
@@ -13,6 +13,8 @@ url(r'^cerrar/$','django.contrib.auth.views.logout_then_login',name='logout'),
 url(r'^index/kadosh/', views.ingreso_mercaderia, name='ingreso_mercaderia'),
 url(r'^Acceso/Denegado/', views.denegado, name='denegado'),
 url(r'^ingreso/cliente/$', viewCliente.registro_cliente, name='registroCliente'),
+url(r'^Registro/empleado/$', ViewTrabajador.registro_trabajador, name='registro_trabajador'),
+url(r'^Elementos/Producto/$', ViewProducto.CosasProducto, name='Elementos'),
 url(r'^modificar/cliente/$', viewModificarCliente.mod_cliente, name='modcliente'),
 url(r'^ingreso/MercaderiaPoProveedor/$',viewIngresoMercaPorProveedor.ingresodemercaderiaporProveedor, name='IngresoMercaPorProveedor'),
 url(r'^ingreso/Compra/$', viewCompra.Compra, name='Compra'),

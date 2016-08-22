@@ -69,6 +69,7 @@
                     <!--a href="{% url 'kadoshapp.viewBusquedaMercaderia.BusquedaMerca' %}" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align ">Busqueda mercaderia</a-->
                     <a href="{% url 'kadoshapp.viewListadoProductos.Listado' %}" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align ">Listado productos</a>
                     <a href="{% url 'kadoshapp.viewPrecios.Precios' %}" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align ">Precios</a>
+                    <a href="{% url 'kadoshapp.ViewProducto.CosasProducto' %}" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align ">Caracteristicas Producto</a>
                   </div>
                   </div>
                 </li><!-- Fin -->
@@ -97,8 +98,9 @@
                     <div class="collection">
                     <a href="{% url 'kadoshapp.viewCliente.registro_cliente' %}"  class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Nuevo cliente</a>
                     <a href="{% url 'kadoshapp.viewModificarCliente.mod_cliente' %}"  class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Modificar cliente</a>
-                    <a href="{% url 'kadoshapp.viewEmpleados.Empleados' %}"  class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Empleados</a>
-                  </div>
+                    <a href="{% url 'kadoshapp.viewEmpleados.Empleados' %}"  class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Listado Empleados</a>
+                    <a href="{% url 'kadoshapp.ViewTrabajador.registro_trabajador' %}"  class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Nuevo Empleado</a>
+                </div>
                   </div>
                 </li><!-- Fin-->
 
@@ -164,7 +166,8 @@
           <a href="{% url 'kadoshapp.viewBusquedaMercaderia.BusquedaMerca' %}" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align ">Busqueda mercaderia</a-->
           <a href="{% url 'kadoshapp.viewListadoProductos.Listado' %}" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align ">Listado productos</a>
           <a href="{% url 'kadoshapp.viewPrecios.Precios' %}" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align ">Precios</a>
-        </div>
+          <a href="{% url 'kadoshapp.ViewProducto.CosasProducto' %}" class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align ">Caracteristicas Producto</a>
+      </div>
         </div>
       </li><!-- Fin -->
 
@@ -190,9 +193,10 @@
           Personas</div>
         <div class="collapsible-body"><!-- Sub Elemntos--->
           <div class="collection">
-          <a href="{% url 'kadoshapp.viewCliente.registro_cliente' %}"  class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Nuevo cliente</a>
-          <a href="{% url 'kadoshapp.viewModificarCliente.mod_cliente' %}"  class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Modificar cliente</a>
-          <a href="{% url 'kadoshapp.viewEmpleados.Empleados' %}"  class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Empleados</a>
+            <a href="{% url 'kadoshapp.viewCliente.registro_cliente' %}"  class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Nuevo cliente</a>
+            <a href="{% url 'kadoshapp.viewModificarCliente.mod_cliente' %}"  class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Modificar cliente</a>
+            <a href="{% url 'kadoshapp.viewEmpleados.Empleados' %}"  class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Listado Empleados</a>
+            <a href="{% url 'kadoshapp.ViewTrabajador.registro_trabajador' %}"  class="white-text text-white waves-effect waves-light collection-item cyan lighten-1 center-align">Nuevo Empleado</a>
         </div>
         </div>
       </li><!-- Fin-->
@@ -274,7 +278,7 @@ close: 'Cerrar',
 
     monthsFull: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'],
     format: 'd/mmmm/yyyy',
-      selectYears: 50 // Creates a dropdown of 15 years to control year
+      selectYears: 150 // Creates a dropdown of 15 years to control year
     });
 </script>
 

@@ -1,0 +1,52 @@
+{% extends 'kadoshapp/base.html' %}
+{% load staticfiles %}
+<!--se añadió la fila anterior-->
+{% block titulo %}
+Elementos Producto
+{% endblock %}
+    {% block styles %}
+      <link type="text/css" rel="stylesheet" href="{% static "css/formularios.css" %}">
+    {% endblock %}
+      {% block encabezado %}Elementos Producto{% endblock %}
+    {% block content %}
+
+        <form method="POST" class="post-form">
+          {% csrf_token %}
+
+
+            <div class="row" style="margin-bottom: 0px;">
+              <div  class="col l7 m12 s12">
+              <div class"row">
+              <label for="nombre_color"><h6>Color</h6> </label>{{ form_color.nombre_color }}
+              <button  type="submit" class="save btn btn-default">Guardar</button>
+              </div>
+              <div class"row">
+              <label for="nombre_estilo"><h6>Estilo</h6> </label>{{ form_estilo.nombre_estilo }}
+              <button  type="submit" class="save btn btn-default">Guardar</button>
+              </div>
+              <div class"row">
+                <label for="nombre_genero"><h6>Genero</h6> </label>{{ form_genero.nombre_genero}}
+                <button  type="submit" class="save btn btn-default">Guardar</button>
+              </div>
+              <div class"row">
+                <label for="nombre_marca"><h6>Marca</h6> </label>{{ form_marca.nombre_marca }}
+                <button  type="submit" class="save btn btn-default">Guardar</button>
+              </div>
+                <div class"row">
+                    <label for="nombre_talla"><h6>Talla</h6> </label>{{ form_talla.nombre_talla }}
+                    <button  type="submit" class="save btn btn-default">Guardar</button>
+                </div>
+                <div class"row">
+                  <label for="nombre_tipoproducto"><h6>Tipo Producto</h6> </label>{{ form_tipo.nombre_tipoproducto}}
+                  <button  type="submit" class="save btn btn-default">Guardar</button>
+                </div>
+              <!--  {{ form.as_p }}-->
+              </div>
+            </div>
+
+
+
+
+        </form>
+
+    {% endblock %}
