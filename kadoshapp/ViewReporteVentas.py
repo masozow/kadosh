@@ -11,9 +11,13 @@ import pytz #para poder hacer la suma de los campos
 from django.db.models import Q #para poder usar el operador | que funciona como OR
 from django.db.models import F #para hacer llamadas u operaciones en la BD, sin cargarlas en memoria (no las procesa django, sino directamente el SGBD)
 from .formReporteVentas import *
+def not_in_AdministradorSistema_group(user):
+    if user:
+        return user.groups.filter(name='AdministradorSistema').count() != 0
+    return False
 
 @login_required
-
+@user_passes_test(not_in_AdministradorSistema_group, login_url='denegado')
 def Ventas(request):
     if request.method == 'POST':
         form_check=Form_Busqueda_Checbox(request.POST)

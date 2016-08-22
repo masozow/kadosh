@@ -10,11 +10,17 @@ from django.db.models import F #para hacer llamadas u operaciones en la BD, sin 
 from collections import namedtuple #Sirve en la funcion de tuplas
 from decimal import Decimal #para hacer la conversion decimal a JSON
 import logging #para enviar datos al archivo Debug
-
+from django.contrib.auth.decorators import login_required, user_passes_test
 
 from .models import *
 from .formPuntodeVenta import *
 #Vista de Punto de Venta
+def not_in_Caja_group(user):
+    if user:
+        return user.groups.filter(name='Caja').count() != 0
+    return False
+@login_required
+@user_passes_test(not_in_Caja_group, login_url='denegado')
 def PuntoDeVenta(request):
     if request.method=='POST':
         #form_Venta=Form_PuntoVenta_Venta(request.POST)

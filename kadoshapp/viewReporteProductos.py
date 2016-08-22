@@ -14,10 +14,9 @@ from django.db.models import Q
 #El siguiente método convierte el resultado de "values" en un diccionario
 def ValuesQuerySetToDict(vqs):
     return [item for item in vqs]
-
 #Nuestra clase hereda de la vista genérica TemplateView
-class ReporteProductos(TemplateView):
 
+class ReporteProductos(TemplateView):
     def get(self, request, *args, **kwargs):
         #recibo los datos
         codigobarras= self.request.GET.get('codigobarras_producto')
