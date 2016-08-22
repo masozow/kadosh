@@ -112,10 +112,11 @@
               <table id="tabla_productos" class="grey lighten-2">
                 <thead>
                   <tr style="margin-bottom: 0px; margin-top: 0px; padding-top:0px; padding-botton:0px;">
-                      <th data-field="Cod" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">Cod</th>
-                      <th data-field="Cod.Barras" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">Cod.Barras</th>
-                      <th data-field="Producto" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">Producto</th>
-                      <th data-field="Cod.Estilo" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">Cod.Estilo</th>
+                      <th data-field="Cod" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">Cod.Bod</th>
+                      <th data-field="Cod.Barras" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">Cod.Prod</th>
+                      <th data-field="Producto" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">Cantidad</th>
+                      <th data-field="Cod.Estilo" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">Producto</th>
+                      <th data-field="Cod.Estilo" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">Valor parcial</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -141,7 +142,11 @@
 
     /*Espacio para JQuery y busquedas dentro del DOM
     ===========================================================================*/
-
+    /*
+    $(document).on("keypress", "form", function(event) {
+        return event.keyCode != 13;
+    });
+    */
       $( document ).ready(function(){ //document indica toda la página, ready indica que ya se haya cargado el DOM
         //Función que coloca el cursor en el textbox Nit del cliente, al momento de cargar la página
         //$('input#id_codigobarras_producto').focus(); //se accede al input con el id que está después de #, //.focus() indica que ahí se colocará el cursor
@@ -358,6 +363,7 @@
                   contentType: false,
                   success: function(json){
                     console.log(json);
+                    $("#id_ruta_fotografia").val('');
                   },
                   // Si el response no tuvo exito
                   error : function(xhr,errmsg,err) {
