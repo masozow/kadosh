@@ -9,6 +9,10 @@ class Form_Compra_Proveedor(forms.ModelForm):
         model=Proveedor
         fields=('nit_proveedor','nombre_proveedor',)
 
+class FormBuscar(forms.Form):
+    nombre_casamatriz=forms.CharField(max_length=70)
+    nit_casamatriz=forms.CharField(max_length=70)
+
 class FormTabla(forms.Form):
     jsonfield = forms.CharField(max_length=1024)
     def clean_jsonfield(self):
@@ -32,6 +36,12 @@ class Form_Compra_Compra(forms.ModelForm):
         }
 
 class Form_Compra_InventarioProducto(forms.ModelForm):
+    def __init__(self, *args, **kwargs):  #este codigo hace que el codigo de producto no sea necesario, así no se tiene un error de validación al no enviarlo
+        # first call parent's constructor
+        super(Form_Compra_InventarioProducto, self).__init__(*args, **kwargs)
+        # there's a `fields` property now
+        self.fields['producto_codigo_producto'].required = False
+
     class Meta:
         model=InventarioProducto
         fields=('producto_codigo_producto','costo_unitario_inventarioproducto','bodega_idbodega',)
@@ -44,7 +54,7 @@ class Form_Compra_Producto(forms.ModelForm):
 class Form_Compra_DetalleCompra(forms.ModelForm):
     class Meta:
         model=DetalleCompra
-        fields=('cantidad_compra',)
+        fields=('cantidad_compra','valor_parcial_compra',)
 
 class Form_Compra_Fotografia(forms.ModelForm):
     class Meta:

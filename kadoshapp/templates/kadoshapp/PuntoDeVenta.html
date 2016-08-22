@@ -11,7 +11,7 @@
 
     {% block encabezado %}Punto de venta{% endblock %}
     {% block content %}
-        <form action="/Guardar/Venta/" id="formulario_venta" method="POST" class="post-form">
+        <form action="/Guardar/Venta/" id="formulario_venta" method="POST" class="post-form" autocomplete="off">
           {% csrf_token %}
         <div id="bloque_encabezado" style="background-color: #e6e6ff;">
           <div class="row" style="margin-bottom: 0px;">
@@ -246,6 +246,15 @@
         //(txtboxInicial,txtboxDestino,dropDownBusqueda,mensaje)
         comprobar_pasarsiguiente_mostrarmensaje('input#id_nit_del_cliente','input#id_codigobarras_producto','#id_cliente_idcliente','El cliente no existe');
 
+        $( 'input#id_cantidad_venta' ).keydown(function(e){
+          var keyCode = e.keyCode || e.which; //la propiedad wich indica la tecla o el botón que se ha presionado específicamente
+          if(e.keyCode==13)
+          {
+            e.preventDefault();
+            $( 'input#id_codigobarras_producto' ).focus();
+          }
+        });
+
         //Función que realiza una acción al leer código de barras
         $( 'input#id_codigobarras_producto' ).keydown(function(e){
           var keyCode = e.keyCode || e.which; //la propiedad wich indica la tecla o el botón que se ha presionado específicamente
@@ -281,15 +290,13 @@
         function agregar_producto(boton){
           var elegido=$('#id_producto_codigo_producto option:selected').text();
           var datos_producto=elegido.split('|');
-
           var cantidad=$('input#id_cantidad_venta').val();
           var valor_parcial=cantidad*parseFloat(datos_producto[4]);
-
           $('#tabla_productos > tbody:last-child').append('<tr>'+
                                                             '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+datos_producto[0]+'</td>'+
                                                             '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+datos_producto[1]+'</td>'+
                                                             '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+cantidad+'</td>'+
-                                                            '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+datos_producto[2]+'</td>'+
+                                                            '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+datos_producto[2]+'-'+datos_producto[5]+'-'+datos_producto[8]+' ['+datos_producto[6]+'] '+datos_producto[7]+'</td>'+
                                                             '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+datos_producto[4]+'</td>'+
                                                             '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;" class="suma_valor_parcial">'+valor_parcial.toFixed(2)+'</td>'+
                                                             '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;"> <input id="boton_eliminar" "type="button" onclick="eliminar_fila(this)" value="Eliminar" name="Eliminar" style="text-align: center; margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;"/> </td>'+
@@ -436,26 +443,23 @@
                 success : function(json) {
                     //console.log(json.recibido);
                     $(codigo_buscado).val(''); // Se limpia el campo del codigo del producto
-                    var res_valorprod=JSON.parse(json.valorprod);
-                    var res_inventario=JSON.parse(json.inventario);
-                    var res_nombre=JSON.parse(json.nombre);
-                    var campos_valorprod =res_valorprod[0].fields;
-                    var campos_nombre =res_nombre[0].fields;
-                    var cantidad=$('input#id_cantidad_venta').val();
-                    var valor_parcial=cantidad*campos_valorprod.valor_precio;
-                    $('#tabla_productos > tbody:last-child').append('<tr>'+
-                                                                      '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+res_inventario[0].pk+'</td>'+
-                                                                      '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+res_nombre[0].pk+'</td>'+
-                                                                      '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+cantidad+'</td>'+
-                                                                      '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+campos_nombre.nombre_producto+'</td>'+
-                                                                      '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+campos_valorprod.valor_precio+'</td>'+
-                                                                      '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;" class="suma_valor_parcial">'+valor_parcial.toFixed(2)+'</td>'+
-                                                                      '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;"> <input id="boton_eliminar" "type="button" onclick="eliminar_fila(this)" value="Eliminar" name="Eliminar" style="text-align: center; margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;"/> </td>'+
-                                                                    '</tr>');
-                    $('input#id_valor_precio').val(campos_valorprod.valor_precio);
-                    //console.log("success"); // Solo se comprueba mediante la consola, que el llamado fue correcto
-                    $('input#id_cantidad_venta').val(1);
-                    sumar_valor_parcial(".suma_valor_parcial",'#id_total_venta');
+                     $.each(json, function(key,value) {
+                        var cantidad=$('input#id_cantidad_venta').val();
+                        var valor_parcial=cantidad*value.precio__valor_precio;
+                        $('#tabla_productos > tbody:last-child').append('<tr>'+
+                                                                          '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.inventarioproducto__pk+'</td>'+
+                                                                          '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.pk+'</td>'+
+                                                                          '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+cantidad+'</td>'+
+                                                                          '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.nombre_producto+'-'+value.marca_id_marca__nombre_marca+'-'+value.genero_idgener__nombre_genero+' ['+value.talla_idtalla__nombre_talla+'] '+value.color_idcolor__nombre_color+'</td>'+
+                                                                          '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.precio__valor_precio+'</td>'+
+                                                                          '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;" class="suma_valor_parcial">'+valor_parcial.toFixed(2)+'</td>'+
+                                                                          '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;"> <input id="boton_eliminar" "type="button" onclick="eliminar_fila(this)" value="Eliminar" name="Eliminar" style="text-align: center; margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;"/> </td>'+
+                                                                        '</tr>');
+                        $('input#id_valor_precio').val(value.valor_precio);
+                        //console.log("success"); // Solo se comprueba mediante la consola, que el llamado fue correcto
+                        $('input#id_cantidad_venta').val(1);
+                        sumar_valor_parcial(".suma_valor_parcial",'#id_total_venta');
+                    });
                 },
                 // Si el response no tuvo exito
                 error : function(xhr,errmsg,err) {
@@ -475,7 +479,7 @@
                 success : function(json) {
                   $(id_producto_codigo_producto).empty();
                   $.each(json.consulta, function(key,value) {
-                    $(id_producto_codigo_producto).append('<option value='+value.codigo_producto+'>'+ value.idInventario_producto +'|'+ value.codigo_producto +'|'+ value.nombre_producto +'|'+ value.codigoestilo_producto +'|'+ value.valor_precio +'</option>');
+                    $(id_producto_codigo_producto).append('<option value='+value.codigo_producto+'>'+ value.idInventario_producto +'|'+ value.codigo_producto +'|'+ value.nombre_producto +'|'+ value.codigoestilo_producto +'|'+ value.valor_precio +'|'+ value.nombre_marca +'|'+ value.nombre_talla +'|'+ value.nombre_color+'|'+ value.nombre_genero +'</option>');
                     //console.log(value);
                   });
                   //console.log('Antes de asginar');

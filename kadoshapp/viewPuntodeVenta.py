@@ -10,10 +10,14 @@ from django.db.models import F #para hacer llamadas u operaciones en la BD, sin 
 from collections import namedtuple #Sirve en la funcion de tuplas
 from decimal import Decimal #para hacer la conversion decimal a JSON
 import logging #para enviar datos al archivo Debug
-
+from django.core.serializers.json import DjangoJSONEncoder #para decofificar todos los datos de MySql
 
 from .models import *
 from .formPuntodeVenta import *
+
+def ValuesQuerySetToDict(vqs):
+    return [item for item in vqs]
+
 #Vista de Punto de Venta
 def PuntoDeVenta(request):
     if request.method=='POST':
@@ -66,17 +70,20 @@ def BuscarProducto(request):
         #pdb.set_trace()  #estos son los breakpoints de django
 
         response_data = {} #declarando un diccionario vacio
-        resp_producto=Producto.objects.filter(codigobarras_producto=txt_codigo_producto,estado_producto=1)
+        producto=Producto.objects.filter(codigobarras_producto=txt_codigo_producto,estado_producto=1,inventarioproducto__bodega_idbodega=id_bodega_que_vende,precio__estado_precio=1).values('pk','nombre_producto','marca_id_marca__nombre_marca','talla_idtalla__nombre_talla','color_idcolor__nombre_color','genero_idgener__nombre_genero','inventarioproducto__pk','precio__valor_precio','precio__pk').order_by('-precio__pk')[:1]
+        dict_producto=ValuesQuerySetToDict(producto)
         #if id_bodega_que_vende is not None:
         #response_data['recibido']=id_bodega_que_vende
-        resp_inventario=InventarioProducto.objects.filter(producto_codigo_producto__in=resp_producto,bodega_idbodega=id_bodega_que_vende).order_by('-idinventario_producto')[:1]
-        resp_precio=Precio.objects.filter(producto_codigo_producto__in=resp_producto,estado_precio=1).order_by('-idprecio')[:1] #
-        response_data['inventario']=serializers.serialize('json', list(resp_inventario), fields=('pk'))
-        response_data['nombre']=serializers.serialize('json', list(resp_producto), fields=('nombre_producto'))
-        response_data['valorprod']=serializers.serialize('json', list(resp_precio), fields=('valor_precio'))
+        #resp_inventario=InventarioProducto.objects.filter(producto_codigo_producto__in=producto,bodega_idbodega=id_bodega_que_vende).values('pk').order_by('-idinventario_producto')[:1]
+        #resp_precio=Precio.objects.filter(producto_codigo_producto__in=producto,estado_precio=1).values('valor_precio').order_by('-idprecio')[:1] #
+        #dict_precio=ValuesQuerySetToDict(resp_precio)
+        #dict_inventario=(resp_inventario)
+        #response_data['inventario']=serializers.serialize('json', dict_inventario)
+        #response_data['nombre']=dict_producto
+        #response_data['valorprod']=serializers.serialize('json', resp_precio)
 
         return HttpResponse(
-            json.dumps(response_data),
+            json.dumps(dict_producto,cls=DjangoJSONEncoder),
             content_type="application/json"
         )
     else:
@@ -242,10 +249,14 @@ def consulta_sql_personalizada(bodega,codestilo,marca,tipo,estilo,talla,color,ge
     #transaction.commit_unless_managed()
 
     # Data retrieval operation - no commit required
-    cursor.execute("""SELECT IP.idInventario_producto,P.codigo_producto,P.codigoestilo_producto,P.nombre_producto,Pr.valor_precio
+    cursor.execute("""SELECT IP.idInventario_producto,P.codigo_producto,P.codigoestilo_producto,P.nombre_producto,Pr.valor_precio,M.nombre_marca,T.nombre_talla,G.nombre_genero,C.nombre_color
                       FROM Producto as P
                       INNER JOIN Inventario_producto as IP on P.codigo_producto=IP.Producto_codigo_producto
                       INNER JOIN Precio as Pr on Pr.Producto_codigo_producto = P.codigo_producto
+                      INNER JOIN Marca as M on M.id_marca = P.marca_idmarca
+                      INNER JOIN Talla as T on T.idtalla = P.talla_idtalla
+                      INNER JOIN Genero as G on G.idgener=P.genero_idgener
+                      INNER JOIN Color as C on C.idcolor=P.color_idcolor
                       WHERE IP.bodega_idbodega=%s
                       AND P.estado_producto=1 AND IP.estado_inventario_producto=1 AND Pr.estado_precio=1
                       AND (P.codigoestilo_producto=%s OR P.marca_idmarca = %s OR P.tipo_producto_idtipo_producto=%s OR P.estilo_idestilo=%s OR P.color_idcolor=%s OR P.genero_idgener=%s OR P.talla_idtalla=%s)""",[bodega,codestilo,marca,tipo,estilo,color,genero,talla])
