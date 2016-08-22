@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.admin import widgets
 from django.forms import extras
 from .models import *
+import json
 
 #Form Compra
 class Form_Compra_Proveedor(forms.ModelForm):
@@ -20,17 +21,21 @@ class FormTabla(forms.Form):
          try:
              json_data = json.loads(jdata) #loads string as json
              #validate json_data
-         except:
-             raise forms.ValidationError("Invalid data in jsonfield")
+         except Exception as e:
+             raise forms.ValidationError(str(e))
          #if json data not valid:
             #raise forms.ValidationError("Invalid data in jsonfield")
          return jdata
 
 class Form_Compra_Compra(forms.ModelForm):
+    #def __init__(self, *args, **kwargs):  #este codigo hace que el codigo de producto no sea necesario, así no se tiene un error de validación al no enviarlo
+    #    super(Form_Compra_Compra, self).__init__(*args, **kwargs)
+    #    self.fields['casa_matriz'].required = False
     class Meta:
         model=Compra
-        fields=('tipo_pago_idtipo_pago','proveedor_idproveedor','tipo_pago_idtipo_pago','casa_matriz','numero_guia','entregada_compra','empleado_recibio','vrf_compra','empleado_reviso','fecha_recepcion_compra','fecha_realizacion_compra',)
+        fields=('tipo_pago_idtipo_pago','proveedor_idproveedor','tipo_pago_idtipo_pago','casa_matriz','numero_guia','entregada_compra','empleado_recibio','vrf_compra','empleado_reviso','fecha_recepcion_compra','fecha_realizacion_compra','total_compra',)
         widgets = {
+            'total_compra': forms.NumberInput(attrs={'readonly':'True','step': '0.01','value':'0.00', 'placeholder':'0.00'}), #es para que no se pueda escribir en el
            'fecha_recepcion_compra': forms.DateInput(attrs={'class': 'datepicker'}),
            'fecha_realizacion_compra': forms.DateInput(attrs={'class': 'datepicker'})
         }

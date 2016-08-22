@@ -10,7 +10,7 @@
       {% block encabezado %}Compras{% endblock %}
     {% block content %}
 
-        <form method="POST" class="post-form" enctype="multipart/form-data" id="formulario_compra" autocomplete="off">
+      <form method="POST" class="post-form" enctype="multipart/form-data" id="formulario_compra" autocomplete="off" action="/ingreso/Compra/">
           {% csrf_token %}
         <div id="bloque_encabezado" style="background-color:#eeeedd;border-radius:10px;">
           <div class="row" style="margin-bottom: 0px;">
@@ -99,10 +99,15 @@
                     <label for="id_producto_codigo_producto"><h6>Resultado de la búsqueda:</h6> </label>{{  form_InventarioProducto.producto_codigo_producto}}<br/>
                   </div>
                   <div class="divider"></div>
-                  <br/>
-                  <br/>
-                  <input class="btn tooltipped" data-position="right" data-delay="5" data-tooltip="El producto se guardará al presionar este botón. Revise bien los datos." id="boton_agregar_producto" type="button" onclick="agregar_producto(this)" value="Agregar" name="btn_agregar_producto"/>
-                  <br/>
+                  <div class="col s6">
+                    <br/>
+                    <input class="btn tooltipped" data-position="right" data-delay="5" data-tooltip="El producto se guardará al presionar este botón. Revise bien los datos." id="boton_agregar_producto" type="button" onclick="agregar_producto(this)" value="Agregar" name="btn_agregar_producto"/>
+                    <br/>
+                  </div>
+                  <div class="col s6">
+                    <label for="id_total_compra"><h6>Total compra:</h6> </label>{{  form_Compra.total_compra}}<br/>
+                    <br/>
+                  </div>
             </div>
           </div>
           <br/>
@@ -114,8 +119,8 @@
                   <tr style="margin-bottom: 0px; margin-top: 0px; padding-top:0px; padding-botton:0px;">
                       <th data-field="Cod" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">Cod.Bod</th>
                       <th data-field="Cod.Barras" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">Cod.Prod</th>
-                      <th data-field="Producto" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">Cantidad</th>
-                      <th data-field="Cod.Estilo" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">Producto</th>
+                      <th data-field="Producto" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">Cant</th>
+                      <th data-field="Cod.Estilo" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;" width="400">Producto</th>
                       <th data-field="Cod.Estilo" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">Valor parcial</th>
                   </tr>
                 </thead>
@@ -127,6 +132,11 @@
         <div class="row" style="margin-bottom: 0px;">
           <div  class="col l6 m12 s12">
             <label for="id_tipo_pago_idtipo_pago"><h6>Tipo de pago:</h6> </label>{{ form_Compra.tipo_pago_idtipo_pago}}
+            {{ form_tabla.jsonfield}}
+            {% if form_tabla.errors %}
+            </br>
+            <label class="mietiqueta">{{ form_tabla.errors.jsonfield }}</label>
+            {% endif %}
           </div>
           <div  class="col l6 m12 s12">
             <br/>
@@ -212,38 +222,111 @@
          obtener_producto_caracteristicas('input#id_codigobarras_producto','#id_codigoestilo_producto','#id_bodega_egreso','#id_marca_id_marca','#id_tipo_producto_idtipo_producto','#id_talla_idtalla','#id_estilo_idestilo','#id_color_idcolor','#id_genero_idgener');
        }
 
-       //Esta funcion agrega el producto resultado de la busqueda por caracteristicas, a la tabla de productos
+
+       var datosproducto;
+       var cantidad;
+       var valorparcial;
+       //Esta funcion agrega el producto, a la tabla de productos, ademas guarda el nuevo producto
        function agregar_producto(boton){
          if($('#id_valor_parcial_compra').val()===''){
            Materialize.toast('Debe colocar el valor parcial de la compra', 4000);
          }
          else{
-           subir_imagen('#id_ruta_fotografia');
-           $('#bloque_caracteristicas_producto').find('input text textarea').not('#boton_buscar_producto,#boton_agregar_producto,#id_codigobarras_producto').val('');
-           $('#id_nombre_producto').val('');
-           $('#id_codigoestilo_producto').val('');
-           $('#id_codigobarras_producto').val('');
-           $('#id_valor_parcial_compra').val('');
-           $('#bloque_caracteristicas_producto').find('select').val(1);
-           $('#id_producto_codigo_producto').empty();
+           valorparcial=$('#id_valor_parcial_compra').val();
+           cantidad=$('#id_cantidad_compra').val();
+           if($('#id_producto_codigo_producto option:selected').length==0)
+           {
+             var marca=$('#id_marca_id_marca option:selected').text().split(' ');
+             var estilo=$('#id_codigoestilo_producto').val();
+             var genero=$('#id_genero_idgener option:selected').text().split(' ');
+             var talla=$('#id_talla_idtalla option:selected').text();
+             var color=$('#id_color_idcolor option:selected').text();
+             var nombre=$('#id_nombre_producto').val();
+             datosproducto=nombre+' -- '+marca[2]+' ['+talla+'] '+ color +' -- '+genero[2]+' -- '+estilo;
+             alert(datosproducto);
+             sumar_valor_parcial(".suma_valor_parcial",'#id_total_compra');
+             subir_imagen('#id_ruta_fotografia');//bajar esto al else, junto con el resto que esta comentado abajo
+             $('#bloque_caracteristicas_producto').find('input text textarea').not('#boton_buscar_producto,#boton_agregar_producto,#id_codigobarras_producto').val('');
+             $('#id_nombre_producto').val('');
+             $('#id_codigoestilo_producto').val('');
+             $('#id_codigobarras_producto').val('');
+             $('#id_valor_parcial_compra').val('');
+             $('#bloque_caracteristicas_producto').find('select').val(1);
+             $('#id_producto_codigo_producto').empty();
+           }
+           else {
+             var datos=$('#id_producto_codigo_producto option:selected').text().split('|');
+             datosproducto=datos[1]+' -- '+datos[3]+' ['+datos[4]+'] '+ datos[5] +' -- '+datos[6]+' -- '+datos[2];
+             $('#tabla_productos > tbody:last-child').append('<tr>'+
+                                                               '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+parseInt($('#id_bodega_idbodega option:selected').val())+'</td>'+
+                                                               '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+parseInt(datos[0])+'</td>'+
+                                                               '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+parseInt(cantidad)+'</td>'+
+                                                               '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+datosproducto+'</td>'+
+                                                               '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;" class="suma_valor_parcial">'+parseFloat(valorparcial).toFixed(2)+'</td>'+
+                                                             '</tr>');
+            sumar_valor_parcial(".suma_valor_parcial",'#id_total_compra');
+            $('#bloque_caracteristicas_producto').find('input text textarea').not('#boton_buscar_producto,#boton_agregar_producto,#id_codigobarras_producto').val('');
+            $('#id_nombre_producto').val('');
+            $('#id_codigoestilo_producto').val('');
+            $('#id_codigobarras_producto').val('');
+            $('#id_valor_parcial_compra').val('');
+            $('#bloque_caracteristicas_producto').find('select').val(1);
+            $('#id_producto_codigo_producto').empty();
+            $('input#id_cantidad_compra').val(1);
+            $("#id_ruta_fotografia").val('');
+           }
          }
+       }
 
-         /*
-         var elegido=$('#id_producto_codigo_producto option:selected').text();
-         var datos_producto=elegido.split('|');
 
-         var cantidad=$('input#id_cantidad_venta').val();
-         var valor_parcial=cantidad*parseFloat(datos_producto[4]);
+       //La siguiente función ejecuta varias acciones antes de  hacer el submit
+       $( '#formulario_compra' ).submit(function( event ) {
+         //event.preventDefault();
+          //A continuacion se obtienen todos los elementos de la tabla producto, en un arrelgo
+          var tbl = $('table#tabla_productos tr').get().map(function(row) {
+            return $(row).find('td').get().map(function(cell) {
+              return $(cell).html();
+            });
+          });
+          $.each(tbl, function(key,value) {//se recorre la matriz resultante de la tabla
+            value.splice(3,1);//elimina el ultimo elemento del arreglo, en este caso, en la fila, el boton de eliminar
+          });
+          tbl.shift();//elimina el primer elemento de la tabla, que en este caso es un arreglo vacio
+          var tblJson=JSON.stringify(tbl); //Sin esto la tabla no se recibe bien en el View, es necesario
+          console.log(tblJson);
+          $('input[name=jsonfield]').val(tblJson); //guardando el valor del arreglo JSON en la tabla
+          //Las siguientes son validaciones para poder enviar la información correctamente
+          if ($('#id_bodega_idbodega option:selected').val()==="") {
+            alert("Debe elegir la bodega");
+            event.preventDefault();
+          }
+          else if (tbl.length===0) {
+            alert("No ha ingresado ningún producto");
+            event.preventDefault();
+          }
+          else if ($('#id_tipo_pago_idtipo_pago option:selected').val()==="") {
+            alert("Elija un tipo de pago válido");
+            event.preventDefault();
+          }
+          else if ($('#id_proveedor_idproveedor option:selected').val()==="") {
+            alert("Debe elegir un proveedor válido");
+            event.preventDefault();
+          }
+        });
 
-         $('#tabla_productos > tbody:last-child').append('<tr>'+
-                                                           '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+datos_producto[1]+'</td>'+
-                                                           '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+cantidad+'</td>'+
-                                                           '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+datos_producto[2]+'</td>'+
-                                                           '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+datos_producto[4]+'</td>'+
-                                                           '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;"> <input id="boton_eliminar" "type="button" onclick="eliminar_fila(this)" value="Eliminar" name="Eliminar" style="text-align: center; margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;"/> </td>'+
-                                                         '</tr>');
-         $('input#id_cantidad_venta').val(1);
-         */
+
+
+       //Funcion para sumar la columna de una tabla
+       //se le envia como primer parametro, el selector de la clase aplicada a la columna de la tabla_productos
+       //luego como segundo, el nombre del 'number input' donde se escribira el resultado
+       function sumar_valor_parcial(clase, escribiraqui)
+       {
+         var sum=0.00;
+         $(clase).each(function() {
+             sum += parseFloat($(this).text());
+         });
+         $(escribiraqui).val(sum.toFixed(2));
+         parseFloat($(escribiraqui).val()).toFixed(2)
        }
 
        /*Espacio para Ajax
@@ -257,7 +340,7 @@
                // Si el response es correcto (si la respuesta del servidor es correcta)
                success : function(json) {
                  //console.log('hola');
-                   $("#tabla_productos > tbody").html("");
+                   //$("#tabla_productos > tbody").html("");
                    console.log(json);
                    if(json.length===0){
                      Materialize.toast('Ese producto no existe', 4000);
@@ -276,15 +359,6 @@
                        $('#id_descripcion_producto').val(value.descripcion_producto);
 
                        console.log(value);
-                       /*
-                       $('#id_ruta_fotografia').text(value.productohasfotografia__fotografia_idfotografia__ruta_fotografia);
-                       $('#tabla_productos > tbody:last-child').append('<tr onclick="seleccionar_fila(this)">'+
-                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.pk+'</td>'+
-                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.codigobarras_producto+'</td>'+
-                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.nombre_producto+'-'+value.marca_id_marca__nombre_marca+'-'+value.genero_idgener__nombre_genero+'-'+value.talla_idtalla__nombre_talla+'-'+value.color_idcolor__nombre_color+'</td>'+
-                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.codigoestilo_producto+'</td>'+
-                                                                       '</tr>');
-                      */
                      });
                    }
                },
@@ -304,7 +378,7 @@
                    data : { codigobarras_producto : $(codigo_buscado).val(), codigo_estilo_producto : $(codigo_estilo_buscar).val(), bodega_idbodega: $(bodega_que_vende+" option:selected").val(), marca_producto: $(marca_buscar+" option:selected").val(), tipo_producto: $(tipo_buscar+" option:selected").val(), estilo_producto: $(estilo_buscar+" option:selected").val(), color_producto: $(color_buscar+" option:selected").val(), talla_producto: $(talla_buscar+" option:selected").val(), genero_producto: $(genero_buscar+" option:selected").val()}, // Datos enviados con el request en formato JSON
                    success : function(json) {
                      $('#id_producto_codigo_producto').empty();
-                     $('#id_producto_codigo_producto').append('<option value="">---------</option>');
+                     //$('#id_producto_codigo_producto').append('<option value="">---------</option>');
                      if(json.length===0){
                        Materialize.toast('Ese producto no existe', 4000);
                      }
@@ -315,33 +389,12 @@
                        $('#id_codigobarras_producto').val('');
                        $('#bloque_caracteristicas_producto').find('select').not('#id_bodega_idbodega').val(1);
                        Materialize.toast('Se obtuvieron resultados', 4000);
+                       console.log(json);
                        $.each(json, function(key,value) {
                          console.log(value);
                          $('#id_producto_codigo_producto').append('<option value='+value.pk+'>'+ value.pk  +'|'+ value.nombre_producto +'|'+ value.codigoestilo_producto +'|'+ value.marca_id_marca__nombre_marca +'|'+ value.talla_idtalla__nombre_talla +'|'+ value.color_idcolor__nombre_color+'|'+ value.genero_idgener__nombre_genero +'</option>');
                          });
                       }
-                       /*
-                       $('input#id_codigobarras_producto').val(value.codigobarras_producto);
-                       $('#id_codigoestilo_producto').val(value.codigoestilo_producto);
-                       $('#id_marca_id_marca').val(value.marca_id_marca__pk);
-                       $('#id_tipo_producto_idtipo_producto').val(value.tipo_producto_idtipo_producto__pk);
-                       $('#id_talla_idtalla').val(value.talla_idtalla__pk);
-                       $('#id_estilo_idestilo').val(value.estilo_idestilo__pk);
-                       $('#id_color_idcolor').val(value.color_idcolor__pk);
-                       $('#id_genero_idgener').val(value.color_idcolor__pk);
-                       $('#id_nombre_producto').val(value.nombre_producto);
-                       $('#id_descripcion_producto').val(value.descripcion_producto);
-                       $('#id_producto_codigo_producto').val(value.pk);
-                       */
-
-
-                     /*
-                     $(id_producto_codigo_producto).empty();
-                     $.each(json.consulta, function(key,value) {
-                       $(id_producto_codigo_producto).append('<option value='+value.codigo_producto+'>'+ value.idInventario_producto +'|'+ value.codigo_producto +'|'+ value.nombre_producto +'|'+ value.codigoestilo_producto +'|'+ value.valor_precio +'</option>');
-                       //console.log(value);
-                     });
-                     */
                    },
 
                    error : function(xhr,errmsg,err) {
@@ -363,6 +416,25 @@
                   contentType: false,
                   success: function(json){
                     console.log(json);
+                    console.log(json.bodega);
+                    var product;
+                    try {
+                      product=json.producto[0].pk;
+                    } catch (e) {
+                      product=json.producto;
+                    }
+                    console.log(product);
+                    //console.log(json.inventario);
+                    $('#tabla_productos > tbody:last-child').append('<tr>'+
+                                                                      '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+parseInt(json.bodega)+'</td>'+
+                                                                      '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+parseInt(product)+'</td>'+
+                                                                      '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+parseInt(cantidad)+'</td>'+
+                                                                      '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+datosproducto+'</td>'+
+                                                                      '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;" class="suma_valor_parcial">'+ parseFloat( valorparcial).toFixed(2)+'</td>'+
+                                                                    '</tr>');
+
+                    sumar_valor_parcial(".suma_valor_parcial",'#id_total_compra');
+                    $('#id_cantidad_compra').val(1);
                     $("#id_ruta_fotografia").val('');
                   },
                   // Si el response no tuvo exito

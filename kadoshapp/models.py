@@ -160,9 +160,9 @@ class Compra(models.Model):
     vrf_compra = models.BooleanField(default=True)
     fecha_recepcion_compra = models.DateField(default=timezone.now)
     fecha_realizacion_compra = models.DateField(default=timezone.now)
-    casa_matriz = models.ForeignKey('Proveedor', db_column='Casa_matriz',related_name='proveedor_casa_matriz',blank=True)  # Field name made lowercase.
-    empleado_recibio = models.ForeignKey('Empleado', db_column='Empleado_recibio',related_name='empleado_empleado_recibio')  # Field name made lowercase.
-    empleado_reviso = models.ForeignKey('Empleado', db_column='Empleado_reviso',related_name='empleado_empleado_reviso')  # Field name made lowercase.
+    casa_matriz = models.ForeignKey('Proveedor', db_column='Casa_matriz',related_name='proveedor_casa_matriz',blank=True,null=True)  # Field name made lowercase.
+    empleado_recibio = models.ForeignKey('Empleado', db_column='Empleado_recibio',related_name='empleado_empleado_recibio',blank=True,null=True)  # Field name made lowercase.
+    empleado_reviso = models.ForeignKey('Empleado', db_column='Empleado_reviso',related_name='empleado_empleado_reviso',blank=True,null=True)  # Field name made lowercase.
 
     def __str__(self):
         return 'Compra: %s - Proveedor: %s  - Fecha: %s' % (self.idcompra, self.proveedor_idproveedor.nombre_proveedor, self.fecha_compra)
