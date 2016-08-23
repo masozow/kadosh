@@ -667,6 +667,7 @@ class Producto(models.Model):
     nombre_producto = models.CharField(max_length=60, blank=True, null=True)
     marca_id_marca = models.ForeignKey(Marca, db_column='marca_idmarca')  # Field name made lowercase.
     publicar_producto = models.BooleanField(default=False)
+    oferta_producto = models.BooleanField(default=False)
     #combo_idcombo = models.ForeignKey(Combo, db_column='Combo_idCombo')  # Field name made lowercase.
 
     def __str__(self):
