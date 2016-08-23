@@ -17,26 +17,26 @@
               <div class="col l6 m12 s12">
                 <div class="row" style="margin-bottom: 0px;">
                   <div class="col s6">
-                    <label for="id_proveedor_idproveedor"><h6>Nombre Proveedor:</h6> </label>{{ form_Proveedor.nombre_proveedor}}
-                    <label for="id_nit_proveedor"><h6>Nit Proveedor:</h6> </label>{{ form_Proveedor.nit_proveedor}}
+                    <label for="id_proveedor_idproveedor" style="color:	#656534;"><h6>Nombre Proveedor:</h6> </label>{{ form_Proveedor.nombre_proveedor}}
+                    <label for="id_nit_proveedor" style="color:	#656534;"><h6>Nit Proveedor:</h6> </label>{{ form_Proveedor.nit_proveedor}}
                     <br/>
                   </div>
                   <div class="col s6">
                     <label for="id_proveedor_idproveedor"><h6>Proveedor:</h6> </label>{{ form_Compra.proveedor_idproveedor}}
                     </br>
-                    <input class="btn tooltipped" data-position="right" data-delay="5" data-tooltip="Crear nuevo proveedor" id="boton_agregar_proveedor" type="button" onclick="agregar_proveedor(this)" value="Nuevo" name="btn_agregar_proveedor"/>
+                    <input class="btn tooltipped" style="opacity: 0.7;filter:alpha(opacity=70);" data-position="right" data-delay="5" data-tooltip="Crear nuevo proveedor" id="boton_agregar_proveedor" type="button" onclick="agregar_proveedor(this)" value="Nuevo" name="btn_agregar_proveedor"/>
                   </div>
                 </div>
                 <div class="row" style="margin-bottom: 0px;">
                   <div class="col s6">
-                    <label for="id_nombre_casamatriz"><h6>Nombre casa matriz:</h6> </label>{{ form_casamatriz.nombre_casamatriz}}
-                    <label for="id_nit_casamatriz"><h6>Nit casa matriz:</h6> </label>{{ form_casamatriz.nit_casamatriz}}
+                    <label for="id_nombre_casamatriz" style="color:	#656534;"><h6>Nombre casa matriz:</h6> </label>{{ form_casamatriz.nombre_casamatriz}}
+                    <label for="id_nit_casamatriz" style="color:	#656534;"><h6>Nit casa matriz:</h6> </label>{{ form_casamatriz.nit_casamatriz}}
                     <br/>
                   </div>
                   <div class="col s6">
                     <label for="id_casa_matriz"><h6>Casa matriz:</h6> </label>{{ form_Compra.casa_matriz}}
                   </br>
-                  <input class="btn tooltipped" data-position="right" data-delay="5" data-tooltip="Crear nueva casa matriz" id="boton_agregar_casamatriz" type="button" onclick="agregar_casamatriz(this)" value="Nueva" name="btn_agregar_casamatriz"/>
+                  <input class="btn tooltipped" style="opacity: 0.7;filter:alpha(opacity=70);" data-position="right" data-delay="5" data-tooltip="Crear nueva casa matriz" id="boton_agregar_casamatriz" type="button" onclick="agregar_casamatriz(this)" value="Nueva" name="btn_agregar_casamatriz"/>
                   </div>
                 </div>
 
@@ -46,18 +46,18 @@
                   <label for="id_numero_guia"><h6>Numero de guía:</h6> </label>{{ form_Compra.numero_guia}}
                   <label for="id_empleado_recibio"><h6>Empleado que recibió:</h6> </label>{{ form_Compra.empleado_recibio}}
                   <label for="id_empleado_reviso"><h6>Empleado que revisó:</h6> </label>{{ form_Compra.empleado_reviso}}
-                  {{ form_Compra.entregada_compra}}
-                  <label for="id_entregada_compra"><h6>Compra entregada</h6> </label>
+                  <label for="id_numero_factura"><h6>Número de factura:</h6> </label>{{ form_Compra.numero_factura}}
                   <br/>
                   <br/>
                 </div>
                 <div class="col s6">
                   <label for="id_fecha_recepcion_compra"><h6>Fecha recepción:</h6> </label>{{ form_Compra.fecha_recepcion_compra}}
-                  <!--input type="date" class="datepicker" id="fecha_recepcion_compra"-->
                   <label for="id_fecha_realizacion_compra"><h6>Fecha compra:</h6> </label>{{ form_Compra.fecha_realizacion_compra}}
-                  <!--input type="date" class="datepicker" id="fecha_realizacion_compra"-->
+                  <label for="id_numero_invoice"><h6>Número de invoice:</h6> </label>{{ form_Compra.numero_invoice}}
                   {{ form_Compra.vrf_compra}}
                   <label for="id_vrf_compra"><h6>VRF</h6></label>
+                  {{ form_Compra.entregada_compra}}
+                  <label for="id_entregada_compra"><h6>Compra entregada</h6> </label>
                 </div>
             </div>
           </div>
@@ -65,46 +65,57 @@
         <div id="bloque_caracteristicas_producto" style="background-color:#ddeee1;border-radius:10px;">
           <div class="row" style="margin-bottom: 0px;">
             <div  class="col l6 m12 s12">
-              <div class="col s12">
-                <label for="id_bodega_idbodega"><h6>Bodega:</h6> </label>{{ form_InventarioProducto.bodega_idbodega}}
+              <div class="row" style="margin-bottom: 0px;">
+                <div class="col s6">
+                  <label for="id_cantidad_compra"><h6>Cantidad:</h6> </label>{{ form_Detallecompra.cantidad_compra}}
+                </div>
               </div>
               <div class="col s6">
-                <label for="id_cantidad_compra"><h6>Cantidad:</h6> </label>{{ form_Detallecompra.cantidad_compra}}
-                <label for="id_codigoestilo_producto"><h6>Código estilo:</h6> </label>{{ form_Producto.codigoestilo_producto}}
-                <label for="id_tipo_producto_idtipo_producto"><h6>Tipo:</h6> </label>{{ form_Producto.tipo_producto_idtipo_producto}}
-                <label for="id_genero_idgener"><h6>Genero:</h6> </label>{{ form_Producto.genero_idgener}}
+                <label for="id_codigobarras_producto"><h6>Código de barras:</h6> </label>{{ form_Producto.codigobarras_producto}}
+                <label for="id_marca_id_marca"><h6>Marca:</h6> </label>{{ form_TipoProducto.marca_id_marca}}
+                <label for="id_genero_idgener"><h6>Género:</h6> </label>{{ form_Producto.genero_idgener}}
                 <label for="id_talla_idtalla"><h6>Talla:</h6> </label>{{ form_Producto.talla_idtalla}}
               </div>
               <div class="col s6">
-                  <label for="id_codigobarras_producto"><h6>Código de barras:</h6> </label>{{ form_Producto.codigobarras_producto}}
-                  <label for="id_marca_id_marca"><h6>Marca:</h6> </label>{{ form_TipoProducto.marca_id_marca}}
+                  <label for="id_codigoestilo_producto"><h6>Código de estilo:</h6> </label>{{ form_Producto.codigoestilo_producto}}
+                  <label for="id_tipo_producto_idtipo_producto"><h6>Tipo:</h6> </label>{{ form_Producto.tipo_producto_idtipo_producto}}
                   <label for="id_estilo_idestilo"><h6>Estilo:</h6> </label>{{ form_Producto.estilo_idestilo}}
                   <label for="id_color_idcolor"><h6>Color:</h6> </label>{{ form_Producto.color_idcolor}}
                   <br/>
-                  <input class="btn tooltipped" data-position="right" data-delay="5" data-tooltip="Se buscará el producto para evitar repetición de datos." id="boton_buscar_producto" type="button" onclick="buscar_producto(this)" value="Buscar" name="btn_buscar_producto"/>
+
               </div>
               <div class="col s12">
                 <label for="id_nombre_producto"><h6>Nombre producto:</h6> </label>{{  form_Producto.nombre_producto}}
+              </div>
+              <div class="col s6">
+                  <label style="color:#656534;"for="id_valor_producto"><h6>Valor producto:</h6> </label><input id="id_valor_producto" name="valor_producto" step="0.01" type="number"></input>
+                  <br/>
+              </div>
+              <div class="col s6">
+                <label for="id_valor_parcial_compra"><h6>Valor parcial:</h6> </label>{{ form_Detallecompra.valor_parcial_compra}}
                 <br/>
               </div>
             </div>
             <div class="col l6 m12 s12">
+                  <div style="background-color:#e5dfcd;">
+                    <input class="btn tooltipped" data-position="right" data-delay="5" data-tooltip="Puede buscar el producto para evitar repetición de datos (la marca es obligatoria para la búsqueda)" id="boton_buscar_producto" type="button" onclick="buscar_producto(this)" value="Buscar" name="btn_buscar_producto"/>
+                    <label for="id_producto_codigo_producto"><h6>Resultado de la búsqueda:</h6> </label>{{  form_InventarioProducto.producto_codigo_producto}}<br/>
+                  </div>
                   <label for="id_descripcion_producto"><h6>Descripción:</h6> </label>{{ form_Producto.descripcion_producto}}
                   <label for="id_nombre_fotografia"><h6>Nombre de la fotografía:</h6> </label>{{ form_fotografia.nombre_fotografia}}
                   <label for="id_ruta_fotografia"><h6>Ruta:</h6> </label>{{ form_fotografia.ruta_fotografia}}
-                  <label for="id_costo_unitario_inventarioproducto"><h6>Valor parcial:</h6> </label>{{ form_Detallecompra.valor_parcial_compra}}
+                  <label for="id_bodega_idbodega"><h6>Bodega:</h6> </label>{{ form_InventarioProducto.bodega_idbodega}}
+
                   <br/>
                   <div class="divider"></div>
-                  <div style="background-color:#e5dfcd;">
-                    <label for="id_producto_codigo_producto"><h6>Resultado de la búsqueda:</h6> </label>{{  form_InventarioProducto.producto_codigo_producto}}<br/>
-                  </div>
+
                   <div class="divider"></div>
                   <div class="col s6">
                     <br/>
                     <input class="btn tooltipped" data-position="right" data-delay="5" data-tooltip="El producto se guardará al presionar este botón. Revise bien los datos." id="boton_agregar_producto" type="button" onclick="agregar_producto(this)" value="Agregar" name="btn_agregar_producto"/>
                     <br/>
                   </div>
-                  <div class="col s6">
+                  <div class="col s6" style="background-color:#e5cdcd;color:#c28989;">
                     <label for="id_total_compra"><h6>Total compra:</h6> </label>{{  form_Compra.total_compra}}<br/>
                     <br/>
                   </div>
@@ -147,6 +158,7 @@
 
     {% endblock %}
     {% block extra_scripts %}
+    <script type="text/javascript" src="{% static 'js/selectorStartsWith.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/funciones.js' %}"></script>
     <script type="text/javascript">
 
@@ -163,13 +175,11 @@
         $('#bloque_caracteristicas_producto').find('select').val(1);
         $('#id_producto_codigo_producto').empty();
         $('input#id_cantidad_compra').val(1);
+        $('#id_tipo_pago_idtipo_pago').val(1);
         $('#id_jsonfield').css('display','None'); //ocultando el campo que enviará los datos JSON como texto
         $('input[type="checkbox"]').addClass("filled-in").addClass("filled-in"); //necesario para que se vean los checkbox
         //$('#id_producto_codigo_producto').empty();
       });
-
-       click_ocultar_mostrar('check_mostrar',"#bloque_caracteristicas_producto");
-
 
        //Para que funcione el boton de eliminar producto
        function eliminar_fila(button){
@@ -190,6 +200,12 @@
 
        }
 
+      $( "#id_valor_parcial_compra" ).focus(function() {
+        Materialize.toast('Decimales separados por coma', 4000);
+      });
+      $( "#id_valor_producto" ).focus(function() {
+        Materialize.toast('Decimales separados por coma', 4000);
+      });
       function agregar_casamatriz(boton)
       {
         if($('#id_nombre_casamatriz').val()==='' && $('#id_nit_casamatriz').val()==='')
@@ -200,7 +216,117 @@
           guardar_obtener_proveedor($('#id_nombre_casamatriz').val(),$('#id_nit_casamatriz').val(),'#id_casa_matriz','#id_nit_casamatriz','#id_nombre_casamatriz','1');
         }
       }
+      //todo este bloque con "keydown" previene que el formulario sea enviado por error
+      $( 'input#id_codigoestilo_producto' ).keydown(function(e){
+        var keyCode = e.keyCode || e.which;
+        if(keyCode==13)
+        {
+          e.preventDefault();
+          $('#bloque_caracteristicas_producto').find('input text textarea').not('#boton_buscar_producto,#boton_agregar_producto,#id_codigobarras_producto').val('');
+          $('#id_nombre_producto').val('');
+          $('#id_codigobarras_producto').val('');
+          $('#id_valor_parcial_compra').val('');
+          $('#bloque_caracteristicas_producto').find('select').not('#id_bodega_idbodega').val(1);
+          $('#id_producto_codigo_producto').empty();
+          obtener_productoestilo('input#id_codigoestilo_producto');
+          $('#id_nombre_producto').focus();
+        }
+      });
+      $( 'input#id_nombre_producto' ).keydown(function(e){
+        var keyCode = e.keyCode || e.which;
+        if(keyCode==13)
+        {
+          e.preventDefault();
+          $('#id_valor_producto').focus();
+          //Materialize.toast('Decimales separados por coma', 4000);
+        }
+      });
+      $( '#id_valor_producto' ).keydown(function(e){
+        var keyCode = e.keyCode || e.which;
+        if(keyCode==13)
+        {
+          e.preventDefault();
+          $('#id_valor_parcial_compra').val(parseFloat($('#id_valor_producto').val()*$('#id_cantidad_compra').val()).toFixed(2));
+          $('#id_valor_parcial_compra').focus();
+          //Materialize.toast('Decimales separados por coma', 4000);
+        }
+      });
 
+      $( 'input#id_valor_parcial_compra' ).keydown(function(e){
+        var keyCode = e.keyCode || e.which;
+        if(keyCode==13)
+        {
+          e.preventDefault();
+        }
+      });
+      $( 'input#id_cantidad_compra' ).keydown(function(e){
+        var keyCode = e.keyCode || e.which;
+        if(keyCode==13)
+        {
+          e.preventDefault();
+          $('#id_codigobarras_producto').focus();
+        }
+      });
+      $( 'input#id_nombre_proveedor' ).keydown(function(e){
+        var keyCode = e.keyCode || e.which;
+        if(keyCode==13)
+        {
+          e.preventDefault();
+          $('#id_nit_proveedor').focus();
+        }
+      });
+      $( 'input#id_nit_proveedor' ).keydown(function(e){
+        var keyCode = e.keyCode || e.which;
+        if(keyCode==13)
+        {
+          e.preventDefault();
+          $('#boton_agregar_proveedor').focus();
+        }
+
+      });
+      $( 'input#id_nombre_casamatriz' ).keydown(function(e){
+        var keyCode = e.keyCode || e.which;
+        if(keyCode==13)
+        {
+          e.preventDefault();
+          $('#id_nit_casamatriz').focus();
+        }
+
+      });
+      $( 'input#id_nit_casamatriz' ).keydown(function(e){
+        var keyCode = e.keyCode || e.which;
+        if(keyCode==13)
+        {
+          e.preventDefault();
+          $('#boton_agregar_casamatriz').focus();
+        }
+
+      });
+      $( 'input#id_numero_invoice' ).keydown(function(e){
+        var keyCode = e.keyCode || e.which;
+        if(keyCode==13)
+        {
+          e.preventDefault();
+          $('#id_numero_factura').focus();
+        }
+
+      });
+      $( 'input#id_numero_guia' ).keydown(function(e){
+        var keyCode = e.keyCode || e.which;
+        if(keyCode==13)
+        {
+          e.preventDefault();
+          $('#id_fecha_recepcion_compra').focus();
+        }
+      });
+      $( 'input#id_numero_factura' ).keydown(function(e){
+        var keyCode = e.keyCode || e.which;
+        if(keyCode==13)
+        {
+          e.preventDefault();
+          $('#id_cantidad_compra').focus();
+        }
+      });
        //Función que realiza una acción al leer código de barras
        $( 'input#id_codigobarras_producto' ).keydown(function(e){
          var keyCode = e.keyCode || e.which; //la propiedad wich indica la tecla o el botón que se ha presionado específicamente
@@ -215,6 +341,7 @@
            $('#bloque_caracteristicas_producto').find('select').not('#id_bodega_idbodega').val(1);
            $('#id_producto_codigo_producto').empty();
            obtener_producto('input#id_codigobarras_producto');
+           $('#id_codigoestilo_producto').focus();
          }
        });
 
@@ -234,29 +361,33 @@
          else{
            valorparcial=$('#id_valor_parcial_compra').val();
            cantidad=$('#id_cantidad_compra').val();
-           if($('#id_producto_codigo_producto option:selected').length==0)
+           if($('#id_producto_codigo_producto option:selected').length===0)
            {
-             var marca=$('#id_marca_id_marca option:selected').text().split(' ');
-             var estilo=$('#id_codigoestilo_producto').val();
-             var genero=$('#id_genero_idgener option:selected').text().split(' ');
-             var talla=$('#id_talla_idtalla option:selected').text();
-             var color=$('#id_color_idcolor option:selected').text();
-             var nombre=$('#id_nombre_producto').val();
-             datosproducto=nombre+' -- '+marca[2]+' ['+talla+'] '+ color +' -- '+genero[2]+' -- '+estilo;
-             alert(datosproducto);
-             sumar_valor_parcial(".suma_valor_parcial",'#id_total_compra');
-             subir_imagen('#id_ruta_fotografia');//bajar esto al else, junto con el resto que esta comentado abajo
-             $('#bloque_caracteristicas_producto').find('input text textarea').not('#boton_buscar_producto,#boton_agregar_producto,#id_codigobarras_producto').val('');
-             $('#id_nombre_producto').val('');
-             $('#id_codigoestilo_producto').val('');
-             $('#id_codigobarras_producto').val('');
-             $('#id_valor_parcial_compra').val('');
-             $('#bloque_caracteristicas_producto').find('select').val(1);
-             $('#id_producto_codigo_producto').empty();
+             if($('#id_nombre_producto').val()===''){
+               Materialize.toast('No puede guardar un producto sin nombre', 4000);
+             }
+             else {
+               var marca=$('#id_marca_id_marca option:selected').text().split(' ');
+               var estilo=$('#id_codigoestilo_producto').val();
+               var genero=$('#id_genero_idgener option:selected').text().split(' ');
+               var talla=$('#id_talla_idtalla option:selected').text();
+               var color=$('#id_color_idcolor option:selected').text();
+               var nombre=$('#id_nombre_producto').val();
+               datosproducto=nombre+' -- '+marca[2]+' ['+talla+'] '+ color +' -- '+genero[2]+' -- '+estilo; //dando formato a los datos del producto
+               sumar_valor_parcial(".suma_valor_parcial",'#id_total_compra');
+               subir_imagen('#id_ruta_fotografia');//bajar esto al else, junto con el resto que esta comentado abajo
+               $('#bloque_caracteristicas_producto').find('input text textarea').not('#boton_buscar_producto,#boton_agregar_producto,#id_codigobarras_producto').val('');
+               $('#id_nombre_producto').val('');
+               $('#id_codigoestilo_producto').val('');
+               $('#id_codigobarras_producto').val('');
+               $('#id_valor_parcial_compra').val('');
+               $('#bloque_caracteristicas_producto').find('select').val(1);
+               $('#id_producto_codigo_producto').empty();
+             }
            }
            else {
              var datos=$('#id_producto_codigo_producto option:selected').text().split('|');
-             datosproducto=datos[1]+' -- '+datos[3]+' ['+datos[4]+'] '+ datos[5] +' -- '+datos[6]+' -- '+datos[2];
+             datosproducto=datos[1]+' -- '+datos[3]+' ['+datos[4]+'] '+ datos[5] +' -- '+datos[6]+' -- '+datos[2]; //dando formato a los datos del producto
              $('#tabla_productos > tbody:last-child').append('<tr>'+
                                                                '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+parseInt($('#id_bodega_idbodega option:selected').val())+'</td>'+
                                                                '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+parseInt(datos[0])+'</td>'+
@@ -274,6 +405,7 @@
             $('#id_producto_codigo_producto').empty();
             $('input#id_cantidad_compra').val(1);
             $("#id_ruta_fotografia").val('');
+            $('#id_cantidad_compra').focus();
            }
          }
        }
@@ -371,6 +503,50 @@
            });
        };
 
+
+
+       function obtener_productoestilo(codigo_buscado) {
+           $.ajax({
+               url : "/Buscar/ProductoEstilo/Compra/", // La URL que llama a la vista
+               type : "POST", // Metodo http para realizar el request (peticion al servidor)
+               data : { codigoestilo_producto : $(codigo_buscado).val()}, // Datos enviados con el request en formato JSON
+
+               // Si el response es correcto (si la respuesta del servidor es correcta)
+               success : function(json) {
+                 //console.log('hola');
+                   //$("#tabla_productos > tbody").html("");
+                   console.log(json);
+                   if(json.length===0){
+                     Materialize.toast('Ese producto no existe', 4000);
+                   }
+                   else{
+                     $.each(json, function(key,value) {
+                       $('input#id_codigobarras_producto').val(value.codigobarras_producto);
+                       //$('#id_codigoestilo_producto').val(value.codigoestilo_producto);
+                       $('#id_marca_id_marca').val(value.marca_id_marca__pk);
+                       $('#id_tipo_producto_idtipo_producto').val(value.tipo_producto_idtipo_producto__pk);
+                       $('#id_talla_idtalla').val(value.talla_idtalla__pk);
+                       $('#id_estilo_idestilo').val(value.estilo_idestilo__pk);
+                       $('#id_color_idcolor').val(value.color_idcolor__pk);
+                       $('#id_genero_idgener').val(value.color_idcolor__pk);
+                       $('#id_nombre_producto').val(value.nombre_producto);
+                       $('#id_descripcion_producto').val(value.descripcion_producto);
+
+                       console.log(value);
+                     });
+                   }
+               },
+               // Si el response no tuvo exito
+               error : function(xhr,errmsg,err) {
+                   $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Ha ocurrido un error: "+errmsg+
+                       " <a href='#' class='close'>&times;</a></div>"); // Se agrega el error al DOM
+                   console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
+               }
+           });
+       };
+
+
+
            function obtener_producto_caracteristicas(codigo_buscado,codigo_estilo_buscar,bodega_que_vende,marca_buscar,tipo_buscar,talla_buscar,estilo_buscar,color_buscar,genero_buscar) {
                $.ajax({
                    url : "/Buscar/ProductoCaracteristicas/Compra/", // La URL que llama a la vista
@@ -436,6 +612,7 @@
                     sumar_valor_parcial(".suma_valor_parcial",'#id_total_compra');
                     $('#id_cantidad_compra').val(1);
                     $("#id_ruta_fotografia").val('');
+                    $('#id_cantidad_compra').focus();
                   },
                   // Si el response no tuvo exito
                   error : function(xhr,errmsg,err) {
@@ -480,7 +657,5 @@
            };
 
     </script>
-
-    <script type="text/javascript" src="{% static 'js/selectorStartsWith.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/token.js' %}"></script>
     {% endblock %}

@@ -33,7 +33,7 @@ class Form_Compra_Compra(forms.ModelForm):
     #    self.fields['casa_matriz'].required = False
     class Meta:
         model=Compra
-        fields=('tipo_pago_idtipo_pago','proveedor_idproveedor','tipo_pago_idtipo_pago','casa_matriz','numero_guia','entregada_compra','empleado_recibio','vrf_compra','empleado_reviso','fecha_recepcion_compra','fecha_realizacion_compra','total_compra',)
+        fields=('tipo_pago_idtipo_pago','proveedor_idproveedor','tipo_pago_idtipo_pago','casa_matriz','numero_guia','entregada_compra','empleado_recibio','vrf_compra','empleado_reviso','fecha_recepcion_compra','fecha_realizacion_compra','total_compra','numero_invoice','numero_factura')
         widgets = {
             'total_compra': forms.NumberInput(attrs={'readonly':'True','step': '0.01','value':'0.00', 'placeholder':'0.00'}), #es para que no se pueda escribir en el
            'fecha_recepcion_compra': forms.DateInput(attrs={'class': 'datepicker'}),

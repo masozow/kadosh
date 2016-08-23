@@ -44,7 +44,6 @@ def Compra(request):
             if form_tabla.is_valid():
                 datos_tabla = form_tabla.cleaned_data #se obtienen los datos que vienen en el formulario
                 tablaJson = json.loads(datos_tabla['jsonfield']) #el loads es necesario, si no los datos aparecen como un arreglo, incluidos los corchetes y las comas, y no como un objeto de json que se pueda iterar
-                #json_data = json.loads(jdata) except Exception as e: print(e)
                 #Iterando dentro de los arreglos de json:
                 for fila in tablaJson:
                     datos=[] #creando una lista
@@ -53,6 +52,7 @@ def Compra(request):
                     invent=InventarioProducto.objects.get(bodega_idbodega=datos[0],producto_codigo_producto=datos[1])
                     detalle=DetalleCompra(compra_idcompra=ultimacompra,cantidad_compra=datos[2],inventario_producto_idinventario_producto=invent,valor_parcial_compra=datos[3])
                     detalle.save()
+
                 form_Compra=Form_Compra_Compra()
                 form_Proveedor=Form_Compra_Proveedor()
                 form_Detallecompra=Form_Compra_DetalleCompra()
@@ -61,8 +61,12 @@ def Compra(request):
                 form_fotografia=Form_Compra_Fotografia()
                 form_tabla=FormTabla()
                 form_casamatriz=FormBuscar()
+
         form_InventarioProducto.fields["producto_codigo_producto"].queryset=Producto.objects.filter(estado_producto=1)
         form_Compra.fields["casa_matriz"].queryset=Proveedor.objects.filter(casa_matrizproveedor=1)
+        form_Compra.fields["empleado_reviso"].queryset=Empleado.objects.filter(estado_empleado=1)
+        form_Compra.fields["empleado_recibio"].queryset=Empleado.objects.filter(estado_empleado=1)
+        form_Compra.fields["tipo_pago_idtipo_pago"].queryset=TipoPago.objects.filter(estado_tipopago=1)
         form_InventarioProducto.fields["bodega_idbodega"].queryset = Bodega.objects.filter(estado_bodega=1)
         form_Producto.fields["marca_id_marca"].queryset = Marca.objects.filter(estado_marca=1)
         form_Producto.fields["tipo_producto_idtipo_producto"].queryset = TipoProducto.objects.filter(estado_tipoproducto=1)
@@ -71,8 +75,6 @@ def Compra(request):
         form_Producto.fields["color_idcolor"].queryset = Color.objects.filter(estado_color=1)
         form_Producto.fields["genero_idgener"].queryset = Genero.objects.filter(estado_genero=1)
         form_TipoProducto=Form_Compra_TipoProducto()
-        #if form_Compra.is_valid():
-        #    ultima_Compra=form_Compra.save()
         return render(request, 'kadoshapp/Compra.html', {'form_Proveedor':form_Proveedor, 'form_Producto': form_Producto,'form_Detallecompra':form_Detallecompra, 'form_TipoProducto':form_TipoProducto,'form_fotografia':form_fotografia ,'form_InventarioProducto':form_InventarioProducto, 'form_Compra':form_Compra,'form_tabla':form_tabla,'form_casamatriz':form_casamatriz })
     else:
         form_Compra=Form_Compra_Compra()
@@ -83,9 +85,13 @@ def Compra(request):
         form_fotografia=Form_Compra_Fotografia()
         form_tabla=FormTabla()
         form_casamatriz=FormBuscar()
+
         form_InventarioProducto.fields["producto_codigo_producto"].queryset=Producto.objects.filter(estado_producto=1)
-        form_Compra.fields["casa_matriz"].queryset=Proveedor.objects.filter(casa_matrizproveedor=1)
         form_InventarioProducto.fields["bodega_idbodega"].queryset = Bodega.objects.filter(estado_bodega=1)
+        form_Compra.fields["casa_matriz"].queryset=Proveedor.objects.filter(casa_matrizproveedor=1)
+        form_Compra.fields["empleado_reviso"].queryset=Empleado.objects.filter(estado_empleado=1)
+        form_Compra.fields["empleado_recibio"].queryset=Empleado.objects.filter(estado_empleado=1)
+        form_Compra.fields["tipo_pago_idtipo_pago"].queryset=TipoPago.objects.filter(estado_tipopago=1)
         form_Producto.fields["marca_id_marca"].queryset = Marca.objects.filter(estado_marca=1)
         form_Producto.fields["tipo_producto_idtipo_producto"].queryset = TipoProducto.objects.filter(estado_tipoproducto=1)
         form_Producto.fields["estilo_idestilo"].queryset = Estilo.objects.filter(estado_estilo=1)
@@ -208,6 +214,25 @@ def BuscarProducto(request):
             json.dumps({"nothing to see": "this isn't happening"}),
             content_type="application/json"
         )
+
+@login_required
+@user_passes_test(not_in_Bodega_group, login_url='denegado') #linea para no permitir acceso al grupo
+def BuscarProductoEstilo(request):
+    if request.method == 'POST':
+        txt_codigo_estilo = request.POST.get('codigoestilo_producto')
+        resp_producto=Producto.objects.filter(codigoestilo_producto=txt_codigo_estilo).values('pk','nombre_producto','descripcion_producto','codigobarras_producto','codigoestilo_producto','estilo_idestilo__pk','tipo_producto_idtipo_producto__pk','marca_id_marca__pk','genero_idgener__pk','talla_idtalla__pk','color_idcolor__pk','descripcion_producto')
+        #resp_producto=Producto.objects.filter(marca_id_marca=id_marca_producto,estilo_idestilo=id_estilo_producto,tipo_producto_idtipo_producto=id_tipo_producto,talla_idtalla=id_talla_producto,color_idcolor=id_color_producto,genero_idgener=id_genero_producto).values('pk','nombre_producto','codigobarras_producto','codigoestilo_producto','marca_id_marca__nombre_marca','genero_idgener__nombre_genero','talla_idtalla__nombre_talla','color_idcolor__nombre_color')
+        producto_diccionario=ValuesQuerySetToDict(resp_producto)
+        return HttpResponse(
+            json.dumps(producto_diccionario,cls=DjangoJSONEncoder),
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
+
 
 @login_required
 @user_passes_test(not_in_Bodega_group, login_url='denegado') #linea para no permitir acceso al grupo

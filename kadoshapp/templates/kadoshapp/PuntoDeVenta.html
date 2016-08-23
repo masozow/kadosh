@@ -11,6 +11,12 @@
 
     {% block encabezado %}Punto de venta{% endblock %}
     {% block content %}
+    <style>
+      table tbody tr:hover {
+      background-color: #CCD9DE;
+      cursor: pointer;
+      }
+    </style>
         <form action="/Guardar/Venta/" id="formulario_venta" method="POST" class="post-form" autocomplete="off">
           {% csrf_token %}
         <div id="bloque_encabezado" style="background-color: #e6e6ff;">
@@ -145,10 +151,10 @@
   </div>
 
   <div class="divider"></div>
-  <div class="row" style="margin-bottom: 0px;background-color:#e6f2ff;">
-    <div id="bloque_tabla">
+  <div class="row" style="margin-bottom: 0px;">
+    <div id="bloque_tabla" >
       <div class="col l9 m12 s12">
-        <table id="tabla_productos">
+        <table id="tabla_productos" class="grey lighten-2">
           <thead>
             <tr style="margin-bottom: 0px; margin-top: 0px; padding-top:0px; padding-botton:0px;">
                 <th data-field="id" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">Inv</th>
@@ -208,6 +214,7 @@
           $('#bloque_caracteristicas_producto').hide(); //.hide() oculta el elemento con ese id
           //$('#bloque_promocion').hide();
           $('#bloque_descuento').hide();
+          $('#id_tipo_pago_idtipo_pago').val(1);
           $('input#id_cantidad_venta').val(1);
           $('input[type="checkbox"]').addClass("filled-in").addClass("filled-in"); //necesario para que se vean los checkbox
           //$('input[type="select"]').addClass("browser-default").addClass("browser-default");
@@ -244,7 +251,7 @@
         //Función que comprueba si el dropdown tiene un elemento seleccionado y pasa al txtbox de destino,
         //de lo contrario muestra una alerta y devuelve el dropdown a su estado original.
         //(txtboxInicial,txtboxDestino,dropDownBusqueda,mensaje)
-        comprobar_pasarsiguiente_mostrarmensaje('input#id_nit_del_cliente','input#id_codigobarras_producto','#id_cliente_idcliente','El cliente no existe');
+        comprobar_pasarsiguiente_mostrarmensaje('input#id_nit_del_cliente','input#id_cantidad_venta','#id_cliente_idcliente','El cliente no existe');
 
         $( 'input#id_cantidad_venta' ).keydown(function(e){
           var keyCode = e.keyCode || e.which; //la propiedad wich indica la tecla o el botón que se ha presionado específicamente

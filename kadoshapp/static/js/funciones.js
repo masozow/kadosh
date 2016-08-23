@@ -20,6 +20,15 @@ function buscar_dropdown_startswith(txtBox,cboBox,html_inicial){
   });
 }
 
+function tabindex(idorigen,iddestino){
+  $(idorigen).keydown(function(e){
+    var keyCode = e.keyCode || e.which;
+    if(keyCode==13){
+      $(iddestino).focus();
+    }
+  });
+}
+
 
 //Funcion para buscar en un dropdownlist de acuerdo al texto escrito en el textbox
 //dependiendo del estado del checkbox enviado, puede buscar lo siguiente:
@@ -105,7 +114,7 @@ function comprobar_pasarsiguiente_mostrarmensaje(txtboxInicial,txtboxDestino,dro
     var keyCode = e.keyCode || e.which; //se declara una variable que capturará cualquiera de esos dos valores
     if (keyCode==13) { //keycode obtiene el valor ascii de la tecla presionada
      e.preventDefault(); //previene que se realice la acción por defecto que efectuaría el navegador con esa tecla
-     
+
       var valor=$(dropDownBusqueda+" option:selected").val();
       if(valor==='')
       {

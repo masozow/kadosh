@@ -122,7 +122,7 @@ class Cliente(models.Model):
 
 class Color(models.Model):
     idcolor = models.AutoField(db_column='idColor', primary_key=True)  # Field name made lowercase.
-    nombre_color = models.CharField(max_length=45, blank=True, null=True)
+    nombre_color = models.CharField(max_length=45)
     estado_color = models.BooleanField(default=True)  # This field type is a guess.
 
     def __str__(self):
@@ -163,6 +163,8 @@ class Compra(models.Model):
     casa_matriz = models.ForeignKey('Proveedor', db_column='Casa_matriz',related_name='proveedor_casa_matriz',blank=True,null=True)  # Field name made lowercase.
     empleado_recibio = models.ForeignKey('Empleado', db_column='Empleado_recibio',related_name='empleado_empleado_recibio',blank=True,null=True)  # Field name made lowercase.
     empleado_reviso = models.ForeignKey('Empleado', db_column='Empleado_reviso',related_name='empleado_empleado_reviso',blank=True,null=True)  # Field name made lowercase.
+    numero_invoice = models.CharField(max_length=45, blank=True, null=True)
+    numero_factura = models.CharField(max_length=45, blank=True, null=True)
 
     def __str__(self):
         return 'Compra: %s - Proveedor: %s  - Fecha: %s' % (self.idcompra, self.proveedor_idproveedor.nombre_proveedor, self.fecha_compra)
@@ -397,7 +399,7 @@ class Envio(models.Model):
 
 class Estilo(models.Model):
     idestilo = models.AutoField(db_column='idEstilo', primary_key=True)  # Field name made lowercase.
-    nombre_estilo = models.CharField(max_length=45, blank=True, null=True)
+    nombre_estilo = models.CharField(max_length=45)
     estado_estilo = models.BooleanField(default=True)
 
     def __str__(self):
@@ -440,7 +442,7 @@ class Gastos(models.Model):
 
 class Genero(models.Model):
     idgener = models.AutoField(db_column='idGener', primary_key=True)  # Field name made lowercase.
-    nombre_genero = models.CharField(max_length=45, blank=True, null=True)
+    nombre_genero = models.CharField(max_length=45)
     estado_genero = models.BooleanField(default=True)
 
     def __str__(self):
@@ -515,7 +517,7 @@ class InventarioProducto(models.Model):
 
 class Marca(models.Model):
     id_marca = models.AutoField(primary_key=True)
-    nombre_marca = models.CharField(max_length=50, blank=True, null=True)
+    nombre_marca = models.CharField(max_length=50)
     estado_marca = models.BooleanField(default=True)
 
     def __str__(self):
@@ -788,7 +790,7 @@ class Sucursal(models.Model):
 
 class Talla(models.Model):
     idtalla = models.AutoField(db_column='idTalla', primary_key=True)  # Field name made lowercase.
-    nombre_talla = models.CharField(db_column='nombre_Talla', max_length=5, blank=True, null=True)  # Field name made lowercase.
+    nombre_talla = models.CharField(db_column='nombre_Talla', max_length=10)  # Field name made lowercase.
     estado_talla = models.BooleanField(default=True)  # This field type is a guess.
 
     def __str__(self):
@@ -829,7 +831,7 @@ class TipoPago(models.Model):
 
 class TipoProducto(models.Model):
     idtipo_producto = models.AutoField(db_column='idTipo_producto', primary_key=True)  # Field name made lowercase.
-    nombre_tipoproducto = models.CharField(db_column='nombre_tipoProducto', max_length=50, blank=True, null=True)  # Field name made lowercase.
+    nombre_tipoproducto = models.CharField(db_column='nombre_tipoProducto', max_length=50)  # Field name made lowercase.
     #marca_id_marca = models.ForeignKey(Marca, db_column='Marca_id_marca')  # Field name made lowercase.
     estado_tipoproducto = models.BooleanField(db_column='estado_tipoProducto', default=True)  # Field name made lowercase.
 
