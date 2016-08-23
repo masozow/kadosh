@@ -171,13 +171,23 @@
          if(e.keyCode==13)
          {
            e.preventDefault();
-           obtener_producto('input#id_codigobarras_producto','#id_bodega_egreso');
+           if($('#id_bodega_egreso option:selected').val()===""){
+             alert("Debe elegir la bodega origen. De ahí se tomará el producto");
+           }
+           else{
+              obtener_producto('input#id_codigobarras_producto','#id_bodega_egreso');
+           }
          }
        });
 
        //Con esta funcion se buscan los productos de acuerdo a sus caracteristicas
        function buscar_caracteristicas(boton){
-         obtener_producto_caracteristicas('#id_codigoestilo_producto','#id_bodega_egreso','#id_marca_id_marca','#id_tipo_producto_idtipo_producto','#id_talla_idtalla','#id_estilo_idestilo','#id_color_idcolor','#id_genero_idgener');
+         if($('#id_bodega_egreso option:selected').val()===""){
+           alert("Debe elegir la bodega origen. De ahí se tomará el producto");
+         }
+         else{
+           obtener_producto_caracteristicas('#id_codigoestilo_producto','#id_bodega_egreso','#id_marca_id_marca','#id_tipo_producto_idtipo_producto','#id_talla_idtalla','#id_estilo_idestilo','#id_color_idcolor','#id_genero_idgener');
+         }
        }
 
        //Esta funcion agrega el producto resultado de la busqueda por caracteristicas, a la tabla de productos
@@ -185,7 +195,7 @@
          var elegido=$('#id_producto_codigo_producto option:selected').text();
          var datos_producto=elegido.split('|');
 
-         var cantidad=$('input#id_cantidad_venta').val();
+         var cantidad=$('input#id_cantidad').val();
          var valor_parcial=cantidad*parseFloat(datos_producto[4]);
          $('#tabla_productos > tbody:last-child').append('<tr>'+
                                                            '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+datos_producto[1]+'</td>'+
@@ -201,7 +211,7 @@
        ============================================================================*/
            function obtener_producto(codigo_buscado,bodega_que_vende) {
                $.ajax({
-                   url : "/Buscar/Producto/", // La URL que llama a la vista
+                   url : "/Buscar/Producto/Traslado/", // La URL que llama a la vista
                    type : "POST", // Metodo http para realizar el request (peticion al servidor)
                    data : { codigobarras_producto : $(codigo_buscado).val(), bodega_idbodega: $(bodega_que_vende).val()  }, // Datos enviados con el request en formato JSON
 
@@ -209,21 +219,18 @@
                    success : function(json) {
                        //console.log(json.recibido);
                        $(codigo_buscado).val(''); // Se limpia el campo del codigo del producto
-                       var res_valorprod=JSON.parse(json.valorprod);
-                       var res_inventario=JSON.parse(json.inventario);
-                       var res_nombre=JSON.parse(json.nombre);
-                       var campos_valorprod =res_valorprod[0].fields;
-                       var campos_nombre =res_nombre[0].fields;
+                        $.each(json, function(key,value) {
                        var cantidad=$('input#id_cantidad').val();
-                       var valor_parcial=cantidad*campos_valorprod.valor_precio;
+                       var valor_parcial=cantidad*value.precio__valor_precio;
                        $('#tabla_productos > tbody:last-child').append('<tr>'+
-                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+res_nombre[0].pk+'</td>'+
+                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.pk+'</td>'+
                                                                          '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+cantidad+'</td>'+
-                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+campos_nombre.nombre_producto+'</td>'+
-                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+campos_valorprod.valor_precio+'</td>'+
+                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.nombre_producto+'-'+value.marca_id_marca__nombre_marca+'-'+value.genero_idgener__nombre_genero+' ['+value.talla_idtalla__nombre_talla+'] '+value.color_idcolor__nombre_color+'</td>'+
+                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.precio__valor_precio+'</td>'+
                                                                          '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;"> <input id="boton_eliminar" "type="button" onclick="eliminar_fila(this)" value="Eliminar" name="Eliminar" style="text-align: center; margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;"/> </td>'+
                                                                        '</tr>');
                        $('input#id_cantidad_venta').val(1);
+                     });
                    },
                    // Si el response no tuvo exito
                    error : function(xhr,errmsg,err) {
@@ -236,7 +243,7 @@
 
            function obtener_producto_caracteristicas(codigo_estilo_buscar,bodega_que_vende,marca_buscar,tipo_buscar,talla_buscar,estilo_buscar,color_buscar,genero_buscar) {
                $.ajax({
-                   url : "/Buscar/ProductoCaracteristicas/", // La URL que llama a la vista
+                   url : "/Buscar/ProductoCaracteristicas/Traslado/", // La URL que llama a la vista
                    type : "POST", // Metodo http para realizar el request (peticion al servidor)
                    data : { codigo_estilo_producto : $(codigo_estilo_buscar).val(), bodega_idbodega: $(bodega_que_vende+" option:selected").val(), marca_producto: $(marca_buscar+" option:selected").val(), tipo_producto: $(tipo_buscar+" option:selected").val(), estilo_producto: $(estilo_buscar+" option:selected").val(), color_producto: $(color_buscar+" option:selected").val(), talla_producto: $(talla_buscar+" option:selected").val(), genero_producto: $(genero_buscar+" option:selected").val()}, // Datos enviados con el request en formato JSON
                    success : function(json) {

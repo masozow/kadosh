@@ -198,7 +198,7 @@ def BuscarProductoNuevo(request):
         producto_diccionario=ValuesQuerySetToDict(resp_producto)
         consulta=resp_producto.query
         return HttpResponse(
-            json.dumps(str(consulta),cls=DjangoJSONEncoder),
+            json.dumps(producto_diccionario,cls=DjangoJSONEncoder),
             content_type="application/json"
         )
     else:

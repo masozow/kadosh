@@ -170,7 +170,54 @@
          $('#id_fecha_venta').val('');
        });
 
-       $("#id_nit_cliente").click(function() {
+
+       $( 'input#id_codigobarras_producto' ).keydown(function(e){
+         var keyCode = e.keyCode || e.which; //la propiedad wich indica la tecla o el botón que se ha presionado específicamente
+                                             //puede ser del teclado o del mouse, normaliza dos eventos: event.keyCode y event.charCode
+         if(e.keyCode==13)
+         {
+           e.preventDefault();
+           obtener_productonuevo('input#id_codigobarras_producto','#id_codigoestilo_producto','#id_marca_id_marca','#id_tipo_producto_idtipo_producto','#id_talla_idtalla','#id_estilo_idestilo','#id_color_idcolor','#id_genero_idgener','#id_bodega_idbodega');
+         }
+       });
+
+       $( 'input#id_codigoestilo_producto' ).keydown(function(e){
+         var keyCode = e.keyCode || e.which; //la propiedad wich indica la tecla o el botón que se ha presionado específicamente
+                                             //puede ser del teclado o del mouse, normaliza dos eventos: event.keyCode y event.charCode
+         if(e.keyCode==13)
+         {
+           e.preventDefault();
+           obtener_productonuevo('input#id_codigobarras_producto','#id_codigoestilo_producto','#id_marca_id_marca','#id_tipo_producto_idtipo_producto','#id_talla_idtalla','#id_estilo_idestilo','#id_color_idcolor','#id_genero_idgener','#id_bodega_idbodega');
+         }
+       });
+
+       $( 'input#id_nit_cliente' ).keydown(function(e){
+         var keyCode = e.keyCode || e.which; //la propiedad wich indica la tecla o el botón que se ha presionado específicamente
+                                             //puede ser del teclado o del mouse, normaliza dos eventos: event.keyCode y event.charCode
+         if(e.keyCode==13)
+         {
+           e.preventDefault();
+           $( 'input#id_nombres_persona' ).focus()
+         }
+       });
+       $( 'input#id_nombres_persona' ).keydown(function(e){
+         var keyCode = e.keyCode || e.which; //la propiedad wich indica la tecla o el botón que se ha presionado específicamente
+                                             //puede ser del teclado o del mouse, normaliza dos eventos: event.keyCode y event.charCode
+         if(e.keyCode==13)
+         {
+           e.preventDefault();
+           $( 'input#id_apellidos_persona' ).focus()
+         }
+       });
+       $( 'input#id_apellidos_persona' ).keydown(function(e){
+         var keyCode = e.keyCode || e.which; //la propiedad wich indica la tecla o el botón que se ha presionado específicamente
+                                             //puede ser del teclado o del mouse, normaliza dos eventos: event.keyCode y event.charCode
+         if(e.keyCode==13)
+         {
+           e.preventDefault();
+         }
+       });
+       $("#id_nit_cliente").focus(function() {
          Materialize.toast('Escriba el nit incluyendo el guión', 4000);
        });
 
@@ -207,7 +254,6 @@
          $('#lbl_detalle').text(datos[0]);
          $('#id_precio_producto').val(datos[5]);
          $('#id_valor_parcial_venta').val(datos[6]);
-         obtener_producto(datos[0]);
          Materialize.toast('Se selecionó el detalle: '+datos[0], 4000);
        }
        //evitando que se actualice la página, guardando el precio y limpiando los items
@@ -220,9 +266,16 @@
            //$('#formulario_precio').find('.mietiqueta').text("");
            //$("#tabla_venta > tbody").html("");
        });
+
+       $( "#id_producto_codigo_producto" ).change(function() {
+         var prod=$( "#id_producto_codigo_producto" ).text().split('|')
+         alert(prod[7])
+         $("#id_inventario_producto_idinventario_producto").val(prod[7]));
+       });
+
        function buscar_caracteristicas(boton){
-          obtener_productonuevo('input#id_codigobarras_producto','#id_codigoestilo_producto','#id_bodega_idbodega','#id_marca_id_marca','#id_tipo_producto_idtipo_producto','#id_talla_idtalla','#id_estilo_idestilo','#id_color_idcolor','#id_genero_idgener','#id_bodega_idbodega');
-          console.log($('#id_bodega_idbodega option:selected').val());
+          obtener_productonuevo('input#id_codigobarras_producto','#id_codigoestilo_producto','#id_marca_id_marca','#id_tipo_producto_idtipo_producto','#id_talla_idtalla','#id_estilo_idestilo','#id_color_idcolor','#id_genero_idgener','#id_bodega_idbodega');
+          //console.log($('#id_bodega_idbodega option:selected').val());
        }
 
    /*Espacio para Ajax
@@ -287,7 +340,7 @@
                }
            });
        };
-
+       /*
        function obtener_producto(detalle) {
            $.ajax({
                url : "/Buscar/Producto/ModificarVenta/", // La URL que llama a la vista
@@ -319,6 +372,7 @@
                }
            });
        };
+       */
 
        function obtener_productonuevo(codigo_buscado,codigo_estilo_buscar,marca_buscar,tipo_buscar,talla_buscar,estilo_buscar,color_buscar,genero_buscar,bodega_vende) {
            $.ajax({
@@ -328,8 +382,10 @@
                // Si el response es correcto (si la respuesta del servidor es correcta)
                success : function(json) {
                   console.log(json);
+                  $('#id_producto_codigo_producto').empty();
                    $.each(json, function(key,value) {
-
+                     $('#id_producto_codigo_producto').append('<option value='+value.pk+'>'+ value.pk  +'|'+ value.nombre_producto +'|'+ value.codigoestilo_producto +'|'+ value.marca_id_marca__nombre_marca +'|'+ value.talla_idtalla__nombre_talla +'|'+ value.color_idcolor__nombre_color+'|'+ value.genero_idgener__nombre_genero +'|'+ value.inventarioproducto__pk +'</option>');
+                      console.log(value);
                    });
                },
                // Si el response no tuvo exito
