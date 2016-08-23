@@ -22,32 +22,32 @@ def CosasProducto(request):
 
         if form_color.is_valid():
             datoscolor=form_color.cleaned_data
-            if not Color.objects.get(nombre_color=datoscolor['nombre_color']):
+            if not Color.objects.filter(nombre_color=datoscolor['nombre_color']):
                 form_color.save()
                 form_color=Form_Producto_Color()
         if form_estilo.is_valid():
             datosestilo=form_estilo.cleaned_data
-            if not Estilo.objects.get(nombre_estilo=datosestilo['nombre_estilo']):
+            if not Estilo.objects.filter(nombre_estilo=datosestilo['nombre_estilo']):
                 form_estilo.save()
                 form_estilo=Form_Producto_Estilo()
         if form_genero.is_valid():
             datosgenero=form_genero.cleaned_data
-            if not Genero.objects.get(nombre_genero=datosgenero['nombre_genero']):
+            if not Genero.objects.filter(nombre_genero=datosgenero['nombre_genero']):
                 form_genero.save()
                 form_genero=Form_Producto_Genero()
         if form_marca.is_valid():
             datosmarca=form_marca.cleaned_data
-            if not Marca.objects.get(nombre_marca=datosmarca['nombre_marca']):
+            if not Marca.objects.filter(nombre_marca=datosmarca['nombre_marca']):
                 form_marca.save()
                 form_marca=Form_Producto_Marca()
         if form_talla.is_valid():
             datostalla=form_talla.cleaned_data
-            if not Talla.objects.get(nombre_talla=datostalla['nombre_talla']):
+            if not Talla.objects.filter(nombre_talla=datostalla['nombre_talla']):
                 form_talla.save()
                 form_talla=Form_Producto_Talla()
         if form_tipo.is_valid():
             datostipo=form_tipo.cleaned_data
-            if not TipoProducto.objects.get(nombre_tipoproducto=datostipo['nombre_tipoproducto']):
+            if not TipoProducto.objects.filter(nombre_tipoproducto=datostipo['nombre_tipoproducto']):
                 form_tipo.save()
                 form_tipo=Form_Producto_Tipo()
 
