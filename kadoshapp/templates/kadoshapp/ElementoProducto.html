@@ -43,7 +43,7 @@ Características del producto
               </div>
               <div  class="col l5 m12 s12">
                 <br/>
-                <button  type="submit" class="save btn btn-default">Guardar</button>
+                <button  type="submit" class="btn tooltipped" data-position="bottom" data-delay="5" data-tooltip="Si al presionar guardar, los datos aparecen de nuevo, es porque estos ya existían">Guardar</button>
               </div>
             </div>
         </form>
@@ -54,8 +54,9 @@ Características del producto
       $( document ).ready(function(){
         Materialize.toast('Todos los datos que escriba serán guardados a la vez', 3000,'',function(){Materialize.toast('Si los deja en blanco simplemente no se guardará nada', 3000);})
       });
+      /*
       $("#form_caracteristicas input[type=text]").click(function(){
         Materialize.toast('Si al presionar guardar, los datos aparecen de nuevo, es porque estos ya existían', 5000);
-      });
+      });*/
     </script>
     {% endblock %}
