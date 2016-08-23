@@ -42,7 +42,7 @@ def Inventario(request):
             except Exception as e:
                 errorForm="Error:" + str(e)
             #form_ajusteinventario=Form_Inventario_AjusteInventario()
-        return render(request, 'kadoshapp/Inventario.html', {'form_inventario':form_inventario, 'form_empleado':form_empleado , 'form_ajusteinventario':form_ajusteinventario,'form_Producto':form_producto,'errorForm':errorForm })
+        return render(request, 'kadoshapp/Inventario.html', {'form_inventario':form_inventario, 'form_empleado':form_empleado , 'form_ajusteinventario':form_ajusteinventario,'form_Producto':form_producto})
     else:
         form_inventario=Form_Inventario_InventarioProducto()
         form_producto=Form_Inventario_Producto()
@@ -95,7 +95,7 @@ def BuscarProducto(request):
         if not id_genero_producto:
             id_genero_producto=0
 
-        resp_producto=Producto.objects.filter(Q(codigobarras_producto=txt_codigo_barras)|Q(codigoestilo_producto=txt_codigo_producto) | Q(marca_id_marca=id_marca_producto) | Q(estilo_idestilo=id_estilo_producto )| Q(tipo_producto_idtipo_producto=id_tipo_producto) | Q(talla_idtalla=id_talla_producto) | Q(color_idcolor=id_color_producto) | Q(genero_idgener=id_genero_producto),estado_producto=1,inventarioproducto__bodega_idbodega__pk=id_bodega_que_vende).values('pk','inventarioproducto__pk','nombre_producto','marca_id_marca__nombre_marca','inventarioproducto__existencia_actual')
+        resp_producto=Producto.objects.filter(Q(codigobarras_producto=txt_codigo_barras)|Q(codigoestilo_producto=txt_codigo_producto) | Q(marca_id_marca=id_marca_producto) | Q(estilo_idestilo=id_estilo_producto )| Q(tipo_producto_idtipo_producto=id_tipo_producto) | Q(talla_idtalla=id_talla_producto) | Q(color_idcolor=id_color_producto) | Q(genero_idgener=id_genero_producto),estado_producto=1,inventarioproducto__bodega_idbodega__pk=id_bodega_que_vende).values('pk','inventarioproducto__pk','nombre_producto','codigoestilo_producto','marca_id_marca__nombre_marca','genero_idgener__nombre_genero','talla_idtalla__nombre_talla','color_idcolor__nombre_color','inventarioproducto__existencia_actual')
         if not resp_producto:
             resp_producto=Producto.objects.filter(inventarioproducto__bodega_idbodega__pk=id_bodega_que_vende).values('pk','inventarioproducto__pk','nombre_producto','codigoestilo_producto','marca_id_marca__nombre_marca','genero_idgener__nombre_genero','talla_idtalla__nombre_talla','color_idcolor__nombre_color','inventarioproducto__existencia_actual')
         producto_diccionario=ValuesQuerySetToDict(resp_producto)
