@@ -136,7 +136,7 @@
             <div class="row" margin-bottom: 0px;>
               <div class="divider"></div>
               <div class="col l4 m12 s12">
-                <label for="id_cantidad_venta"><h6>Cantidad:</h6> </label>{{ form_DetalleVenta.cantidad_venta}}
+                <label for="id_cantidad_venta"><h6>Cantidad nueva:</h6> </label>{{ form_DetalleVenta.cantidad_venta}}
               </div>
               <div class="col l4 m12 s12">
                 <label for="id_cantidad_venta"><h6>Precio:</h6> </label>{{ form_busquedas.precio_producto}}
@@ -168,6 +168,20 @@
      //Similar al FormLoad
        $( document ).ready(function(){ //document indica toda la página, ready indica que ya se haya cargado el DOM
          $('#id_fecha_venta').val('');
+         $("#id_producto_codigo_producto").empty();
+         $('#bloque_caracteristicas_producto').find('input').not('#boton_buscar_caracteristicas,#boton_limpiar,#id_bodega_idbodega').val('');
+         $('#bloque_caracteristicas_producto').find('text').not('#boton_buscar_caracteristicas,#boton_limpiar,#id_bodega_idbodega').val('');
+         $('#bloque_caracteristicas_producto').find('textarea').not('#boton_buscar_caracteristicas,#boton_limpiar,#id_bodega_idbodega').val('');
+         $('#bloque_caracteristicas_producto').find('select').not('#boton_buscar_caracteristicas,#boton_limpiar,#id_bodega_idbodega').val('');
+         $("#id_cantidad_venta").val(1);
+         $("#id_bodega_idbodega").val(1);
+         //$("#id_cantidad_devuelta").val(1);
+         $('#id_inventario_producto_idinventario_producto').find(':not(:selected)').prop('disabled',true);
+         $("#id_codigobarras_producto").val('');
+         $("#id_valor_precio").val(0);
+         $("#id_valor_parcial_venta").val(0);
+         $("#id_codigoestilo_producto").val('');
+         //$("#id_inventario_producto_idinventario_producto").prop('readonly',true);
        });
 
 
@@ -177,7 +191,14 @@
          if(e.keyCode==13)
          {
            e.preventDefault();
-           obtener_productonuevo('input#id_codigobarras_producto','#id_codigoestilo_producto','#id_marca_id_marca','#id_tipo_producto_idtipo_producto','#id_talla_idtalla','#id_estilo_idestilo','#id_color_idcolor','#id_genero_idgener','#id_bodega_idbodega');
+           if($('#id_bodega_idbodega').val()===''){
+             alert('Debe elegir una bodega válida');
+           }
+           else{
+              obtener_productonuevo('input#id_codigobarras_producto','#id_codigoestilo_producto','#id_marca_id_marca','#id_tipo_producto_idtipo_producto','#id_talla_idtalla','#id_estilo_idestilo','#id_color_idcolor','#id_genero_idgener','#id_bodega_idbodega');
+           }
+
+
          }
        });
 
@@ -217,6 +238,15 @@
            e.preventDefault();
          }
        });
+       $( '#id_cantidad_venta' ).keydown(function(e){
+         var keyCode = e.keyCode || e.which; //la propiedad wich indica la tecla o el botón que se ha presionado específicamente
+                                             //puede ser del teclado o del mouse, normaliza dos eventos: event.keyCode y event.charCode
+         if(e.keyCode==13)
+         {
+           e.preventDefault();
+           $('#id_valor_parcial_venta').val($('#id_cantidad_venta').val()*$('#id_precio_producto').val());
+         }
+       });
        $("#id_nit_cliente").focus(function() {
          Materialize.toast('Escriba el nit incluyendo el guión', 4000);
        });
@@ -227,7 +257,9 @@
 
        //función que limpia los valores de la sección de características del producto
        function limpiar(boton){
-         $('#bloque_caracteristicas_producto').find('input, textarea, select').not("#boton_limpiar,#boton_buscar_caracteristicas").val("");
+         $('#bloque_caracteristicas_producto').find('input, textarea, select').not("#boton_limpiar,#boton_buscar_caracteristicas,#id_cantidad_venta,#id_bodega_idbodega").val("");
+         $('#id_cantidad_venta').val(1);
+         $('#id_bodega_idbodega').val(1);
        }
 
        //Con esta funcion se buscan los productos de acuerdo a sus caracteristicas
@@ -235,32 +267,51 @@
            obtener_venta($("#id_venta_idventa option:selected").val(),$('#id_apellidos_persona').val(),$('#id_nombres_persona').val(),$('#id_fecha_venta').val(),$('#id_nit_cliente').val());
            $("#lbl_venta").text("");
        }
-
+       var venta=0;
        //esta funcion se activa al dar clic sobre una fila de la tabla
        function seleccionar_fila(fila){
          var datos = $(fila).find('td').get().map(function(cell) {
              return $(cell).html();
          });
          Materialize.toast('Se selecionó la venta: '+datos[0], 4000);
+         venta=datos[0];
          $('#lbl_venta').text(datos[0]);
          obtener_detalleventa(datos[0]);
        }
-
+       var detalle=0;
        //esta funcion se activa al dar clic sobre una fila de la tabla
        function seleccionar_filadetalle(fila){
          var datos = $(fila).find('td').get().map(function(cell) {
              return $(cell).html();
          });
+         detalle=datos[0];
          $('#lbl_detalle').text(datos[0]);
          $('#id_precio_producto').val(datos[5]);
          $('#id_valor_parcial_venta').val(datos[6]);
+         //$("#id_cantidad_devuelta").val(datos[3]);
          Materialize.toast('Se selecionó el detalle: '+datos[0], 4000);
        }
        //evitando que se actualice la página, guardando el precio y limpiando los items
 
        $('#formulario_anular').on('submit', function(event){
            event.preventDefault();
-           anular_venta($("#lbl_venta").text(),$("#id_empleado_idempleado option:selected").val(),$("#id_codigo_autorizacion_empleado").val());
+           if(venta===0)
+           {
+             alert('No eligió ninguna venta');
+           }
+           else if (detalle===0) {
+             alert('No eligió ningun detalle a modificar');
+           }
+           else if ($('#id_producto_codigo_producto').val()==='') {
+             alert('No eligió ningun producto a agregar');
+           }
+           else if ($('#id_inventario_producto_idinventario_producto option:selected').val()==='') {
+             alert('Debe elegir un inventario válido');
+           }
+           else{
+             modificar_detalle(venta,detalle,$('#id_inventario_producto_idinventario_producto option:selected').val(),$("#id_empleado_idempleado option:selected").val(),$("#id_codigo_autorizacion_empleado").val(),$('#id_cantidad_venta').val(),$('#id_valor_parcial_venta').val());
+           }
+           //anular_venta($("#lbl_venta").text(),$("#id_empleado_idempleado option:selected").val(),$("#id_codigo_autorizacion_empleado").val());
 
            //$('#formulario_precio').find('input, textarea, select').not("#boton_buscar, #boton_guardar").val("");
            //$('#formulario_precio').find('.mietiqueta').text("");
@@ -268,13 +319,20 @@
        });
 
        $( "#id_producto_codigo_producto" ).change(function() {
-         var prod=$( "#id_producto_codigo_producto" ).text().split('|')
-         alert(prod[7])
-         $("#id_inventario_producto_idinventario_producto").val(prod[7]));
+         var prod=$( "#id_producto_codigo_producto option:selected" ).text().split('|');
+         //alert(prod[7]);
+         $("#id_inventario_producto_idinventario_producto").val(parseInt(prod[7]));
+         $("#id_precio_producto").val(prod[8]);
+         $('#id_valor_parcial_venta').val(prod[8]*$('#id_cantidad_venta').val());
        });
 
        function buscar_caracteristicas(boton){
-          obtener_productonuevo('input#id_codigobarras_producto','#id_codigoestilo_producto','#id_marca_id_marca','#id_tipo_producto_idtipo_producto','#id_talla_idtalla','#id_estilo_idestilo','#id_color_idcolor','#id_genero_idgener','#id_bodega_idbodega');
+         if($('#id_bodega_idbodega').val()===''){
+           alert('Debe elegir una bodega válida');
+         }
+         else{
+            obtener_productonuevo('input#id_codigobarras_producto','#id_codigoestilo_producto','#id_marca_id_marca','#id_tipo_producto_idtipo_producto','#id_talla_idtalla','#id_estilo_idestilo','#id_color_idcolor','#id_genero_idgener','#id_bodega_idbodega');
+         }
           //console.log($('#id_bodega_idbodega option:selected').val());
        }
 
@@ -310,6 +368,7 @@
                }
            });
        };
+
        function obtener_detalleventa(num_venta) {
            $.ajax({
                url : "/Buscar/DetalleVenta/", // La URL que llama a la vista
@@ -384,7 +443,12 @@
                   console.log(json);
                   $('#id_producto_codigo_producto').empty();
                    $.each(json, function(key,value) {
-                     $('#id_producto_codigo_producto').append('<option value='+value.pk+'>'+ value.pk  +'|'+ value.nombre_producto +'|'+ value.codigoestilo_producto +'|'+ value.marca_id_marca__nombre_marca +'|'+ value.talla_idtalla__nombre_talla +'|'+ value.color_idcolor__nombre_color+'|'+ value.genero_idgener__nombre_genero +'|'+ value.inventarioproducto__pk +'</option>');
+                     if(key===0){
+                        $("#id_inventario_producto_idinventario_producto").val(value.inventarioproducto__pk);
+                        $("#id_precio_producto").val(value.precio__valor_precio);
+                        $('#id_valor_parcial_venta').val(value.precio__valor_precio*$('#id_cantidad_venta').val());
+                     }
+                     $('#id_producto_codigo_producto').append('<option value='+value.pk+'>'+ value.pk  +'|'+ value.nombre_producto +'|'+ value.codigoestilo_producto +'|'+ value.marca_id_marca__nombre_marca +'|'+ value.talla_idtalla__nombre_talla +'|'+ value.color_idcolor__nombre_color+'|'+ value.genero_idgener__nombre_genero +'|'+ value.inventarioproducto__pk+'|'+ value.precio__valor_precio +'</option>');
                       console.log(value);
                    });
                },
@@ -399,11 +463,11 @@
 
 
        var res;
-       function anular_venta(venta,empleado,autorizacion) {
+       function modificar_detalle(idventa,iddetalle,idinventario,idempleado,autorizacion,cantventa,valparventa) {
            $.ajax({
                url : "/Modificacion/Venta/", // La URL que llama a la vista
                type : "POST", // Metodo http para realizar el request (peticion al servidor)
-               data : { cod_venta : venta, cod_empleado : empleado, codigo : autorizacion}, // Datos enviados con el request en formato JSON
+               data : { cod_venta:idventa,cod_detalle : iddetalle, cod_inventario:idinventario, cod_empleado : idempleado, codigo : autorizacion,cant_venta:cantventa,val_parcial:valparventa}, // Datos enviados con el request en formato JSON
                // Si el response es correcto (si la respuesta del servidor es correcta)
                success : function(json) {
                    res=json;
@@ -416,7 +480,7 @@
                    console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
                }
            }).done(function( data ) {
-             if (res==="Venta anulada") {
+             if (res==="Detalle actualizado") {
                $("#id_codigo_autorizacion_empleado").val("");
                $("#id_empleado_idempleado").val("");
                location.reload();

@@ -7,6 +7,7 @@ from .models import *
 class Form_ModificarVenta_busquedas(forms.Form):
     codigo_venta = forms.CharField(label='Codigo Venta',max_length=13)
     precio_producto = forms.IntegerField(widget=forms.NumberInput(attrs={'readonly':'True','step': '0.01','value':'0.00', 'placeholder':'0.00'}))
+    cantidad_devolver=forms.IntegerField(widget=forms.NumberInput(attrs={'min': 1}))
 
 
 class Form_ModificarVenta_Venta(forms.ModelForm):
@@ -32,7 +33,9 @@ class Form_ModificarVenta_DetalleVenta(forms.ModelForm):
         model=DetalleVenta
         fields=('venta_idventa','inventario_producto_idinventario_producto','cantidad_venta','valor_parcial_venta')
         widgets={
-           'cantidad_venta':forms.NumberInput(attrs={'min': 1})
+           'cantidad_venta':forms.NumberInput(attrs={'min': 1}),
+           'valor_parcial_venta': forms.NumberInput(attrs={'readonly':'True','step': '0.01','value':'0.00', 'placeholder':'0.00'}),
+           'inventario_producto_idinventario_producto':forms.Select(attrs={'readonly':'True'})
         }
 
 class Form_ModificarVenta_Empleado(forms.ModelForm):

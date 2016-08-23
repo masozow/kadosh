@@ -10,9 +10,7 @@ from django.db.models import F #para hacer llamadas u operaciones en la BD, sin 
 from collections import namedtuple #Sirve en la funcion de tuplas
 from decimal import Decimal #para hacer la conversion decimal a JSON
 import logging #para enviar datos al archivo Debug
-
 from django.core.serializers.json import DjangoJSONEncoder #para decofificar todos los datos de MySql
-
 from django.contrib.auth.decorators import login_required, user_passes_test
 
 

@@ -9,7 +9,7 @@ from django.shortcuts import get_object_or_404
 from .models import *
 from .formModificarVenta import *
 from django.core.serializers.json import DjangoJSONEncoder #para decofificar todos los datos de MySql
-from django.db.models import Q,F,ExpressionWrapper,FloatField #para poder usar el operador | que funciona como OR
+from django.db.models import Q,F,ExpressionWrapper,FloatField,Sum #para poder usar el operador | que funciona como OR
 #from django.db.models import F #para hacer llamadas u operaciones en la BD, sin cargarlas en memoria (no las procesa django, sino directamente el SGBD)
 import pytz #para usar la zona horaria
 import datetime #para que se pueda dar formato a la fecha
@@ -128,8 +128,13 @@ def BuscarDetalleVenta(request):
 def ModificacionVenta(request):
     if request.method == 'POST':
         cod_venta = request.POST.get('cod_venta')
+        cod_detalle = request.POST.get('cod_detalle')
         cod_empleado = request.POST.get('cod_empleado')
+        cod_inventario = request.POST.get('cod_inventario')
         codigo = request.POST.get('codigo')
+        val_parcial = request.POST.get('val_parcial')
+        cant_venta = request.POST.get('cant_venta')
+
         if not cod_empleado:
             cod_empleado=0
         if not codigo:
@@ -140,8 +145,15 @@ def ModificacionVenta(request):
                 resultado="El código no pertenece al empleado"
             else:
                 try:
-                    Venta.objects.filter(pk=cod_venta).update(estado_venta=0)
-                    resultado="Venta anulada" #no alterar este texto, porque se usa en una comprobación en la función "done" de Ajax
+                    detalleviejo=DetalleVenta.objects.get(pk=cod_detalle)
+                    invviejo=InventarioProducto.objects.filter(detalleventa__pk=cod_detalle).update(existencia_actual=F('existencia_actual') + detalleviejo.cantidad_venta)
+                    if invviejo:
+                        det=DetalleVenta.objects.filter(pk=cod_detalle).update(inventario_producto_idinventario_producto=cod_inventario,cantidad_venta=cant_venta,valor_parcial_venta=val_parcial)
+                        if det:
+                            nuevototal=DetalleVenta.objects.filter(venta_idventa__pk=cod_venta).aggregate(suma_detalle=Sum('valor_parcial_venta'))
+                            invnuevo=InventarioProducto.objects.filter(detalleventa__pk=cod_detalle).update(existencia_actual=F('existencia_actual') - cant_venta)
+                            Venta.objects.filter(pk=cod_venta).update(total_venta=nuevototal['suma_detalle'])
+                    resultado="Detalle actualizado" #no alterar este texto, porque se usa en una comprobación en la función "done" de Ajax
                 except Exception as e:
                     resultado="Error: "+str(e)
         #form_precio=Form_Precios_Precio(request.POST)
@@ -194,7 +206,7 @@ def BuscarProductoNuevo(request):
             id_genero_producto=0
         #response_data={}
         #response_data['datos']=str(txt_codigo_barras)+'-'+str(txt_codigo_producto)+'-'+str(id_bodega_que_vende)+'-'+str(id_marca_producto)+'-'+str(id_tipo_producto)+'-'+str(id_estilo_producto)+'-'+str(id_color_producto)+'-'+str(id_genero_producto)+'-'+str(id_talla_producto)
-        resp_producto=Producto.objects.filter(Q(codigobarras_producto=txt_codigo_barras)|Q(codigoestilo_producto=txt_codigo_producto) | Q(marca_id_marca=id_marca_producto) | Q(estilo_idestilo=id_estilo_producto )| Q(tipo_producto_idtipo_producto=id_tipo_producto) | Q(talla_idtalla=id_talla_producto) | Q(color_idcolor=id_color_producto) | Q(genero_idgener=id_genero_producto),estado_producto=1,inventarioproducto__bodega_idbodega__pk=int(id_bodega_que_vende)).values('pk','nombre_producto','codigobarras_producto','codigoestilo_producto','marca_id_marca__nombre_marca','genero_idgener__nombre_genero','talla_idtalla__nombre_talla','color_idcolor__nombre_color','inventarioproducto__pk')
+        resp_producto=Producto.objects.filter(Q(codigobarras_producto=txt_codigo_barras)|Q(codigoestilo_producto=txt_codigo_producto) | Q(marca_id_marca=id_marca_producto) | Q(estilo_idestilo=id_estilo_producto )| Q(tipo_producto_idtipo_producto=id_tipo_producto) | Q(talla_idtalla=id_talla_producto) | Q(color_idcolor=id_color_producto) | Q(genero_idgener=id_genero_producto),estado_producto=1,inventarioproducto__bodega_idbodega__pk=int(id_bodega_que_vende),precio__estado_precio=1).values('pk','nombre_producto','codigobarras_producto','codigoestilo_producto','marca_id_marca__nombre_marca','genero_idgener__nombre_genero','talla_idtalla__nombre_talla','color_idcolor__nombre_color','inventarioproducto__pk','precio__valor_precio')
         producto_diccionario=ValuesQuerySetToDict(resp_producto)
         consulta=resp_producto.query
         return HttpResponse(
