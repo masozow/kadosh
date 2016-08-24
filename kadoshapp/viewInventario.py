@@ -28,22 +28,34 @@ def Inventario(request):
         form_inventario=Form_Inventario_InventarioProducto(request.POST)
         form_producto=Form_Inventario_Producto(request.POST)
         form_empleado=Form_Inventario_Empleado(request.POST)
+        errores=''
         if form_ajusteinventario.is_valid():
-            try:
-                datosajuste=form_ajusteinventario.cleaned_data
-                ajuste=form_ajusteinventario.save(commit=False)
-                ajuste.empleado_idempleado=Empleado.objects.get(auth_user=request.user)
-                InventarioProducto.objects.filter(pk=datosajuste["inventario_producto_idinventario_producto"].pk).update(existencia_actual=datosajuste["cantidad_real_ajuste"])
-                ajuste=form_ajusteinventario.save()
-                form_ajusteinventario=Form_Inventario_AjusteInventario()
-                form_inventario=Form_Inventario_InventarioProducto()
-                form_producto=Form_Inventario_Producto()
-                form_empleado=Form_Inventario_Empleado()
-            except Exception as e:
-                errorForm="Error:" + str(e)
+            if form_empleado.is_valid(): #se comprueba que el formulario sea válido, es decir, que cumpla con las restricciones descritas en el model
+                datosempleado=form_empleado.cleaned_data #se obtienen los datos que venían dentro de los elementos del formulario
+                if datosempleado['codigo_autorizacion_empleado']: #si el codigo de autorización contiene por lo menos un dato
+                    codigo=datosempleado['codigo_autorizacion_empleado'] #se obtiene el código escrito por el usuario
+                    cierre=form_ajusteinventario.cleaned_data #se obtienen los datos que venían dentro de los elementos del formulario
+                    empleadoautorizo=cierre['empleado_idempleado'] #se obtiene el empleado elegido en el selectinput/combobox, este es un objeto Empleado no un código como tal, esto ocurre porque esa es una llave foránea
+                    empleado=Empleado.objects.filter(codigo_autorizacion_empleado=codigo,pk=empleadoautorizo.pk) #se busca el empleado que tena ese código y esa llave primaria (pk)
+                    if empleado: #si existe un empleado con las dos restricciones anteriores
+                        try:
+                            datosajuste=form_ajusteinventario.cleaned_data
+                            ajuste=form_ajusteinventario.save(commit=False)
+#                            ajuste.empleado_idempleado=Empleado.objects.get(auth_user=request.user)
+                            InventarioProducto.objects.filter(pk=datosajuste["inventario_producto_idinventario_producto"].pk).update(existencia_actual=datosajuste["cantidad_real_ajuste"])
+                            ajuste.save()
+                            form_ajusteinventario=Form_Inventario_AjusteInventario()
+                            form_inventario=Form_Inventario_InventarioProducto()
+                            form_producto=Form_Inventario_Producto()
+                            form_empleado=Form_Inventario_Empleado()
+                        except Exception as e:
+                            errorForm="Error:" + str(e)
+                    else:
+                        errores='Los datos del empleado no coinciden'
             #form_ajusteinventario=Form_Inventario_AjusteInventario()
-        return render(request, 'kadoshapp/Inventario.html', {'form_inventario':form_inventario, 'form_empleado':form_empleado , 'form_ajusteinventario':form_ajusteinventario,'form_Producto':form_producto})
+        return render(request, 'kadoshapp/Inventario.html', {'form_inventario':form_inventario, 'form_empleado':form_empleado , 'form_ajusteinventario':form_ajusteinventario,'form_Producto':form_producto,'errores':errores})
     else:
+        errores=''
         form_inventario=Form_Inventario_InventarioProducto()
         form_producto=Form_Inventario_Producto()
         form_empleado=Form_Inventario_Empleado()
@@ -58,7 +70,7 @@ def Inventario(request):
         form_producto.fields["color_idcolor"].queryset = Color.objects.filter(estado_color=1)
         form_producto.fields["genero_idgener"].queryset = Genero.objects.filter(estado_genero=1)
         #form_inventariorealizado=Form_Inventario_InventarioRealizado();
-    return render(request, 'kadoshapp/Inventario.html', {'form_inventario':form_inventario, 'form_empleado':form_empleado , 'form_ajusteinventario':form_ajusteinventario,'form_Producto':form_producto })
+    return render(request, 'kadoshapp/Inventario.html', {'form_inventario':form_inventario, 'form_empleado':form_empleado , 'form_ajusteinventario':form_ajusteinventario,'form_Producto':form_producto,'errores':errores })
 
 @login_required
 @user_passes_test(not_in_Bodega_group, login_url='denegado')

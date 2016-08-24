@@ -40,6 +40,8 @@
                 <label for="id_inventario_producto_idinventario_producto"><h6>ID inventario:</h6> </label>{{ form_ajusteinventario.inventario_producto_idinventario_producto}}
                 <label for="id_cantidad_real_ajuste"><h6>Conteo Real:</h6> </label>{{ form_ajusteinventario.cantidad_real_ajuste}}
                 <label for="id_motivo_idmotivo"><h6>Motivo Ajuste:</h6> </label>{{ form_ajusteinventario.motivo_idmotivo}}
+                <label for="id_empleado_idempleado"><h6>Empleado que autoriza:</h6> </label>{{ form_ajusteinventario.empleado_idempleado}}
+                <label for="id_codigo_autorizacion_empleado"><h6>Codigo de autorización:</h6> </label>{{ form_empleado.codigo_autorizacion_empleado}}
                 <br/>
                <button type="submit" class="btn tooltipped" data-position="right" data-delay="5" data-tooltip="Los datos que guarde no podrán ser modificados">Guardar ajuste</button>
                {% if form_ajusteinventario.errors %}
@@ -50,6 +52,11 @@
                   </br>
                   <label class="mietiqueta">{{errorForm}}</label>
                {% endif %}
+               {% if errores %}
+                  </br>
+                  <label class="mietiqueta">{{errores}}</label>
+               {% endif %}
+
           </div>
         </div>
       <div class="row" style="margin-bottom: 0px;">
