@@ -96,6 +96,7 @@
 
         //Con esta funcion se buscan los productos de acuerdo a sus caracteristicas
         function buscar_empleados(boton){
+          $("#tabla_empleados > tbody").html("");
           obtener_empleados('#id_nombres_persona','#id_apellidos_persona','#id_puesto_idpuesto');
         }
 
@@ -125,9 +126,9 @@
               return $(cell).html();
           });
           $('#lbl_empleado').text(datos[0]);
-          $('#id_fotografia_empleado').attr("src", "../../archivos"+datos[8].substr(1));
+          $('#id_fotografia_empleado').attr("src", "../../archivos"+datos[7].substr(1));
           //var
-          console.log(datos);
+          //console.log(datos);
           //alert($(fila).text());
         }
     /*Espacio para Ajax
@@ -137,7 +138,7 @@
             $.ajax({
                 url : "/Buscar/Empleados/", // La URL que llama a la vista
                 type : "POST", // Metodo http para realizar el request (peticion al servidor)
-                data : { nombres : $(buscar_nombres).val(), nombres : $(buscar_apellidos).val(), puesto: $(buscar_puesto+" option:selected").val()}, // Datos enviados con el request en formato JSON
+                data : { nombres : $(buscar_nombres).val(), apellidos : $(buscar_apellidos).val(), puesto: $(buscar_puesto+" option:selected").val()}, // Datos enviados con el request en formato JSON
 
                 // Si el response es correcto (si la respuesta del servidor es correcta)
                 success : function(json) {
@@ -147,15 +148,14 @@
                       $("#tabla_empleados > tbody").html("");
                       //Se llena la tabla con datos
                       $('#tabla_empleados > tbody:last-child').append('<tr onclick="seleccionar_fila(this)">'+
-                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;" class="id_empleado">'+value.id+'</td>'+
-                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.nombre+'</td>'+
-                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.puesto+'</td>'+
-                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.motivo_baja+'</td>'+
-                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.fecha_contratacion+'</td>'+
-                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.fecha_baja+'</td>'+
-                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.ventas_mes+'</td>'+
-                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;display:none;">'+value.idp+'</td>'+
-                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;display:none;">'+value.ruta_fotografia+'</td>'+
+                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;" class="id_empleado">'+value.pk+'</td>'+
+                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.persona_idpersona__nombres_persona+' '+value.persona_idpersona__apellidos_persona+'</td>'+
+                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.puesto_idpuesto__nombre_puesto+'</td>'+
+                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.motivo_baja_empleado+'</td>'+
+                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.fecha_contratacion_empleado+'</td>'+
+                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.fecha_baja_empleado+'</td>'+
+                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;display:none;">'+value.puesto_idpuesto__pk+'</td>'+
+                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;display:none;">'+value.fotografia_empleado+'</td>'+
                                                                       '</tr>');
                     });
                 },

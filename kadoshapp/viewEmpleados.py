@@ -15,6 +15,9 @@ from decimal import Decimal #para hacer la conversion decimal a JSON
 import datetime #para hacer la conversion de fecha
 from django.core.serializers.json import DjangoJSONEncoder
 
+def ValuesQuerySetToDict(vqs):
+    return [item for item in vqs]
+
 def not_in_Supervisor_group(user):
     if user:
         return user.groups.filter(name='Supervisor').count() != 0
@@ -24,14 +27,19 @@ def not_in_Supervisor_group(user):
 @user_passes_test(not_in_Supervisor_group, login_url='denegado')
 def Empleados(request):
     if request.method=='POST':
-        return render(request, 'kadoshapp/Empleados.html',{})
+        form_empleado=Form_Empleados_Empleado()
+        form_persona=Form_Empleados_Persona()
+        form_puesto=Form_Empleados_Puesto()
+        form_empleado.fields["puesto_idpuesto"].queryset = Puesto.objects.filter(estado_puesto=1)
+        form_puesto.fields["puesto_idpuesto"].queryset = Puesto.objects.filter(estado_puesto=1)
+        return render(request, 'kadoshapp/Empleados.html', {'form_puesto':form_puesto, 'form_persona':form_persona,  'form_empleado':form_empleado })
     else:
         form_empleado=Form_Empleados_Empleado()
         form_persona=Form_Empleados_Persona()
         form_puesto=Form_Empleados_Puesto()
         form_empleado.fields["puesto_idpuesto"].queryset = Puesto.objects.filter(estado_puesto=1)
         form_puesto.fields["puesto_idpuesto"].queryset = Puesto.objects.filter(estado_puesto=1)
-    return render(request, 'kadoshapp/Empleados.html', {'form_puesto':form_puesto, 'form_persona':form_persona,  'form_empleado':form_empleado })
+        return render(request, 'kadoshapp/Empleados.html', {'form_puesto':form_puesto, 'form_persona':form_persona,  'form_empleado':form_empleado })
 
 
 @login_required
@@ -43,19 +51,24 @@ def BuscarEmpleados(request):
         rec_puesto = request.POST.get('puesto')
 
         if not rec_puesto:
-            rec_puesto=0
+            rec_puesto='0'
+        #if not rec_apellidos:
+        #    rec_apellidos=''
+        #if not rec_nombres:
+        #    rec_nombres=''
 
         response_data = {} #declarando un diccionario vacio
         lista_resultado=[]
-        resp_consulta=consulta_sql_personalizada(rec_nombres,rec_apellidos,rec_puesto)
-
-        for row in resp_consulta: #esto tal vez no sea necesario
-            lista_resultado.append(row)
-
+        resp_empleado=Empleado.objects.filter(Q(persona_idpersona__nombres_persona__iexact=rec_nombres)|Q(persona_idpersona__apellidos_persona__iexact=rec_apellidos)|Q(puesto_idpuesto=rec_puesto),estado_empleado=1).values('pk','persona_idpersona__nombres_persona','persona_idpersona__apellidos_persona','puesto_idpuesto__nombre_puesto','motivo_baja_empleado','fecha_contratacion_empleado','fecha_baja_empleado','puesto_idpuesto__pk','fotografia_empleado')
+        #resp_consulta=consulta_sql_personalizada(rec_nombres,rec_apellidos,rec_puesto)
+        resp_consulta=ValuesQuerySetToDict(resp_empleado)
+        #for row in resp_consulta: #esto tal vez no sea necesario
+        #    lista_resultado.append(row)
+        #
         return HttpResponse(
-            json.dumps(lista_resultado,cls=DjangoJSONEncoder),
+            json.dumps(resp_consulta,cls=DjangoJSONEncoder),
             content_type="application/json"
-        )
+            )
     else:
         return HttpResponse(
             json.dumps({"nothing to see": "this isn't happening"}),
@@ -95,7 +108,7 @@ def consulta_sql_personalizada(nombres,apellidos,puesto):
                       inner join Puesto as P on E.Puesto_idPuesto=P.idPuesto
                       inner join Venta as V on V.vendedor_venta=E.idEmpleado
                       inner join Persona as Per on E.Persona_idPersona=Per.idPersona
-                      where (Per.nombres_persona like %s OR Per.apellidos_persona like %s OR E.Puesto_idPuesto=%s)
+                      where (E.Puesto_idPuesto=%s OR Per.nombres_persona like %s\% OR Per.apellidos_persona like %s\%)
                       AND E.estado_empleado=1 AND V.estado_venta=1
                       AND
                       (YEAR(V.fecha_venta) = YEAR(Now())
@@ -119,21 +132,3 @@ def namedtuplefetchall(cursor):
     desc = cursor.description
     nt_result = namedtuple('Result', [col[0] for col in desc])
     return [nt_result(*row) for row in cursor.fetchall()]
-
-#sobrecargando la funcion default de JSON, para poder enviar datos decimales
-#def default(obj):
-#    if isinstance(obj, Decimal):
-#        return str(obj)
-#    raise TypeError
-
-#
-#class DateTimeEncoder(json.JSONEncoder):
-#    def default(self, obj):
-#        if isinstance(obj, datetime.datetime):
-#            return obj.isoformat()
-#        elif isinstance(obj, datetime.date):
-#            return obj.isoformat()
-#        elif isinstance(obj, datetime.timedelta):
-#            return (datetime.datetime.min + obj).time().isoformat()
-#        else:
-#            return super(DateTimeEncoder, self).default(obj)
