@@ -10,7 +10,13 @@ from .models import *
 from .formTrabajador import *
 from django.contrib.auth import login
 
+def not_in_Supervisor_group(user):
+    if user:
+        return user.groups.filter(name='Supervisor').count() != 0
+    return False
+
 @login_required
+@user_passes_test(not_in_Supervisor_group, login_url='denegado')
 def registro_trabajador(request):
     if request.method == 'POST':
         form=Form_RegistroEmpleado_Persona(request.POST)
