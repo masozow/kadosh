@@ -2,29 +2,25 @@
 {% load django_tables2 %}
 {% load staticfiles %}
 {% block titulo %}
- Reporte Ventas
+ Reporte Compras
 {% endblock %}
 {% block styles %}
   <link type="text/css" rel="stylesheet" href="{% static "css/formularios.css" %}"/>
   <link rel="stylesheet" href="{{ STATIC_URL }}django_tables2/themes/paleblue/css/screen.css" />
 {% endblock %}
-{% block encabezado %}Reporte Ventas{% endblock %}
+{% block encabezado %}Reporte Compras{% endblock %}
 {% block content %}
-<form action="/Reporte/Ventas/" id="formulario_reporte2" method="POST" class="post-form">
+<form action="/Reporte/Compras/" id="formulario_reporte2" method="POST" class="post-form">
   {% csrf_token %}
 <div class="row" style="margin-bottom: 0px;">
   <h6> Caracteristicas de busqueda</h6>
-<div class="col l6 m12 s12">
-    <label for="id_fechainicial_precio"><h6>Fecha inicial:</h6> </label>{{ form_fecha.fechainicial_precio}}
-</div>
-<div class="col l6 m12 s12">
+  <div class="col l6 m12 s12">
+      <label for="id_fechainicial_precio"><h6>Fecha inicial:</h6> </label>{{ form_fecha.fechainicial_precio}}
+  </div>
+  <div class="col l6 m12 s12">
 
-  <label for="id_fechafinal_precio"><h6>Fecha final:</h6> </label>{{ form_fecha.fechafinal_precio}}
-</div>
-</div>
-<div class="row" style="margin-bottom: 0px;">
-<div class="col l6 m12 s12">
-<label for="cliente_idcliente"><h6>Vendedor:</h6> </label>{{ form_vendedor.empleado_idempleado}}
+    <label for="id_fechafinal_precio"><h6>Fecha final:</h6> </label>{{ form_fecha.fechafinal_precio}}
+  </div>
 </div>
 <div class="col l6 m12 s12">
   <div class="row">
@@ -32,10 +28,8 @@
           <h1 class="page-header"></h1>
       </div>
   </div>
-  {{ form_check.checkbo}}
-  <label for="id_checkbo"><h6>Agrupar por mes</h6> </label>
-
-
+  {{ form_check.checkbox_vrf}}
+  <label for="id_checkbox_vrf"><h6>VRF</h6> </label>
   <button type="submit" class="save btn btn-default">Buscar</button>
 </div>
 </div>
@@ -67,7 +61,7 @@
 
 <script type="text/javascript">
 $( document ).ready(function(){ //document indica toda la página, ready indica que ya se haya cargado el DOM
-  $('#id_fechafinal_precio').val($('#id_fechainicial_precio').val());
+  //$('#id_fechafinal_precio').val($('#id_fechainicial_precio').val());
   $('input[type="checkbox"]').addClass("filled-in");
   cambiar_ruta();
 });
@@ -75,13 +69,13 @@ $( document ).ready(function(){ //document indica toda la página, ready indica 
 
 var ruta;//variable donde se guardará la ruta
 function cambiar_ruta(){
-  ruta=$('#id_fechainicial_precio').val()+'&fechafinal_precio='+$('#id_fechafinal_precio').val() +'&empleado_idempleado='+$('#id_empleado_idempleado option:selected').val()+'&checkbo='+$('#id_checkbo').is(':checked');
+  ruta=$('#id_fechainicial_precio').val()+'&fechafinal_precio='+$('#id_fechafinal_precio').val() +'&checkbo='+$('#id_checkbox_vrf').is(':checked');
   console.log(ruta);
 }
 $('#id_fechainicial_precio').change(function(){//cuando un elemento especifico cambia su valor, en este caso un textbox
   cambiar_ruta();
 });
-$('#id_checkbo').change(function(){//cuando un elemento especifico cambia su valor, en este caso un textbox
+$('#id_checkbox_vrf').change(function(){//cuando un elemento especifico cambia su valor, en este caso un textbox
   cambiar_ruta();
 });
 $('#id_fechafinal_precio').change(function(){//cuando un elemento especifico cambia su valor, en este caso un textbox
@@ -98,7 +92,7 @@ $("select").change(function (){ //cuando cualquier combobox=select cambia su val
 
 function descargar(boton){
   console.log($('#id_fechainicial_precio').val());
-  $(location).attr('href', '/reporte_ventas_excel?fechainicial_precio='+ruta);
+  $(location).attr('href', '/reporte_compras_excel?fechainicial_precio='+ruta);
 }
 </script>
 {% endblock %}

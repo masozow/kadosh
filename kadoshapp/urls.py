@@ -1,6 +1,6 @@
 from django.conf.urls import include, url
 from . import views
-from . import ViewProducto,ViewTrabajador,viewReporteProductos,viewModificarCliente,viewAsignarCaja,viewListadoProductos,viewBusquedaMercaderia,viewPrecios,viewCliente, viewIngresoMercaPorProveedor, viewCompra, viewPuntodeVenta, viewTrasladoMercaderia, viewCierreCaja, viewAnularVenta, viewInventario, viewPromocion,viewEmpleados, viewCotizacion,viewModificarVenta
+from . import ViewProducto,ViewTrabajador,viewReporteProductos,viewModificarCliente,viewAsignarCaja,viewListadoProductos,viewBusquedaMercaderia,viewPrecios,viewCliente, viewIngresoMercaPorProveedor, viewCompra, viewPuntodeVenta, viewTrasladoMercaderia, viewCierreCaja, viewAnularVenta, viewInventario, viewPromocion,viewEmpleados, viewCotizacion,viewModificarVenta,viewReporteCompras,viewReporteComprasExcel
 from . import viewTablas
 from . import viewReporteClientes,viewReporteClientesExcel
 from . import ViewReporteVentas, ViewReporteVentasExcel
@@ -67,7 +67,9 @@ url(r'^cotizaciones/$',viewCotizacion.ReporteCotizacion.as_view(), name="reporte
 url(r'^reporte_productos_excel/$',viewReporteProductos.ReporteProductos.as_view(), name="reporte_productos_excel"),
 url(r'^Reporte/Productos/', viewTablas.productos_lista, name='Rproductos'),
 url(r'^Reporte/Clientes/', viewReporteClientes.Clientes, name='Rclientes'),
+url(r'^Reporte/Compras/', viewReporteCompras.Compras, name='Rcompras'),
 url(r'^reporte_clientes_excel/$',viewReporteClientesExcel.ReporteCliente.as_view(), name="reporte_clientes_excel"),
 url(r'^Reporte/Ventas/', ViewReporteVentas.Ventas, name='RVentas'),
 url(r'^reporte_ventas_excel/$',ViewReporteVentasExcel.ReporteVentas.as_view(), name="reporte_ventas_excel"),
+url(r'^reporte_compras_excel/$',viewReporteComprasExcel.ReporteCompras.as_view(), name="reporte_compras_excel"),
 ]

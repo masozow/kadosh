@@ -18,5 +18,6 @@ class Form_Busqueda_Vendedor(forms.ModelForm):
         model=Venta
         fields=('empleado_idempleado',)
 
-class Form_Busqueda_Checbox(forms.Form):
-    checkbo=forms.BooleanField(required=False)
+
+class Form_Busqueda_Checkbox(forms.Form):
+    checkbox_vrf=forms.BooleanField(required=False)

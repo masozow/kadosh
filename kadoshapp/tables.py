@@ -18,3 +18,9 @@ class VentasTabla(tables.Table):
         model = Venta
         fields=('vendedor_venta__persona_idpersona__nombres_persona','vendedor_venta__persona_idpersona__apellidos_persona','month','total_ventas',)
         attrs = {'class': 'paleblue'}
+
+class ComprasTabla(tables.Table):
+    class Meta:
+        model = Compra
+        #fields=('vendedor_venta__persona_idpersona__nombres_persona','vendedor_venta__persona_idpersona__apellidos_persona','month','total_ventas',)
+        attrs = {'class': 'paleblue'}
