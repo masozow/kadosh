@@ -63,10 +63,13 @@
                   <!--{{ sub_form.as_p }}-->
               </div>
             </div>
-
-
-
             <button  type="submit" class="save btn btn-default">Guardar</button>
+            {% if form.errors %}
+              <p>{{form.errors}}</p>
+            {% endif %}
+            {% if sub_form.errors %}
+              <p>{{sub_form.errors}}</p>
+            {% endif %}
         </form>
         <!--script>
           $(function() {

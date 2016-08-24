@@ -13,6 +13,11 @@ class Form_RegistroEmpleado_Persona(forms.ModelForm):
 
 
 class Form_RegistroEmpleado_Empleado(forms.ModelForm):
+    def __init__(self, *args, **kwargs):  #este codigo hace que el codigo de producto no sea necesario, así no se tiene un error de validación al no enviarlo
+        # first call parent's constructor
+        super(Form_RegistroEmpleado_Empleado, self).__init__(*args, **kwargs)
+        # there's a `fields` property now
+        self.fields['auth_user'].required = False
     class Meta:
         model=Empleado
         exclude=('persona_idpersona','estado_empleado',)

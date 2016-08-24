@@ -10,62 +10,63 @@
       {% block encabezado %}Nuevo Empleado{% endblock %}
     {% block content %}
 
-        <form method="POST" class="post-form">
+        <form method="POST" class="post-form" enctype="multipart/form-data">
           {% csrf_token %}
             <!--p><label>Nombres: </label>{{ form.nombres_persona }}</p-->
 
             <div class="row" style="margin-bottom: 0px;">
               <div  class="col l6 m12 s12">
               <div class"row">
-              <label for="dpi_persona"><h6>DPI:</h6> </label>{{ form.dpi_persona }}
+              <label for="id_dpi_persona"><h6>DPI:</h6> </label>{{ form.dpi_persona }}
               </div>
               <div class"row">
-              <label for="nombres_persona"><h6>Nombres:</h6> </label>{{ form.nombres_persona }}
+              <label for="id_nombres_persona"><h6>Nombres:</h6> </label>{{ form.nombres_persona }}
               </div>
               <div class"row">
-                <label for="apellidos_persona"><h6>Apellidos:</h6> </label>{{ form.apellidos_persona }}
+                <label for="id_apellidos_persona"><h6>Apellidos:</h6> </label>{{ form.apellidos_persona }}
               </div>
               <div class"row">
-                <label for="telefonos_persona"><h6>Numero de Telefono/Celular:</h6> </label>{{ form.telefonos_persona }}
+                <label for="id_telefonos_persona"><h6>Numero de Telefono/Celular:</h6> </label>{{ form.telefonos_persona }}
               </div>
                 <div class"row">
-                    <label for="direccion_persona"><h6>Direccion:</h6> </label>{{ form.direccion_persona }}
+                    <label for="id_direccion_persona"><h6>Direccion:</h6> </label>{{ form.direccion_persona }}
                 </div>
                 <div class"row">
 
-                <label for="fecha_nacimiento_persona"><h6>Fecha De Nacimiento:</h6> </label>{{ form.fecha_nacimiento_persona}}
+                <label for="id_fecha_nacimiento_persona"><h6>Fecha De Nacimiento:</h6> </label>{{ form.fecha_nacimiento_persona}}
                 </div>
               <!--  {{ form.as_p }}-->
               </div>
               <!--datos de empleado-->
               <div class="col l6 m12 s12">
                 <div class"row">
-                  <label for="puesto_idpuesto"><h6>Puesto:</h6> </label>{{ sub_form.puesto_idpuesto }}
+                  <label for="id_puesto_idpuesto"><h6>Puesto:</h6> </label>{{ sub_form.puesto_idpuesto }}
                 </div>
                 <div class"row">
-            <label for="fecha_contratacion_empleado"><h6>Fecha De Contratacion:</h6> </label>{{ sub_form.fecha_contratacion_empleado}}
+                  <label for="id_fecha_contratacion_empleado"><h6>Fecha De Contratacion:</h6> </label>{{ sub_form.fecha_contratacion_empleado}}
                 </div>
                 <div class"row">
-                <label for="codigo_autorizacion_empleado"><h6>Codigo autorizacion:</h6> </label>{{ sub_form.codigo_autorizacion_empleado}}
+                  <label for="id_codigo_autorizacion_empleado"><h6>Codigo autorizacion:</h6> </label>{{ sub_form.codigo_autorizacion_empleado}}
                 </div>
                 <div class"row">
-                  <label for="sucursal_idsucursal"><h6>Sucursal:</h6> </label>{{ sub_form.sucursal_idsucursal}}
+                  <label for="id_sucursal_idsucursal"><h6>Sucursal:</h6> </label>{{ sub_form.sucursal_idsucursal}}
                 </div>
                 <div class"row">
-                  <label for="fotografia_empleado"><h6>Fotografia:</h6> </label>{{ sub_form.fotografia_empleado}}
+                  <label for="id_fotografia_empleado"><h6>Fotografia:</h6> </label>{{ sub_form.fotografia_empleado}}
                 </div>
-
+                <div class"row">
+                  <label for="id_username"><h6>Usuario:</h6> </label>{{ form_usuario.username}}
+                </div>
+                <div class"row">
+                  <label for="id_password"><h6>Contraseña:</h6> </label>{{ form_usuario.password}}
+                  <br/>
+                  <button  type="submit" class="save btn btn-default">Guardar</button>
+                  {% if sub_form.errors%}
+                    <p>{{sub_form.errors}}</p>
+                  {% endif %}
+                </div>
               </div>
-
             </div>
-
-
-
-
-
-
-
-            <button  type="submit" class="save btn btn-default">Guardar</button>
         </form>
         <!--script>
           $(function() {

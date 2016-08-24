@@ -143,9 +143,10 @@
                 // Si el response es correcto (si la respuesta del servidor es correcta)
                 success : function(json) {
                     //console.log(json)
+                    $("#tabla_empleados > tbody").html("");
                     $.each(json, function(key,value) {
                       //Se borra la tabla
-                      $("#tabla_empleados > tbody").html("");
+
                       //Se llena la tabla con datos
                       $('#tabla_empleados > tbody:last-child').append('<tr onclick="seleccionar_fila(this)">'+
                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;" class="id_empleado">'+value.pk+'</td>'+

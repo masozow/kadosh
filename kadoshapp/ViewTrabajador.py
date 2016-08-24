@@ -8,36 +8,34 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import *
 from .formTrabajador import *
+from django.contrib.auth import login
 
 @login_required
 def registro_trabajador(request):
     if request.method == 'POST':
         form=Form_RegistroEmpleado_Persona(request.POST)
+        form_usuario=UserForm(request.POST)
+        sub_form=Form_RegistroEmpleado_Empleado(request.POST, request.FILES)
         if form.is_valid(): #validando a la persona
-            ultima_persona=form.save()
-            #return render(request, 'kadoshapp/ingreso_mercaderia.html',{})
-        else:
-            print (f.errors)
+            if form_usuario.is_valid():
+                if sub_form.is_valid():
+                    try:
+                        ultima_persona=form.save()
+                        new_user = User.objects.create_user(**form_usuario.cleaned_data)
+                        #ultimo_usuario=new_user.save()
+                        sf=sub_form.save(commit=False)
+                        sf.persona_idpersona=ultima_persona
+                        sf.auth_user=new_user
+                        sf.save()
+                        form=Form_RegistroEmpleado_Persona()
+                        form_usuario=UserForm()
+                        sub_form=Form_RegistroEmpleado_Empleado()
+                    except Exception as e:
+                        errores=str(e)
             #mensaje error (raise error)
-        sub_form=Form_RegistroEmpleado_Empleado(request.POST)
-                #ultima_persona=Persona.objects.order_by('-idpersona')[:1]
-                #[:1] es el equivalente de SQL a: TOP 1.
-                #El - antes del nombre del campo indica que es en orden descendente
-        if sub_form.is_valid():
-            sf=sub_form.save(commit=False)
-            #aqui solo se guarda el objeto del formulario del cliente en la variable sf
-            #se le indica que no haga el commit para que aún no lo guarde en la BD
-            sf.persona_idpersona=ultima_persona
-            #se accede al campo persona_idpersona del modelo Cliente,
-            #que se encuentra ya en el formulario, para cambiar su valor
-            #por el que devuelve el queryset ultima_persona
-            sf.save()
-            #ahora sí se guarda
-        else:
-            print (sf.errors)
-            #mensaje error (raise error)
-        return render(request, 'kadoshapp/ingreso_mercaderia.html',{})
+        return render(request, 'kadoshapp/Trabajador.html', {'form': form, 'sub_form':sub_form,'form_usuario':form_usuario})
     else:
         form=Form_RegistroEmpleado_Persona()
         sub_form=Form_RegistroEmpleado_Empleado()
-    return render(request, 'kadoshapp/Trabajador.html', {'form': form, 'sub_form':sub_form})
+        form_usuario=UserForm()
+    return render(request, 'kadoshapp/Trabajador.html', {'form': form, 'sub_form':sub_form,'form_usuario':form_usuario})
