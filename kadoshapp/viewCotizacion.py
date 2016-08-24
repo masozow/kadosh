@@ -47,8 +47,6 @@ class ReporteCotizacion(TemplateView):
                                                             'cliente_idcliente__nit_cliente',
                                                             'vendedor_venta__persona_idpersona__nombres_persona',
                                                             'vendedor_venta__persona_idpersona__apellidos_persona',
-                                                            'empleado_idempleado__persona_idpersona__nombres_persona',
-                                                            'empleado_idempleado__persona_idpersona__apellidos_persona',
                                                             'fecha_venta',
                                                             'total_venta')
         venta_diccionario=ValuesQuerySetToDict(venta)
@@ -62,14 +60,14 @@ class ReporteCotizacion(TemplateView):
         ws['E2'] = 'Nit cliente:'
         ws['E3'] = 'Cliente:'
         ws['E4'] = 'Vendedor:'
-        ws['E5'] = 'Empleado:'
+        #ws['E5'] = 'Empleado:'
 
         ws['C4'] = venta_simple['total_venta']
         ws['F1'] = venta_simple['fecha_venta']
         ws['F2'] = venta_simple['cliente_idcliente__persona_idpersona__nombres_persona']+' '+venta_simple['cliente_idcliente__persona_idpersona__apellidos_persona']
         ws['F3'] = venta_simple['cliente_idcliente__nit_cliente']
         ws['F4'] = venta_simple['vendedor_venta__persona_idpersona__nombres_persona']+' '+venta_simple['vendedor_venta__persona_idpersona__apellidos_persona']
-        ws['F5'] = venta_simple['empleado_idempleado__persona_idpersona__nombres_persona']+' '+venta_simple['empleado_idempleado__persona_idpersona__apellidos_persona']
+        #ws['F5'] = venta_simple['empleado_idempleado__persona_idpersona__nombres_persona']+' '+venta_simple['empleado_idempleado__persona_idpersona__apellidos_persona']
         #Juntamos las celdas, formando una sola celda
         ws.merge_cells('A1:C2')
         ws.merge_cells('A3:C3')

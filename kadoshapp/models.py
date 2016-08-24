@@ -862,7 +862,7 @@ class TrasladoMercaderia(models.Model):
 
 class Venta(models.Model):
     idventa = models.AutoField(db_column='idVenta', primary_key=True)  # Field name made lowercase.
-    empleado_idempleado = models.ForeignKey(Empleado, db_column='Empleado_idEmpleado')  # Field name made lowercase.
+    empleado_idempleado = models.ForeignKey(Empleado, db_column='Empleado_idEmpleado',blank=True,null=True)  # Field name made lowercase.
     cliente_idcliente = models.ForeignKey(Cliente, db_column='Cliente_idCliente')  # Field name made lowercase.
     caja_idcaja = models.ForeignKey(Caja, db_column='Caja_idCaja')  # Field name made lowercase.
     tipo_pago_idtipo_pago = models.ForeignKey(TipoPago, db_column='Tipo_pago_idTipo_pago')  # Field name made lowercase.

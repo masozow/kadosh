@@ -202,8 +202,8 @@ def GuardarVenta(request):
 
         response_data = {} #declarando un diccionario vacio
         try:
-            empleado=Empleado.objects.get(auth_user=request.user)
-            ventaNueva=Venta(empleado_idempleado=empleado,anotaciones_venta=rec_anotaciones_venta,cliente_idcliente=Cliente.objects.get(idcliente=rec_cliente_idcliente),tipo_pago_idtipo_pago=TipoPago.objects.get(idtipo_pago=rec_tipo_pago_idtipo_pago),contado_venta=rec_contado_venta,vendedor_venta=Empleado.objects.get(idempleado=rec_vendedor_venta),caja_idcaja=Caja.objects.get(idcaja=rec_caja_idcaja),es_cotizacion=rec_es_cotizacion,total_venta=rec_total_venta)
+            #empleado=Empleado.objects.get(auth_user=request.user)
+            ventaNueva=Venta(anotaciones_venta=rec_anotaciones_venta,cliente_idcliente=Cliente.objects.get(idcliente=rec_cliente_idcliente),tipo_pago_idtipo_pago=TipoPago.objects.get(idtipo_pago=rec_tipo_pago_idtipo_pago),contado_venta=rec_contado_venta,vendedor_venta=Empleado.objects.get(idempleado=rec_vendedor_venta),caja_idcaja=Caja.objects.get(idcaja=rec_caja_idcaja),es_cotizacion=rec_es_cotizacion,total_venta=rec_total_venta)
             ventaNueva.save()
             tablaJson=json.loads(rec_tabla)#el loads es necesario, si no los datos aparecen como un arreglo, incluidos los corchetes y las comas
 
