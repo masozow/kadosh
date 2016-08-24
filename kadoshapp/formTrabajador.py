@@ -20,3 +20,10 @@ class Form_RegistroEmpleado_Empleado(forms.ModelForm):
             'fecha_contratacion_empleado': forms.DateInput(attrs={'class': 'datepicker'}),
 
         }
+
+from django.contrib.auth.models import User
+
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('username', 'password',)

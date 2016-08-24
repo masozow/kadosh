@@ -12,6 +12,10 @@ class Form_Inventario_Empleado(forms.ModelForm):
     class Meta:
         model=Empleado
         fields=('codigo_autorizacion_empleado',)
+        widgets={
+            'codigo_autorizacion_empleado':forms.PasswordInput()
+        }
+
 
 
 class Form_Inventario_InventarioProducto(forms.ModelForm):
