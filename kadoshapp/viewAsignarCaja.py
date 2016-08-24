@@ -9,13 +9,14 @@ from django.shortcuts import get_object_or_404
 from .models import *
 from .formAsignarCaja import *
 
-def not_in_Supervisor_group(user):
+
+def not_in_Caja_group(user):
     if user:
-        return user.groups.filter(name='Supervisor').count() != 0
+        return user.groups.filter(name='Caja').count() != 0
     return False
 
 @login_required
-@user_passes_test(not_in_Supervisor_group, login_url='denegado')
+@user_passes_test(not_in_Caja_group, login_url='denegado')
 def RegistrarGasto(request):
     if request.method=='POST':
         form_gasto=Form_Gastos(request.POST)

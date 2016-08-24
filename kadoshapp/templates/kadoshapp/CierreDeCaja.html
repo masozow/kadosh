@@ -73,16 +73,41 @@
             data : { caja : cod_caja}, // Datos enviados con el request en formato JSON
             // Si el response es correcto (si la respuesta del servidor es correcta)
             success : function(json) {
-              var grantotal=parseFloat(json.efectivo[0].total_efectivo)+parseFloat(json.cheque[0].total_cheque)+parseFloat(json.tarjeta[0].total_tarjeta)-parseFloat(json.gastos[0].total_gastos);
+              var cheque=0;
+              var efectivo=0;
+              var gasto=0;
+              var tarjeta=0;
+              var grantotal=0;
+              try{
+                efectivo=parseFloat(json.efectivo[0].total_efectivo);
+              }catch(e){
+
+              }
+              try{
+                cheque=parseFloat(json.cheque[0].total_cheque);
+              }catch(e){
+
+              }
+              try{
+                tarjeta=parseFloat(json.tarjeta[0].total_tarjeta);
+              }catch(e){
+
+              }
+              try{
+                gasto=parseFloat(json.gastos[0].total_gastos);
+              }catch(e){
+
+              }
+              grantotal=efectivo+tarjeta+cheque-gasto;
               $('#id_total_calculado_cierredecaja').val(grantotal);
-              $('#id_total_efectivo_cierredecaja').val(json.efectivo[0].total_efectivo);
-              $('#id_total_cheque_cierredecaja').val(json.cheque[0].total_cheque);
-              $('#id_total_tarjeta_cierredecaja').val(json.tarjeta[0].total_tarjeta);
-              $('#id_total_egresos_cierredecaja').val(json.gastos[0].total_gastos);
-              console.log(json.gastos[0].total_gastos);
+              $('#id_total_efectivo_cierredecaja').val(efectivo);
+              $('#id_total_cheque_cierredecaja').val(cheque);
+              $('#id_total_tarjeta_cierredecaja').val(tarjeta);
+              $('#id_total_egresos_cierredecaja').val(gasto);
+              /*console.log(json.gastos[0].total_gastos);
               console.log(json.efectivo[0].total_efectivo);
               console.log(json.tarjeta[0].total_tarjeta);
-              console.log(json.cheque[0].total_cheque);
+              console.log(json.cheque[0].total_cheque);*/
             },
             // Si el response no tuvo exito
             error : function(xhr,errmsg,err) {
