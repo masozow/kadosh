@@ -254,6 +254,7 @@ def BuscarProductoEstilo(request):
 @user_passes_test(not_in_Bodega_group, login_url='denegado') #linea para no permitir acceso al grupo
 def BuscarProductoCaracteristicas(request):
     if request.method == 'POST':
+        txt_codigo_barras = request.POST.get('codigobarras_producto')
         txt_codigo_producto = request.POST.get('codigo_estilo_producto')
 
         id_marca_producto = request.POST.get('marca_producto')
@@ -279,12 +280,13 @@ def BuscarProductoCaracteristicas(request):
         id_genero_producto = request.POST.get('genero_producto')
         if not id_genero_producto:
             id_genero_producto=0
-        resp_producto=Producto.objects.filter(codigoestilo_producto=txt_codigo_producto).values('pk','nombre_producto','descripcion_producto','codigoestilo_producto','estilo_idestilo__nombre_estilo','tipo_producto_idtipo_producto__nombre_tipoproducto','marca_id_marca__nombre_marca','genero_idgener__nombre_genero','talla_idtalla__nombre_talla','color_idcolor__nombre_color')
-        if not resp_producto:
-            if id_estilo_producto=='1' and id_tipo_producto=='1' and id_talla_producto=='1' and id_color_producto=='1' and id_genero_producto=='1':
-                resp_producto=Producto.objects.filter(marca_id_marca=id_marca_producto).values('pk','nombre_producto','descripcion_producto','codigoestilo_producto','estilo_idestilo__nombre_estilo','tipo_producto_idtipo_producto__nombre_tipoproducto','marca_id_marca__nombre_marca','genero_idgener__nombre_genero','talla_idtalla__nombre_talla','color_idcolor__nombre_color')
-            else:
-                resp_producto=Producto.objects.filter(Q(estilo_idestilo=id_estilo_producto )| Q(tipo_producto_idtipo_producto=id_tipo_producto) | Q(talla_idtalla=id_talla_producto) | Q(color_idcolor=id_color_producto) | Q(genero_idgener=id_genero_producto), marca_id_marca=id_marca_producto).values('pk','nombre_producto','descripcion_producto','codigoestilo_producto','estilo_idestilo__nombre_estilo','tipo_producto_idtipo_producto__nombre_tipoproducto','marca_id_marca__nombre_marca','genero_idgener__nombre_genero','talla_idtalla__nombre_talla','color_idcolor__nombre_color')
+        resp_producto=Producto.objects.filter(codigobarras_producto=txt_codigo_barras,codigoestilo_producto=txt_codigo_producto,talla_idtalla=id_talla_producto,genero_idgener=id_genero_producto,color_idcolor=id_color_producto,tipo_producto_idtipo_producto=id_tipo_producto,estilo_idestilo=id_estilo_producto,marca_id_marca=id_marca_producto).values('pk','nombre_producto','descripcion_producto','codigoestilo_producto','estilo_idestilo__nombre_estilo','tipo_producto_idtipo_producto__nombre_tipoproducto','marca_id_marca__nombre_marca','genero_idgener__nombre_genero','talla_idtalla__nombre_talla','color_idcolor__nombre_color') #comprobando la existencia de ese producto, mediante el código de barras y sus caractersíticas
+        #resp_producto=Producto.objects.filter(codigoestilo_producto=txt_codigo_producto).values('pk','nombre_producto','descripcion_producto','codigoestilo_producto','estilo_idestilo__nombre_estilo','tipo_producto_idtipo_producto__nombre_tipoproducto','marca_id_marca__nombre_marca','genero_idgener__nombre_genero','talla_idtalla__nombre_talla','color_idcolor__nombre_color')
+        #if not resp_producto:
+        #    if id_estilo_producto=='1' and id_tipo_producto=='1' and id_talla_producto=='1' and id_color_producto=='1' and id_genero_producto=='1':
+        #        resp_producto=Producto.objects.filter(marca_id_marca=id_marca_producto).values('pk','nombre_producto','descripcion_producto','codigoestilo_producto','estilo_idestilo__nombre_estilo','tipo_producto_idtipo_producto__nombre_tipoproducto','marca_id_marca__nombre_marca','genero_idgener__nombre_genero','talla_idtalla__nombre_talla','color_idcolor__nombre_color')
+        #    else:
+        #        resp_producto=Producto.objects.filter(Q(estilo_idestilo=id_estilo_producto )| Q(tipo_producto_idtipo_producto=id_tipo_producto) | Q(talla_idtalla=id_talla_producto) | Q(color_idcolor=id_color_producto) | Q(genero_idgener=id_genero_producto), marca_id_marca=id_marca_producto).values('pk','nombre_producto','descripcion_producto','codigoestilo_producto','estilo_idestilo__nombre_estilo','tipo_producto_idtipo_producto__nombre_tipoproducto','marca_id_marca__nombre_marca','genero_idgener__nombre_genero','talla_idtalla__nombre_talla','color_idcolor__nombre_color')
 
         #if not resp_producto:resp_producto=Producto.objects.filter(|Q(codigoestilo_producto=txt_codigo_producto) | Q(marca_id_marca=id_marca_producto) | Q(estilo_idestilo=id_estilo_producto )| Q(tipo_producto_idtipo_producto=id_tipo_producto) | Q(talla_idtalla=id_talla_producto) | Q(color_idcolor=id_color_producto) | Q(genero_idgener=id_genero_producto)).values('pk','nombre_producto','descripcion_producto','codigoestilo_producto','estilo_idestilo__nombre_estilo','tipo_producto_idtipo_producto__nombre_tipoproducto','marca_id_marca__nombre_marca','genero_idgener__nombre_genero','talla_idtalla__nombre_talla','color_idcolor__nombre_color')
         #    resp_producto=Producto.objects.all().values('pk','nombre_producto','codigobarras_producto','codigoestilo_producto','marca_id_marca__nombre_marca','genero_idgener__nombre_genero','talla_idtalla__nombre_talla','color_idcolor__nombre_color')

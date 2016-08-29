@@ -390,8 +390,8 @@
            $('#id_codigoestilo_producto').val('');
            $('#id_valor_parcial_compra').val('');
            $('#bloque_caracteristicas_producto').find('select').not('#id_bodega_idbodega').val(1);
-           $('#id_producto_codigo_producto').empty();
-           obtener_producto('input#id_codigobarras_producto');*/
+           $('#id_producto_codigo_producto').empty();*/
+           obtener_producto_caracteristicas('input#id_codigobarras_producto','#id_codigoestilo_producto','#id_bodega_egreso','#id_marca_id_marca','#id_tipo_producto_idtipo_producto','#id_talla_idtalla','#id_estilo_idestilo','#id_color_idcolor','#id_genero_idgener');
            $('#id_nombre_producto').focus();
          }
        });
@@ -531,6 +531,7 @@
                    else{
                      $.each(json, function(key,value) {
                        //$('input#id_codigobarras_producto').val(value.codigobarras_producto);
+                       /*
                        $('#id_codigoestilo_producto').val(value.codigoestilo_producto);
                        $('#id_marca_id_marca').val(value.marca_id_marca__pk);
                        $('#id_tipo_producto_idtipo_producto').val(value.tipo_producto_idtipo_producto__pk);
@@ -538,6 +539,7 @@
                        $('#id_estilo_idestilo').val(value.estilo_idestilo__pk);
                        $('#id_color_idcolor').val(value.color_idcolor__pk);
                        $('#id_genero_idgener').val(value.genero_idgener__pk);
+                       */
                        $('#id_nombre_producto').val(value.nombre_producto);
                        $('#id_descripcion_producto').val(value.descripcion_producto);
 
@@ -610,17 +612,22 @@
                        Materialize.toast('Ese producto no existe', 4000);
                      }
                      else{
+                       /*
                        $('#bloque_caracteristicas_producto').find('input text textarea').not('#boton_buscar_producto,#boton_agregar_producto,#id_codigobarras_producto').val('');
                        $('#id_nombre_producto').val('');
                        $('#id_codigoestilo_producto').val('');
                        $('#id_codigobarras_producto').val('');
                        $('#bloque_caracteristicas_producto').find('select').not('#id_bodega_idbodega').val(1);
                        Materialize.toast('Se obtuvieron resultados', 4000);
-                       console.log(json);
+                       console.log(json);*/
                        $.each(json, function(key,value) {
+                         $('#id_nombre_producto').val(value.nombre_producto);
+                         $('#id_descripcion_producto').val(value.descripcion_producto);
+                         /*
                          console.log(value);
                          $('#id_producto_codigo_producto').append('<option value='+value.pk+'>'+ value.pk  +'|'+ value.nombre_producto +'|'+ value.codigoestilo_producto +'|'+ value.marca_id_marca__nombre_marca +'|'+ value.talla_idtalla__nombre_talla +'|'+ value.color_idcolor__nombre_color+'|'+ value.genero_idgener__nombre_genero +'</option>');
-                         });
+                         */
+                       });
                       }
                    },
 
@@ -663,6 +670,9 @@
                     $('#id_cantidad_compra').val(1);
                     $("#id_ruta_fotografia").val('');
                     $('#id_cantidad_compra').focus();
+                    $('#id_valor_producto').val(0);
+                    $('#id_porcentaje_ganancia').val(0);
+                    $('#id_valor_precio').val(0);
                   },
                   // Si el response no tuvo exito
                   error : function(xhr,errmsg,err) {
