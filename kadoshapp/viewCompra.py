@@ -36,11 +36,11 @@ def Compra(request):
         form_casamatriz=FormBuscar(request.POST)
         form_precio=Form_Compra_Precio(request.POST)
 
-        #empleado=Empleado.objects.get(auth_user=request.user)
+        empleado=Empleado.objects.get(auth_user=request.user)
         if form_Compra.is_valid():
             #datoscompra=form_compra.cleaned_data
             ultimacompra=form_Compra.save(commit=False)
-            #ultimacompra.empleado_idempleado=empleado
+            ultimacompra.empleado_idempleado=empleado
             ultimacompra.save()
             if form_tabla.is_valid():
                 datos_tabla = form_tabla.cleaned_data #se obtienen los datos que vienen en el formulario
