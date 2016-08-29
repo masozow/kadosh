@@ -34,6 +34,7 @@ def Compra(request):
         form_fotografia=Form_Compra_Fotografia(request.POST)
         form_tabla=FormTabla(request.POST)
         form_casamatriz=FormBuscar(request.POST)
+        form_precio=Form_Compra_Precio(request.POST)
 
         empleado=Empleado.objects.get(auth_user=request.user)
         if form_Compra.is_valid():
@@ -61,6 +62,7 @@ def Compra(request):
                 form_fotografia=Form_Compra_Fotografia()
                 form_tabla=FormTabla()
                 form_casamatriz=FormBuscar()
+                form_precio=Form_Compra_Precio()
 
         form_InventarioProducto.fields["producto_codigo_producto"].queryset=Producto.objects.filter(estado_producto=1)
         form_Compra.fields["casa_matriz"].queryset=Proveedor.objects.filter(casa_matrizproveedor=1)
@@ -75,7 +77,7 @@ def Compra(request):
         form_Producto.fields["color_idcolor"].queryset = Color.objects.filter(estado_color=1)
         form_Producto.fields["genero_idgener"].queryset = Genero.objects.filter(estado_genero=1)
         form_TipoProducto=Form_Compra_TipoProducto()
-        return render(request, 'kadoshapp/Compra.html', {'form_Proveedor':form_Proveedor, 'form_Producto': form_Producto,'form_Detallecompra':form_Detallecompra, 'form_TipoProducto':form_TipoProducto,'form_fotografia':form_fotografia ,'form_InventarioProducto':form_InventarioProducto, 'form_Compra':form_Compra,'form_tabla':form_tabla,'form_casamatriz':form_casamatriz })
+        return render(request, 'kadoshapp/Compra.html', {'form_Proveedor':form_Proveedor, 'form_Producto': form_Producto,'form_Detallecompra':form_Detallecompra, 'form_TipoProducto':form_TipoProducto,'form_fotografia':form_fotografia ,'form_InventarioProducto':form_InventarioProducto, 'form_Compra':form_Compra,'form_tabla':form_tabla,'form_casamatriz':form_casamatriz,'form_precio':form_precio })
     else:
         form_Compra=Form_Compra_Compra()
         form_Proveedor=Form_Compra_Proveedor
@@ -85,6 +87,7 @@ def Compra(request):
         form_fotografia=Form_Compra_Fotografia()
         form_tabla=FormTabla()
         form_casamatriz=FormBuscar()
+        form_precio=Form_Compra_Precio()
 
         form_InventarioProducto.fields["producto_codigo_producto"].queryset=Producto.objects.filter(estado_producto=1)
         form_InventarioProducto.fields["bodega_idbodega"].queryset = Bodega.objects.filter(estado_bodega=1)
@@ -100,7 +103,7 @@ def Compra(request):
         form_Producto.fields["genero_idgener"].queryset = Genero.objects.filter(estado_genero=1)
         #form_anaquel=Form_Compra_Anaquel()
         form_TipoProducto=Form_Compra_TipoProducto()
-    return render(request, 'kadoshapp/Compra.html', {'form_Proveedor':form_Proveedor, 'form_Producto': form_Producto,'form_Detallecompra':form_Detallecompra, 'form_TipoProducto':form_TipoProducto,'form_fotografia':form_fotografia ,'form_InventarioProducto':form_InventarioProducto, 'form_Compra':form_Compra,'form_tabla':form_tabla,'form_casamatriz':form_casamatriz })
+    return render(request, 'kadoshapp/Compra.html', {'form_Proveedor':form_Proveedor, 'form_Producto': form_Producto,'form_Detallecompra':form_Detallecompra, 'form_TipoProducto':form_TipoProducto,'form_fotografia':form_fotografia ,'form_InventarioProducto':form_InventarioProducto, 'form_Compra':form_Compra,'form_tabla':form_tabla,'form_casamatriz':form_casamatriz,'form_precio': form_precio})
 
 @login_required
 @user_passes_test(not_in_Bodega_group, login_url='denegado') #linea para no permitir acceso al grupo
@@ -110,6 +113,7 @@ def SubirImagen(request): #también sirve para subir todo lo relacionado al prod
         producto=Form_Compra_Producto(request.POST)
         inventario=Form_Compra_InventarioProducto(request.POST)
         detalle=Form_Compra_DetalleCompra(request.POST)
+        precio=Form_Compra_Precio(request.POST)
         response_data={}
         foto=None
         if fotografia.is_valid():
@@ -139,35 +143,47 @@ def SubirImagen(request): #también sirve para subir todo lo relacionado al prod
                     colorproducto=datosproducto['color_idcolor']
                     tallaproducto=datosproducto['talla_idtalla']
                     generoproducto=datosproducto['genero_idgener']
-                    if not prod: #comprobando que no se haya enviado un código de producto a través del select
-                        prod=Producto.objects.filter(codigobarras_producto=codigobarras) #comprobando la existencia de ese producto, mediante el código de barras
-                        response_data['producto']=ValuesQuerySetToDict(prod.values('pk')) #serializers.serialize('json', list(prod), fields=('pk'))
-                        if not prod: #si no existe ese código de barras, se busca por otro parámetro
-                            prod=Producto.objects.filter(codigoestilo_producto=codigoestilo) #comprobando la existencia de ese producto, mediante el código de estilo
-                            response_data['producto']=ValuesQuerySetToDict(prod.values('pk'))
-                            if not prod: #si no existe, se procederá a guardar un nuevo producto
-                                prod=Producto(codigobarras_producto=codigobarras,codigoestilo_producto=codigoestilo,nombre_producto=nombreproducto,descripcion_producto=descripcion,talla_idtalla=tallaproducto,genero_idgener=generoproducto,color_idcolor=colorproducto,tipo_producto_idtipo_producto=tipoproducto,estilo_idestilo=estiloproducto,marca_id_marca=marcaproducto)
+                    if precio.is_valid():
+                        datosprecio=precio.cleaned_data
+                        valor=datosprecio['valor_precio']
+                        if not prod: #comprobando que no se haya enviado un código de producto a través del select input (combobox)
+                            prod=Producto.objects.filter(codigobarras_producto=codigobarras,codigoestilo_producto=codigoestilo,talla_idtalla=tallaproducto,genero_idgener=generoproducto,color_idcolor=colorproducto,tipo_producto_idtipo_producto=tipoproducto,estilo_idestilo=estiloproducto,marca_id_marca=marcaproducto) #comprobando la existencia de ese producto, mediante el código de barras y sus caractersíticas
+                            response_data['producto']=ValuesQuerySetToDict(prod.values('pk')) #eligiendo solamente la llave primaria y guardándola en el diccionario que se regresa a través de JSON
+                            if prod: #si existe el producto, se procederá a guardar el inventario y el precio
+                                resultadoprecio=Precio(producto_codigo_producto=Producto(pk=response_data['producto'][0]['pk']),valor_precio=valor) #creando una nueva instancia de producto, para ese prodcuto cone sa PK y con ese Valor
+                                resultadoinventario=InventarioProducto.objects.filter(bodega_idbodega=bodega,producto_codigo_producto=prod).update(existencia_actual=F('existencia_actual') + cantidad) #se actualiza el inventario de ese producto en esa bodega
+                                if not resultadoinventario: #si no existiera el inventario para actualizar, entonces se crea otro nuevo
+                                    resultadoinventario=InventarioProducto(producto_codigo_producto=Producto(pk=response_data['producto'][0]['pk']),bodega_idbodega=bodega,existencia_actual=cantidad) #creando el nuevo inventario
+                                    resultadoinventario.save()
+                            else: #si no existe el producto, se crea uno nuevo
+                                prod=Producto(codigobarras_producto=codigobarras,codigoestilo_producto=codigoestilo,nombre_producto=nombreproducto,descripcion_producto=descripcion,talla_idtalla=tallaproducto,genero_idgener=generoproducto,color_idcolor=colorproducto,tipo_producto_idtipo_producto=tipoproducto,estilo_idestilo=estiloproducto,marca_id_marca=marcaproducto) #Creando el nuevo producto
                                 prod.save()
                                 response_data['producto']=prod.pk
-                        resultadoinventario=InventarioProducto.objects.filter(bodega_idbodega=bodega,producto_codigo_producto=prod).update(existencia_actual=F('existencia_actual') + cantidad)
-                        if not resultadoinventario: #si no existiera el inventario para actualizar, entonces se crea otro nuevo
-                            resultadoinventario=InventarioProducto(producto_codigo_producto=prod,bodega_idbodega=bodega,existencia_actual=cantidad)
-                            resultadoinventario.save()
-                    else: #si el producto elegido en el combobox no estuviera vacio, es decir, si se envió un producto a través del select
-                        resultadoinventario=InventarioProducto.objects.filter(bodega_idbodega=bodega,producto_codigo_producto=prod).update(existencia_actual=F('existencia_actual') + cantidad)
-                        if not resultadoinventario: #si no existiera el inventario para actualizar, entonces se crea otro nuevo
-                            resultadoinventario=InventarioProducto(producto_codigo_producto=prod,bodega_idbodega=bodega,existencia_actual=cantidad)
-                            resultadoinventario.save()
-                        produ=Producto.objects.filter(pk=prod.pk).values('pk')
-                        response_data['producto']=ValuesQuerySetToDict(produ)
-                    #response_data['inventario']=ValuesQuerySetToDict(resultadoinventario.values('pk'))
-                    response_data['bodega']=bodega.pk
-                    if foto: #si hay alguna foto, se asigna al producto
-                        try:
-                            productoimagen=ProductoHasFotografia(fotografia_idfotografia=foto,producto_codigo_producto=prod)
-                            productoimagen.save()
-                        except Exception as e:
-                            response_data['errorfotoproducto']=str(e)
+                                #resultadoinventario=InventarioProducto.objects.filter(bodega_idbodega=bodega,producto_codigo_producto=prod).update(existencia_actual=F('existencia_actual') + cantidad) #se actualiza el inventario de ese producto en esa bodega
+                                #if not resultadoinventario: #si no existiera el inventario para actualizar, entonces se crea otro nuevo
+                                resultadoinventario=InventarioProducto(producto_codigo_producto=prod,bodega_idbodega=bodega,existencia_actual=cantidad)
+                                resultadoprecio=Precio(producto_codigo_producto=prod,valor_precio=valor)
+                                resultadoinventario.save()
+                            resultadoprecio.save()
+                        else: #si el producto elegido en el combobox no estuviera vacio, es decir, sí se envió un producto a través del select
+                            resultadoinventario=InventarioProducto.objects.filter(bodega_idbodega=bodega,producto_codigo_producto=prod).update(existencia_actual=F('existencia_actual') + cantidad)
+                            if not resultadoinventario: #si no existiera el inventario para actualizar, entonces se crea otro nuevo
+                                resultadoinventario=InventarioProducto(producto_codigo_producto=prod,bodega_idbodega=bodega,existencia_actual=cantidad)
+                                resultadoinventario.save()
+                            produ=Producto.objects.filter(pk=prod.pk)
+                            response_data['producto']=ValuesQuerySetToDict(produ)
+                            resultadoprecio=Precio(producto_codigo_producto=prod,valor_precio=valor)
+                            resultadoprecio.save()
+                        #response_data['inventario']=ValuesQuerySetToDict(resultadoinventario.values('pk'))
+                        response_data['bodega']=bodega.pk
+                        if foto: #si hay alguna foto, se asigna al producto
+                            try:
+                                productoimagen=ProductoHasFotografia(fotografia_idfotografia=foto,producto_codigo_producto=prod)
+                                productoimagen.save()
+                            except Exception as e:
+                                response_data['errorfotoproducto']=str(e)
+                    else:
+                        response_data['errorprecio']=precio.errors
                 else:
                     response_data['errorproducto']=producto.errors
             else:

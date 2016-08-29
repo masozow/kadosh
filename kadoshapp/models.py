@@ -403,7 +403,7 @@ class Estilo(models.Model):
     estado_estilo = models.BooleanField(default=True)
 
     def __str__(self):
-        return '%s - %s' % (self.idestilo, self.nombre_estilo)
+        return '%s' % (self.nombre_estilo)
 
     class Meta:
         managed = True
@@ -446,7 +446,7 @@ class Genero(models.Model):
     estado_genero = models.BooleanField(default=True)
 
     def __str__(self):
-        return '%s - %s' % (self.idgener, self.nombre_genero)
+        return '%s' % (self.nombre_genero)
 
     class Meta:
         managed = True
@@ -521,7 +521,7 @@ class Marca(models.Model):
     estado_marca = models.BooleanField(default=True)
 
     def __str__(self):
-        return '%s - %s' % (self.id_marca, self.nombre_marca)
+        return '%s' % (self.nombre_marca)
 
     class Meta:
         managed = True
@@ -669,7 +669,7 @@ class Producto(models.Model):
     publicar_producto = models.BooleanField(default=False)
     oferta_producto = models.BooleanField(default=False)
     #combo_idcombo = models.ForeignKey(Combo, db_column='Combo_idCombo')  # Field name made lowercase.
-
+    
     def __str__(self):
         return '%s||%s||%s' % (self.codigo_producto,self.codigoestilo_producto,self.nombre_producto)
 
@@ -837,7 +837,7 @@ class TipoProducto(models.Model):
     estado_tipoproducto = models.BooleanField(db_column='estado_tipoProducto', default=True)  # Field name made lowercase.
 
     def __str__(self):
-        return '%s - %s' % (self.idtipo_producto,self.nombre_tipoproducto)
+        return '%s' % (self.nombre_tipoproducto)
 
     class Meta:
         managed = True

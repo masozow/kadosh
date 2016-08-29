@@ -14,6 +14,11 @@
           {% csrf_token %}
         <div id="bloque_encabezado" style="background-color:#eeeedd;border-radius:10px;">
           <div class="row" style="margin-bottom: 0px;">
+            <div class="col l12 m12 s12">
+              <div class="center-align">
+                <h5><b>Datos de la compra</b></h5>
+              </div>
+            </div>
               <div class="col l6 m12 s12">
                 <div class="row" style="margin-bottom: 0px;">
                   <div class="col s6">
@@ -64,14 +69,14 @@
         </div>
         <div id="bloque_caracteristicas_producto" style="background-color:#ddeee1;border-radius:10px;">
           <div class="row" style="margin-bottom: 0px;">
-            <div  class="col l6 m12 s12">
-              <div class="row" style="margin-bottom: 0px;">
-                <div class="col s6">
-                  <label for="id_cantidad_compra"><h6>Cantidad:</h6> </label>{{ form_Detallecompra.cantidad_compra}}
-                </div>
+            <div class="col l12 m12 s12" >
+              <div class="center-align">
+                <h5><b>Datos del producto</b></h5>
               </div>
+            </div>
+            <div  class="col l6 m12 s12">
               <div class="col s6">
-                <label for="id_codigobarras_producto"><h6>Código de barras:</h6> </label>{{ form_Producto.codigobarras_producto}}
+                <label for="id_cantidad_compra"><h6>Cantidad:</h6> </label>{{ form_Detallecompra.cantidad_compra}}
                 <label for="id_marca_id_marca"><h6>Marca:</h6> </label>{{ form_TipoProducto.marca_id_marca}}
                 <label for="id_genero_idgener"><h6>Género:</h6> </label>{{ form_Producto.genero_idgener}}
                 <label for="id_talla_idtalla"><h6>Talla:</h6> </label>{{ form_Producto.talla_idtalla}}
@@ -81,8 +86,11 @@
                   <label for="id_tipo_producto_idtipo_producto"><h6>Tipo:</h6> </label>{{ form_Producto.tipo_producto_idtipo_producto}}
                   <label for="id_estilo_idestilo"><h6>Estilo:</h6> </label>{{ form_Producto.estilo_idestilo}}
                   <label for="id_color_idcolor"><h6>Color:</h6> </label>{{ form_Producto.color_idcolor}}
-                  <br/>
-
+              </div>
+              <div class="row" style="margin-bottom: 0px;">
+                <div class="col s6">
+                  <label for="id_codigobarras_producto"><h6>Código de barras:</h6> </label>{{ form_Producto.codigobarras_producto}}
+                </div>
               </div>
               <div class="col s12">
                 <label for="id_nombre_producto"><h6>Nombre producto:</h6> </label>{{  form_Producto.nombre_producto}}
@@ -95,12 +103,20 @@
                 <label for="id_valor_parcial_compra"><h6>Valor parcial:</h6> </label>{{ form_Detallecompra.valor_parcial_compra}}
                 <br/>
               </div>
+              <div class="col s6">
+                  <label style="color:#656534;"for="id_porcentaje_ganancia"><h6>% ganancia:</h6> </label><input id="id_porcentaje_ganancia" name="porcentaje_ganancia" step="1" type="number"></input>
+                  <br/>
+              </div>
+              <div class="col s6">
+                  <label style="color:#656534;"for="id_valor_precio"><h6>Precio producto:</h6></label>{{form_precio.valor_precio}}
+                  <br/>
+              </div>
             </div>
             <div class="col l6 m12 s12">
-                  <div style="background-color:#e5dfcd;">
+                  <!--div style="background-color:#e5dfcd;">
                     <input class="btn tooltipped" data-position="right" data-delay="5" data-tooltip="Puede buscar el producto para evitar repetición de datos (la marca es obligatoria para la búsqueda)" id="boton_buscar_producto" type="button" onclick="buscar_producto(this)" value="Buscar" name="btn_buscar_producto"/>
                     <label for="id_producto_codigo_producto"><h6>Resultado de la búsqueda:</h6> </label>{{  form_InventarioProducto.producto_codigo_producto}}<br/>
-                  </div>
+                  </div-->
                   <label for="id_descripcion_producto"><h6>Descripción:</h6> </label>{{ form_Producto.descripcion_producto}}
                   <label for="id_nombre_fotografia"><h6>Nombre de la fotografía:</h6> </label>{{ form_fotografia.nombre_fotografia}}
                   <label for="id_ruta_fotografia"><h6>Ruta:</h6> </label>{{ form_fotografia.ruta_fotografia}}
@@ -176,6 +192,7 @@
         $('#id_producto_codigo_producto').empty();
         $('input#id_cantidad_compra').val(1);
         $('#id_tipo_pago_idtipo_pago').val(1);
+        $('#id_porcentaje_ganancia').val(0);
         $('#id_jsonfield').css('display','None'); //ocultando el campo que enviará los datos JSON como texto
         $('input[type="checkbox"]').addClass("filled-in").addClass("filled-in"); //necesario para que se vean los checkbox
         //$('#id_producto_codigo_producto').empty();
@@ -203,6 +220,9 @@
       $( "#id_valor_parcial_compra" ).focus(function() {
         Materialize.toast('Decimales separados por coma', 4000);
       });
+      $( "#id_porcentaje_ganancia" ).focus(function() {
+        Materialize.toast('Solo se aceptan números enteros', 4000);
+      });
       $( "#id_valor_producto" ).focus(function() {
         Materialize.toast('Decimales separados por coma', 4000);
       });
@@ -222,14 +242,14 @@
         if(keyCode==13)
         {
           e.preventDefault();
-          $('#bloque_caracteristicas_producto').find('input text textarea').not('#boton_buscar_producto,#boton_agregar_producto,#id_codigobarras_producto').val('');
-          $('#id_nombre_producto').val('');
-          $('#id_codigobarras_producto').val('');
-          $('#id_valor_parcial_compra').val('');
-          $('#bloque_caracteristicas_producto').find('select').not('#id_bodega_idbodega').val(1);
-          $('#id_producto_codigo_producto').empty();
-          obtener_productoestilo('input#id_codigoestilo_producto');
-          $('#id_nombre_producto').focus();
+          //$('#bloque_caracteristicas_producto').find('input text textarea').not('#boton_buscar_producto,#boton_agregar_producto,#id_codigobarras_producto').val('');
+          //$('#id_nombre_producto').val('');
+          //$('#id_codigobarras_producto').val('');
+          //$('#id_valor_parcial_compra').val('');
+          //$('#bloque_caracteristicas_producto').find('select').not('#id_bodega_idbodega').val(1);
+          //$('#id_producto_codigo_producto').empty();
+          //obtener_productoestilo('input#id_codigoestilo_producto');
+          $('#id_marca_id_marca').focus();
         }
       });
       $( 'input#id_nombre_producto' ).keydown(function(e){
@@ -238,6 +258,15 @@
         {
           e.preventDefault();
           $('#id_valor_producto').focus();
+          //Materialize.toast('Decimales separados por coma', 4000);
+        }
+      });
+      $( 'input#id_marca_id_marca' ).keydown(function(e){
+        var keyCode = e.keyCode || e.which;
+        if(keyCode==9)
+        {
+          e.preventDefault();
+          $('#id_tipo_producto_idtipo_producto').focus();
           //Materialize.toast('Decimales separados por coma', 4000);
         }
       });
@@ -257,14 +286,35 @@
         if(keyCode==13)
         {
           e.preventDefault();
+          $('#id_porcentaje_ganancia').focus();
+          $('#id_porcentaje_ganancia').val($('#id_valor_parcial_compra'));
         }
       });
+      $( 'input#id_porcentaje_ganancia' ).keydown(function(e){
+        var keyCode = e.keyCode || e.which;
+        if(keyCode==13)
+        {
+          e.preventDefault();
+          $('#id_valor_precio').focus();
+          $('#id_valor_precio').val(parseFloat($('#id_valor_producto').val()*(1+($('#id_porcentaje_ganancia').val())/100)).toFixed(2));
+        }
+      });
+      $( 'input#id_valor_precio' ).keydown(function(e){
+        var keyCode = e.keyCode || e.which;
+        if(keyCode==13)
+        {
+          e.preventDefault();
+          //$('#id_valor_producto').focus();
+          //$('#id_valor_producto').val(parseFloat($('#id_valor_producto').val()*$('#id_porcentaje_ganancia').val()).toFixed(2));
+        }
+      });
+
       $( 'input#id_cantidad_compra' ).keydown(function(e){
         var keyCode = e.keyCode || e.which;
         if(keyCode==13)
         {
           e.preventDefault();
-          $('#id_codigobarras_producto').focus();
+          $('#id_codigoestilo_producto').focus();
         }
       });
       $( 'input#id_nombre_proveedor' ).keydown(function(e){
@@ -341,7 +391,7 @@
            $('#bloque_caracteristicas_producto').find('select').not('#id_bodega_idbodega').val(1);
            $('#id_producto_codigo_producto').empty();
            obtener_producto('input#id_codigobarras_producto');
-           $('#id_codigoestilo_producto').focus();
+           $('#id_nombre_producto').focus();
          }
        });
 
@@ -367,13 +417,13 @@
                Materialize.toast('No puede guardar un producto sin nombre', 4000);
              }
              else {
-               var marca=$('#id_marca_id_marca option:selected').text().split(' ');
+               var marca=$('#id_marca_id_marca option:selected').text();
                var estilo=$('#id_codigoestilo_producto').val();
-               var genero=$('#id_genero_idgener option:selected').text().split(' ');
+               var genero=$('#id_genero_idgener option:selected').text();
                var talla=$('#id_talla_idtalla option:selected').text();
                var color=$('#id_color_idcolor option:selected').text();
                var nombre=$('#id_nombre_producto').val();
-               datosproducto=nombre+' -- '+marca[2]+' ['+talla+'] '+ color +' -- '+genero[2]+' -- '+estilo; //dando formato a los datos del producto
+               datosproducto=nombre+' -- '+marca+' ['+talla+'] '+ color +' -- '+genero+' -- '+estilo; //dando formato a los datos del producto
                sumar_valor_parcial(".suma_valor_parcial",'#id_total_compra');
                subir_imagen('#id_ruta_fotografia');//bajar esto al else, junto con el resto que esta comentado abajo
                $('#bloque_caracteristicas_producto').find('input text textarea').not('#boton_buscar_producto,#boton_agregar_producto,#id_codigobarras_producto').val('');
@@ -486,7 +536,7 @@
                        $('#id_talla_idtalla').val(value.talla_idtalla__pk);
                        $('#id_estilo_idestilo').val(value.estilo_idestilo__pk);
                        $('#id_color_idcolor').val(value.color_idcolor__pk);
-                       $('#id_genero_idgener').val(value.color_idcolor__pk);
+                       $('#id_genero_idgener').val(value.genero_idgener__pk);
                        $('#id_nombre_producto').val(value.nombre_producto);
                        $('#id_descripcion_producto').val(value.descripcion_producto);
 
@@ -528,7 +578,7 @@
                        $('#id_talla_idtalla').val(value.talla_idtalla__pk);
                        $('#id_estilo_idestilo').val(value.estilo_idestilo__pk);
                        $('#id_color_idcolor').val(value.color_idcolor__pk);
-                       $('#id_genero_idgener').val(value.color_idcolor__pk);
+                       $('#id_genero_idgener').val(value.genero_idgener__pk);
                        $('#id_nombre_producto').val(value.nombre_producto);
                        $('#id_descripcion_producto').val(value.descripcion_producto);
 
@@ -608,7 +658,6 @@
                                                                       '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+datosproducto+'</td>'+
                                                                       '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;" class="suma_valor_parcial">'+ parseFloat( valorparcial).toFixed(2)+'</td>'+
                                                                     '</tr>');
-
                     sumar_valor_parcial(".suma_valor_parcial",'#id_total_compra');
                     $('#id_cantidad_compra').val(1);
                     $("#id_ruta_fotografia").val('');
