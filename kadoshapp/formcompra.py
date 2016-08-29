@@ -76,6 +76,7 @@ class Form_Compra_TipoProducto(forms.ModelForm):
         model=Producto
         fields=('marca_id_marca',)
 
+
 class Form_Compra_Precio(forms.ModelForm):
     def __init__(self, *args, **kwargs):  #este codigo hace que el codigo de producto no sea necesario, así no se tiene un error de validación al no enviarlo
         super(Form_Compra_Precio, self).__init__(*args, **kwargs)
