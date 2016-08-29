@@ -77,7 +77,7 @@ def Compra(request):
         form_Producto.fields["color_idcolor"].queryset = Color.objects.filter(estado_color=1)
         form_Producto.fields["genero_idgener"].queryset = Genero.objects.filter(estado_genero=1)
         form_TipoProducto=Form_Compra_TipoProducto()
-        return render(request, 'kadoshapp/Compra.html', {'form_Proveedor':form_Proveedor, 'form_Producto': form_Producto,'form_Detallecompra':form_Detallecompra, 'form_TipoProducto':form_TipoProducto,'form_fotografia':form_fotografia ,'form_InventarioProducto':form_InventarioProducto, 'form_Compra':form_Compra,'form_tabla':form_tabla,'form_casamatriz':form_casamatriz,'form_precio':form_precio })
+        return render(request, 'kadoshapp/Compra.html', {'form_precio':form_precio,'form_Proveedor':form_Proveedor, 'form_Producto': form_Producto,'form_Detallecompra':form_Detallecompra, 'form_TipoProducto':form_TipoProducto,'form_fotografia':form_fotografia ,'form_InventarioProducto':form_InventarioProducto, 'form_Compra':form_Compra,'form_tabla':form_tabla,'form_casamatriz':form_casamatriz })
     else:
         form_Compra=Form_Compra_Compra()
         form_Proveedor=Form_Compra_Proveedor
@@ -103,7 +103,7 @@ def Compra(request):
         form_Producto.fields["genero_idgener"].queryset = Genero.objects.filter(estado_genero=1)
         #form_anaquel=Form_Compra_Anaquel()
         form_TipoProducto=Form_Compra_TipoProducto()
-    return render(request, 'kadoshapp/Compra.html', {'form_Proveedor':form_Proveedor, 'form_Producto': form_Producto,'form_Detallecompra':form_Detallecompra, 'form_TipoProducto':form_TipoProducto,'form_fotografia':form_fotografia ,'form_InventarioProducto':form_InventarioProducto, 'form_Compra':form_Compra,'form_tabla':form_tabla,'form_casamatriz':form_casamatriz,'form_precio': form_precio})
+    return render(request, 'kadoshapp/Compra.html', {'form_precio': form_precio,'form_Proveedor':form_Proveedor, 'form_Producto': form_Producto,'form_Detallecompra':form_Detallecompra, 'form_TipoProducto':form_TipoProducto,'form_fotografia':form_fotografia ,'form_InventarioProducto':form_InventarioProducto, 'form_Compra':form_Compra,'form_tabla':form_tabla,'form_casamatriz':form_casamatriz})
 
 @login_required
 @user_passes_test(not_in_Bodega_group, login_url='denegado') #linea para no permitir acceso al grupo
