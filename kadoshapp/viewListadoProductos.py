@@ -11,17 +11,16 @@ from .formListadoProductos import *
 from django.core.serializers.json import DjangoJSONEncoder #para decofificar todos los datos de MySql
 from django.db.models import Q #para poder usar el operador | que funciona como OR
 
-def not_in_Bodega_group(user):
-    if user:
-        return user.groups.filter(name='Bodega').count() != 0
-    return False
-
-#El siguiente método convierte el resultado de "values" en un diccionario
 def ValuesQuerySetToDict(vqs):
     return [item for item in vqs]
 
+def not_in_Caja_group(user):
+    if user:
+        return user.groups.filter(name='Caja').count() != 0
+    return False
+
 @login_required
-@user_passes_test(not_in_Bodega_group, login_url='denegado')
+@user_passes_test(not_in_Caja_group, login_url='denegado')
 def Listado(request):
     if request.method=='POST':
         form_prducto=Form_Busqueda_Listado_Precio(request.POST)
@@ -48,7 +47,12 @@ def BuscarProductoExtra(request):
                                                                                             'inventarioproducto__existencia_actual',
                                                                                             'codigoestilo_producto',
                                                                                             'precio__valor_precio',
-                                                                                            'marca_id_marca__nombre_marca')
+                                                                                            'marca_id_marca__nombre_marca',
+                                                                                            'tipo_producto_idtipo_producto__nombre_tipoproducto',
+                                                                                            'estilo_idestilo__nombre_estilo',
+                                                                                            'genero_idgener__nombre_genero',
+                                                                                            'talla_idtalla__nombre_talla',
+                                                                                            'color_idcolor__nombre_color')
                                                                             #'inventarioproducto__detallecompra__valor_parcial_compra'
                                                                             #).order_by('-inventarioproducto__detallecompra__pk')
         resultado_diccionario=ValuesQuerySetToDict(resultado)
@@ -104,7 +108,12 @@ def BuscarProductoCaracteristicasExtra(request):
                                                                                                                                                                                                                                                                                                                                                       'inventarioproducto__existencia_actual',
                                                                                                                                                                                                                                                                                                                                                       'codigoestilo_producto',
                                                                                                                                                                                                                                                                                                                                                       'precio__valor_precio',
-                                                                                                                                                                                                                                                                                                                                                      'marca_id_marca__nombre_marca')
+                                                                                                                                                                                                                                                                                                                                                      'marca_id_marca__nombre_marca',
+                                                                                                                                                                                                                                                                                                                                                      'tipo_producto_idtipo_producto__nombre_tipoproducto',
+                                                                                                                                                                                                                                                                                                                                                      'estilo_idestilo__nombre_estilo',
+                                                                                                                                                                                                                                                                                                                                                      'genero_idgener__nombre_genero',
+                                                                                                                                                                                                                                                                                                                                                      'talla_idtalla__nombre_talla',
+                                                                                                                                                                                                                                                                                                                                                      'color_idcolor__nombre_color')
 
         resultado_diccionario=ValuesQuerySetToDict(resultado)
         return HttpResponse(

@@ -152,7 +152,7 @@ Listado Productos
                     $.each(json, function(key,value) {
                     $('#tabla_productos > tbody:last-child').append('<tr>'+
                                                                     '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.pk+'</td>'+
-                                                                    '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.nombre_producto+'</td>'+
+                                                                    '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.nombre_producto+'-'+value.genero_idgener__nombre_genero+' ['+value.talla_idtalla__nombre_talla+'] '+value.color_idcolor__nombre_color+'-'+value.estilo_idestilo__nombre_estilo+'</td>'+
                                                                     '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.codigoestilo_producto+'</td>'+
                                                                     '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.codigobarras_producto+'</td>'+
                                                                     '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.marca_id_marca__nombre_marca+'</td>'+
