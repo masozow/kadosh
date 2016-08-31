@@ -50,18 +50,18 @@ class ReporteProductos(TemplateView):
         color_int=int(color)
         genero_int=int(genero)
 
-        productos=Producto.objects.filter(Q(codigobarras_producto=codigobarras)|Q(codigoestilo_producto=codigoEstilo) | Q(marca_id_marca=marca_int) | Q(estilo_idestilo=estilo_int )| Q(tipo_producto_idtipo_producto=tipo_int) | Q(talla_idtalla=talla_int) | Q(color_idcolor=color_int) | Q(genero_idgener=genero_int)).values('pk','nombre_producto','codigobarras_producto','codigoestilo_producto','precio__valor_precio','marca_id_marca__nombre_marca','tipo_producto_idtipo_producto__nombre_tipoproducto','talla_idtalla__nombre_talla','color_idcolor__nombre_color','genero_idgener__nombre_genero').annotate(cantidad_vendida=Sum('inventarioproducto__detalleventa__cantidad_venta'),total_ventas=Sum('inventarioproducto__detalleventa__valor_parcial_venta'))
+        productos=Producto.objects.filter(Q(codigobarras_producto=codigobarras)|Q(codigoestilo_producto=codigoEstilo) | Q(marca_id_marca=marca_int) | Q(estilo_idestilo=estilo_int )| Q(tipo_producto_idtipo_producto=tipo_int) | Q(talla_idtalla=talla_int) | Q(color_idcolor=color_int) | Q(genero_idgener=genero_int),inventarioproducto__detalleventa__venta_idventa__es_cotizacion=0,inventarioproducto__detalleventa__venta_idventa__estado_venta=1).values('pk','nombre_producto','codigobarras_producto','codigoestilo_producto','marca_id_marca__nombre_marca','tipo_producto_idtipo_producto__nombre_tipoproducto','talla_idtalla__nombre_talla','color_idcolor__nombre_color','genero_idgener__nombre_genero','estilo_idestilo__nombre_estilo').annotate(cantidad_vendida=Sum('inventarioproducto__detalleventa__cantidad_venta'),total_ventas=Sum('inventarioproducto__detalleventa__valor_parcial_venta'))
         if not productos:
-            productos=Producto.objects.all().values('pk',
+            productos=Producto.objects.filter(inventarioproducto__detalleventa__venta_idventa__es_cotizacion=0,inventarioproducto__detalleventa__venta_idventa__estado_venta=1).values('pk',
                                                     'nombre_producto',
                                                     'codigobarras_producto',
                                                     'codigoestilo_producto',
-                                                    'precio__valor_precio',
                                                     'marca_id_marca__nombre_marca',
                                                     'tipo_producto_idtipo_producto__nombre_tipoproducto',
                                                     'talla_idtalla__nombre_talla',
                                                     'color_idcolor__nombre_color',
-                                                    'genero_idgener__nombre_genero').annotate(cantidad_vendida=Sum('inventarioproducto__detalleventa__cantidad_venta'),total_ventas=Sum('inventarioproducto__detalleventa__valor_parcial_venta'))
+                                                    'genero_idgener__nombre_genero',
+                                                    'estilo_idestilo__nombre_estilo').annotate(cantidad_vendida=Sum('inventarioproducto__detalleventa__cantidad_venta'),total_ventas=Sum('inventarioproducto__detalleventa__valor_parcial_venta'))
 
         nuevos_productos=ValuesQuerySetToDict(productos)
         #Creamos el libro de trabajo
@@ -91,12 +91,13 @@ class ReporteProductos(TemplateView):
         ws['C5'] = 'Nombre Producto'
         ws['D5'] = 'Codigo Barra'
         ws['E5'] = 'Codigo Estilo'
-        ws['F5'] = 'Precio'
-        ws['G5'] = 'Marca'
-        ws['H5'] = 'Tipo'
-        ws['I5'] = 'Talla'
-        ws['J5'] = 'Color'
-        ws['K5'] = 'Genero'
+        #ws['F5'] = 'Precio'
+        ws['F5'] = 'Marca'
+        ws['G5'] = 'Tipo'
+        ws['H5'] = 'Talla'
+        ws['I5'] = 'Color'
+        ws['J5'] = 'Genero'
+        ws['K5'] = 'Estilo'
         ws['L5'] = 'Cantidad Vendida'
         ws['M5'] = 'Total De Ventas'
 
@@ -107,12 +108,13 @@ class ReporteProductos(TemplateView):
             ws.cell(row=cont,column=3).value = producto['nombre_producto']
             ws.cell(row=cont,column=4).value = producto['codigobarras_producto']
             ws.cell(row=cont,column=5).value = producto['codigoestilo_producto']
-            ws.cell(row=cont,column=6).value = producto['precio__valor_precio']
-            ws.cell(row=cont,column=7).value = producto['marca_id_marca__nombre_marca']
-            ws.cell(row=cont,column=8).value = producto['tipo_producto_idtipo_producto__nombre_tipoproducto']
-            ws.cell(row=cont,column=9).value = producto['talla_idtalla__nombre_talla']
-            ws.cell(row=cont,column=10).value = producto['color_idcolor__nombre_color']
-            ws.cell(row=cont,column=11).value = producto['genero_idgener__nombre_genero']
+            #ws.cell(row=cont,column=6).value = producto['precio__valor_precio']
+            ws.cell(row=cont,column=6).value = producto['marca_id_marca__nombre_marca']
+            ws.cell(row=cont,column=7).value = producto['tipo_producto_idtipo_producto__nombre_tipoproducto']
+            ws.cell(row=cont,column=8).value = producto['talla_idtalla__nombre_talla']
+            ws.cell(row=cont,column=9).value = producto['color_idcolor__nombre_color']
+            ws.cell(row=cont,column=10).value = producto['genero_idgener__nombre_genero']
+            ws.cell(row=cont,column=11).value = producto['estilo_idestilo__nombre_estilo']
             ws.cell(row=cont,column=12).value = producto['cantidad_vendida']
             ws.cell(row=cont,column=13).value = producto['total_ventas']
             cont = cont + 1

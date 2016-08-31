@@ -1,12 +1,12 @@
 from django.conf.urls import include, url
 from . import views
-from . import ViewProducto,ViewTrabajador,viewReporteProductos,viewModificarCliente,viewAsignarCaja,viewListadoProductos,viewBusquedaMercaderia,viewPrecios,viewCliente, viewIngresoMercaPorProveedor, viewCompra, viewPuntodeVenta, viewTrasladoMercaderia, viewCierreCaja, viewAnularVenta, viewInventario, viewPromocion,viewEmpleados, viewCotizacion,viewModificarVenta,viewReporteCompras,viewReporteComprasExcel
+from . import ViewProducto,ViewTrabajador,viewReporteProductos,viewModificarCliente,viewAsignarCaja,viewListadoProductos,viewBusquedaMercaderia,viewPrecios,viewCliente, viewIngresoMercaPorProveedor, viewCompra, viewPuntodeVenta, viewTrasladoMercaderia, viewCierreCaja, viewAnularVenta, viewInventario, viewPromocion,viewEmpleados, viewCotizacion,viewModificarVenta,viewReporteCompras,viewReporteComprasExcel,viewResumenes,viewReporteCompraEspecifica,viewReporteCompraEspecificaExcel
 from . import viewTablas
 from . import viewReporteClientes,viewReporteClientesExcel
 from . import ViewReporteVentas, ViewReporteVentasExcel
 urlpatterns=[
 #urls para loguear
-url(r'^$','django.contrib.auth.views.login',
+url(r'^sistema/$','django.contrib.auth.views.login',
 {'template_name':'kadoshapp/login.html'}, name='login'),
 
 url(r'^cerrar/$','django.contrib.auth.views.logout_then_login',name='logout'),
@@ -31,7 +31,7 @@ url(r'^Buscar/Producto/Precio/$', viewPrecios.BuscarProducto, name='BusquedaProd
 url(r'^Buscar/Producto/Compra/$', viewCompra.BuscarProducto, name='BusquedaProdCompra'),
 url(r'^Buscar/ProductoEstilo/Compra/$', viewCompra.BuscarProductoEstilo, name='BusquedaProdEstiloCompra'),
 url(r'^Buscar/ProductoCaracteristicas/Compra/$', viewCompra.BuscarProductoCaracteristicas, name='BusquedaProdCompraCaracteristicas'),
-url(r'^Buscar/Producto/ModificarVenta/$', viewModificarVenta.BuscarProductoDetalle, name='BusquedaProdModificarVenta'),
+#url(r'^Buscar/Producto/ModificarVenta/$', viewModificarVenta.BuscarProductoDetalle, name='BusquedaProdModificarVenta'),
 url(r'^Buscar/ProductoNuevo/ModificarVenta/$', viewModificarVenta.BuscarProductoNuevo, name='BusquedaProdNuevoModificarVenta'),
 url(r'^Buscar/Precio/$', viewPrecios.BuscarPrecio, name='BusquedaPrecio'),
 url(r'^Buscar/Venta/$', viewAnularVenta.BuscarVenta, name='BusquedaVenta'),
@@ -57,6 +57,7 @@ url(r'^Productos/Listado/$', viewListadoProductos.Listado, name='ListadoProducto
 url(r'^Registrar/Gasto/$', viewAsignarCaja.RegistrarGasto, name='RegitrarGasto'),
 url(r'^Guardar/Venta/$', viewPuntodeVenta.GuardarVenta, name='GuardarVenta'),
 url(r'^Guardar/Precio/$', viewPrecios.GuardarPrecio, name='GuardarPrecio'),
+url(r'^Ver/Resumenes/$', viewResumenes.Resumenes, name='Resumenes'),
 url(r'^Buscar/TodosProductosCaracteristicas/$', viewListadoProductos.BuscarProductoCaracteristicasExtra, name='BuscarListadoProductos'),
 url(r'^Buscar/TodosProductosCaracteristicasExtra/$', viewListadoProductos.BuscarProductoCaracteristicasExtra, name='BuscarListadoProductos'),
 url(r'^Buscar/TodosProductosExtra/$', viewListadoProductos.BuscarProductoExtra, name='BuscarListadoProductos'),
@@ -72,4 +73,6 @@ url(r'^reporte_clientes_excel/$',viewReporteClientesExcel.ReporteCliente.as_view
 url(r'^Reporte/Ventas/', ViewReporteVentas.Ventas, name='RVentas'),
 url(r'^reporte_ventas_excel/$',ViewReporteVentasExcel.ReporteVentas.as_view(), name="reporte_ventas_excel"),
 url(r'^reporte_compras_excel/$',viewReporteComprasExcel.ReporteCompras.as_view(), name="reporte_compras_excel"),
+url(r'^Reporte/CompraEspecifica/', viewReporteCompraEspecifica.CompraEspecifica, name='Rcompraespecifica'),
+#url(r'^reporte_comprasespecificas_excel/$',viewReporteCompraEspecificaExcel.ReporteCompraEspecifica.as_view(), name="reporte_compraespecifica_excel"),
 ]

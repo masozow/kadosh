@@ -1,0 +1,79 @@
+{% extends 'kadoshapp/base.html'  %}
+{% load django_tables2 %}
+{% load staticfiles %}
+{% block titulo %}
+ Reporte Compra Específica
+{% endblock %}
+{% block styles %}
+  <link type="text/css" rel="stylesheet" href="{% static "css/formularios.css" %}"/>
+  <link rel="stylesheet" href="{{ STATIC_URL }}django_tables2/themes/paleblue/css/screen.css" />
+{% endblock %}
+{% block encabezado %}Reporte Compra Específica{% endblock %}
+{% block content %}
+<form action="/Reporte/CompraEspecifica/" id="formulario_reporte2" method="POST" class="post-form">
+  {% csrf_token %}
+<div class="row" style="margin-bottom: 0px;">
+  <h5><b> Características de busqueda</b></h5>
+  <div class="col l6 m12 s12">
+      <label for="id_numerocompra"><h6>Número de compra:</h6> </label>{{ form_compra.numerocompra}}
+  </div>
+  <div class="col l3 m12 s12">
+    <br/>
+        <button type="submit" class="save btn btn-default">Buscar</button>
+  </div>
+  <div class="col l3 m12 s12">
+    <br/>
+        <input class="save btn btn-default" id="boton_descargar" type="button" onclick="descargar(this)" value="Descargar" name="btn_descargar"/>
+  </div>
+</div>
+</div>
+
+
+ </form>
+<div class="row" style="margin-bottom: 0px;">
+  <div class="col l12 m12 s12">
+    {% render_table reporte1 %}
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+
+<script type="text/javascript">
+$( document ).ready(function(){ //document indica toda la página, ready indica que ya se haya cargado el DOM
+  //$('#id_fechafinal_precio').val($('#id_fechainicial_precio').val());
+  $('input[type="checkbox"]').addClass("filled-in");
+  cambiar_ruta();
+});
+
+
+var ruta;//variable donde se guardará la ruta
+function cambiar_ruta(){
+  ruta=$('#id_fechainicial_precio').val()+'&fechafinal_precio='+$('#id_fechafinal_precio').val() +'&checkbo='+$('#id_checkbox_vrf').is(':checked');
+  console.log(ruta);
+}
+$('#id_fechainicial_precio').change(function(){//cuando un elemento especifico cambia su valor, en este caso un textbox
+  cambiar_ruta();
+});
+$('#id_checkbox_vrf').change(function(){//cuando un elemento especifico cambia su valor, en este caso un textbox
+  cambiar_ruta();
+});
+$('#id_fechafinal_precio').change(function(){//cuando un elemento especifico cambia su valor, en este caso un textbox
+  cambiar_ruta();
+});
+/*+'&fechafinal_precio='+$('#id_fechafinal_precio').val()*/
+/*
+$('#id_fechafinal_precio').change(function(){ //cuando un elemento especifico cambia su valor, en este caso un textbox
+  cambiar_ruta();
+});*/
+$("select").change(function (){ //cuando cualquier combobox=select cambia su valor
+    cambiar_ruta();
+});
+
+function descargar(boton){
+  console.log($('#id_fechainicial_precio').val());
+  $(location).attr('href', '/reporte_compras_excel?fechainicial_precio='+ruta);
+}
+</script>
+{% endblock %}

@@ -32,7 +32,7 @@ def Ventas(request):
         fecha2=fechafini #debe ser la fecha más grande
         fecha1_split=fecha1.split('/')
         fecha2_split=fecha2.split('/')
-        ventas_vendedor=ventas_vendedor=qs.values('month','vendedor_venta__persona_idpersona__nombres_persona','vendedor_venta__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('month','total_ventas')
+        ventas_vendedor=qs.values('month','vendedor_venta__persona_idpersona__nombres_persona','vendedor_venta__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('month','total_ventas')
         if len(fecha1_split)>1 and len(fecha2_split)>1:
             box = request.POST.get('checkbo', False)
             if not empleado:

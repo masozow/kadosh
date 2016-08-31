@@ -9,7 +9,7 @@ class Form_RegistroCliente_Persona(forms.ModelForm):
         exclude=('estado_persona',)
         #fields=('dpi_persona','nombres_persona','apellidos_persona','telefonos_persona','direccion_persona','fecha_nacimiento_persona',)
         widgets = {
-            'fecha_nacimiento_persona':extras.SelectDateWidget(years=range(1900, 2015))
+            'fecha_nacimiento_persona':extras.SelectDateWidget(years=range(1925, 2025))
             #'fecha_nacimiento_persona': widgets.AdminDateWidget(), #este funcionó con todo el bloque de código que se agregó en el template
             #forms.DateInput(format='%d/%m/%Y'),
             #DateInput(attrs={'class':'datepicker'}), #Esto es para usar jquery

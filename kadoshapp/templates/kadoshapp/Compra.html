@@ -419,12 +419,13 @@
              }
              else {
                var marca=$('#id_marca_id_marca option:selected').text();
-               var estilo=$('#id_codigoestilo_producto').val();
+               var codestilo=$('#id_codigoestilo_producto').val();
                var genero=$('#id_genero_idgener option:selected').text();
+               var estilo=$('#id_estilo_idestilo option:selected').text();
                var talla=$('#id_talla_idtalla option:selected').text();
                var color=$('#id_color_idcolor option:selected').text();
                var nombre=$('#id_nombre_producto').val();
-               datosproducto=nombre+' -- '+marca+' ['+talla+'] '+ color +' -- '+genero+' -- '+estilo; //dando formato a los datos del producto
+               datosproducto=nombre+' -- '+marca+' ['+talla+'] '+ color +' -- '+genero+' -- '+codestilo+' -- '+estilo; //dando formato a los datos del producto
                sumar_valor_parcial(".suma_valor_parcial",'#id_total_compra');
                subir_imagen('#id_ruta_fotografia');//bajar esto al else, junto con el resto que esta comentado abajo
                $('#bloque_caracteristicas_producto').find('input text textarea').not('#boton_buscar_producto,#boton_agregar_producto,#id_codigobarras_producto').val('');

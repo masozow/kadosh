@@ -151,10 +151,12 @@ def SubirImagen(request): #también sirve para subir todo lo relacionado al prod
                             response_data['producto']=ValuesQuerySetToDict(prod.values('pk')) #eligiendo solamente la llave primaria y guardándola en el diccionario que se regresa a través de JSON
                             if prod: #si existe el producto, se procederá a guardar el inventario y el precio
                                 resultadoprecio=Precio(producto_codigo_producto=Producto(pk=response_data['producto'][0]['pk']),valor_precio=valor) #creando una nueva instancia de producto, para ese prodcuto cone sa PK y con ese Valor
+                                resultadoprecio.save()
                                 resultadoinventario=InventarioProducto.objects.filter(bodega_idbodega=bodega,producto_codigo_producto=prod).update(existencia_actual=F('existencia_actual') + cantidad) #se actualiza el inventario de ese producto en esa bodega
                                 if not resultadoinventario: #si no existiera el inventario para actualizar, entonces se crea otro nuevo
                                     resultadoinventario=InventarioProducto(producto_codigo_producto=Producto(pk=response_data['producto'][0]['pk']),bodega_idbodega=bodega,existencia_actual=cantidad) #creando el nuevo inventario
                                     resultadoinventario.save()
+                                cambiarprecios=Precio.objects.filter(producto_codigo_producto=Producto(pk=response_data['producto'][0]['pk'])).exclude(pk=resultadoprecio.pk).update(estado_precio=0) #se actualizan todos los demas precios que no sean el mas reciente, así se les quita el estado activo
                             else: #si no existe el producto, se crea uno nuevo
                                 prod=Producto(codigobarras_producto=codigobarras,codigoestilo_producto=codigoestilo,nombre_producto=nombreproducto,descripcion_producto=descripcion,talla_idtalla=tallaproducto,genero_idgener=generoproducto,color_idcolor=colorproducto,tipo_producto_idtipo_producto=tipoproducto,estilo_idestilo=estiloproducto,marca_id_marca=marcaproducto) #Creando el nuevo producto
                                 prod.save()
@@ -164,7 +166,7 @@ def SubirImagen(request): #también sirve para subir todo lo relacionado al prod
                                 resultadoinventario=InventarioProducto(producto_codigo_producto=prod,bodega_idbodega=bodega,existencia_actual=cantidad)
                                 resultadoprecio=Precio(producto_codigo_producto=prod,valor_precio=valor)
                                 resultadoinventario.save()
-                            resultadoprecio.save()
+                                resultadoprecio.save()
                         else: #si el producto elegido en el combobox no estuviera vacio, es decir, sí se envió un producto a través del select
                             resultadoinventario=InventarioProducto.objects.filter(bodega_idbodega=bodega,producto_codigo_producto=prod).update(existencia_actual=F('existencia_actual') + cantidad)
                             if not resultadoinventario: #si no existiera el inventario para actualizar, entonces se crea otro nuevo
@@ -174,6 +176,7 @@ def SubirImagen(request): #también sirve para subir todo lo relacionado al prod
                             response_data['producto']=ValuesQuerySetToDict(produ)
                             resultadoprecio=Precio(producto_codigo_producto=prod,valor_precio=valor)
                             resultadoprecio.save()
+                            cambiarprecios=Precio.objects.filter(producto_codigo_producto=Producto(pk=response_data['producto'][0]['pk'])).exclude(pk=resultadoprecio.pk).update(estado_precio=0)
                         #response_data['inventario']=ValuesQuerySetToDict(resultadoinventario.values('pk'))
                         response_data['bodega']=bodega.pk
                         if foto: #si hay alguna foto, se asigna al producto

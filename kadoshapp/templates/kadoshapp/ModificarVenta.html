@@ -197,8 +197,6 @@
            else{
               obtener_productonuevo('input#id_codigobarras_producto','#id_codigoestilo_producto','#id_marca_id_marca','#id_tipo_producto_idtipo_producto','#id_talla_idtalla','#id_estilo_idestilo','#id_color_idcolor','#id_genero_idgener','#id_bodega_idbodega');
            }
-
-
          }
        });
 
@@ -284,12 +282,16 @@
          var datos = $(fila).find('td').get().map(function(cell) {
              return $(cell).html();
          });
-         detalle=datos[0];
-         $('#lbl_detalle').text(datos[0]);
-         $('#id_precio_producto').val(datos[5]);
-         $('#id_valor_parcial_venta').val(datos[6]);
-         //$("#id_cantidad_devuelta").val(datos[3]);
-         Materialize.toast('Se selecionó el detalle: '+datos[0], 4000);
+         if (datos[1]==='0') {
+            Materialize.toast('No se puede seleccionar el detalle: '+datos[0], 4000);
+         }else {
+           detalle=datos[0];
+           $('#lbl_detalle').text(datos[0]);
+           $('#id_precio_producto').val(datos[5]);
+           $('#id_valor_parcial_venta').val(datos[6]);
+           //$("#id_cantidad_devuelta").val(datos[3]);
+           Materialize.toast('Se selecionó el detalle: '+datos[0], 4000);
+         }
        }
        //evitando que se actualice la página, guardando el precio y limpiando los items
 
@@ -380,15 +382,34 @@
                    $("#tabla_productos > tbody").html("");
                    //console.log(json);
                    $.each(json, function(key,value) {
-                     $('#tabla_productos > tbody:last-child').append('<tr onclick="seleccionar_filadetalle(this)">'+
-                                                                       '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.pk+'</td>'+
-                                                                       '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.inventario_producto_idinventario_producto__pk+'</td>'+
-                                                                       '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.inventario_producto_idinventario_producto__producto_codigo_producto__pk+'</td>'+
-                                                                       '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.cantidad_venta+'</td>'+
-                                                                       '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.inventario_producto_idinventario_producto__producto_codigo_producto__nombre_producto+'--'+value.inventario_producto_idinventario_producto__producto_codigo_producto__marca_id_marca__nombre_marca+' ['+value.inventario_producto_idinventario_producto__producto_codigo_producto__talla_idtalla__nombre_talla+'] '+value.inventario_producto_idinventario_producto__producto_codigo_producto__color_idcolor__nombre_color+'--'+value.inventario_producto_idinventario_producto__producto_codigo_producto__genero_idgener__nombre_genero+'</td>'+
-                                                                       '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.precio+'</td>'+
-                                                                       '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.valor_parcial_venta+'</td>'+
-                                                                     '</tr>');
+                     var precioprod=0;
+                     if(value.precio){ //Comprobando que el precio no sea null, porque a veces se tiene 0 cantidad de producto y 0 valor parcial
+                       precioprod=value.precio;
+                     }
+                     if (value.inventario_producto_idinventario_producto__pk) {
+                       $('#tabla_productos > tbody:last-child').append('<tr onclick="seleccionar_filadetalle(this)">'+
+                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.pk+'</td>'+
+                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.inventario_producto_idinventario_producto__pk+'</td>'+
+                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.inventario_producto_idinventario_producto__producto_codigo_producto__pk+'</td>'+
+                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.cantidad_venta+'</td>'+
+                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.inventario_producto_idinventario_producto__producto_codigo_producto__nombre_producto+'--'+value.inventario_producto_idinventario_producto__producto_codigo_producto__marca_id_marca__nombre_marca+' ['+value.inventario_producto_idinventario_producto__producto_codigo_producto__talla_idtalla__nombre_talla+'] '+value.inventario_producto_idinventario_producto__producto_codigo_producto__color_idcolor__nombre_color+'--'+value.inventario_producto_idinventario_producto__producto_codigo_producto__genero_idgener__nombre_genero+'</td>'+
+                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+precioprod+'</td>'+
+                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.valor_parcial_venta+'</td>'+
+                                                                       '</tr>');
+                     }
+                     else {
+                       console.log(value);
+                       $('#tabla_productos > tbody:last-child').append('<tr onclick="seleccionar_filadetalle(this)">'+
+                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.pk+'</td>'+
+                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+0+'</td>'+
+                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+0+'</td>'+
+                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.cantidad_venta+'</td>'+
+                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+'Descuento: '+ value.descuento_iddescuento__descripcion_descuento+'</td>'+
+                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+precioprod+'</td>'+
+                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.valor_parcial_venta+'</td>'+
+                                                                       '</tr>');
+                     }
+
                    });
                },
                // Si el response no tuvo exito

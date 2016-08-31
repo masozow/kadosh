@@ -109,7 +109,7 @@ def BuscarDetalleVenta(request):
         cod_venta = request.POST.get('numeroventa')
         if not cod_venta:
             cod_venta=0
-        resp_detalleventa=DetalleVenta.objects.filter(venta_idventa__pk=cod_venta).values('pk','inventario_producto_idinventario_producto__pk','inventario_producto_idinventario_producto__producto_codigo_producto__pk','inventario_producto_idinventario_producto__producto_codigo_producto__nombre_producto','cantidad_venta','valor_parcial_venta','inventario_producto_idinventario_producto__producto_codigo_producto__marca_id_marca__nombre_marca','inventario_producto_idinventario_producto__producto_codigo_producto__talla_idtalla__nombre_talla','inventario_producto_idinventario_producto__producto_codigo_producto__color_idcolor__nombre_color','inventario_producto_idinventario_producto__producto_codigo_producto__genero_idgener__nombre_genero').annotate(precio=ExpressionWrapper(F('valor_parcial_venta')/F('cantidad_venta'),output_field=FloatField()))
+        resp_detalleventa=DetalleVenta.objects.filter(venta_idventa__pk=cod_venta).values('pk','inventario_producto_idinventario_producto__pk','inventario_producto_idinventario_producto__producto_codigo_producto__pk','inventario_producto_idinventario_producto__producto_codigo_producto__nombre_producto','cantidad_venta','valor_parcial_venta','inventario_producto_idinventario_producto__producto_codigo_producto__marca_id_marca__nombre_marca','inventario_producto_idinventario_producto__producto_codigo_producto__talla_idtalla__nombre_talla','inventario_producto_idinventario_producto__producto_codigo_producto__color_idcolor__nombre_color','inventario_producto_idinventario_producto__producto_codigo_producto__genero_idgener__nombre_genero','descuento_iddescuento__descripcion_descuento').annotate(precio=ExpressionWrapper(F('valor_parcial_venta')/F('cantidad_venta'),output_field=FloatField()))
         #if not resp_venta:
         #    resp_venta=Venta.objects.filter(estado_venta=1).values('pk','cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__persona_idpersona__apellidos_persona','fecha_venta','vendedor_venta','empleado_idempleado','total_venta').order_by('pk')
         detalleventa_diccionario=ValuesQuerySetToDict(resp_detalleventa)
@@ -124,7 +124,8 @@ def BuscarDetalleVenta(request):
         )
 
 
-
+@login_required
+@user_passes_test(not_in_Caja_group, login_url='denegado')
 def ModificacionVenta(request):
     if request.method == 'POST':
         cod_venta = request.POST.get('cod_venta')
@@ -145,14 +146,23 @@ def ModificacionVenta(request):
                 resultado="El código no pertenece al empleado"
             else:
                 try:
-                    detalleviejo=DetalleVenta.objects.get(pk=cod_detalle)
-                    invviejo=InventarioProducto.objects.filter(detalleventa__pk=cod_detalle).update(existencia_actual=F('existencia_actual') + detalleviejo.cantidad_venta)
-                    if invviejo:
-                        det=DetalleVenta.objects.filter(pk=cod_detalle).update(inventario_producto_idinventario_producto=cod_inventario,cantidad_venta=cant_venta,valor_parcial_venta=val_parcial)
-                        if det:
-                            nuevototal=DetalleVenta.objects.filter(venta_idventa__pk=cod_venta).aggregate(suma_detalle=Sum('valor_parcial_venta'))
-                            invnuevo=InventarioProducto.objects.filter(detalleventa__pk=cod_detalle).update(existencia_actual=F('existencia_actual') - cant_venta)
-                            Venta.objects.filter(pk=cod_venta).update(total_venta=nuevototal['suma_detalle'])
+                    detviejo=DetalleVenta.objects.get(pk=cod_detalle)
+                    invviejo=InventarioProducto.objects.filter(detalleventa__pk=cod_detalle)
+                    #.update(existencia_actual=F('existencia_actual') + detalleviejo.cantidad_venta)
+                    if detviejo:
+                        if int(detviejo.cantidad_venta) != int(cant_venta): #se deben convertir a int, si no la comparación nunca ocurre; se compara si la cantidad guardada en ese detalle conicide con la cantidad de producto que se le dio al cliente en sustitución a lo que devolvió
+                            detalleviejo=DetalleVenta.objects.filter(pk=cod_detalle).update(  valor_parcial_venta=(F('valor_parcial_venta')-(cant_venta*(F('valor_parcial_venta')/F('cantidad_venta')) )) ) #se actualiza el detalle de venta anterior, primero el valor
+                            detalleviejo2=DetalleVenta.objects.filter(pk=cod_detalle).update(  cantidad_venta=(F('cantidad_venta')-cant_venta)) #se actualiza el detalle de venta anterior, segundo la cantidad de venta
+                            actualizarinventarioanterior=InventarioProducto.objects.filter(detalleventa__pk=cod_detalle).update(existencia_actual=F('existencia_actual') + detviejo.cantidad_venta) #se aumenta el inventario del producto devuelto
+                            detallenuevo=DetalleVenta(venta_idventa=Venta(pk=cod_venta),cantidad_venta=cant_venta,valor_parcial_venta=val_parcial,inventario_producto_idinventario_producto=InventarioProducto(pk=cod_inventario)) #se crea un nuevo detalle de venta para el producto que se dio en lugar del anterior
+                            detallenuevo.save() #se guarda el nuevo detalle
+                            actualizarinventarionuevo=InventarioProducto.objects.filter(pk=cod_inventario).update(existencia_actual=F('existencia_actual') - cant_venta) #el inventario del producto que se dio en sustitución del anterior, se reduce por la cantidad que se le dio al cliente
+                        else: #si las cantidades son las mismas
+                            detalle=DetalleVenta.objects.filter(pk=cod_detalle).update(inventario_producto_idinventario_producto=InventarioProducto(pk=cod_inventario),cantidad_venta=cant_venta,valor_parcial_venta=val_parcial) #se actualiza el detalle y se sustituyen los datos por completo
+                            inventarioviejo=invviejo.update(existencia_actual=F('existencia_actual') + detviejo.cantidad_venta) #Se actualiza el inventario del producto que fue devuelo, aumentando sus existencias
+                            invnuevo=InventarioProducto.objects.filter(pk=cod_inventario).update(existencia_actual=F('existencia_actual') - cant_venta) #se actualia el inventario del producto que se dio en sustitución, se decrementan sus existencias
+                        nuevototal=DetalleVenta.objects.filter(venta_idventa__pk=cod_venta).aggregate(suma_detalle=Sum('valor_parcial_venta')) #se obtiene la suma de los valore parciales de venta de todos los detalles pertenencientes a esa venta
+                        Venta.objects.filter(pk=cod_venta).update(total_venta=nuevototal['suma_detalle']) #se actualiza el total de venta, de esa venta en específico
                     resultado="Detalle actualizado" #no alterar este texto, porque se usa en una comprobación en la función "done" de Ajax
                 except Exception as e:
                     resultado="Error: "+str(e)
@@ -172,6 +182,9 @@ def ModificacionVenta(request):
             json.dumps({"nothing to see": "this isn't happening"}),
             content_type="application/json"
         )
+
+@login_required
+@user_passes_test(not_in_Caja_group, login_url='denegado')
 def BuscarProductoNuevo(request):
     if request.method == 'POST':
         txt_codigo_barras = request.POST.get('codigobarras_producto')
@@ -239,7 +252,8 @@ def BuscarProductoDetalle(request):
                                                                           'inventario_producto_idinventario_producto__producto_codigo_producto__color_idcolor__pk',
                                                                           'inventario_producto_idinventario_producto__producto_codigo_producto__tipo_producto_idtipo_producto__pk',
                                                                           'inventario_producto_idinventario_producto__producto_codigo_producto__estilo_idestilo__pk',
-                                                                          'inventario_producto_idinventario_producto__bodega_idbodega__pk')
+                                                                          'inventario_producto_idinventario_producto__bodega_idbodega__pk',
+                                                                          'descuento_iddescuento__descripcion_descuento')
         producto_diccionario=ValuesQuerySetToDict(resp_producto)
         return HttpResponse(
             json.dumps(producto_diccionario,cls=DjangoJSONEncoder),

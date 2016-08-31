@@ -78,7 +78,7 @@ def BuscarProducto(request):
         #pdb.set_trace()  #estos son los breakpoints de django
 
         response_data = {} #declarando un diccionario vacio
-        producto=Producto.objects.filter(codigobarras_producto=txt_codigo_producto,estado_producto=1,inventarioproducto__bodega_idbodega=id_bodega_que_vende,precio__estado_precio=1).values('pk','nombre_producto','marca_id_marca__nombre_marca','talla_idtalla__nombre_talla','color_idcolor__nombre_color','genero_idgener__nombre_genero','inventarioproducto__pk','precio__valor_precio','precio__pk').order_by('-precio__pk')[:1]
+        producto=Producto.objects.filter(codigobarras_producto=txt_codigo_producto,estado_producto=1,inventarioproducto__bodega_idbodega=id_bodega_que_vende,precio__estado_precio=1).values('pk','nombre_producto','marca_id_marca__nombre_marca','talla_idtalla__nombre_talla','color_idcolor__nombre_color','genero_idgener__nombre_genero','inventarioproducto__pk','precio__valor_precio','precio__pk','estilo_idestilo__nombre_estilo','codigoestilo_producto').order_by('-precio__pk')
         dict_producto=ValuesQuerySetToDict(producto)
         #if id_bodega_que_vende is not None:
         #response_data['recibido']=id_bodega_que_vende
@@ -257,7 +257,7 @@ def consulta_sql_personalizada(bodega,codestilo,marca,tipo,estilo,talla,color,ge
     #transaction.commit_unless_managed()
 
     # Data retrieval operation - no commit required
-    cursor.execute("""SELECT IP.idInventario_producto,P.codigo_producto,P.codigoestilo_producto,P.nombre_producto,Pr.valor_precio,M.nombre_marca,T.nombre_talla,G.nombre_genero,C.nombre_color
+    cursor.execute("""SELECT IP.idInventario_producto,P.codigo_producto,P.codigoestilo_producto,P.nombre_producto,Pr.valor_precio,M.nombre_marca,T.nombre_talla,G.nombre_genero,C.nombre_color,E.nombre_estilo
                       FROM Producto as P
                       INNER JOIN Inventario_producto as IP on P.codigo_producto=IP.Producto_codigo_producto
                       INNER JOIN Precio as Pr on Pr.Producto_codigo_producto = P.codigo_producto
@@ -265,6 +265,7 @@ def consulta_sql_personalizada(bodega,codestilo,marca,tipo,estilo,talla,color,ge
                       INNER JOIN Talla as T on T.idtalla = P.talla_idtalla
                       INNER JOIN Genero as G on G.idgener=P.genero_idgener
                       INNER JOIN Color as C on C.idcolor=P.color_idcolor
+                      INNER JOIN Estilo as E on E.idEstilo=P.Estilo_idEstilo
                       WHERE IP.bodega_idbodega=%s
                       AND P.estado_producto=1 AND IP.estado_inventario_producto=1 AND Pr.estado_precio=1
                       AND (P.codigoestilo_producto=%s OR P.marca_idmarca = %s OR P.tipo_producto_idtipo_producto=%s OR P.estilo_idestilo=%s OR P.color_idcolor=%s OR P.genero_idgener=%s OR P.talla_idtalla=%s)""",[bodega,codestilo,marca,tipo,estilo,color,genero,talla])

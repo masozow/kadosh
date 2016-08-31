@@ -3,11 +3,19 @@ from django.http import HttpResponse
 from django.core import serializers
 import json
 import pdb #para hacer el debugging
-from django.contrib.auth.decorators import login_required
 #from .models import Persona, Cliente, TipoCliente
 #from .forms import Form_RegistroCliente_Persona, Form_RegistroCliente_Cliente
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
+from django_tables2 import RequestConfig
+from .models import *
+from .tables import *
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.db.models import Sum, Count
+from django.utils import timezone
+#import datetime
+from datetime import datetime, timedelta
+
 #importacion para form de IngresoMercaderiaPorProveedor
 #from .models import Producto, DetalleCompra, TipoProducto, Fotografia, InventarioProducto, Anaquel, Compra
 #from .forms import Form_IngresoMercaderiaPorProveedor_Producto, Form_IngresoMercaderiaPorProveedor_DetalleCompra, Form_IngresoMercaderiaPorProveedor_TipoProducto, Form_IngresoMercaderiaPorProveedor_Fotografia, Form_IngresoMercaderiaPorProveedor_InventarioProducto, Form_IngresoMercaderiaPorProveedor_Anaquel, Form_IngresoMercaderiaPorProveedor_Compra
@@ -37,7 +45,23 @@ from django.shortcuts import get_object_or_404
 # Creat your views here.
 @login_required
 def ingreso_mercaderia(request):
-    return render(request, 'kadoshapp/ingreso_mercaderia.html',{})
+    if request.method == 'POST':
+        fecha=datetime.today()
+        fecha2= fecha + timedelta(days=1)
+        clientes=Cliente.objects.filter(persona_idpersona__fecha_nacimiento_persona__day=fecha2.day,persona_idpersona__fecha_nacimiento_persona__month=fecha2.month,venta__estado_venta=1,venta__es_cotizacion=0,estado_cliente=1).values('pk','persona_idpersona__nombres_persona','persona_idpersona__apellidos_persona','persona_idpersona__correoelectronico_persona','persona_idpersona__fecha_nacimiento_persona','tipo_cliente_idtipo_cliente__nombre_tipocliente','persona_idpersona__telefonos_persona').annotate(total_ventas=Sum('venta__total_venta'))
+        reporte1=RecordatorioClientesTabla(clientes)
+        RequestConfig(request, paginate={'per_page': 25}).configure(reporte1)
+        return render(request,'kadoshapp/ingreso_mercaderia.html',{'reporte1':reporte1})
+    else:
+        fecha=datetime.today()
+        fecha2= fecha + timedelta(days=1)
+        clientes=Cliente.objects.filter(persona_idpersona__fecha_nacimiento_persona__day=fecha2.day,persona_idpersona__fecha_nacimiento_persona__month=fecha2.month,venta__estado_venta=1,venta__es_cotizacion=0,estado_cliente=1).values('pk','persona_idpersona__nombres_persona','persona_idpersona__apellidos_persona','persona_idpersona__correoelectronico_persona','persona_idpersona__fecha_nacimiento_persona','tipo_cliente_idtipo_cliente__nombre_tipocliente','persona_idpersona__telefonos_persona').annotate(total_ventas=Sum('venta__total_venta'))
+        reporte1=RecordatorioClientesTabla(clientes)
+        RequestConfig(request, paginate={'per_page': 25}).configure(reporte1)
+        return render(request,'kadoshapp/ingreso_mercaderia.html',{'reporte1':reporte1})
+
+
+
 @login_required
 def denegado(request):
     return render(request, 'kadoshapp/Denegado.html',{})

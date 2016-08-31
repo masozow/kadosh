@@ -5,30 +5,33 @@ from .tables import *
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db.models import Sum, Count
 from django.utils import timezone
-import datetime
+from datetime import datetime, timedelta
+#from dateutil.relativedelta import relativedelta
 from django.db import connection
 import pytz #para poder hacer la suma de los campos
 from django.db.models import Q #para poder usar el operador | que funciona como OR
 from django.db.models import F #para hacer llamadas u operaciones en la BD, sin cargarlas en memoria (no las procesa django, sino directamente el SGBD)
-from .formReporteClientes import *
-@login_required
+from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404
 
+@login_required
 def Resumenes(request):
     if request.method == 'POST':
-        #reporte1=ClientesTabla(compras_clientes)
-        #RequestConfig(request, paginate={'per_page': 25}).configure(reporte1)
-        return render(request,'kadoshapp/ReportesClientes.html',{'reporte1':reporte1,'form_fecha':form_fecha,'form_cliente':form_cliente,'form_check':form_check})
+        fecha=datetime.today()
+        vendedores=Venta.objects.filter(vendedor_venta__puesto_idpuesto__nombre_puesto__contains='Ventas',vendedor_venta__estado_empleado=1,fecha_venta__month=fecha.month,fecha_venta__year=fecha.year).values('vendedor_venta__pk','vendedor_venta__persona_idpersona__nombres_persona','vendedor_venta__persona_idpersona__apellidos_persona','vendedor_venta__puesto_idpuesto__nombre_puesto').annotate(total_ventas=Sum('total_venta')).order_by('total_ventas')
+        productos=Venta.objects.filter(fecha_venta__lte=fecha2).filter(detalleventa__inventario_producto_idinventario_producto__producto_codigo_producto__estado_producto=1).values('detalleventa__inventario_producto_idinventario_producto__producto_codigo_producto__pk','detalleventa__inventario_producto_idinventario_producto__producto_codigo_producto__nombre_producto','detalleventa__inventario_producto_idinventario_producto__producto_codigo_producto__codigobarras_producto','detalleventa__inventario_producto_idinventario_producto__producto_codigo_producto__codigoestilo_producto','fecha_venta')
+        reporteproductos=ProductosSinMovimientoTabla(productos)
+        reportevendedores=VendedoresPuestoTabla(vendedores)
+        RequestConfig(request, paginate={'per_page': 25}).configure(reportevendedores)
+        RequestConfig(request, paginate={'per_page': 25}).configure(reporteproductos)
+        return render(request,'kadoshapp/Resumenes.html',{'reportevendedores':reportevendedores,'reporteproductos':reporteproductos})
     else:
-        fecha=datetime.datetime.today()
-        fecha2= fecha + datetime.timedelta(days=2)
-        #anio=fecha.year
-        #posts = TodaysObject.objects.extra([where='DAY(publish_date)<=%d AND MONTH(publish_date)=%d' % (now.day, now.month)])
-        clientes=Cliente.objects.filter(persona_idpersona__fecha_nacimiento_persona__range=(fecha,fecha2))
-        Venta.objects.filter(), datetime.datetime(int(fecha2_split[2]),int(fecha2_split[1]), int(fecha2_split[0]),23,59,59,tzinfo=pytz.UTC))).values('cliente_idcliente__nit_cliente','cliente_idcliente__pk','cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('total_ventas')
-        form_fecha=Form_Busqueda_Fechas()
-        form_cliente=Form_Busqueda_Cliente()
-        form_check=Form_Busqueda_Checbox()
-        consulta=Cliente.objects.all()
-        reporte1=ClientesTabla(consulta)
-        RequestConfig(request, paginate={'per_page': 25}).configure(reporte1)
-        return render(request,'kadoshapp/ReportesClientes.html',{'reporte1':reporte1,'form_fecha':form_fecha,'form_cliente':form_cliente,'form_check':form_check})
+        fecha=timezone.now()
+        fecha2= fecha - timedelta(3*365/12)
+        vendedores=Venta.objects.filter(vendedor_venta__puesto_idpuesto__nombre_puesto__contains='Ventas',vendedor_venta__estado_empleado=1,fecha_venta__year=fecha.year,fecha_venta__month=fecha.month).values('vendedor_venta__pk','vendedor_venta__persona_idpersona__nombres_persona','vendedor_venta__persona_idpersona__apellidos_persona','vendedor_venta__puesto_idpuesto__nombre_puesto').annotate(total_ventas=Sum('total_venta')).order_by('total_ventas')
+        productos=Venta.objects.filter(fecha_venta__lte=fecha2).filter(detalleventa__inventario_producto_idinventario_producto__producto_codigo_producto__estado_producto=1).values('detalleventa__inventario_producto_idinventario_producto__producto_codigo_producto__pk','detalleventa__inventario_producto_idinventario_producto__producto_codigo_producto__nombre_producto','detalleventa__inventario_producto_idinventario_producto__producto_codigo_producto__codigobarras_producto','detalleventa__inventario_producto_idinventario_producto__producto_codigo_producto__codigoestilo_producto','fecha_venta')
+        reporteproductos=ProductosSinMovimientoTabla(productos)
+        reportevendedores=VendedoresPuestoTabla(vendedores)
+        RequestConfig(request, paginate={'per_page': 25}).configure(reportevendedores)
+        RequestConfig(request, paginate={'per_page': 25}).configure(reporteproductos)
+        return render(request,'kadoshapp/Resumenes.html',{'reportevendedores':reportevendedores,'reporteproductos':reporteproductos})

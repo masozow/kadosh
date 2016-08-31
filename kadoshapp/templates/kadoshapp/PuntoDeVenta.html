@@ -109,13 +109,15 @@
               </div>
             </div>
           </div>
-          <div class="row" style="margin-bottom: 0px;">
-              <div class="col l6 m12 s12">
-                  <label>Descripcion: </label>{{form_InventarioProducto.producto_codigo_producto}}
-                  <input class="save btn btn-default" id="boton_agregar_producto" type="button" onclick="agregar_producto(this)" value="Agregar" name="btn_agregar_producto"/>
-              </div>
-          </div>
     </div>
+  </div>
+  <div class="row" style="margin-bottom: 0px;">
+      <div class="col l9 m12 s12">
+          <label>Descripción: </label>{{form_InventarioProducto.producto_codigo_producto}}
+      </div>
+      <div class="col l3 m12 s12">
+          <input class="save btn btn-default" id="boton_agregar_producto" type="button" onclick="agregar_producto(this)" value="Agregar" name="btn_agregar_producto"/>
+      </div>
   </div>
   <div class="divider"></div>
   <!--div class="row" style="margin-bottom: 0px;">
@@ -303,7 +305,7 @@
                                                             '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+datos_producto[0]+'</td>'+
                                                             '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+datos_producto[1]+'</td>'+
                                                             '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+cantidad+'</td>'+
-                                                            '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+datos_producto[2]+'-'+datos_producto[5]+'-'+datos_producto[8]+' ['+datos_producto[6]+'] '+datos_producto[7]+'</td>'+
+                                                            '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+datos_producto[2]+'-'+datos_producto[5]+'-'+datos_producto[8]+' ['+datos_producto[6]+'] '+datos_producto[7]+'-'+datos_producto[9]+'</td>'+
                                                             '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+datos_producto[4]+'</td>'+
                                                             '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;" class="suma_valor_parcial">'+valor_parcial.toFixed(2)+'</td>'+
                                                             '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;"> <input id="boton_eliminar" "type="button" onclick="eliminar_fila(this)" value="Eliminar" name="Eliminar" style="text-align: center; margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;"/> </td>'+
@@ -452,22 +454,28 @@
                 success : function(json) {
                     //console.log(json.recibido);
                     $(codigo_buscado).val(''); // Se limpia el campo del codigo del producto
+                    $('#id_producto_codigo_producto').empty();
                      $.each(json, function(key,value) {
-                        var cantidad=$('input#id_cantidad_venta').val();
-                        var valor_parcial=cantidad*value.precio__valor_precio;
-                        $('#tabla_productos > tbody:last-child').append('<tr>'+
-                                                                          '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.inventarioproducto__pk+'</td>'+
-                                                                          '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.pk+'</td>'+
-                                                                          '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+cantidad+'</td>'+
-                                                                          '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.nombre_producto+'-'+value.marca_id_marca__nombre_marca+'-'+value.genero_idgener__nombre_genero+' ['+value.talla_idtalla__nombre_talla+'] '+value.color_idcolor__nombre_color+'</td>'+
-                                                                          '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.precio__valor_precio+'</td>'+
-                                                                          '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;" class="suma_valor_parcial">'+valor_parcial.toFixed(2)+'</td>'+
-                                                                          '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;"> <input id="boton_eliminar" "type="button" onclick="eliminar_fila(this)" value="Eliminar" name="Eliminar" style="text-align: center; margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;"/> </td>'+
-                                                                        '</tr>');
-                        $('input#id_valor_precio').val(value.valor_precio);
-                        //console.log("success"); // Solo se comprueba mediante la consola, que el llamado fue correcto
-                        $('input#id_cantidad_venta').val(1);
-                        sumar_valor_parcial(".suma_valor_parcial",'#id_total_venta');
+                       if(key===0){
+                         var cantidad=$('input#id_cantidad_venta').val();
+                         var valor_parcial=cantidad*value.precio__valor_precio;
+                         $('#tabla_productos > tbody:last-child').append('<tr>'+
+                                                                           '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.inventarioproducto__pk+'</td>'+
+                                                                           '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.pk+'</td>'+
+                                                                           '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+cantidad+'</td>'+
+                                                                           '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.nombre_producto+'-'+value.marca_id_marca__nombre_marca+'-'+value.genero_idgener__nombre_genero+' ['+value.talla_idtalla__nombre_talla+'] '+value.color_idcolor__nombre_color+'-'+value.estilo_idestilo__nombre_estilo+'</td>'+
+                                                                           '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.precio__valor_precio+'</td>'+
+                                                                           '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;" class="suma_valor_parcial">'+valor_parcial.toFixed(2)+'</td>'+
+                                                                           '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;"> <input id="boton_eliminar" "type="button" onclick="eliminar_fila(this)" value="Eliminar" name="Eliminar" style="text-align: center; margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;"/> </td>'+
+                                                                         '</tr>');
+                         $('input#id_valor_precio').val(value.valor_precio);
+                         //console.log("success"); // Solo se comprueba mediante la consola, que el llamado fue correcto
+                         $('input#id_cantidad_venta').val(1);
+                         sumar_valor_parcial(".suma_valor_parcial",'#id_total_venta');
+                       }
+                       else {
+                          $('#id_producto_codigo_producto').append('<option value='+value.pk+'>'+ value.inventarioproducto__pk +'|'+ value.pk +'|'+ value.nombre_producto +'|'+ value.codigoestilo_producto +'|'+ value.precio__valor_precio +'|'+ value.marca_id_marca__nombre_marca +'|'+ value.talla_idtalla__nombre_talla +'|'+ value.color_idcolor__nombre_color+'|'+ value.genero_idgener__nombre_genero +'|'+ value.estilo_idestilo__nombre_estilo +'</option>');
+                       }
                     });
                 },
                 // Si el response no tuvo exito
@@ -488,7 +496,7 @@
                 success : function(json) {
                   $(id_producto_codigo_producto).empty();
                   $.each(json.consulta, function(key,value) {
-                    $(id_producto_codigo_producto).append('<option value='+value.codigo_producto+'>'+ value.idInventario_producto +'|'+ value.codigo_producto +'|'+ value.nombre_producto +'|'+ value.codigoestilo_producto +'|'+ value.valor_precio +'|'+ value.nombre_marca +'|'+ value.nombre_talla +'|'+ value.nombre_color+'|'+ value.nombre_genero +'</option>');
+                    $(id_producto_codigo_producto).append('<option value='+value.codigo_producto+'>'+ value.idInventario_producto +'|'+ value.codigo_producto +'|'+ value.nombre_producto +'|'+ value.codigoestilo_producto +'|'+ value.valor_precio +'|'+ value.nombre_marca +'|'+ value.nombre_talla +'|'+ value.nombre_color+'|'+ value.nombre_genero +'|'+ value.nombre_estilo +'</option>');
                     //console.log(value);
                   });
                   //console.log('Antes de asginar');

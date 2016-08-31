@@ -6,6 +6,7 @@ from .models import *
 
 #form para fechas
 class Form_Busqueda_Fechas(forms.ModelForm):
+    fechafinal_precio=forms.CharField(widget=forms.DateInput(attrs={'class': 'datepicker'}),initial=timezone.now())
     class Meta:
         model=Precio
         exclude=('nombre_precio',)

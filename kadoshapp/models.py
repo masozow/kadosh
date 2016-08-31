@@ -669,7 +669,6 @@ class Producto(models.Model):
     publicar_producto = models.BooleanField(default=False)
     oferta_producto = models.BooleanField(default=False)
     #combo_idcombo = models.ForeignKey(Combo, db_column='Combo_idCombo')  # Field name made lowercase.
-    
     def __str__(self):
         return '%s||%s||%s' % (self.codigo_producto,self.codigoestilo_producto,self.nombre_producto)
 
