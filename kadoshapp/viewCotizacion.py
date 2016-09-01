@@ -30,18 +30,23 @@ class ReporteCotizacion(TemplateView):
         #Definimos como nuestra hoja de trabajo, la hoja activa, por defecto la primera del libro
         ws = wb.active
 
-        detalle=DetalleVenta.objects.filter(venta_idventa=53,inventario_producto_idinventario_producto__producto_codigo_producto__productohasfotografia__fotografia_idfotografia__principal_fotografia=1).values('inventario_producto_idinventario_producto__producto_codigo_producto',
+        detalle=DetalleVenta.objects.filter(venta_idventa__idventa=variable).values('inventario_producto_idinventario_producto__producto_codigo_producto',
                                                                         'cantidad_venta',
                                                                         'inventario_producto_idinventario_producto__producto_codigo_producto__nombre_producto',
                                                                         'inventario_producto_idinventario_producto__producto_codigo_producto__marca_id_marca__nombre_marca',
                                                                         'inventario_producto_idinventario_producto__producto_codigo_producto__codigoestilo_producto',
+                                                                        'inventario_producto_idinventario_producto__producto_codigo_producto__codigobarras_producto',
+                                                                        'inventario_producto_idinventario_producto__producto_codigo_producto__tipo_producto_idtipo_producto__nombre_tipoproducto',
+                                                                        'inventario_producto_idinventario_producto__producto_codigo_producto__estilo_idestilo__nombre_estilo',
                                                                         'inventario_producto_idinventario_producto__producto_codigo_producto__talla_idtalla__nombre_talla',
                                                                         'inventario_producto_idinventario_producto__producto_codigo_producto__color_idcolor__nombre_color',
                                                                         'inventario_producto_idinventario_producto__producto_codigo_producto__genero_idgener__nombre_genero',
                                                                         'inventario_producto_idinventario_producto__producto_codigo_producto__codigoestilo_producto',
                                                                         'valor_parcial_venta')
                                                                         #'inventario_producto_idinventario_producto__producto_codigo_producto__productohasfotografia__fotografia_idfotografia__ruta_fotografia')
+
         detalle_diccionario=ValuesQuerySetToDict(detalle)
+
         venta=Venta.objects.filter(idventa=variable).values('cliente_idcliente__persona_idpersona__nombres_persona',
                                                             'cliente_idcliente__persona_idpersona__apellidos_persona',
                                                             'cliente_idcliente__nit_cliente',
@@ -52,17 +57,18 @@ class ReporteCotizacion(TemplateView):
         venta_diccionario=ValuesQuerySetToDict(venta)
 
         venta_simple=venta_diccionario[0]
+
         ws['A1'] = 'Kadosh'
         ws['A3'] = 'Cotización'
         ws['A4'] = 'Total:'
 
         ws['E1'] = 'Fecha:'
-        ws['E2'] = 'Nit cliente:'
-        ws['E3'] = 'Cliente:'
+        ws['E2'] = 'Cliente:'
+        ws['E3'] = 'Nit cliente:'
         ws['E4'] = 'Vendedor:'
         #ws['E5'] = 'Empleado:'
 
-        ws['C4'] = venta_simple['total_venta']
+        ws['C4'] = 'Q.'+str(venta_simple['total_venta'])
         ws['F1'] = venta_simple['fecha_venta']
         ws['F2'] = venta_simple['cliente_idcliente__persona_idpersona__nombres_persona']+' '+venta_simple['cliente_idcliente__persona_idpersona__apellidos_persona']
         ws['F3'] = venta_simple['cliente_idcliente__nit_cliente']
@@ -73,7 +79,7 @@ class ReporteCotizacion(TemplateView):
         ws.merge_cells('A3:C3')
         ws.merge_cells('A4:B4')
 
-        ws.merge_cells('F1:G1')
+        ws.merge_cells('F1:H1')
         ws.merge_cells('F2:H2')
         ws.merge_cells('F3:H3')
         ws.merge_cells('F4:H4')
@@ -122,28 +128,32 @@ class ReporteCotizacion(TemplateView):
         ws['F8'] = 'Talla'
         ws['G8'] = 'Cod.Estilo'
         ws['H8'] ='Valor parcial'
-        cont=9
+
         ws.column_dimensions["A"].width = 4.0
         ws.column_dimensions["B"].width = 5.0
-        ws.column_dimensions["C"].width = 20.0
+        ws.column_dimensions["C"].width = 43.0
         ws.column_dimensions["D"].width = 7.0
         ws.column_dimensions["F"].width = 5.0
         ws.column_dimensions["H"].width = 13.0
+        #ws['M8'] = detalle_diccionario[0]['inventario_producto_idinventario_producto__producto_codigo_producto']
+        cont=9
+
         #############probando insertar imagene
         #img = Image('/archivos/blusapolo.jpg')#,size=(75,100)
         #img.anchor(ws.cell('J1'))
         #ws.add_image(img)
 
-        #Recorremos el conjunto de personas y vamos escribiendo cada uno de los datos en las celdas
+        #Recorremos el conjunto de detalles y vamos escribiendo cada uno de los datos en las celdas
         for det in detalle_diccionario:
             ws.cell(row=cont,column=1).value = det['inventario_producto_idinventario_producto__producto_codigo_producto']
             ws.cell(row=cont,column=2).value = det['cantidad_venta']
-            ws.cell(row=cont,column=3).value = det['inventario_producto_idinventario_producto__producto_codigo_producto__genero_idgener__nombre_genero']+'-'+det['inventario_producto_idinventario_producto__producto_codigo_producto__nombre_producto']
+            ws.cell(row=cont,column=3).value = det['inventario_producto_idinventario_producto__producto_codigo_producto__nombre_producto']+' - '+det['inventario_producto_idinventario_producto__producto_codigo_producto__genero_idgener__nombre_genero']+' - '+det['inventario_producto_idinventario_producto__producto_codigo_producto__tipo_producto_idtipo_producto__nombre_tipoproducto']+' - '+det['inventario_producto_idinventario_producto__producto_codigo_producto__estilo_idestilo__nombre_estilo']+' ['+det['inventario_producto_idinventario_producto__producto_codigo_producto__codigobarras_producto']+'] '
             ws.cell(row=cont,column=4).value = det['inventario_producto_idinventario_producto__producto_codigo_producto__marca_id_marca__nombre_marca']
             ws.cell(row=cont,column=5).value = det['inventario_producto_idinventario_producto__producto_codigo_producto__color_idcolor__nombre_color']
             ws.cell(row=cont,column=6).value = det['inventario_producto_idinventario_producto__producto_codigo_producto__talla_idtalla__nombre_talla']
             ws.cell(row=cont,column=7).value = det['inventario_producto_idinventario_producto__producto_codigo_producto__codigoestilo_producto']
             ws.cell(row=cont,column=8).value = det['valor_parcial_venta']
+
             cont = cont + 1
         #Establecemos el nombre del archivo
         nombre_archivo ="CotizacionProductos.xlsx"

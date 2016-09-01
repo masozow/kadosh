@@ -118,7 +118,8 @@ def SubirImagen(request): #también sirve para subir todo lo relacionado al prod
         foto=None
         if fotografia.is_valid():
             foto=fotografia.save(commit=False)
-            foto.principal_fotografia=True
+            foto.principal_fotografia=1
+            foto.estado_fotografia=1
             foto.save()
             response_data['idfoto']=foto.pk
         else:

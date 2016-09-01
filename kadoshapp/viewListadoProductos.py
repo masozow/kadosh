@@ -14,13 +14,13 @@ from django.db.models import Q #para poder usar el operador | que funciona como 
 def ValuesQuerySetToDict(vqs):
     return [item for item in vqs]
 
-def not_in_Caja_group(user):
+def not_in_Traslado_group(user):
     if user:
-        return user.groups.filter(name='Caja').count() != 0
+        return user.groups.filter(name='Traslado').count() != 0
     return False
 
 @login_required
-@user_passes_test(not_in_Caja_group, login_url='denegado')
+@user_passes_test(not_in_Traslado_group, login_url='denegado')
 def Listado(request):
     if request.method=='POST':
         form_prducto=Form_Busqueda_Listado_Precio(request.POST)

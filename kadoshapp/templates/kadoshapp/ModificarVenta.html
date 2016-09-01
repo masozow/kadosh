@@ -55,8 +55,9 @@
                    <th data-field="Cliente">Cliente</th>
                    <th data-field="Fecha">Fecha</th>
                    <th data-field="Vendedor">Cod.Vendedor</th>
-                   <th data-field="Cajero">Cod.Cajero</th>
+                   <!--th data-field="Cajero">Cod.Cajero</th-->
                    <th data-field="Total">Total</th>
+                   <th data-field="Anotaciones">Anotaciones</th>
                </tr>
              </thead>
              <tbody>
@@ -357,8 +358,9 @@
                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.cliente_idcliente__persona_idpersona__nombres_persona+' '+value.cliente_idcliente__persona_idpersona__apellidos_persona +'</td>'+
                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.fecha_venta+'</td>'+
                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.vendedor_venta__pk+'</td>'+
-                                                                       '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.empleado_idempleado__pk+'</td>'+
+                                                                       //'<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.empleado_idempleado__pk+'</td>'+
                                                                        '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.total_venta+'</td>'+
+                                                                       '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.anotaciones_venta+'</td>'+
                                                                      '</tr>');
                    });
                },

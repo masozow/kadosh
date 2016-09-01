@@ -52,6 +52,7 @@ class Form_Compra_InventarioProducto(forms.ModelForm):
         fields=('producto_codigo_producto','costo_unitario_inventarioproducto','bodega_idbodega',)
 
 class Form_Compra_Producto(forms.ModelForm):
+    codigoestilo_producto=forms.CharField(initial='-')
     class Meta:
         model=Producto
         exclude=('estado_producto',)

@@ -2,10 +2,13 @@ from __future__ import unicode_literals
 from django.utils import timezone
 from django.db import models
 from django.utils.timezone import localtime, now
+from datetime import timedelta
 from django.conf import settings
 from django.contrib.auth.models import User
 
 # Create your models here.
+
+
 
 class AjusteInventario(models.Model):
     idajuste_inventario = models.AutoField(db_column='idAjuste_inventario', primary_key=True)  # Field name made lowercase.
@@ -859,13 +862,14 @@ class TrasladoMercaderia(models.Model):
         db_table = 'Traslado_mercaderia'
 
 
+
 class Venta(models.Model):
     idventa = models.AutoField(db_column='idVenta', primary_key=True)  # Field name made lowercase.
     empleado_idempleado = models.ForeignKey(Empleado, db_column='Empleado_idEmpleado',blank=True,null=True)  # Field name made lowercase.
     cliente_idcliente = models.ForeignKey(Cliente, db_column='Cliente_idCliente')  # Field name made lowercase.
     caja_idcaja = models.ForeignKey(Caja, db_column='Caja_idCaja')  # Field name made lowercase.
     tipo_pago_idtipo_pago = models.ForeignKey(TipoPago, db_column='Tipo_pago_idTipo_pago')  # Field name made lowercase.
-    fecha_venta = models.DateTimeField(default=timezone.now)
+    fecha_venta = models.DateTimeField(default=timezone.now)#models.DateTimeField(default=timezone.now)
     total_venta = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
     contado_venta = models.BooleanField(default=True)
     estado_venta = models.BooleanField(default=True)

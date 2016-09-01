@@ -7,6 +7,38 @@ class ProductosTabla(tables.Table):
         fields=('pk','nombre_producto','codigobarras_producto','codigoestilo_producto','marca_id_marca__nombre_marca','tipo_producto_idtipo_producto__nombre_tipoproducto','talla_idtalla__nombre_talla','color_idcolor__nombre_color','genero_idgener__nombre_genero','estilo_idestilo__nombre_estilo','cantidad_vendida','total_ventas',)
         attrs = {'class': 'paleblue'}
 
+class CierreTabla(tables.Table):
+    pk=tables.Column(verbose_name= 'Cod') #lo que está a la izquierda del "igual" es el nombre del campo en el modelo, lo qeu esta después de "verbose name" es el nombre que se muestra, es como un alias (como el AS de SQL)
+    caja_idcaja=tables.Column(verbose_name= 'Caja')
+    empleado_idempleado=tables.Column(verbose_name= 'Empleado autorizó')
+    fecha_cierredecaja=tables.Column(verbose_name= 'Fecha')
+    total_real_cierredecaja=tables.Column(verbose_name= 'Total contabilizado')
+    total_calculado_cierredecaja=tables.Column(verbose_name= 'Total(ingresos-gastos)')
+    total_efectivo_cierredecaja=tables.Column(verbose_name= 'Efectivo')
+    total_cheque_cierredecaja=tables.Column(verbose_name= 'Cheque')
+    total_tarjeta_cierredecaja=tables.Column(verbose_name= 'Tarjeta')
+    total_egresos_cierredecaja=tables.Column(verbose_name= 'Gastos')
+    finalizado_cierredecaja=tables.Column(verbose_name= 'Finalizado')
+    class Meta:
+        attrs = {'class': 'paleblue'}
+
+
+class TodosProductosTabla(tables.Table):
+    pk=tables.Column(verbose_name= 'Cod') #lo que está a la izquierda del "igual" es el nombre del campo en el modelo, lo qeu esta después de "verbose name" es el nombre que se muestra, es como un alias (como el AS de SQL)
+    nombre_producto=tables.Column(verbose_name= 'Producto')
+    codigobarras_producto=tables.Column(verbose_name= 'CodBarras')
+    codigoestilo_producto=tables.Column(verbose_name= 'CodEstilo')
+    marca_id_marca__nombre_marca=tables.Column(verbose_name= 'Marca')
+    tipo_producto_idtipo_producto__nombre_tipoproducto=tables.Column(verbose_name= 'Tipo')
+    talla_idtalla__nombre_talla=tables.Column(verbose_name= 'Talla')
+    color_idcolor__nombre_color=tables.Column(verbose_name= 'Color')
+    genero_idgener__nombre_genero=tables.Column(verbose_name= 'Género')
+    estilo_idestilo__nombre_estilo=tables.Column(verbose_name= 'Estilo')
+    inventarioproducto__bodega_idbodega__nombre_bodega=tables.Column(verbose_name= 'Bodega')
+    inventarioproducto__existencia_actual=tables.Column(verbose_name= 'Existencias')
+    class Meta:
+        attrs = {'class': 'paleblue'}
+
 class ClientesTabla(tables.Table):
     class Meta:
         model = Cliente

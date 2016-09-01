@@ -1,0 +1,87 @@
+{% extends 'kadoshapp/base.html'  %}
+{% load django_tables2 %}
+{% load staticfiles %}
+{% block titulo %}
+ Reporte Productos
+{% endblock %}
+{% block styles %}
+  <link type="text/css" rel="stylesheet" href="{% static "css/formularios.css" %}"/>
+  <link rel="stylesheet" href="{{ STATIC_URL }}django_tables2/themes/paleblue/css/screen.css" />
+{% endblock %}
+{% block encabezado %}Reporte Productos{% endblock %}
+{% block content %}
+<form action="/Reporte/TodosProductos/" id="formulario_reporte1" method="POST" class="post-form">
+  {% csrf_token %}
+<div class="row" style="margin-bottom: 0px;">
+<div class="col l12 m12 s12">
+<h6> Caracteristicas de busqueda</h6>
+    <div class="col s6">
+      <label for="codigobarras_producto"><h6>Codigo de barras:</h6> </label>{{ form_producto.codigobarras_producto}}
+    <label for="marca_id_marca"><h6>Marca:</h6> </label>{{ form_producto.marca_id_marca}}
+    <label for="estilo_idestilo"><h6>Estilo:</h6> </label>{{ form_producto.estilo_idestilo}}
+    <label for="genero_idgener"><h6>Genero:</h6> </label>{{ form_producto.genero_idgener}}
+    <label for="talla_idtalla"><h6>Talla:</h6> </label>{{ form_producto.talla_idtalla}}
+    </div>
+    <div class="col s6">
+<label for="codigoestilo_producto"><h6>Codigo Estilo:</h6> </label>{{ form_producto.codigoestilo_producto}}
+<label for="tipo_producto_idtipo_producto"><h6>Tipo:</h6> </label>{{ form_producto.tipo_producto_idtipo_producto}}
+
+    <label for="color_idcolor"><h6>Color:</h6> </label>{{ form_producto.color_idcolor}}
+    <div class="row">
+        <div class="col l12 m12 s12">
+            <h1 class="page-header"></h1>
+        </div>
+    </div>
+<button type="submit" class="save btn btn-default">Buscar</button>
+    </div>
+  <div>
+</div>
+
+<div class="row">
+    <div class="col l12 m12 s12">
+        <h1 class="page-header"></h1>
+    </div>
+</div>
+<div class="row">
+  <div class="col l6 m12 s12">
+    <!--
+     <a id="crear_detalle" href="{% url 'reporte_productos_excel' %}"  class="btn btn-info btn-block">
+     <span class="glyphicon glyphicon-list-alt">Descargar</span>
+   </a>-->
+   <input class="save btn btn-default" id="boton_descargar" type="button" onclick="descargar(this)" value="Descargar" name="btn_descargar"/>
+  </div>
+  </div>
+
+ </form>
+{% render_table reporte1 %}
+{% endblock %}
+
+{% block extra_scripts %}
+<script type="text/javascript">
+
+$( document ).ready(function(){ //document indica toda la página, ready indica que ya se haya cargado el DOM
+  $('input[type="checkbox"]').addClass("filled-in");
+  cambiar_ruta();
+});
+
+var ruta;//variable donde se guardará la ruta
+function cambiar_ruta(){ //esta función cambiará la ruta que se envía al view
+  //ahora aquí se obtienen los valores de todos los elementos
+  ruta=$('#id_codigobarras_producto').val()+'&marca_id_marca='+$('#id_marca_id_marca option:selected').val()+'&codigoestilo_producto='+$('#id_codigoestilo_producto').val()+'&estilo_idestilo='+$('#id_estilo_idestilo option:selected').val()+'&tipo_producto_idtipo_producto='+$('#id_tipo_producto_idtipo_producto option:selected').val()+'&talla_idtalla='+$('#id_talla_idtalla option:selected').val()+'&color_idcolor='+$('#id_color_idcolor option:selected').val()+'&genero_idgener='+$('#id_genero_idgener option:selected').val();
+}
+$('#id_codigobarras_producto').change(function(){//cuando un elemento especifico cambia su valor, en este caso un textbox
+  cambiar_ruta();
+});
+$('#id_codigoestilo_producto').change(function(){ //cuando un elemento especifico cambia su valor, en este caso un textbox
+  cambiar_ruta();
+});
+$("select").change(function (){ //cuando cualquier combobox=select cambia su valor
+    cambiar_ruta();
+});
+
+function descargar(boton){
+  $(location).attr('href', '/reporte_todosproductos_excel?codigobarras_producto='+ruta);
+}
+
+</script>
+{% endblock %}

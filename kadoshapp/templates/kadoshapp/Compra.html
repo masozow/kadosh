@@ -430,8 +430,11 @@
                subir_imagen('#id_ruta_fotografia');//bajar esto al else, junto con el resto que esta comentado abajo
                $('#bloque_caracteristicas_producto').find('input text textarea').not('#boton_buscar_producto,#boton_agregar_producto,#id_codigobarras_producto').val('');
                $('#id_nombre_producto').val('');
-               $('#id_codigoestilo_producto').val('');
+               $('#id_codigoestilo_producto').val('-');
                $('#id_codigobarras_producto').val('');
+               $('#id_valor_producto').val('');
+               $('#id_porcentaje_ganancia').val('');
+               $('#id_valor_precio').val('');
                $('#id_valor_parcial_compra').val('');
                $('#bloque_caracteristicas_producto').find('select').val(1);
                $('#id_producto_codigo_producto').empty();
@@ -461,7 +464,10 @@
            }
          }
        }
-
+       //el siguiente código selecciona el texto contenido en el input, al recibir focus
+       $("#id_codigoestilo_producto").focus(function() { $(this).select() });
+       $("#id_porcentaje_ganancia").focus(function() { $(this).select() });
+       $("#id_valor_producto").focus(function() { $(this).select() });
 
        //La siguiente función ejecuta varias acciones antes de  hacer el submit
        $( '#formulario_compra' ).submit(function( event ) {
