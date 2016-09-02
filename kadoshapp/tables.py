@@ -22,6 +22,23 @@ class CierreTabla(tables.Table):
     class Meta:
         attrs = {'class': 'paleblue'}
 
+class GastosTabla(tables.Table):
+    pk=tables.Column(verbose_name= 'Cod') #lo que está a la izquierda del "igual" es el nombre del campo en el modelo, lo qeu esta después de "verbose name" es el nombre que se muestra, es como un alias (como el AS de SQL)
+    caja_idcaja=tables.Column(verbose_name= 'Caja')
+    momento_gasto=tables.Column(verbose_name= 'Fecha')
+    motivo_gasto=tables.Column(verbose_name= 'Motivo')
+    class Meta:
+        attrs = {'class': 'paleblue'}
+
+
+class DevolucionTabla(tables.Table):
+    pk=tables.Column(verbose_name= 'Cod') #lo que está a la izquierda del "igual" es el nombre del campo en el modelo, lo qeu esta después de "verbose name" es el nombre que se muestra, es como un alias (como el AS de SQL)
+    motivo_devolucion=tables.Column(verbose_name= 'Motivo')
+    momento_devolucion=tables.Column(verbose_name= 'Fecha')
+    venta_idventa=tables.Column(verbose_name= 'Venta')
+    class Meta:
+        attrs = {'class': 'paleblue'}
+
 
 class TodosProductosTabla(tables.Table):
     pk=tables.Column(verbose_name= 'Cod') #lo que está a la izquierda del "igual" es el nombre del campo en el modelo, lo qeu esta después de "verbose name" es el nombre que se muestra, es como un alias (como el AS de SQL)

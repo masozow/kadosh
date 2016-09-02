@@ -1,6 +1,6 @@
 from django.conf.urls import include, url
 from . import views
-from . import ViewProducto,ViewTrabajador,viewReporteProductos,viewModificarCliente,viewAsignarCaja,viewListadoProductos,viewBusquedaMercaderia,viewPrecios,viewCliente, viewIngresoMercaPorProveedor, viewCompra, viewPuntodeVenta, viewTrasladoMercaderia, viewCierreCaja, viewAnularVenta, viewInventario, viewPromocion,viewEmpleados, viewCotizacion,viewModificarVenta,viewReporteCompras,viewReporteComprasExcel,viewResumenes,viewReporteCompraEspecifica,viewReporteCompraEspecificaExcel,viewReporteTodosProductos,viewReporteTodosProductosExcel,viewReporteCierreCaja,viewReporteCierreCajaExcel
+from . import ViewProducto,ViewTrabajador,viewReporteProductos,viewModificarCliente,viewAsignarCaja,viewListadoProductos,viewBusquedaMercaderia,viewPrecios,viewCliente, viewIngresoMercaPorProveedor, viewCompra, viewPuntodeVenta, viewTrasladoMercaderia, viewCierreCaja, viewAnularVenta, viewInventario, viewPromocion,viewEmpleados, viewCotizacion,viewModificarVenta,viewReporteCompras,viewReporteComprasExcel,viewResumenes,viewReporteCompraEspecifica,viewReporteCompraEspecificaExcel,viewReporteTodosProductos,viewReporteTodosProductosExcel,viewReporteCierreCaja,viewReporteCierreCajaExcel,viewReporteDevolucion,viewReporteDevolucionExcel,viewReporteGastos,viewReporteGastosExcel
 from . import viewTablas
 from . import viewReporteClientes,viewReporteClientesExcel
 from . import ViewReporteVentas, ViewReporteVentasExcel
@@ -73,6 +73,12 @@ url(r'^Reporte/TodosProductos/', viewReporteTodosProductos.productos_lista, name
 
 url(r'^reporte_cierrecaja_excel/$',viewReporteCierreCajaExcel.ReporteProductos.as_view(), name="reporte_cierrecaja_excel"),
 url(r'^Reporte/CierreCaja/', viewReporteCierreCaja.cierre_caja, name='RCierrecaja'),
+
+url(r'^reporte_devolucion_excel/$',viewReporteDevolucionExcel.ReporteDevolucion.as_view(), name="reporte_devolucion_excel"),
+url(r'^Reporte/Devolucion/', viewReporteDevolucion.devolucion, name='RDevolucion'),
+
+url(r'^reporte_gastos_excel/$',viewReporteGastosExcel.ReporteGastos.as_view(), name="reporte_gastos_excel"),
+url(r'^Reporte/Gastos/', viewReporteGastos.gastos, name='RGastos'),
 
 url(r'^Reporte/Clientes/', viewReporteClientes.Clientes, name='Rclientes'),
 url(r'^Reporte/Compras/', viewReporteCompras.Compras, name='Rcompras'),

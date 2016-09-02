@@ -55,7 +55,11 @@ class ReporteCompras(TemplateView):
         if fecha1 and fecha2:
             fecha1_split=fecha1.split('/')
             fecha2_split=fecha2.split('/')
-            compras=Compra.objects.filter(fecha_realizacion_compra__range=(datetime.datetime(int(fecha1_split[2]),int(fecha1_split[1]), int(fecha1_split[0]),0,0,0,tzinfo=pytz.UTC), datetime.datetime(int(fecha2_split[2]),int(fecha2_split[1]), int(fecha2_split[0]),23,59,59,tzinfo=pytz.UTC)),vrf_compra=box)
+            fechainicial_real=datetime.datetime(int(fecha1_split[2]),int(fecha1_split[1]), int(fecha1_split[0]),0,0,0,tzinfo=pytz.UTC)
+            fechafinal_real=datetime.datetime(int(fecha2_split[2]),int(fecha2_split[1]), int(fecha2_split[0]),23,59,59,tzinfo=pytz.UTC)
+            fechainicial_real=fechainicial_real+datetime.timedelta(hours=6)
+            fechafinal_real=fechafinal_real+datetime.timedelta(hours=6)
+            compras=Compra.objects.filter(fecha_realizacion_compra__range=(fechainicial_real,fechafinal_real),vrf_compra=box)
         else:
             compras=Compra.objects.filter(vrf_compra=box)
 

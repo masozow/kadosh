@@ -1,13 +1,13 @@
 {% extends 'kadoshapp/base.html' %}
 {% load staticfiles %}
 {% block titulo %}
- Inventario
+ Ajuste de inventario
 {% endblock %}
 <!--se añadió la fila anterior-->
    {% block styles %}
      <link type="text/css" rel="stylesheet" href="{% static "css/formularios.css" %}"/>
    {% endblock %}
-     {% block encabezado %}Inventario{% endblock %}
+     {% block encabezado %}Ajuste de inventario{% endblock %}
    {% block content %}
    <style>
      table tbody tr:hover {
@@ -155,7 +155,7 @@
                  $('#tabla_productos > tbody:last-child').append('<tr onclick="seleccionar_fila(this)">'+
                                                                  '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.inventarioproducto__pk+'</td>'+
                                                                  '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.pk+'</td>'+
-                                                                 '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.nombre_producto+' -- '+value.genero_idgener__nombre_genero+' ['+value.talla_idtalla__nombre_talla+'] '+value.color_idcolor__nombre_color+' ['+value.codigoestilo_producto+']'+'</td>'+
+                                                                 '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.nombre_producto+' -- '+value.genero_idgener__nombre_genero+' ['+value.talla_idtalla__nombre_talla+'] '+value.color_idcolor__nombre_color+' ['+value.codigoestilo_producto+']'+' -- '+value.estilo_idestilo__nombre_estilo+' -- '+value.tipo_producto_idtipo_producto__nombre_tipoproducto+ '</td>'+
                                                                  '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.marca_id_marca__nombre_marca+'</td>'+
                                                                  '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.inventarioproducto__existencia_actual+'</td>'+
                                                                  '</tr>')

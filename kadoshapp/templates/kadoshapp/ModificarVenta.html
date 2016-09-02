@@ -153,9 +153,18 @@
            </div>
            <div class="col l6 m12 s12">
              <label for="id_codigo_autorizacion_empleado"><h6>Codigo de autorización:</h6> </label>{{ form_empleado.codigo_autorizacion_empleado}}
+           </div>
+         </div>
+         <div class="row" margin-bottom: 0px;>
+           <div class="col l6 m12 s12">
+             <label for="id_motivo_devolucion"><h6>Motivo de devolución:</h6> </label>{{ form_devolucion.motivo_devolucion}}
+           </div>
+           <div class="col l4 m12 s12">
+            </br>
              <button type="submit" class="btn tooltipped" data-position="right" data-delay="50" data-tooltip="Se modificará ese detalle de la venta" id="boton_anular" name="btn_anular">Modificar</button>
            </div>
          </div>
+
 
        </form>
 
@@ -254,6 +263,11 @@
          $("#lbl_venta").text($("#id_venta_idventa option:selected").val());
        });
 
+
+       $( "#id_cantidad_venta" ).change(function() {
+         $('#id_valor_parcial_venta').val($('#id_cantidad_venta').val()*$('#id_precio_producto').val());
+       });
+
        //función que limpia los valores de la sección de características del producto
        function limpiar(boton){
          $('#bloque_caracteristicas_producto').find('input, textarea, select').not("#boton_limpiar,#boton_buscar_caracteristicas,#id_cantidad_venta,#id_bodega_idbodega").val("");
@@ -312,7 +326,7 @@
              alert('Debe elegir un inventario válido');
            }
            else{
-             modificar_detalle(venta,detalle,$('#id_inventario_producto_idinventario_producto option:selected').val(),$("#id_empleado_idempleado option:selected").val(),$("#id_codigo_autorizacion_empleado").val(),$('#id_cantidad_venta').val(),$('#id_valor_parcial_venta').val());
+             modificar_detalle(venta,detalle,$('#id_inventario_producto_idinventario_producto option:selected').val(),$("#id_empleado_idempleado option:selected").val(),$("#id_codigo_autorizacion_empleado").val(),$('#id_cantidad_venta').val(),$('#id_valor_parcial_venta').val(),$('#id_motivo_devolucion').val());
            }
            //anular_venta($("#lbl_venta").text(),$("#id_empleado_idempleado option:selected").val(),$("#id_codigo_autorizacion_empleado").val());
 
@@ -486,11 +500,11 @@
 
 
        var res;
-       function modificar_detalle(idventa,iddetalle,idinventario,idempleado,autorizacion,cantventa,valparventa) {
+       function modificar_detalle(idventa,iddetalle,idinventario,idempleado,autorizacion,cantventa,valparventa,motivo) {
            $.ajax({
                url : "/Modificacion/Venta/", // La URL que llama a la vista
                type : "POST", // Metodo http para realizar el request (peticion al servidor)
-               data : { cod_venta:idventa,cod_detalle : iddetalle, cod_inventario:idinventario, cod_empleado : idempleado, codigo : autorizacion,cant_venta:cantventa,val_parcial:valparventa}, // Datos enviados con el request en formato JSON
+               data : { cod_venta:idventa,cod_detalle : iddetalle, cod_inventario:idinventario, cod_empleado : idempleado, codigo : autorizacion,cant_venta:cantventa,val_parcial:valparventa,motivo_devolucion:motivo}, // Datos enviados con el request en formato JSON
                // Si el response es correcto (si la respuesta del servidor es correcta)
                success : function(json) {
                    res=json;

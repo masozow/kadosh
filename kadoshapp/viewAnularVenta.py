@@ -13,6 +13,7 @@ from django.db.models import Q #para poder usar el operador | que funciona como 
 from django.db.models import F #para hacer llamadas u operaciones en la BD, sin cargarlas en memoria (no las procesa django, sino directamente el SGBD)
 import pytz #para usar la zona horaria
 import datetime #para que se pueda dar formato a la fecha
+from django.utils import timezone
 
 def not_in_Caja_group(user):
     if user:
@@ -61,8 +62,13 @@ def BuscarVenta(request):
         fechafinal_real=None  #se setea la fecha a Null
         fechainicial_real=None #se setea la fecha a Null
         if len(f)>1: #si la fecha no estaba vacia, el arreglo del split contendrá más de un elemento
+            f1=datetime.date(int(f[2]),int(f[1]),int(f[0]))
+            #fechainicial_real=datetime.datetime.combine(f1,timezone.datetime.min())
+            #fechafinal_real=datetime.datetime.combine(f1,timezone.datetime.max())
             fechainicial_real=datetime.datetime(int(f[2]),int(f[1]),int(f[0]),0,0,0,tzinfo=pytz.UTC) #se obtiene la fecha con la primer hora del día
             fechafinal_real=datetime.datetime(int(f[2]),int(f[1]),int(f[0]),23,59,59,tzinfo=pytz.UTC) #se obtiene la fecha con la última hora dle día
+            fechainicial_real=fechainicial_real+datetime.timedelta(hours=6)
+            fechafinal_real=fechafinal_real+datetime.timedelta(hours=6)
         resp_venta=Venta.objects.filter(Q(pk=int(cod_venta))|Q(cliente_idcliente__persona_idpersona__nombres_persona=nombres) | Q(cliente_idcliente__persona_idpersona__apellidos_persona=apellidos) | Q(cliente_idcliente__nit_cliente=nit )|Q(fecha_venta__range=(fechainicial_real,fechafinal_real)),estado_venta=1,es_cotizacion=0).values('pk','cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__persona_idpersona__apellidos_persona','fecha_venta','vendedor_venta__pk','empleado_idempleado__pk','total_venta').order_by('pk')
 
         venta_diccionario=ValuesQuerySetToDict(resp_venta)
@@ -76,7 +82,7 @@ def BuscarVenta(request):
             content_type="application/json"
         )
 
-
+@login_required
 def AnulacionVenta(request):
     if request.method == 'POST':
         cod_venta = request.POST.get('cod_venta')
@@ -95,9 +101,10 @@ def AnulacionVenta(request):
                 Venta.objects.filter(pk=cod_venta).update(estado_venta=0)
                 detalles=DetalleVenta.objects.filter(venta_idventa__pk=cod_venta)
                 for detalle in detalles:
-                    cantidad=detalle.cantidad_venta
                     inventario=detalle.inventario_producto_idinventario_producto
-                    inventarioactualizado=InventarioProducto.objects.filter(pk=inventario).update(existencia_actual=F('existencia_actual')+cantidad)
+                    if inventario:
+                        cantidad=detalle.cantidad_venta
+                        inventarioactualizado=InventarioProducto.objects.filter(pk=inventario.pk).update(existencia_actual=F('existencia_actual')+cantidad)
                 resultado="Venta anulada" #no alterar este texto, porque se usa en una comprobación en la función "done" de Ajax
                 #except Exception as e:
                 #    resultado="Error: "+str(e)

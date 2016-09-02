@@ -11,6 +11,8 @@ import pytz #para poder hacer la suma de los campos
 from django.db.models import Q #para poder usar el operador | que funciona como OR
 from django.db.models import F #para hacer llamadas u operaciones en la BD, sin cargarlas en memoria (no las procesa django, sino directamente el SGBD)
 from .formReporteCompras import *
+from datetime import timedelta
+
 def not_in_AdministradorSistema_group(user):
     if user:
         return user.groups.filter(name='AdministradorSistema').count() != 0
@@ -31,7 +33,11 @@ def Compras(request):
         if fecha1 and fecha2:
             fecha1_split=fecha1.split('/')
             fecha2_split=fecha2.split('/')
-            compras=Compra.objects.filter(fecha_realizacion_compra__range=(datetime.datetime(int(fecha1_split[2]),int(fecha1_split[1]), int(fecha1_split[0]),0,0,0,tzinfo=pytz.UTC), datetime.datetime(int(fecha2_split[2]),int(fecha2_split[1]), int(fecha2_split[0]),23,59,59,tzinfo=pytz.UTC)),vrf_compra=box)
+            fechainicial_real=datetime.datetime(int(fecha1_split[2]),int(fecha1_split[1]), int(fecha1_split[0]),0,0,0,tzinfo=pytz.UTC)
+            fechafinal_real=datetime.datetime(int(fecha2_split[2]),int(fecha2_split[1]), int(fecha2_split[0]),23,59,59,tzinfo=pytz.UTC)
+            fechainicial_real=fechainicial_real+datetime.timedelta(hours=6)
+            fechafinal_real=fechafinal_real+datetime.timedelta(hours=6)
+            compras=Compra.objects.filter(fecha_realizacion_compra__range=(fechainicial_real,fechafinal_real),vrf_compra=box)
         else:
             compras=Compra.objects.filter(vrf_compra=box)
         reporte1=ComprasTabla(compras)

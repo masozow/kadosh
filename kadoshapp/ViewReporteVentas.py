@@ -11,6 +11,8 @@ import pytz #para poder hacer la suma de los campos
 from django.db.models import Q #para poder usar el operador | que funciona como OR
 from django.db.models import F #para hacer llamadas u operaciones en la BD, sin cargarlas en memoria (no las procesa django, sino directamente el SGBD)
 from .formReporteVentas import *
+from datetime import timedelta
+
 def not_in_AdministradorSistema_group(user):
     if user:
         return user.groups.filter(name='AdministradorSistema').count() != 0
@@ -34,17 +36,21 @@ def Ventas(request):
         fecha2_split=fecha2.split('/')
         ventas_vendedor=qs.values('month','vendedor_venta__persona_idpersona__nombres_persona','vendedor_venta__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('month','total_ventas')
         if len(fecha1_split)>1 and len(fecha2_split)>1:
+            fechainicial_real=datetime.datetime(int(fecha1_split[2]),int(fecha1_split[1]), int(fecha1_split[0]),0,0,0,tzinfo=pytz.UTC)
+            fechafinal_real=datetime.datetime(int(fecha2_split[2]),int(fecha2_split[1]), int(fecha2_split[0]),23,59,59,tzinfo=pytz.UTC)
+            fechainicial_real=fechainicial_real+datetime.timedelta(hours=6)
+            fechafinal_real=fechafinal_real+datetime.timedelta(hours=6)
             box = request.POST.get('checkbo', False)
             if not empleado:
                 empleado=0
             if box:
-                ventas_vendedor = qs.filter(es_cotizacion=0,estado_venta=1,vendedor_venta=int(empleado),fecha_venta__range=(datetime.datetime(int(fecha1_split[2]),int(fecha1_split[1]), int(fecha1_split[0]),0,0,0,tzinfo=pytz.UTC), datetime.datetime(int(fecha2_split[2]),int(fecha2_split[1]), int(fecha2_split[0]),23,59,59,tzinfo=pytz.UTC))).values('month','vendedor_venta__persona_idpersona__nombres_persona','vendedor_venta__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('month') #este y funciona con las horas
+                ventas_vendedor = qs.filter(es_cotizacion=0,estado_venta=1,vendedor_venta=int(empleado),fecha_venta__range=(fechainicial_real,fechafinal_real )).values('month','vendedor_venta__persona_idpersona__nombres_persona','vendedor_venta__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('month') #este y funciona con las horas
                 if not ventas_vendedor:
-                    ventas_vendedor = qs.filter(es_cotizacion=0,estado_venta=1,fecha_venta__range=(datetime.datetime(int(fecha1_split[2]),int(fecha1_split[1]), int(fecha1_split[0]),0,0,0,tzinfo=pytz.UTC), datetime.datetime(int(fecha2_split[2]),int(fecha2_split[1]), int(fecha2_split[0]),23,59,59,tzinfo=pytz.UTC))).values('month','vendedor_venta__persona_idpersona__nombres_persona','vendedor_venta__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('month') #este y funciona con las horas
+                    ventas_vendedor = qs.filter(es_cotizacion=0,estado_venta=1,fecha_venta__range=(fechainicial_real,fechafinal_real)).values('month','vendedor_venta__persona_idpersona__nombres_persona','vendedor_venta__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('month') #este y funciona con las horas
             else:
-                ventas_vendedor = Venta.objects.filter(es_cotizacion=0,estado_venta=1,vendedor_venta=int(empleado),fecha_venta__range=(datetime.datetime(int(fecha1_split[2]),int(fecha1_split[1]), int(fecha1_split[0]),0,0,0,tzinfo=pytz.UTC), datetime.datetime(int(fecha2_split[2]),int(fecha2_split[1]), int(fecha2_split[0]),23,59,59,tzinfo=pytz.UTC))).values('vendedor_venta__persona_idpersona__nombres_persona','vendedor_venta__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('total_ventas')
+                ventas_vendedor = Venta.objects.filter(es_cotizacion=0,estado_venta=1,vendedor_venta=int(empleado),fecha_venta__range=(fechainicial_real, fechafinal_real)).values('vendedor_venta__persona_idpersona__nombres_persona','vendedor_venta__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('total_ventas')
                 if not ventas_vendedor:
-                    ventas_vendedor = Venta.objects.filter(es_cotizacion=0,estado_venta=1,fecha_venta__range=(datetime.datetime(int(fecha1_split[2]),int(fecha1_split[1]), int(fecha1_split[0]),0,0,0,tzinfo=pytz.UTC), datetime.datetime(int(fecha2_split[2]),int(fecha2_split[1]), int(fecha2_split[0]),23,59,59,tzinfo=pytz.UTC))).values('vendedor_venta__persona_idpersona__nombres_persona','vendedor_venta__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('total_ventas')
+                    ventas_vendedor = Venta.objects.filter(es_cotizacion=0,estado_venta=1,fecha_venta__range=(fechainicial_real, fechafinal_real)).values('vendedor_venta__persona_idpersona__nombres_persona','vendedor_venta__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('total_ventas')
 
 
         reporte1=VentasTabla(ventas_vendedor)

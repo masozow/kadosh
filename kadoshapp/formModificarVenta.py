@@ -55,3 +55,8 @@ class Form_ModificarVenta_InventarioProducto(forms.ModelForm):
     class Meta:
         model=InventarioProducto
         fields=('producto_codigo_producto','bodega_idbodega',)
+
+class Form_ModificarVenta_Devolucion(forms.ModelForm):
+    class Meta:
+        model=Devolucion
+        exclude=('momento_devolucion',)

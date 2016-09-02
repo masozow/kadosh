@@ -1,0 +1,65 @@
+{% extends 'kadoshapp/base.html'  %}
+{% load django_tables2 %}
+{% load staticfiles %}
+{% block titulo %}
+ Reporte Devoluciones
+{% endblock %}
+{% block styles %}
+  <link type="text/css" rel="stylesheet" href="{% static "css/formularios.css" %}"/>
+  <link rel="stylesheet" href="{{ STATIC_URL }}django_tables2/themes/paleblue/css/screen.css" />
+{% endblock %}
+{% block encabezado %}Reporte Devoluciones{% endblock %}
+{% block content %}
+<form action="/Reporte/Devolucion/" id="formulario_reporte1" method="POST" class="post-form">
+  {% csrf_token %}
+<div class="row" style="margin-bottom: 0px;">
+  <div class="col l6 m12 s12">
+      <h6> Caracteristicas de busqueda</h6>
+      <label for="marca_id_marca"><h6>Fecha inicial:</h6> </label>{{ form_devolucion.fechainicial}}
+      <label for="marca_id_marca"><h6>Fecha final:</h6> </label>{{ form_devolucion.fechafinal}}
+  </div>
+</div>
+<div class="row" style="margin-bottom: 0px;">
+  <div class="col l6 m12 s12">
+      <button type="submit" class="save btn btn-default">Buscar</button>
+  </div>
+  <div class="col l6 m12 s12">
+   <input class="save btn btn-default" id="boton_descargar" type="button" onclick="descargar(this)" value="Descargar" name="btn_descargar"/>
+  </div>
+</div>
+
+
+
+ </form>
+{% render_table reporte1 %}
+{% endblock %}
+
+{% block extra_scripts %}
+<script type="text/javascript">
+
+$( document ).ready(function(){ //document indica toda la página, ready indica que ya se haya cargado el DOM
+  $('input[type="checkbox"]').addClass("filled-in");
+  cambiar_ruta();
+});
+
+var ruta;//variable donde se guardará la ruta
+function cambiar_ruta(){ //esta función cambiará la ruta que se envía al view
+  //ahora aquí se obtienen los valores de todos los elementos
+  ruta=$('#id_fechainicial').val()+'&fechafinal='+$('#id_fechafinal').val();
+}
+$('#id_fechainicial').change(function(){//cuando un elemento especifico cambia su valor, en este caso un textbox
+  cambiar_ruta();
+});
+$('#id_fechafinal').change(function(){ //cuando un elemento especifico cambia su valor, en este caso un textbox
+  cambiar_ruta();
+});
+$("select").change(function (){ //cuando cualquier combobox=select cambia su valor
+    cambiar_ruta();
+});
+
+function descargar(boton){
+  $(location).attr('href', '/reporte_devolucion_excel?fechainicial='+ruta);
+}
+
+</script>
+{% endblock %}
