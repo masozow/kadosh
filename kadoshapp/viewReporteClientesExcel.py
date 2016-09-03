@@ -58,8 +58,8 @@ class ReporteCliente(TemplateView):
         compras_clientes=qs.values('month','cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__nit_cliente','cliente_idcliente__pk','cliente_idcliente__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('month') #este y funciona con las horas
         pormes=False
         if len(fecha1_split)>1 and len(fecha2_split)>1:
-            fecha1_split=fecha1.split('/')
-            fecha2_split=fecha2.split('/')
+            #fecha1_split=fecha1.split('/')
+            #fecha2_split=fecha2.split('/')
             fechainicial_real=datetime.datetime(int(fecha1_split[2]),int(fecha1_split[1]), int(fecha1_split[0]),0,0,0,tzinfo=pytz.UTC)
             fechafinal_real=datetime.datetime(int(fecha2_split[2]),int(fecha2_split[1]), int(fecha2_split[0]),23,59,59,tzinfo=pytz.UTC)
             fechainicial_real=fechainicial_real+datetime.timedelta(hours=6)

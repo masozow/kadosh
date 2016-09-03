@@ -11,7 +11,7 @@ from django.http.response import HttpResponse
 from .models import *
 from django.db.models import Sum
 from django.db.models import Q
-from datetime import datetime
+from datetime import datetime,timedelta
 import pytz #para poder hacer la suma de los campos
 
 #El siguiente método convierte el resultado de "values" en un diccionario
@@ -30,6 +30,7 @@ class ReporteDevolucion(TemplateView):
             mes=fechasplit1[1]
             anio=fechasplit1[2]
             fecha1=datetime(int(anio),int(mes), int(dia),0,0,0,tzinfo=pytz.UTC)
+            fecha1=fecha1+datetime.timedelta(hours=6)
         else:
             fecha1=''
 
@@ -39,6 +40,7 @@ class ReporteDevolucion(TemplateView):
             mes=fechasplit2[1]
             anio=fechasplit2[2]
             fecha2=datetime(int(anio),int(mes), int(dia),23,59,59,tzinfo=pytz.UTC)
+            fecha2=fecha2+datetime.timedelta(hours=6)
         else:
             fecha2=''
 

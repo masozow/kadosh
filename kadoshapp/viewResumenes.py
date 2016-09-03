@@ -17,7 +17,7 @@ from django.shortcuts import get_object_or_404
 @login_required
 def Resumenes(request):
     if request.method == 'POST':
-        fecha=datetime.today()
+        fecha=timezone.now()
         vendedores=Venta.objects.filter(vendedor_venta__puesto_idpuesto__nombre_puesto__contains='Ventas',vendedor_venta__estado_empleado=1,fecha_venta__month=fecha.month,fecha_venta__year=fecha.year).values('vendedor_venta__pk','vendedor_venta__persona_idpersona__nombres_persona','vendedor_venta__persona_idpersona__apellidos_persona','vendedor_venta__puesto_idpuesto__nombre_puesto').annotate(total_ventas=Sum('total_venta')).order_by('total_ventas')
         productos=Venta.objects.filter(fecha_venta__lte=fecha2).filter(detalleventa__inventario_producto_idinventario_producto__producto_codigo_producto__estado_producto=1).values('detalleventa__inventario_producto_idinventario_producto__producto_codigo_producto__pk','detalleventa__inventario_producto_idinventario_producto__producto_codigo_producto__nombre_producto','detalleventa__inventario_producto_idinventario_producto__producto_codigo_producto__codigobarras_producto','detalleventa__inventario_producto_idinventario_producto__producto_codigo_producto__codigoestilo_producto','fecha_venta')
         reporteproductos=ProductosSinMovimientoTabla(productos)

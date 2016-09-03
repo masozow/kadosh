@@ -193,6 +193,7 @@
         $('input#id_cantidad_compra').val(1);
         $('#id_tipo_pago_idtipo_pago').val(1);
         $('#id_porcentaje_ganancia').val(0);
+        //$('#id_codigobarras_producto').val('-');
         $('#id_jsonfield').css('display','None'); //ocultando el campo que enviará los datos JSON como texto
         $('input[type="checkbox"]').addClass("filled-in").addClass("filled-in"); //necesario para que se vean los checkbox
         //$('#id_producto_codigo_producto').empty();
@@ -431,6 +432,7 @@
                $('#bloque_caracteristicas_producto').find('input text textarea').not('#boton_buscar_producto,#boton_agregar_producto,#id_codigobarras_producto').val('');
                $('#id_nombre_producto').val('');
                $('#id_codigoestilo_producto').val('-');
+              // $('#id_codigobarras_producto').val('-');
                $('#id_codigobarras_producto').val('');
                $('#id_valor_producto').val('');
                $('#id_porcentaje_ganancia').val('');
@@ -466,6 +468,7 @@
        }
        //el siguiente código selecciona el texto contenido en el input, al recibir focus
        $("#id_codigoestilo_producto").focus(function() { $(this).select() });
+       //$("#id_codigobarras_producto").focus(function() { $(this).select() });
        $("#id_porcentaje_ganancia").focus(function() { $(this).select() });
        $("#id_valor_producto").focus(function() { $(this).select() });
 

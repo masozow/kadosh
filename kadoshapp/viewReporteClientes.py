@@ -5,6 +5,7 @@ from .tables import *
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db.models import Sum, Count
 from django.utils import timezone
+from datetime import timedelta
 import datetime
 from django.db import connection
 import pytz #para poder hacer la suma de los campos

@@ -133,6 +133,7 @@ class Color(models.Model):
 
     class Meta:
         managed = True
+        ordering=["nombre_color"]
         db_table = 'Color'
 
 
@@ -312,7 +313,7 @@ class DetalleVenta(models.Model):
     promocion_idpromocion = models.ForeignKey('Promocion', db_column='Promocion_idPromocion',blank=True,null=True)  # Field name made lowercase.
 
     def __str__(self):
-        return 'Id: %s - Venta: %s - Lote: %s - Producto: %s' % (self.iddetalleventa,self.venta_idventa.idventa, self.inventario_producto_idinventario_producto.idinventario_producto, self.inventario_producto_idinventario_producto.producto_codigo_producto)
+        return 'Id: %s - Venta: %s - Inv: %s ' % (self.iddetalleventa,self.venta_idventa.idventa, self.inventario_producto_idinventario_producto )
 
     class Meta:
         managed = True
@@ -410,6 +411,7 @@ class Estilo(models.Model):
 
     class Meta:
         managed = True
+        ordering=["nombre_estilo"]
         db_table = 'Estilo'
 
 
@@ -453,6 +455,7 @@ class Genero(models.Model):
 
     class Meta:
         managed = True
+        ordering=["nombre_genero"]
         db_table = 'Genero'
 
 
@@ -528,6 +531,7 @@ class Marca(models.Model):
 
     class Meta:
         managed = True
+        ordering=["nombre_marca"]
         db_table = 'Marca'
 
 
@@ -801,6 +805,7 @@ class Talla(models.Model):
 
     class Meta:
         managed = True
+        ordering=["nombre_talla"]
         db_table = 'Talla'
 
 
@@ -843,6 +848,7 @@ class TipoProducto(models.Model):
 
     class Meta:
         managed = True
+        ordering=["nombre_tipoproducto"]
         db_table = 'Tipo_producto'
 
 

@@ -17,6 +17,7 @@ from django.db import connection
 import pytz #para poder hacer la suma de los campos
 from django.db.models import Q #para poder usar el operador | que funciona como OR
 from django.db.models import F
+from datetime import timedelta
 
 def ValuesQuerySetToDict(vqs):
     return [item for item in vqs]
@@ -45,8 +46,8 @@ class ReporteCompras(TemplateView):
 
         fecha1=str(fechaini) #debe ser la fecha más pequeña
         fecha2=str(fechafini) #debe ser la fecha más grande
-        fecha1_split=fecha1.split('/')
-        fecha2_split=fecha2.split('/')
+        #fecha1_split=fecha1.split('/')
+        #fecha2_split=fecha2.split('/')
         if box=="true":
             box=True
         elif box=="false":

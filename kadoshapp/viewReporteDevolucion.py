@@ -7,7 +7,7 @@ from django.db.models import Sum #para poder hacer la suma de los campos
 from django.db.models import Q #para poder usar el operador | que funciona como OR
 from django.db.models import F #para hacer llamadas u operaciones en la BD, sin cargarlas en memoria (no las procesa django, sino directamente el SGBD)
 from .formReporteDevolucion import *
-from datetime import datetime
+from datetime import datetime,timedelta
 import pytz #para poder hacer la suma de los campos
 
 def not_in_AdministradorSistema_group(user):
@@ -22,18 +22,21 @@ def devolucion(request):
         form_devolucion=Form_RepDevolucion_Devolucion(request.POST)
         fecha1= request.POST.get('fechainicial')
         fecha2= request.POST.get('fechafinal')
+
         if fecha1:
             fechasplit1=str(fecha1).split('/')
             dia=fechasplit1[0]
             mes=fechasplit1[1]
             anio=fechasplit1[2]
             fecha1=datetime(int(anio),int(mes), int(dia),0,0,0,tzinfo=pytz.UTC)
+            fecha1=fecha1+datetime.timedelta(hours=6)
         if fecha2:
             fechasplit2=str(fecha2).split('/')
             dia=fechasplit2[0]
             mes=fechasplit2[1]
             anio=fechasplit2[2]
             fecha2=datetime(int(anio),int(mes), int(dia),23,59,59,tzinfo=pytz.UTC)
+            fecha2=fecha2+datetime.timedelta(hours=6)
 
         if not fecha1 and not fecha2:
             resultado_devolucion=Devolucion.objects.all()
