@@ -495,8 +495,8 @@
                 data : { codigo_estilo_producto : $(codigo_estilo_buscar).val(), bodega_idbodega: $(bodega_que_vende+" option:selected").val(), marca_producto: $(marca_buscar+" option:selected").val(), tipo_producto: $(tipo_buscar+" option:selected").val(), estilo_producto: $(estilo_buscar+" option:selected").val(), color_producto: $(color_buscar+" option:selected").val(), talla_producto: $(talla_buscar+" option:selected").val(), genero_producto: $(genero_buscar+" option:selected").val()}, // Datos enviados con el request en formato JSON
                 success : function(json) {
                   $(id_producto_codigo_producto).empty();
-                  $.each(json.consulta, function(key,value) {
-                    $(id_producto_codigo_producto).append('<option value='+value.codigo_producto+'>'+ value.idInventario_producto +'|'+ value.codigo_producto +'|'+ value.nombre_producto +'|'+ value.codigoestilo_producto +'|'+ value.valor_precio +'|'+ value.nombre_marca +'|'+ value.nombre_talla +'|'+ value.nombre_color+'|'+ value.nombre_genero +'|'+ value.nombre_estilo +'</option>');
+                  $.each(json, function(key,value) {
+                    $(id_producto_codigo_producto).append('<option value='+value.pk+'>'+ value.inventarioproducto__pk +'|'+ value.pk +'|'+ value.nombre_producto +'|'+ value.codigoestilo_producto +'|'+ value.precio__valor_precio +'|'+ value.marca_id_marca__nombre_marca +'|'+ value.talla_idtalla__nombre_talla +'|'+ value.color_idcolor__nombre_color+'|'+ value.genero_idgener__nombre_genero +'|'+ value.estilo_idestilo__nombre_estilo +'</option>');
                     //console.log(value);
                   });
                   //console.log('Antes de asginar');
