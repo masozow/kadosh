@@ -22,15 +22,15 @@
             <div class="col s6">
               Bodega:{{ form_inventario.bodega_idbodega}}
               Marca: {{form_Producto.marca_id_marca}}
-              Tipo: {{form_Producto.tipo_producto_idtipo_producto}}
               Talla: {{form_Producto.talla_idtalla}}
+              Color: {{form_Producto.color_idcolor}}
               Estilo: {{form_Producto.estilo_idestilo}}
             </div>
             <div class="col s6">
               Código Barras:{{ form_Producto.codigobarras_producto }}
               Código de estilo:{{form_Producto.codigoestilo_producto}}
-              Color: {{form_Producto.color_idcolor}}
               Género: {{form_Producto.genero_idgener}}
+              Tipo: {{form_Producto.tipo_producto_idtipo_producto}}
               <br/>
               <input class="btn tooltipped" data-position="bottom" data-delay="5" data-tooltip="Puede buscar solo con la bodega, pero sí quiere ser más específico use las demás opciones" id="boton_buscar_caracteristicas" type="button" onclick="buscar_caracteristicas(this)" value="Buscar" name="btn_buscar_caracteristicas"/>
             </div>
@@ -151,7 +151,7 @@
                success : function(json) {
                  $("#tabla_productos > tbody").html("");
                  $.each(json, function(key,value) {
-                   console.log(value);
+                   //console.log(value);
                  $('#tabla_productos > tbody:last-child').append('<tr onclick="seleccionar_fila(this)">'+
                                                                  '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.inventarioproducto__pk+'</td>'+
                                                                  '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.pk+'</td>'+

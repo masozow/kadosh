@@ -37,7 +37,7 @@ def Precios(request):
         form_producto=Form_Precios_Producto()
         form_precio=Form_Precios_Precio()
         form_InventarioProducto=Form_Precios_InventarioProducto
-    return render(request, 'kadoshapp/Precios.html', {'form_InventarioProducto':form_InventarioProducto,'form_precio':form_precio,  'form_producto':form_producto })
+        return render(request, 'kadoshapp/Precios.html', {'form_InventarioProducto':form_InventarioProducto,'form_precio':form_precio,  'form_producto':form_producto })
 
 #Vista para obtener solo el producto mediante Ajax
 @login_required
@@ -75,9 +75,38 @@ def BuscarProducto(request):
         if not id_genero_producto:
             id_genero_producto=0
 
-        resp_producto=Producto.objects.filter(Q(codigobarras_producto=txt_codigo_barras)|Q(codigoestilo_producto=txt_codigo_producto) | Q(marca_id_marca=id_marca_producto) | Q(estilo_idestilo=id_estilo_producto )| Q(tipo_producto_idtipo_producto=id_tipo_producto) | Q(talla_idtalla=id_talla_producto) | Q(color_idcolor=id_color_producto) | Q(genero_idgener=id_genero_producto),estado_producto=1).values('pk','nombre_producto','codigobarras_producto','codigoestilo_producto','marca_id_marca__nombre_marca','genero_idgener__nombre_genero','talla_idtalla__nombre_talla','color_idcolor__nombre_color')
-        if not resp_producto:
-            resp_producto=Producto.objects.all().values('pk','nombre_producto','codigobarras_producto','codigoestilo_producto','marca_id_marca__nombre_marca','genero_idgener__nombre_genero','talla_idtalla__nombre_talla','color_idcolor__nombre_color')
+        if txt_codigo_producto and id_marca_producto !=0 and id_estilo_producto !=0 and id_tipo_producto !=0 and id_talla_producto !=0 and id_color_producto != 0 and id_genero_producto !=0:
+            resp_producto=Producto.objects.filter(codigoestilo_producto=txt_codigo_producto,marca_id_marca=id_marca_producto,estilo_idestilo=id_estilo_producto,tipo_producto_idtipo_producto=id_tipo_producto,talla_idtalla=id_talla_producto,color_idcolor=id_color_producto,genero_idgener=id_genero_producto,estado_producto=1).values('pk','nombre_producto','codigobarras_producto','codigoestilo_producto','marca_id_marca__nombre_marca','genero_idgener__nombre_genero','talla_idtalla__nombre_talla','color_idcolor__nombre_color','estilo_idestilo__nombre_estilo','tipo_producto_idtipo_producto__nombre_tipoproducto')
+            #todos los parametros
+        elif txt_codigo_producto and id_marca_producto !=0 and id_tipo_producto !=0 and id_talla_producto !=0 and id_color_producto != 0 and id_genero_producto !=0:
+            resp_producto=Producto.objects.filter(codigoestilo_producto=txt_codigo_producto,marca_id_marca=id_marca_producto,tipo_producto_idtipo_producto=id_tipo_producto,talla_idtalla=id_talla_producto,color_idcolor=id_color_producto,genero_idgener=id_genero_producto,estado_producto=1).values('pk','nombre_producto','codigobarras_producto','codigoestilo_producto','marca_id_marca__nombre_marca','genero_idgener__nombre_genero','talla_idtalla__nombre_talla','color_idcolor__nombre_color','estilo_idestilo__nombre_estilo','tipo_producto_idtipo_producto__nombre_tipoproducto')
+            #sin estilo
+        elif txt_codigo_producto and id_marca_producto !=0 and id_talla_producto !=0 and id_color_producto != 0 and id_genero_producto !=0:
+            resp_producto=Producto.objects.filter(codigoestilo_producto=txt_codigo_producto,marca_id_marca=id_marca_producto,talla_idtalla=id_talla_producto,color_idcolor=id_color_producto,genero_idgener=id_genero_producto,estado_producto=1).values('pk','nombre_producto','codigobarras_producto','codigoestilo_producto','marca_id_marca__nombre_marca','genero_idgener__nombre_genero','talla_idtalla__nombre_talla','color_idcolor__nombre_color','estilo_idestilo__nombre_estilo','tipo_producto_idtipo_producto__nombre_tipoproducto')
+            #sin estilo, sin tipo
+        elif txt_codigo_producto and id_marca_producto !=0 and id_talla_producto !=0 and id_genero_producto !=0:
+            resp_producto=Producto.objects.filter(codigoestilo_producto=txt_codigo_producto,marca_id_marca=id_marca_producto,talla_idtalla=id_talla_producto,genero_idgener=id_genero_producto,estado_producto=1).values('pk','nombre_producto','codigobarras_producto','codigoestilo_producto','marca_id_marca__nombre_marca','genero_idgener__nombre_genero','talla_idtalla__nombre_talla','color_idcolor__nombre_color','estilo_idestilo__nombre_estilo','tipo_producto_idtipo_producto__nombre_tipoproducto')
+            #sin estilo, sin tipo, sin color
+        elif txt_codigo_producto and id_marca_producto !=0 and id_genero_producto !=0:
+            resp_producto=Producto.objects.filter(codigoestilo_producto=txt_codigo_producto,marca_id_marca=id_marca_producto,genero_idgener=id_genero_producto,estado_producto=1).values('pk','nombre_producto','codigobarras_producto','codigoestilo_producto','marca_id_marca__nombre_marca','genero_idgener__nombre_genero','talla_idtalla__nombre_talla','color_idcolor__nombre_color','estilo_idestilo__nombre_estilo','tipo_producto_idtipo_producto__nombre_tipoproducto')
+            #sin estilo, sin tipo, sin color, sin talla
+        elif txt_codigo_producto and id_marca_producto !=0:
+            resp_producto=Producto.objects.filter(codigoestilo_producto=txt_codigo_producto,marca_id_marca=id_marca_producto,estado_producto=1).values('pk','nombre_producto','codigobarras_producto','codigoestilo_producto','marca_id_marca__nombre_marca','genero_idgener__nombre_genero','talla_idtalla__nombre_talla','color_idcolor__nombre_color','estilo_idestilo__nombre_estilo','tipo_producto_idtipo_producto__nombre_tipoproducto')
+            #sin estilo, sin tipo, sin color, sin talla, sin genero
+        elif id_marca_producto !=0:
+            resp_producto=Producto.objects.filter(marca_id_marca=id_marca_producto,estado_producto=1).values('pk','nombre_producto','codigobarras_producto','codigoestilo_producto','marca_id_marca__nombre_marca','genero_idgener__nombre_genero','talla_idtalla__nombre_talla','color_idcolor__nombre_color','estilo_idestilo__nombre_estilo','tipo_producto_idtipo_producto__nombre_tipoproducto')
+            #sin estilo, sin tipo, sin color, sin talla, sin genero, sin codigo estilo
+        elif txt_codigo_producto:
+            resp_producto=Producto.objects.filter(codigoestilo_producto=txt_codigo_producto,estado_producto=1).values('pk','nombre_producto','codigobarras_producto','codigoestilo_producto','marca_id_marca__nombre_marca','genero_idgener__nombre_genero','talla_idtalla__nombre_talla','color_idcolor__nombre_color','estilo_idestilo__nombre_estilo','tipo_producto_idtipo_producto__nombre_tipoproducto')
+            #sin estilo, sin tipo, sin color, sin talla, sin genero, sin marca, sin codigo barras
+        elif txt_codigo_barras:
+            resp_producto=Producto.objects.filter(codigobarras_producto=txt_codigo_barras,estado_producto=1).values('pk','nombre_producto','codigobarras_producto','codigoestilo_producto','marca_id_marca__nombre_marca','genero_idgener__nombre_genero','talla_idtalla__nombre_talla','color_idcolor__nombre_color','estilo_idestilo__nombre_estilo','tipo_producto_idtipo_producto__nombre_tipoproducto')
+            #sin estilo, sin tipo, sin color, sin talla, sin genero, sin marca, sin codigo estilo
+        else:
+            resp_producto=Producto.objects.filter(Q(codigoestilo_producto=txt_codigo_producto) | Q(marca_id_marca=id_marca_producto) | Q(estilo_idestilo=id_estilo_producto )| Q(tipo_producto_idtipo_producto=id_tipo_producto) | Q(talla_idtalla=id_talla_producto) | Q(color_idcolor=id_color_producto) | Q(genero_idgener=id_genero_producto),estado_producto=1).values('pk','nombre_producto','codigobarras_producto','codigoestilo_producto','marca_id_marca__nombre_marca','genero_idgener__nombre_genero','talla_idtalla__nombre_talla','color_idcolor__nombre_color','estilo_idestilo__nombre_estilo','tipo_producto_idtipo_producto__nombre_tipoproducto')
+            if not resp_producto:
+                resp_producto=Producto.objects.filter(estado_producto=1).values('pk','nombre_producto','codigobarras_producto','codigoestilo_producto','marca_id_marca__nombre_marca','genero_idgener__nombre_genero','talla_idtalla__nombre_talla','color_idcolor__nombre_color','estilo_idestilo__nombre_estilo','tipo_producto_idtipo_producto__nombre_tipoproducto')
+
         producto_diccionario=ValuesQuerySetToDict(resp_producto)
         return HttpResponse(
             json.dumps(producto_diccionario,cls=DjangoJSONEncoder),

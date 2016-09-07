@@ -142,16 +142,40 @@ def BuscarProductoCaracteristicas(request):
         if not id_genero_producto:
             id_genero_producto=0
 
-        response_data = {} #declarando un diccionario vacio
         #La Q en el siguiente queryset es importantisima, sin ella no funciona los OR, representados por el poerador |
-        #resp_producto=Producto.objects.filter(Q(codigoestilo_producto=txt_codigo_producto) | Q(marca_id_marca=id_marca_producto) | Q(estilo_idestilo=id_estilo_producto )| Q(tipo_producto_idtipo_producto=id_tipo_producto) | Q(talla_idtalla=id_talla_producto) | Q(color_idcolor=id_color_producto) | Q(genero_idgener=id_genero_producto))
-        resp_consulta=consulta_sql_personalizada(id_bodega_que_vende,txt_codigo_producto,id_marca_producto,id_tipo_producto,id_estilo_producto,id_talla_producto,id_color_producto,id_genero_producto)
-        #A continuacion se usa una consulta SQL comun y corriente, prestar atencion al placeholder "%s" que es para un valor unico, y al parametro con el formato values_list('un_campo',flat=True), que hace que se envie un solo valor del resultado de ese queryset
-        #resp_foto=Fotografia.objects.raw('SELECT F.idfotografia,F.ruta_fotografia FROM Fotografia as F INNER JOIN Producto_has_Fotografia as PF on F.idfotografia=PF.fotografia_idfotografia WHERE PF.producto_codigo_producto=%s AND F.principal_fotografia=1',resp_producto.values_list('codigo_producto',flat=True))
-        response_data['consulta']=resp_consulta
+        if txt_codigo_producto and id_bodega_que_vende!= 0 and id_marca_producto !=0 and id_estilo_producto !=0 and id_tipo_producto !=0 and id_talla_producto !=0 and id_color_producto != 0 and id_genero_producto !=0:
+            resp_producto=Producto.objects.filter(codigoestilo_producto=txt_codigo_producto,marca_id_marca=id_marca_producto,estilo_idestilo=id_estilo_producto,tipo_producto_idtipo_producto=id_tipo_producto,talla_idtalla=id_talla_producto,color_idcolor=id_color_producto,genero_idgener=id_genero_producto,estado_producto=1,inventarioproducto__bodega_idbodega__pk=id_bodega_que_vende,precio__estado_precio=1).values('pk','nombre_producto','marca_id_marca__nombre_marca','talla_idtalla__nombre_talla','color_idcolor__nombre_color','genero_idgener__nombre_genero','inventarioproducto__pk','precio__valor_precio','precio__pk','estilo_idestilo__nombre_estilo','codigoestilo_producto').order_by('-precio__pk')
+            #todos los parametros
+        elif txt_codigo_producto and id_bodega_que_vende!= 0 and id_marca_producto !=0 and id_tipo_producto !=0 and id_talla_producto !=0 and id_color_producto != 0 and id_genero_producto !=0:
+            resp_producto=Producto.objects.filter(codigoestilo_producto=txt_codigo_producto,marca_id_marca=id_marca_producto,tipo_producto_idtipo_producto=id_tipo_producto,talla_idtalla=id_talla_producto,color_idcolor=id_color_producto,genero_idgener=id_genero_producto,estado_producto=1,inventarioproducto__bodega_idbodega__pk=id_bodega_que_vende,precio__estado_precio=1).values('pk','nombre_producto','marca_id_marca__nombre_marca','talla_idtalla__nombre_talla','color_idcolor__nombre_color','genero_idgener__nombre_genero','inventarioproducto__pk','precio__valor_precio','precio__pk','estilo_idestilo__nombre_estilo','codigoestilo_producto').order_by('-precio__pk')
+            #sin estilo
+        elif txt_codigo_producto and id_bodega_que_vende!= 0 and id_marca_producto !=0 and id_talla_producto !=0 and id_color_producto != 0 and id_genero_producto !=0:
+            resp_producto=Producto.objects.filter(codigoestilo_producto=txt_codigo_producto,marca_id_marca=id_marca_producto,talla_idtalla=id_talla_producto,color_idcolor=id_color_producto,genero_idgener=id_genero_producto,estado_producto=1,inventarioproducto__bodega_idbodega__pk=id_bodega_que_vende,precio__estado_precio=1).values('pk','nombre_producto','marca_id_marca__nombre_marca','talla_idtalla__nombre_talla','color_idcolor__nombre_color','genero_idgener__nombre_genero','inventarioproducto__pk','precio__valor_precio','precio__pk','estilo_idestilo__nombre_estilo','codigoestilo_producto').order_by('-precio__pk')
+            #sin estilo, sin tipo
+        elif txt_codigo_producto and id_bodega_que_vende!= 0 and id_marca_producto !=0 and id_talla_producto !=0 and id_genero_producto !=0:
+            resp_producto=Producto.objects.filter(codigoestilo_producto=txt_codigo_producto,marca_id_marca=id_marca_producto,talla_idtalla=id_talla_producto,genero_idgener=id_genero_producto,estado_producto=1,inventarioproducto__bodega_idbodega__pk=id_bodega_que_vende,precio__estado_precio=1).values('pk','nombre_producto','marca_id_marca__nombre_marca','talla_idtalla__nombre_talla','color_idcolor__nombre_color','genero_idgener__nombre_genero','inventarioproducto__pk','precio__valor_precio','precio__pk','estilo_idestilo__nombre_estilo','codigoestilo_producto').order_by('-precio__pk')
+            #sin estilo, sin tipo, sin color
+        elif txt_codigo_producto and id_bodega_que_vende!= 0 and id_marca_producto !=0 and id_genero_producto !=0:
+            resp_producto=Producto.objects.filter(codigoestilo_producto=txt_codigo_producto,marca_id_marca=id_marca_producto,genero_idgener=id_genero_producto,estado_producto=1,inventarioproducto__bodega_idbodega__pk=id_bodega_que_vende,precio__estado_precio=1).values('pk','nombre_producto','marca_id_marca__nombre_marca','talla_idtalla__nombre_talla','color_idcolor__nombre_color','genero_idgener__nombre_genero','inventarioproducto__pk','precio__valor_precio','precio__pk','estilo_idestilo__nombre_estilo','codigoestilo_producto').order_by('-precio__pk')
+            #sin estilo, sin tipo, sin color, sin talla
+        elif txt_codigo_producto and id_bodega_que_vende!= 0 and id_marca_producto !=0:
+            resp_producto=Producto.objects.filter(codigoestilo_producto=txt_codigo_producto,marca_id_marca=id_marca_producto,estado_producto=1,inventarioproducto__bodega_idbodega__pk=id_bodega_que_vende,precio__estado_precio=1).values('pk','nombre_producto','marca_id_marca__nombre_marca','talla_idtalla__nombre_talla','color_idcolor__nombre_color','genero_idgener__nombre_genero','inventarioproducto__pk','precio__valor_precio','precio__pk','estilo_idestilo__nombre_estilo','codigoestilo_producto').order_by('-precio__pk')
+            #sin estilo, sin tipo, sin color, sin talla, sin genero
+        elif id_bodega_que_vende!= 0 and id_marca_producto !=0:
+            resp_producto=Producto.objects.filter(marca_id_marca=id_marca_producto,estado_producto=1,inventarioproducto__bodega_idbodega__pk=id_bodega_que_vende,precio__estado_precio=1).values('pk','nombre_producto','marca_id_marca__nombre_marca','talla_idtalla__nombre_talla','color_idcolor__nombre_color','genero_idgener__nombre_genero','inventarioproducto__pk','precio__valor_precio','precio__pk','estilo_idestilo__nombre_estilo','codigoestilo_producto').order_by('-precio__pk')
+            #sin estilo, sin tipo, sin color, sin talla, sin genero, sin codigo estilo
+        elif txt_codigo_producto and id_bodega_que_vende!= 0 :
+            resp_producto=Producto.objects.filter(codigoestilo_producto=txt_codigo_producto,estado_producto=1,inventarioproducto__bodega_idbodega__pk=id_bodega_que_vende,precio__estado_precio=1).values('pk','nombre_producto','marca_id_marca__nombre_marca','talla_idtalla__nombre_talla','color_idcolor__nombre_color','genero_idgener__nombre_genero','inventarioproducto__pk','precio__valor_precio','precio__pk','estilo_idestilo__nombre_estilo','codigoestilo_producto').order_by('-precio__pk')
+            #sin estilo, sin tipo, sin color, sin talla, sin genero, sin marca
+        else:
+            resp_producto=Producto.objects.filter(Q(codigoestilo_producto=txt_codigo_producto) | Q(marca_id_marca=id_marca_producto) | Q(estilo_idestilo=id_estilo_producto )| Q(tipo_producto_idtipo_producto=id_tipo_producto) | Q(talla_idtalla=id_talla_producto) | Q(color_idcolor=id_color_producto) | Q(genero_idgener=id_genero_producto),estado_producto=1,inventarioproducto__bodega_idbodega__pk=id_bodega_que_vende,precio__estado_precio=1).values('pk','nombre_producto','marca_id_marca__nombre_marca','talla_idtalla__nombre_talla','color_idcolor__nombre_color','genero_idgener__nombre_genero','inventarioproducto__pk','precio__valor_precio','precio__pk','estilo_idestilo__nombre_estilo','codigoestilo_producto').order_by('-precio__pk')
+            if not resp_producto:
+                resp_producto=Producto.objects.filter(inventarioproducto__bodega_idbodega__pk=id_bodega_que_vende).values('pk','inventarioproducto__pk','nombre_producto','codigoestilo_producto','marca_id_marca__nombre_marca','genero_idgener__nombre_genero','talla_idtalla__nombre_talla','color_idcolor__nombre_color','inventarioproducto__existencia_actual','estilo_idestilo__nombre_estilo','tipo_producto_idtipo_producto__nombre_tipoproducto')
+        #producto_diccionario=ValuesQuerySetToDict(resp_producto)
+        resp_consulta=ValuesQuerySetToDict(resp_producto)
 
         return HttpResponse(
-            json.dumps(response_data,default=default),
+            json.dumps(resp_consulta,cls=DjangoJSONEncoder),
             content_type="application/json"
         )
     else:

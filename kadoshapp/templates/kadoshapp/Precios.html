@@ -34,14 +34,16 @@
         <div class="row" style="margin-bottom: 0px;">
               <div id="bloque_caracteristicas_producto">
                 <div class="col s6">
-                  <label for="marca_id_marca"><h6>Marca:</h6> </label>{{ form_producto.marca_id_marca}}
-                  <label for="estilo_idestilo"><h6>Estilo:</h6> </label>{{ form_producto.estilo_idestilo}}
-                  <label for="genero_idgener"><h6>Genero:</h6> </label>{{ form_producto.genero_idgener}}
+                  <label for="id_marca_id_marca"><h6>Marca:</h6> </label>{{ form_producto.marca_id_marca}}
+                  <label for="id_genero_idgener"><h6>Genero:</h6> </label>{{ form_producto.genero_idgener}}
+                  <label for="id_color_idcolor"><h6>Color:</h6> </label>{{ form_producto.color_idcolor}}
+                  <label for="id_estilo_idestilo"><h6>Estilo:</h6> </label>{{ form_producto.estilo_idestilo}}
                 </div>
                 <div class="col s6">
-                  <label for="talla_idtalla"><h6>Talla:</h6> </label>{{ form_producto.talla_idtalla}}
-                  <label for="color_idcolor"><h6>Color:</h6> </label>{{ form_producto.color_idcolor}}
-                  <label for="codigoestilo_producto"><h6>Codigo estilo:</h6> </label>{{ form_producto.codigoestilo_producto}}
+                  <label for="id_codigoestilo_producto"><h6>Codigo estilo:</h6> </label>{{ form_producto.codigoestilo_producto}}
+                  <label for="id_talla_idtalla"><h6>Talla:</h6> </label>{{ form_producto.talla_idtalla}}
+                  <label for="id_tipo_producto_idtipo_producto"><h6>Tipo:</h6></label>{{form_producto.tipo_producto_idtipo_producto}}
+                  <br/>
                   <input class="save btn btn-default" id="boton_buscar_caracteristicas" type="button" onclick="buscar_caracteristicas(this)" value="Buscar" name="btn_buscar_caracteristicas"/>
                 </div>
               </div>
