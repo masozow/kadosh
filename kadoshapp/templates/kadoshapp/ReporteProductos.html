@@ -8,7 +8,7 @@
   <link type="text/css" rel="stylesheet" href="{% static "css/formularios.css" %}"/>
   <link rel="stylesheet" href="{{ STATIC_URL }}django_tables2/themes/paleblue/css/screen.css" />
 {% endblock %}
-{% block encabezado %}Reporte Productos{% endblock %}
+{% block encabezado %}Reporte ventas de productos{% endblock %}
 {% block content %}
 <form action="/Reporte/Productos/" id="formulario_reporte1" method="POST" class="post-form">
   {% csrf_token %}

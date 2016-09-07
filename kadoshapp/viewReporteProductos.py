@@ -19,49 +19,74 @@ def ValuesQuerySetToDict(vqs):
 class ReporteProductos(TemplateView):
     def get(self, request, *args, **kwargs):
         #recibo los datos
-        codigobarras= self.request.GET.get('codigobarras_producto')
-        marca= self.request.GET.get('marca_id_marca')
-        estilo= self.request.GET.get('estilo_idestilo')
-        tipo= self.request.GET.get('tipo_producto_idtipo_producto')
-        talla= self.request.GET.get('talla_idtalla')
-        color= self.request.GET.get('color_idcolor')
-        genero= self.request.GET.get('genero_idgener')
-        codigoEstilo= self.request.GET.get('codigoestilo_producto')
+        txt_codigo_barras= self.request.GET.get('codigobarras_producto')
+        id_marca_producto= self.request.GET.get('marca_id_marca')
+        id_estilo_producto= self.request.GET.get('estilo_idestilo')
+        id_tipo_producto= self.request.GET.get('tipo_producto_idtipo_producto')
+        id_talla_producto= self.request.GET.get('talla_idtalla')
+        id_color_producto= self.request.GET.get('color_idcolor')
+        id_genero_producto= self.request.GET.get('genero_idgener')
+        txt_codigo_producto= self.request.GET.get('codigoestilo_producto')
 
 
          #el not indica que la cadena está vacía, o que la variable es null
-        if not marca:
-            marca=0
-        if not estilo:
-            estilo=0
-        if not tipo:
-            tipo=0
-        if not talla:
-            talla=0
-        if not color:
-            color=0
-        if not genero:
-            genero=0
+        if not id_marca_producto:
+            id_marca_producto=0
+        if not id_estilo_producto:
+            id_estilo_producto=0
+        if not id_tipo_producto:
+            id_tipo_producto=0
+        if not id_talla_producto:
+            id_talla_producto=0
+        if not id_color_producto:
+            id_color_producto=0
+        if not id_genero_producto:
+            id_genero_producto=0
 
-        marca_int=int(marca)
-        estilo_int=int(estilo)
-        tipo_int=int(tipo)
-        talla_int=int(talla)
-        color_int=int(color)
-        genero_int=int(genero)
+        if txt_codigo_producto and id_marca_producto !=0 and id_estilo_producto !=0 and id_tipo_producto !=0 and id_talla_producto !=0 and id_color_producto != 0 and id_genero_producto !=0:
+            productos=Producto.objects.filter(codigoestilo_producto=txt_codigo_producto,marca_id_marca=id_marca_producto,estilo_idestilo=id_estilo_producto,tipo_producto_idtipo_producto=id_tipo_producto,talla_idtalla=id_talla_producto,color_idcolor=id_color_producto,genero_idgener=id_genero_producto,inventarioproducto__detalleventa__venta_idventa__es_cotizacion=0,inventarioproducto__detalleventa__venta_idventa__estado_venta=1).values('pk','nombre_producto','codigobarras_producto','codigoestilo_producto','marca_id_marca__nombre_marca','tipo_producto_idtipo_producto__nombre_tipoproducto','talla_idtalla__nombre_talla','color_idcolor__nombre_color','genero_idgener__nombre_genero','estilo_idestilo__nombre_estilo').annotate(cantidad_vendida=Sum('inventarioproducto__detalleventa__cantidad_venta'),total_ventas=Sum('inventarioproducto__detalleventa__valor_parcial_venta'))
+            #todos los parametros
+        elif txt_codigo_producto and id_marca_producto !=0 and id_tipo_producto !=0 and id_talla_producto !=0 and id_color_producto != 0 and id_genero_producto !=0:
+            productos=Producto.objects.filter(codigoestilo_producto=txt_codigo_producto,marca_id_marca=id_marca_producto,tipo_producto_idtipo_producto=id_tipo_producto,talla_idtalla=id_talla_producto,color_idcolor=id_color_producto,genero_idgener=id_genero_producto,inventarioproducto__detalleventa__venta_idventa__es_cotizacion=0,inventarioproducto__detalleventa__venta_idventa__estado_venta=1).values('pk','nombre_producto','codigobarras_producto','codigoestilo_producto','marca_id_marca__nombre_marca','tipo_producto_idtipo_producto__nombre_tipoproducto','talla_idtalla__nombre_talla','color_idcolor__nombre_color','genero_idgener__nombre_genero','estilo_idestilo__nombre_estilo').annotate(cantidad_vendida=Sum('inventarioproducto__detalleventa__cantidad_venta'),total_ventas=Sum('inventarioproducto__detalleventa__valor_parcial_venta'))
+            #sin estilo
+        elif txt_codigo_producto and id_marca_producto !=0 and id_talla_producto !=0 and id_color_producto != 0 and id_genero_producto !=0:
+            productos=Producto.objects.filter(codigoestilo_producto=txt_codigo_producto,marca_id_marca=id_marca_producto,talla_idtalla=id_talla_producto,color_idcolor=id_color_producto,genero_idgener=id_genero_producto,inventarioproducto__detalleventa__venta_idventa__es_cotizacion=0,inventarioproducto__detalleventa__venta_idventa__estado_venta=1).values('pk','nombre_producto','codigobarras_producto','codigoestilo_producto','marca_id_marca__nombre_marca','tipo_producto_idtipo_producto__nombre_tipoproducto','talla_idtalla__nombre_talla','color_idcolor__nombre_color','genero_idgener__nombre_genero','estilo_idestilo__nombre_estilo').annotate(cantidad_vendida=Sum('inventarioproducto__detalleventa__cantidad_venta'),total_ventas=Sum('inventarioproducto__detalleventa__valor_parcial_venta'))
+            #sin estilo, sin tipo
+        elif txt_codigo_producto and id_marca_producto !=0 and id_talla_producto !=0 and id_genero_producto !=0:
+            productos=Producto.objects.filter(codigoestilo_producto=txt_codigo_producto,marca_id_marca=id_marca_producto,talla_idtalla=id_talla_producto,genero_idgener=id_genero_producto,inventarioproducto__detalleventa__venta_idventa__es_cotizacion=0,inventarioproducto__detalleventa__venta_idventa__estado_venta=1).values('pk','nombre_producto','codigobarras_producto','codigoestilo_producto','marca_id_marca__nombre_marca','tipo_producto_idtipo_producto__nombre_tipoproducto','talla_idtalla__nombre_talla','color_idcolor__nombre_color','genero_idgener__nombre_genero','estilo_idestilo__nombre_estilo').annotate(cantidad_vendida=Sum('inventarioproducto__detalleventa__cantidad_venta'),total_ventas=Sum('inventarioproducto__detalleventa__valor_parcial_venta'))
+            #sin estilo, sin tipo, sin color
+        elif txt_codigo_producto and id_marca_producto !=0 and id_genero_producto !=0:
+            productos=Producto.objects.filter(codigoestilo_producto=txt_codigo_producto,marca_id_marca=id_marca_producto,genero_idgener=id_genero_producto,inventarioproducto__detalleventa__venta_idventa__es_cotizacion=0,inventarioproducto__detalleventa__venta_idventa__estado_venta=1).values('pk','nombre_producto','codigobarras_producto','codigoestilo_producto','marca_id_marca__nombre_marca','tipo_producto_idtipo_producto__nombre_tipoproducto','talla_idtalla__nombre_talla','color_idcolor__nombre_color','genero_idgener__nombre_genero','estilo_idestilo__nombre_estilo').annotate(cantidad_vendida=Sum('inventarioproducto__detalleventa__cantidad_venta'),total_ventas=Sum('inventarioproducto__detalleventa__valor_parcial_venta'))
+            #sin estilo, sin tipo, sin color, sin talla
+        elif txt_codigo_producto and id_marca_producto !=0:
+            productos=Producto.objects.filter(codigoestilo_producto=txt_codigo_producto,marca_id_marca=id_marca_producto,inventarioproducto__detalleventa__venta_idventa__es_cotizacion=0,inventarioproducto__detalleventa__venta_idventa__estado_venta=1).values('pk','nombre_producto','codigobarras_producto','codigoestilo_producto','marca_id_marca__nombre_marca','tipo_producto_idtipo_producto__nombre_tipoproducto','talla_idtalla__nombre_talla','color_idcolor__nombre_color','genero_idgener__nombre_genero','estilo_idestilo__nombre_estilo').annotate(cantidad_vendida=Sum('inventarioproducto__detalleventa__cantidad_venta'),total_ventas=Sum('inventarioproducto__detalleventa__valor_parcial_venta'))
+            #sin estilo, sin tipo, sin color, sin talla, sin genero
+        elif id_marca_producto !=0:
+            productos=Producto.objects.filter(marca_id_marca=id_marca_producto,inventarioproducto__detalleventa__venta_idventa__es_cotizacion=0,inventarioproducto__detalleventa__venta_idventa__estado_venta=1).values('pk','nombre_producto','codigobarras_producto','codigoestilo_producto','marca_id_marca__nombre_marca','tipo_producto_idtipo_producto__nombre_tipoproducto','talla_idtalla__nombre_talla','color_idcolor__nombre_color','genero_idgener__nombre_genero','estilo_idestilo__nombre_estilo').annotate(cantidad_vendida=Sum('inventarioproducto__detalleventa__cantidad_venta'),total_ventas=Sum('inventarioproducto__detalleventa__valor_parcial_venta'))
+            #sin estilo, sin tipo, sin color, sin talla, sin genero, sin codigo estilo
+        elif txt_codigo_producto:
+            productos=Producto.objects.filter(codigoestilo_producto=txt_codigo_producto,inventarioproducto__detalleventa__venta_idventa__es_cotizacion=0,inventarioproducto__detalleventa__venta_idventa__estado_venta=1).values('pk','nombre_producto','codigobarras_producto','codigoestilo_producto','marca_id_marca__nombre_marca','tipo_producto_idtipo_producto__nombre_tipoproducto','talla_idtalla__nombre_talla','color_idcolor__nombre_color','genero_idgener__nombre_genero','estilo_idestilo__nombre_estilo').annotate(cantidad_vendida=Sum('inventarioproducto__detalleventa__cantidad_venta'),total_ventas=Sum('inventarioproducto__detalleventa__valor_parcial_venta'))
+            #sin estilo, sin tipo, sin color, sin talla, sin genero, sin marca, sin codigo barras
+        elif txt_codigo_barras:
+            productos=Producto.objects.filter(codigobarras_producto=txt_codigo_barras,inventarioproducto__detalleventa__venta_idventa__es_cotizacion=0,inventarioproducto__detalleventa__venta_idventa__estado_venta=1).values('pk','nombre_producto','codigobarras_producto','codigoestilo_producto','marca_id_marca__nombre_marca','tipo_producto_idtipo_producto__nombre_tipoproducto','talla_idtalla__nombre_talla','color_idcolor__nombre_color','genero_idgener__nombre_genero','estilo_idestilo__nombre_estilo').annotate(cantidad_vendida=Sum('inventarioproducto__detalleventa__cantidad_venta'),total_ventas=Sum('inventarioproducto__detalleventa__valor_parcial_venta'))
+            #sin estilo, sin tipo, sin color, sin talla, sin genero, sin marca, sin codigo estilo
+        else:
+            productos=Producto.objects.filter(Q(codigoestilo_producto=txt_codigo_producto) | Q(marca_id_marca=id_marca_producto) | Q(estilo_idestilo=id_estilo_producto )| Q(tipo_producto_idtipo_producto=id_tipo_producto) | Q(talla_idtalla=id_talla_producto) | Q(color_idcolor=id_color_producto) | Q(genero_idgener=id_genero_producto),inventarioproducto__detalleventa__venta_idventa__es_cotizacion=0,inventarioproducto__detalleventa__venta_idventa__estado_venta=1).values('pk','nombre_producto','codigobarras_producto','codigoestilo_producto','marca_id_marca__nombre_marca','tipo_producto_idtipo_producto__nombre_tipoproducto','talla_idtalla__nombre_talla','color_idcolor__nombre_color','genero_idgener__nombre_genero','estilo_idestilo__nombre_estilo').annotate(cantidad_vendida=Sum('inventarioproducto__detalleventa__cantidad_venta'),total_ventas=Sum('inventarioproducto__detalleventa__valor_parcial_venta'))
+            if not productos:
+                productos=Producto.objects.filter(inventarioproducto__detalleventa__venta_idventa__es_cotizacion=0,inventarioproducto__detalleventa__venta_idventa__estado_venta=1).values('pk','nombre_producto','codigobarras_producto','codigoestilo_producto','marca_id_marca__nombre_marca','tipo_producto_idtipo_producto__nombre_tipoproducto','talla_idtalla__nombre_talla','color_idcolor__nombre_color','genero_idgener__nombre_genero','estilo_idestilo__nombre_estilo').annotate(cantidad_vendida=Sum('inventarioproducto__detalleventa__cantidad_venta'),total_ventas=Sum('inventarioproducto__detalleventa__valor_parcial_venta'))
 
-        productos=Producto.objects.filter(Q(codigobarras_producto=codigobarras)|Q(codigoestilo_producto=codigoEstilo) | Q(marca_id_marca=marca_int) | Q(estilo_idestilo=estilo_int )| Q(tipo_producto_idtipo_producto=tipo_int) | Q(talla_idtalla=talla_int) | Q(color_idcolor=color_int) | Q(genero_idgener=genero_int),inventarioproducto__detalleventa__venta_idventa__es_cotizacion=0,inventarioproducto__detalleventa__venta_idventa__estado_venta=1).values('pk','nombre_producto','codigobarras_producto','codigoestilo_producto','marca_id_marca__nombre_marca','tipo_producto_idtipo_producto__nombre_tipoproducto','talla_idtalla__nombre_talla','color_idcolor__nombre_color','genero_idgener__nombre_genero','estilo_idestilo__nombre_estilo').annotate(cantidad_vendida=Sum('inventarioproducto__detalleventa__cantidad_venta'),total_ventas=Sum('inventarioproducto__detalleventa__valor_parcial_venta'))
-        if not productos:
-            productos=Producto.objects.filter(inventarioproducto__detalleventa__venta_idventa__es_cotizacion=0,inventarioproducto__detalleventa__venta_idventa__estado_venta=1).values('pk',
-                                                    'nombre_producto',
-                                                    'codigobarras_producto',
-                                                    'codigoestilo_producto',
-                                                    'marca_id_marca__nombre_marca',
-                                                    'tipo_producto_idtipo_producto__nombre_tipoproducto',
-                                                    'talla_idtalla__nombre_talla',
-                                                    'color_idcolor__nombre_color',
-                                                    'genero_idgener__nombre_genero',
-                                                    'estilo_idestilo__nombre_estilo').annotate(cantidad_vendida=Sum('inventarioproducto__detalleventa__cantidad_venta'),total_ventas=Sum('inventarioproducto__detalleventa__valor_parcial_venta'))
+        #productos=Producto.objects.filter(Q(codigobarras_producto=codigobarras)|Q(codigoestilo_producto=codigoEstilo) | Q(marca_id_marca=marca_int) | Q(estilo_idestilo=estilo_int )| Q(tipo_producto_idtipo_producto=tipo_int) | Q(talla_idtalla=talla_int) | Q(color_idcolor=color_int) | Q(genero_idgener=genero_int),inventarioproducto__detalleventa__venta_idventa__es_cotizacion=0,inventarioproducto__detalleventa__venta_idventa__estado_venta=1).values('pk','nombre_producto','codigobarras_producto','codigoestilo_producto','marca_id_marca__nombre_marca','tipo_producto_idtipo_producto__nombre_tipoproducto','talla_idtalla__nombre_talla','color_idcolor__nombre_color','genero_idgener__nombre_genero','estilo_idestilo__nombre_estilo').annotate(cantidad_vendida=Sum('inventarioproducto__detalleventa__cantidad_venta'),total_ventas=Sum('inventarioproducto__detalleventa__valor_parcial_venta'))
+        #if not productos:
+        #    productos=Producto.objects.filter(inventarioproducto__detalleventa__venta_idventa__es_cotizacion=0,inventarioproducto__detalleventa__venta_idventa__estado_venta=1).values('pk',
+        #                                            'nombre_producto',
+        #                                            'codigobarras_producto',
+        #                                            'codigoestilo_producto',
+        #                                            'marca_id_marca__nombre_marca',
+        #                                            'tipo_producto_idtipo_producto__nombre_tipoproducto',
+        #                                            'talla_idtalla__nombre_talla',
+        #                                            'color_idcolor__nombre_color',
+        #                                            'genero_idgener__nombre_genero',
+        #                                            'estilo_idestilo__nombre_estilo').annotate(cantidad_vendida=Sum('inventarioproducto__detalleventa__cantidad_venta'),total_ventas=Sum('inventarioproducto__detalleventa__valor_parcial_venta'))
 
         nuevos_productos=ValuesQuerySetToDict(productos)
         #Creamos el libro de trabajo
