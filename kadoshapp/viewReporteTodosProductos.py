@@ -85,7 +85,7 @@ def productos_lista(request):
         #form_producto=Form_Busqueda_Producto()
         reporte1=TodosProductosTabla(resultado_caracteristicas)
         RequestConfig(request).configure(reporte1)
-        return render(request,'kadoshapp/ReporteProductos.html',{'reporte1':reporte1,'form_producto':form_producto})
+        return render(request,'kadoshapp/ReporteTodosProductos.html',{'reporte1':reporte1,'form_producto':form_producto})
     else:
         form_producto=Form_Busqueda_Producto()
         consulta=Producto.objects.filter(estado_producto=1).values('pk','nombre_producto','codigobarras_producto','codigoestilo_producto','marca_id_marca__nombre_marca','tipo_producto_idtipo_producto__nombre_tipoproducto','talla_idtalla__nombre_talla','color_idcolor__nombre_color','genero_idgener__nombre_genero','estilo_idestilo__nombre_estilo','inventarioproducto__bodega_idbodega__nombre_bodega','inventarioproducto__existencia_actual')
