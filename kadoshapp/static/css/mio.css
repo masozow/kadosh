@@ -1,0 +1,30 @@
+.tabs .indicator {
+  background-color:#1de9b6;
+}
+/*voy a probar lo del nav en todo el contenido*/
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.wrapper2 {
+  width: 100%;
+}
+header {
+  width: 100%;
+  position: fixed;
+  z-index: 20;
+}
+
+}
+nav {
+  float: left; /* Desplazamos el nav hacia la izquierda */
+}
+.contenido2 {
+  padding-top: 115px;
+}
+table{
+  background-color: white;
+  opacity: 0.5;
+
+}
