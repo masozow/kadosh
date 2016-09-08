@@ -19,6 +19,7 @@ from .models import *
 # Creat your views here.
 def inicio(request):
     infoindex=Index.objects.filter(pk=1)
-    fotosindex=IndexHasFotografia.objects.filter(index_idindex=infoindex).values('fotografia_idfotografia__pk','fotografia_idfotografia__ruta_fotografia','ubicacion_fotografiaindex')
-    return render(request,'kadoshapp/WEBindex.html',{'infoindex':infoindex,'fotosindex':fotosindex})
+    fotosslide=IndexHasFotografia.objects.filter(index_idindex=infoindex,ubicacion_fotografiaindex=0).values('fotografia_idfotografia__pk','fotografia_idfotografia__ruta_fotografia')
+    fotosinfo=IndexHasFotografia.objects.filter(index_idindex=infoindex,ubicacion_fotografiaindex=1).values('fotografia_idfotografia__pk','fotografia_idfotografia__ruta_fotografia')
+    return render(request,'kadoshapp/WEBindex.html',{'infoindex':infoindex,'fotosslide':fotosslide,'fotosinfo':fotosinfo})
     #{% fotosindex.fotografia_idfotografia__ruta_fotografia %}
