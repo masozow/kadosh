@@ -1,25 +1,109 @@
-<!DOCTYPE hmtl>
-    {% extends 'blog/base.html' %}
-<hmtl>
-<head><!--cabeceras-->
-  <meta charset="utf-8">
-  <title> Kadosh Inicio</title><!--Titulo de la pagina-->
-        <!--Font de google+iconos-->
-        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <!--materialize.css-->
-        <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-        <link type="text/css" rel="stylesheet" href="css/mio.css"/>
-        <!--Para movil-->
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <style type="text/css">
+<!--DOCTYPE hmtl-->
+{% extends 'kadoshapp/WEBbase.html' %}
+
 h3 {
     text-shadow: 2px 2px #212121;
 }
-  </style>
-</head>
-<body class="grey lighten-4">
-<!--Nav principal-->
-    {% block content %}
-    {% endblock %}
-</body>
-</html>
+{% block content %}
+
+<section class="contenido2 wrapper2"><!--Contenido de la pagina-->
+<!--Slider de imagenes-->
+<div>
+  <div class="slider">
+    <ul class="slides">
+      <li>
+        <img src="imagenes/1.jpg"> <!-- random image -->
+        <div class="caption center-align">
+          <h3>Moda para damas</h3>
+        <!--  <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>-->
+        </div>
+      </li>
+      <li>
+        <img src="imagenes/2.jpg"> <!-- random image -->
+        <div class="caption left-align">
+          <h3>Articulos para caballero</h3>
+        <!--  <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>-->
+        </div>
+      </li>
+      <li>
+        <img src="imagenes/3.jpg"> <!-- random image -->
+        <div class="caption right-align">
+          <h3>Ropa para todas las edades</h3>
+          <!--<h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>-->
+        </div>
+      </li>
+      <li>
+        <img src="imagenes/4.jpg"> <!-- random image -->
+        <div class="caption center-align">
+          <h3>Moda de niños</h3>
+        <!--  <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>-->
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+<!--Fin de Slider-->
+
+<!--Seccion Acerca de...-->
+
+  <div class="section white">
+    <div class="row container">
+      <!--h2 class="header">Kadosh...</h2-->
+      <!--p class="grey-text text-darken-3 lighten-3"> Información acerca de la boutique, se puede colocar todo lo que quieran....</p-->
+    </div>
+  </div>
+<!--Fin seccion acerca de...-->
+
+
+
+<!--Seccion de noticias o articulos nuevos-->
+<div class="row">
+
+  <div class=" col s12 l4 m4">
+      <div class="card hoverable">
+        <div class="card-image">
+          <img src="imagenes/5.jpg" class="  materialboxed" width="650" height="300">
+          <span class="card-title">Card Title</span>
+        </div>
+
+        <div class="card-action">
+          <a href="#">This is a link</a>
+        </div>
+      </div>
+    </div>
+
+  <div class=" col s12 l4 m4">
+      <div class="card hoverable">
+        <div class="card-image">
+          <img src="imagenes/r1.jpg" class=" materialboxed" width="650" height="300">
+          <span class="card-title">Card Title</span>
+        </div>
+        <div class="card-action">
+          <a href="#">This is a link</a>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class=" col s12 l4 m4">
+        <div class="card hoverable">
+          <div class="card-image" >
+            <img src="imagenes/4.jpg" class=" materialboxed" width="650" height="300">
+            <span class="card-title">Card Title</span>
+          </div>
+
+          <div class="card-action">
+            <a href="#">This is a link</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+<!--Fin de seccion de noticas-->
+
+<section><!--Fin de seccion de contenido-->
+
+
+{% endblock %}
