@@ -1,6 +1,6 @@
 from django.conf.urls import include, url
 from . import views
-from . import ViewProducto,ViewTrabajador,viewReporteProductos,viewModificarCliente,viewAsignarCaja,viewListadoProductos,viewBusquedaMercaderia,viewPrecios,viewCliente, viewIngresoMercaPorProveedor, viewCompra, viewPuntodeVenta, viewTrasladoMercaderia, viewCierreCaja, viewAnularVenta, viewInventario, viewPromocion,viewEmpleados, viewCotizacion,viewModificarVenta,viewReporteCompras,viewReporteComprasExcel,viewResumenes,viewReporteCompraEspecifica,viewReporteCompraEspecificaExcel,viewReporteTodosProductos,viewReporteTodosProductosExcel,viewReporteCierreCaja,viewReporteCierreCajaExcel,viewReporteDevolucion,viewReporteDevolucionExcel,viewReporteGastos,viewReporteGastosExcel
+from . import ViewProducto,ViewTrabajador,viewReporteProductos,viewModificarCliente,viewAsignarCaja,viewListadoProductos,viewBusquedaMercaderia,viewPrecios,viewCliente, viewIngresoMercaPorProveedor, viewCompra, viewPuntodeVenta, viewTrasladoMercaderia, viewCierreCaja, viewAnularVenta, viewInventario, viewPromocion,viewEmpleados, viewCotizacion,viewModificarVenta,viewReporteCompras,viewReporteComprasExcel,viewResumenes,viewReporteCompraEspecifica,viewReporteCompraEspecificaExcel,viewReporteTodosProductos,viewReporteTodosProductosExcel,viewReporteCierreCaja,viewReporteCierreCajaExcel,viewReporteDevolucion,viewReporteDevolucionExcel,viewReporteGastos,viewReporteGastosExcel,viewWebInicio
 from . import viewTablas
 from . import viewReporteClientes,viewReporteClientesExcel
 from . import ViewReporteVentas, ViewReporteVentasExcel
@@ -10,8 +10,8 @@ url(r'^sistema/$','django.contrib.auth.views.login',
 {'template_name':'kadoshapp/login.html'}, name='login'),
 
 url(r'^cerrar/$','django.contrib.auth.views.logout_then_login',name='logout'),
-url(r'^index/kadosh/', views.ingreso_mercaderia, name='ingreso_mercaderia'),
-url(r'^Acceso/Denegado/', views.denegado, name='denegado'),
+url(r'^index/kadosh/$', views.ingreso_mercaderia, name='ingreso_mercaderia'),
+url(r'^Acceso/Denegado/$', views.denegado, name='denegado'),
 url(r'^ingreso/cliente/$', viewCliente.registro_cliente, name='registroCliente'),
 url(r'^Registro/empleado/$', ViewTrabajador.registro_trabajador, name='registro_trabajador'),
 url(r'^Elementos/Producto/$', ViewProducto.CosasProducto, name='Elementos'),
@@ -66,26 +66,35 @@ url(r'^Guardar/Venta/$', viewPuntodeVenta.GuardarVenta, name='GuardarVenta'),
 #url(r'^Reporte/Personas/', viewTablas.persona_lista, name='Rpersonas'),
 url(r'^cotizaciones/$',viewCotizacion.ReporteCotizacion.as_view(), name="reporte_cotizacion_excel"),
 url(r'^reporte_productos_excel/$',viewReporteProductos.ReporteProductos.as_view(), name="reporte_productos_excel"),
-url(r'^Reporte/Productos/', viewTablas.productos_lista, name='Rproductos'),
+url(r'^Reporte/Productos/$', viewTablas.productos_lista, name='Rproductos'),
 
 url(r'^reporte_todosproductos_excel/$',viewReporteTodosProductosExcel.ReporteProductos.as_view(), name="reporte_todosproductos_excel"),
-url(r'^Reporte/TodosProductos/', viewReporteTodosProductos.productos_lista, name='RTodosproductos'),
+url(r'^Reporte/TodosProductos/$', viewReporteTodosProductos.productos_lista, name='RTodosproductos'),
 
 url(r'^reporte_cierrecaja_excel/$',viewReporteCierreCajaExcel.ReporteProductos.as_view(), name="reporte_cierrecaja_excel"),
-url(r'^Reporte/CierreCaja/', viewReporteCierreCaja.cierre_caja, name='RCierrecaja'),
+url(r'^Reporte/CierreCaja/$', viewReporteCierreCaja.cierre_caja, name='RCierrecaja'),
 
 url(r'^reporte_devolucion_excel/$',viewReporteDevolucionExcel.ReporteDevolucion.as_view(), name="reporte_devolucion_excel"),
-url(r'^Reporte/Devolucion/', viewReporteDevolucion.devolucion, name='RDevolucion'),
+url(r'^Reporte/Devolucion/$', viewReporteDevolucion.devolucion, name='RDevolucion'),
 
 url(r'^reporte_gastos_excel/$',viewReporteGastosExcel.ReporteGastos.as_view(), name="reporte_gastos_excel"),
-url(r'^Reporte/Gastos/', viewReporteGastos.gastos, name='RGastos'),
+url(r'^Reporte/Gastos/$', viewReporteGastos.gastos, name='RGastos'),
 
-url(r'^Reporte/Clientes/', viewReporteClientes.Clientes, name='Rclientes'),
-url(r'^Reporte/Compras/', viewReporteCompras.Compras, name='Rcompras'),
+url(r'^Reporte/Clientes/$', viewReporteClientes.Clientes, name='Rclientes'),
+url(r'^Reporte/Compras/$', viewReporteCompras.Compras, name='Rcompras'),
 url(r'^reporte_clientes_excel/$',viewReporteClientesExcel.ReporteCliente.as_view(), name="reporte_clientes_excel"),
-url(r'^Reporte/Ventas/', ViewReporteVentas.Ventas, name='RVentas'),
+url(r'^Reporte/Ventas/$', ViewReporteVentas.Ventas, name='RVentas'),
 url(r'^reporte_ventas_excel/$',ViewReporteVentasExcel.ReporteVentas.as_view(), name="reporte_ventas_excel"),
 url(r'^reporte_compras_excel/$',viewReporteComprasExcel.ReporteCompras.as_view(), name="reporte_compras_excel"),
-url(r'^Reporte/CompraEspecifica/', viewReporteCompraEspecifica.CompraEspecifica, name='Rcompraespecifica'),
+url(r'^Reporte/CompraEspecifica/$', viewReporteCompraEspecifica.CompraEspecifica, name='Rcompraespecifica'),
 #url(r'^reporte_comprasespecificas_excel/$',viewReporteCompraEspecificaExcel.ReporteCompraEspecifica.as_view(), name="reporte_compraespecifica_excel"),
+
+#direcciones del sitio web
+url(r'^$', viewWebInicio.inicio, name='IndexWeb'),
+#url(r'^Noticias/$', viewWebNoticias.noticias, name='NoticiasWeb'),
+#url(r'^Noticias/(?P<pk>[0-9]+)/$', viewWebNoticias.detallenoticias, name='DetalleNoticiasWeb'),
+#url(r'^Productos/$', viewWebProductos.productos, name='ProductosWeb'),
+#url(r'^Productos/(?P<pk>[0-9]+)/$', viewWebProductos.detalleproductos, name='DetalleProductosWeb'),
+#url(r'^Contactanos/$', viewWebContacto.contactanos, name='ContactoWeb'),
+#url(r'^Ofertas/$', viewWebOfertas.ofertas, name='OfertasWeb'),
 ]
