@@ -1,6 +1,6 @@
 from django.conf.urls import include, url
 from . import views
-from . import ViewProducto,ViewTrabajador,viewReporteProductos,viewModificarCliente,viewAsignarCaja,viewListadoProductos,viewBusquedaMercaderia,viewPrecios,viewCliente, viewIngresoMercaPorProveedor, viewCompra, viewPuntodeVenta, viewTrasladoMercaderia, viewCierreCaja, viewAnularVenta, viewInventario, viewPromocion,viewEmpleados, viewCotizacion,viewModificarVenta,viewReporteCompras,viewReporteComprasExcel,viewResumenes,viewReporteCompraEspecifica,viewReporteCompraEspecificaExcel,viewReporteTodosProductos,viewReporteTodosProductosExcel,viewReporteCierreCaja,viewReporteCierreCajaExcel,viewReporteDevolucion,viewReporteDevolucionExcel,viewReporteGastos,viewReporteGastosExcel,viewWebInicio
+from . import ViewProducto,ViewTrabajador,viewReporteProductos,viewModificarCliente,viewAsignarCaja,viewListadoProductos,viewBusquedaMercaderia,viewPrecios,viewCliente, viewIngresoMercaPorProveedor, viewCompra, viewPuntodeVenta, viewTrasladoMercaderia, viewCierreCaja, viewAnularVenta, viewInventario, viewPromocion,viewEmpleados, viewCotizacion,viewModificarVenta,viewReporteCompras,viewReporteComprasExcel,viewResumenes,viewReporteCompraEspecifica,viewReporteCompraEspecificaExcel,viewReporteTodosProductos,viewReporteTodosProductosExcel,viewReporteCierreCaja,viewReporteCierreCajaExcel,viewReporteDevolucion,viewReporteDevolucionExcel,viewReporteGastos,viewReporteGastosExcel,viewWebInicio,viewWebNoticias,viewWebProductos,viewWebConcacto,viewWebOfertas
 from . import viewTablas
 from . import viewReporteClientes,viewReporteClientesExcel
 from . import ViewReporteVentas, ViewReporteVentasExcel
@@ -91,10 +91,13 @@ url(r'^Reporte/CompraEspecifica/$', viewReporteCompraEspecifica.CompraEspecifica
 
 #direcciones del sitio web
 url(r'^$', viewWebInicio.inicio, name='IndexWeb'),
-#url(r'^Noticias/$', viewWebNoticias.noticias, name='NoticiasWeb'),
-#url(r'^Noticias/(?P<pk>[0-9]+)/$', viewWebNoticias.detallenoticias, name='DetalleNoticiasWeb'),
-#url(r'^Productos/$', viewWebProductos.productos, name='ProductosWeb'),
-#url(r'^Productos/(?P<pk>[0-9]+)/$', viewWebProductos.detalleproductos, name='DetalleProductosWeb'),
-#url(r'^Contactanos/$', viewWebContacto.contactanos, name='ContactoWeb'),
-#url(r'^Ofertas/$', viewWebOfertas.ofertas, name='OfertasWeb'),
+url(r'^Noticias/$', viewWebNoticias.noticias, name='NoticiasWeb'),
+url(r'^Noticias/(?P<pk>[0-9]+)/$', viewWebNoticias.detallenoticias, name='DetalleNoticiasWeb'),
+url(r'^Productos/$', viewWebProductos.productos, name='ProductosWeb'),
+url(r'^Productos/(?P<pk>[0-9]+)/$', viewWebProductos.detalleproductos, name='DetalleProductosWeb'),
+url(r'^Productos/Navegar/$', viewWebProductos.avanzar_retroceder_productos, name='NavegarProductosWeb'),
+url(r'^Contactanos/$', viewWebConcacto.contactanos, name='ContactoWeb'),
+url(r'^Ofertas/$', viewWebOfertas.ofertas, name='OfertasWeb'),
+url(r'^Ofertas/(?P<pk>[0-9]+)/$', viewWebOfertas.detalleofertas, name='DetalleOfertas'),
+url(r'^Ofertas/Navegar/$', viewWebOfertas.avanzar_retroceder_productos, name='NavegarOfertasWeb'),
 ]

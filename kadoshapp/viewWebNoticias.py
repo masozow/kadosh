@@ -19,8 +19,8 @@ from .models import *
 
 # Creat your views here.
 def noticias(request):
-    noticias=NoticiaHasFotografias.objects.filter(noticia__estado_noticia=1,vista_previa=1).values('noticia__pk','noticia__momento_publiacion_noticia','noticia__titulo_noticia','noticia__contenido_noticia','fotografia__ruta_fotografia').order_by('noticia__momento_publicacion_noticia')
-    return render(request,'kadoshapp/ingreso_mercaderia.html',{'noticias':noticias})
+    noticias_mostrar=NoticiaHasFotografias.objects.filter(noticia__estado_noticia=1,vista_previa=1).values('noticia__pk','noticia__momento_publiacion_noticia','noticia__titulo_noticia','noticia__contenido_noticia','fotografia__ruta_fotografia').order_by('noticia__momento_publicacion_noticia')
+    return render(request,'kadoshapp/ingreso_mercaderia.html',{'noticias':noticias_mostrar})
 
 
 def detallenoticias(request,pk):
