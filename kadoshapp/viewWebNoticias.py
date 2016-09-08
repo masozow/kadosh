@@ -19,13 +19,13 @@ from .models import *
 
 # Creat your views here.
 def noticias(request):
-    noticias_mostrar=NoticiaHasFotografias.objects.filter(noticia__estado_noticia=1,vista_previa=1).values('noticia__pk','noticia__momento_publiacion_noticia','noticia__titulo_noticia','noticia__contenido_noticia','fotografia__ruta_fotografia').order_by('noticia__momento_publicacion_noticia')
-    return render(request,'kadoshapp/ingreso_mercaderia.html',{'noticias':noticias_mostrar})
+    noticias_mostrar=NoticiaHasFotografia.objects.filter(noticia_idnoticia__estado_noticia=1,vista_previa=1).values('noticia_idnoticia__pk','noticia_idnoticia__momento_publicacion_noticia','noticia_idnoticia__titulo_noticia','noticia_idnoticia__contenido_noticia','fotografia_idfotografia__ruta_fotografia').order_by('noticia_idnotica__momento_publicacion_noticia')
+    return render(request,'kadoshapp/WEBnoticias.html',{'noticias':noticias_mostrar})
 
 
 def detallenoticias(request,pk):
     noticia=Noticia.objects.filter(pk=pk)
-    fotografias=NoticiaHasFotografias.objects.filter(noticia__pk=pk,fotografia__estado_fotografia=1).values('fotografia__pk','fotografia__ruta_fotografia')
-    return render(request,'kadoshapp/ingreso_mercaderia.html',{'noticia':noticia,'fotografias':fotografias})
+    fotografias=NoticiaHasFotografia.objects.filter(noticia_idnoticia__pk=pk,fotografia_idfotografia__estado_fotografia=1).values('fotografia_idfotografia__pk','fotografia_idfotografia__ruta_fotografia')
+    return render(request,'kadoshapp/WEBdetallenoticia.html',{'noticia':noticia,'fotografias':fotografias})
 
 

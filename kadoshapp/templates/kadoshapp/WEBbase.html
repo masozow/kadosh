@@ -40,10 +40,10 @@ h3 {
        <thead>
          <tr>
              <th class=" center-align"> <a class="black-text" href="{% url 'kadoshapp.viewWebInicio.inicio' %}">INICIO</a> </th>
-             <th class=" center-align"> <a class=" black-text" href="noticias.html">LO NUEVO</a></th>
-             <th class=" center-align"> <a class=" black-text" href="productos.html">PRODUCTOS</a></th>
-             <th class=" center-align"> <a class=" black-text" href="contaco.html">CONTACTANOS</a></th>
-             <th class=" center-align"> <a class=" black-text" href="ofertas.html">OFERTAS</a></th>
+             <th class=" center-align"> <a class="black-text" href="{% url 'kadoshapp.viewWebNoticias.noticias' %}">LO NUEVO</a></th>
+             <th class=" center-align"> <a class="black-text" href="{% url 'kadoshapp.viewWebProductos.productos' %}">PRODUCTOS</a></th>
+             <th class=" center-align"> <a class="black-text" href="{% url 'kadoshapp.viewWebConcacto.contactanos' %}">CONTACTANOS</a></th>
+             <th class=" center-align"> <a class="black-text" href="{% url 'kadoshapp.viewWebOfertas.ofertas' %}">OFERTAS</a></th>
          </tr>
        </thead>
      </table>
@@ -55,11 +55,11 @@ h3 {
   </header>
   <div> <!--Barra lateral para moviles-->
     <ul class="side-nav grey darken-4" id="mobile-demo">
-      <li><a class="white-text" href="index.html">Inicio</a></li>
-      <li><a class="white-text" href="noticias.html">Lo Nuevo</a></li>
-      <li><a class="white-text" href="productos.html">Productos</a></li>
-      <li><a class="white-text" href="contaco.html">Contactanos</a></li>
-      <li><a class="white-text" href="ofertas.html">Ofertas</a></li>
+      <li><a class="white-text" href="{% url 'kadoshapp.viewWebInicio.inicio' %}">Inicio</a></li>
+      <li><a class="white-text" href="{% url 'kadoshapp.viewWebNoticias.noticias' %}">Lo Nuevo</a></li>
+      <li><a class="white-text" href="{% url 'kadoshapp.viewWebProductos.productos' %}">Productos</a></li>
+      <li><a class="white-text" href="{% url 'kadoshapp.viewWebConcacto.contactanos' %}">Contactanos</a></li>
+      <li><a class="white-text" href="{% url 'kadoshapp.viewWebOfertas.ofertas' %}">Ofertas</a></li>
     </ul>
   </div>
 

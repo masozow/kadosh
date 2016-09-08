@@ -11,6 +11,7 @@ from django.shortcuts import get_object_or_404
 from .models import *
 #from .tables import *
 #from django.contrib.auth.decorators import login_required, user_passes_test
+from .formWebContacto import *
 from django.db.models import Sum, Count
 #from django.utils import timezone
 #import datetime
@@ -32,4 +33,4 @@ def contactanos(request):
             form_contacto=Form_Contacto() #se obtiene un formulario limpio
     else:
         form_contacto=Form_Contacto() #se obtiene el formulario que vino con el request
-    return render(request, 'kadoshapp/CierreDeCaja.html', {'form_contacto':form_contacto})
+    return render(request, 'kadoshapp/WEBcontacto.html', {'form_contacto':form_contacto})
