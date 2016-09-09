@@ -6,38 +6,20 @@
         text-shadow: 2px 2px #212121;
     }
     <section class="contenido2 wrapper2"><!--Contenido de la pagina-->
+
     <!--Slider de imagenes-->
     <div>
       <div class="slider">
         <ul class="slides">
+        {% for foto in fotosslide %}
           <li>
-            <img src= "" /> <!-- random image -->
-            <div class="caption center-align">
-              <h3>Moda para damas</h3>
-            <!--  <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>-->
-            </div>
-          </li>
-          <li>
-            <img src="{{ fotosslide.fotografia_idfotografia__ruta_fotografia }}"> <!-- random image -->
+            <img src='/archivos{{ foto.fotografia_idfotografia__ruta_fotografia|slice:"1:"}}'> <!-- random image -->
             <div class="caption left-align">
-              <h3>{{ fotosslide.fotografia_idfotografia__nombre_fotografia }}</h3>
+              <h3>{{ foto.fotografia_idfotografia__nombre_fotografia }}</h3>
             <!--  <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>-->
             </div>
           </li>
-          <li>
-            <img src="imagenes/3.jpg"> <!-- random image -->
-            <div class="caption right-align">
-              <h3>Ropa para todas las edades</h3>
-              <!--<h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>-->
-            </div>
-          </li>
-          <li>
-            <img src="imagenes/4.jpg"> <!-- random image -->
-            <div class="caption center-align">
-              <h3>Moda de niños</h3>
-            <!--  <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>-->
-            </div>
-          </li>
+        {% endfor %}
         </ul>
       </div>
     </div>
@@ -47,8 +29,9 @@
 
       <div class="section white">
         <div class="row container">
-            <h2 class="header">{{ infoindex.titulo_index }}</h2>
-            <p>{{ infoindex.parrafo_index }}</p>
+              <h2 class="header">{{ infoindex.first.titulo_index }}</h2>
+              <p>{{ infoindex.first.parrafo_index }}</p>
+            
           <!--h2 class="header">Kadosh...</h2-->
           <!--p class="grey-text text-darken-3 lighten-3"> Información acerca de la boutique, se puede colocar todo lo que quieran....</p-->
         </div>
@@ -63,12 +46,12 @@
       <div class=" col s12 l4 m4">
           <div class="card hoverable">
             <div class="card-image">
-              <img src="imagenes/5.jpg" class="  materialboxed" width="650" height="300">
-              <span class="card-title">Card Title</span>
+              <img src='/archivos{{ fotosinfo.0.fotografia_idfotografia__ruta_fotografia|slice:"1:"}}' class=" materialboxed" width="650" height="400">
+              <!--span class="card-title"></span-->
             </div>
 
             <div class="card-action">
-              <a href="#">This is a link</a>
+              <a href="#">{{ fotosinfo.0.fotografia_idfotografia__nombre_fotografia}}</a>
             </div>
           </div>
         </div>
@@ -76,11 +59,11 @@
       <div class=" col s12 l4 m4">
           <div class="card hoverable">
             <div class="card-image">
-              <img src="imagenes/r1.jpg" class=" materialboxed" width="650" height="300">
-              <span class="card-title">Card Title</span>
+            <img src='/archivos{{ fotosinfo.1.fotografia_idfotografia__ruta_fotografia|slice:"1:"}}' class=" materialboxed" width="650" height="400">
+              <!--span class="card-title"></span-->
             </div>
             <div class="card-action">
-              <a href="#">This is a link</a>
+              <a href="#">{{ fotosinfo.1.fotografia_idfotografia__nombre_fotografia}}</a>
             </div>
           </div>
         </div>
@@ -89,16 +72,15 @@
 
         <div class=" col s12 l4 m4">
             <div class="card hoverable">
-              <div class="card-image" >
-                <img src="imagenes/4.jpg" class=" materialboxed" width="650" height="300">
-                <span class="card-title">Card Title</span>
+              <div class="card-image">
+                <img src='/archivos{{ fotosinfo.2.fotografia_idfotografia__ruta_fotografia|slice:"1:"}}' class=" materialboxed" width="650" height="400">
+                <!--span class="card-title"></span-->
               </div>
-
               <div class="card-action">
-                <a href="#">This is a link</a>
+                <a href="#">{{ fotosinfo.2.fotografia_idfotografia__nombre_fotografia}}</a>
               </div>
             </div>
-          </div>
+        </div>
 
         </div>
 
@@ -106,4 +88,8 @@
 
     <section><!--Fin de seccion de contenido-->
 
+{% endblock %}
+
+{% block extrascripts%}
+ 
 {% endblock %}

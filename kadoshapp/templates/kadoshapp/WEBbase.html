@@ -40,7 +40,7 @@ h3 {
        <thead>
          <tr>
              <th class=" center-align"> <a class="black-text" href="{% url 'kadoshapp.viewWebInicio.inicio' %}">INICIO</a> </th>
-             <th class=" center-align"> <a class="black-text" href="{% url 'kadoshapp.viewWebNoticias.noticias' %}">LO NUEVO</a></th>
+             <th class=" center-align"> <a class="black-text" href="{% url 'kadoshapp.viewWebNoticias.noticias' %}">NOTICIAS</a></th>
              <th class=" center-align"> <a class="black-text" href="{% url 'kadoshapp.viewWebProductos.productos' %}">PRODUCTOS</a></th>
              <th class=" center-align"> <a class="black-text" href="{% url 'kadoshapp.viewWebConcacto.contactanos' %}">CONTACTANOS</a></th>
              <th class=" center-align"> <a class="black-text" href="{% url 'kadoshapp.viewWebOfertas.ofertas' %}">OFERTAS</a></th>
@@ -56,7 +56,7 @@ h3 {
   <div> <!--Barra lateral para moviles-->
     <ul class="side-nav grey darken-4" id="mobile-demo">
       <li><a class="white-text" href="{% url 'kadoshapp.viewWebInicio.inicio' %}">Inicio</a></li>
-      <li><a class="white-text" href="{% url 'kadoshapp.viewWebNoticias.noticias' %}">Lo Nuevo</a></li>
+      <li><a class="white-text" href="{% url 'kadoshapp.viewWebNoticias.noticias' %}">Noticias</a></li>
       <li><a class="white-text" href="{% url 'kadoshapp.viewWebProductos.productos' %}">Productos</a></li>
       <li><a class="white-text" href="{% url 'kadoshapp.viewWebConcacto.contactanos' %}">Contactanos</a></li>
       <li><a class="white-text" href="{% url 'kadoshapp.viewWebOfertas.ofertas' %}">Ofertas</a></li>
@@ -95,8 +95,9 @@ h3 {
 <!--Fin de Footer-->
 
 <!--Importacion de script jQuery y materialize.js-->
-<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script type="text/javascript" src="js/materialize.min.js"></script>
+<script type="text/javascript"  src= "{% static 'js/jquery-3.1.0.min.js' %}"></script>
+ <!--'https://code.jquery.com/jquery-2.1.1.min.js'-->
+<script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
 <!--para activar boton movil en cel-->
 <script type="text/javascript" >
  $(".button-collapse").sideNav();
@@ -113,7 +114,8 @@ $(document).ready(function(){
     $('.materialboxed').materialbox();
   });
 </script>
-
+{% block extrascripts%}
+{% endblock %}
 
 
 </body>
