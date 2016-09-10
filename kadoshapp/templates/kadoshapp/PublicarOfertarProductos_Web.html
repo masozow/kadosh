@@ -1,0 +1,211 @@
+{% extends 'kadoshapp/base.html' %}
+{% load staticfiles %}
+{% block titulo %}
+Listado Productos
+{% endblock %}
+<!--se añadió la fila anterior-->
+    {% block styles %}
+      <link type="text/css" rel="stylesheet" href="{% static "css/formularios.css" %}"/>
+    {% endblock %}
+      {% block encabezado %}Listado Productos{% endblock %}
+    {% block content %}
+    <form method="POST" class="post-form">
+      {% csrf_token %}
+
+
+<div class="row" style="margin-bottom: 0px;">
+  <h6> Producto</h6>
+    <div class="col l6 s12 m12">
+    <label for="codigobarras_producto"><h6>Codigo de barras:</h6> </label>{{ form_producto.codigobarras_producto}}
+    </div>
+    <div class="col l6 s12 m12">
+      <input class="filled-in" id="check_mostrar" name="mostrar_check" type="checkbox" />
+      <label style="font-size: 80%" for="check_mostrar"><h6>Características del producto</h6></label>
+    </div>
+</div>
+<div class="divider"></div>
+<div class="row" style="margin-bottom: 0px;">
+  <div id="bloque_caracteristicas_producto">
+    <div class="col l6 s12 m12">
+      <label for="id_marca_id_marca"><h6>Marca:</h6> </label>{{ form_producto.marca_id_marca}}
+      <label for="id_genero_idgener"><h6>Genero:</h6> </label>{{ form_producto.genero_idgener}}
+      <label for="id_color_idcolor"><h6>Color:</h6> </label>{{ form_producto.color_idcolor}}
+      <label for="id_estilo_idestilo"><h6>Estilo:</h6> </label>{{ form_producto.estilo_idestilo}}
+    </div>
+    <div class="col l6 s12 m12">
+      <label for="id_codigoestilo_producto"><h6>Código de estilo:</h6> </label>{{ form_producto.codigoestilo_producto}}
+      <label for="id_talla_idtalla"><h6>Talla:</h6> </label>{{ form_producto.talla_idtalla}}
+      <label for="id_tipo_producto_idtipo_producto"><h6>Tipo:</h6> </label>{{form_producto.tipo_producto_idtipo_producto}}
+      <br/>
+      <input class="save btn btn-default" id="boton_buscar_caracteristicas" type="button" onclick="buscar_caracteristicas(this)" value="Buscar" name="btn_buscar_caracteristicas"/>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+      <div class="row" style="margin-bottom: 0px;">
+        <h5>Productos</h5>
+          <div class="grey lighten-2">
+          <table id="tabla_productos">
+            <thead>
+              <tr>
+                  <th data-field="Cod">Cod</th>
+                  <th data-field="Producto">Producto</th>
+                  <th data-field="Codigo estilo">Codigo estilo</th>
+                  <th data-field="Codigo Barras">Codigo Barras</th>
+                  <th data-field="Marca">Marca</th>
+                  <th data-field="Precio">Precio</th>
+                  <!--th data-field="Sucursal">Sucursal</th-->
+                  <th data-field="Bodega">Bodega</th>
+                  <th data-field="Existencia">Existencia</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+      </div>
+  </form>
+
+
+    {% endblock %}
+
+    {% block extra_scripts %}
+    <script type="text/javascript" src="{% static 'js/funciones.js' %}"></script>
+    <script type="text/javascript">
+
+    /*Espacio para JQuery y busquedas dentro del DOM
+    ===========================================================================*/
+
+      //Es importante colocar esta linea antes de llamar a las funciones de busqueda
+      //dentro de dropdown, porque obtiene el estado por defecto del dropdown, asi
+      //se puede resetear. Hay que hacerlo con cada dropdown donde se busque.
+       var selectClienteDefault = $("#id_cliente_idcliente").html();
+       var selectPromocionDefault = $("#id_promocion_idpromocion").html();
+       var marcaDefault = $("#id_marca_id_marca").html();
+       var estiloDefault = $("#id_estilo_idestilo").html();
+       var tipoDefault = $("#id_tipo_producto_idtipo_producto").html();
+       var tallaDefault = $("#id_talla_idtalla").html();
+       var colorDefault = $("#id_color_idcolor").html();
+       var generoDefault = $("#id_genero_idgener").html();
+
+       //Obteniendo el estado inicial del Body, excluyendo dos DropDown
+//       var estado_inicial_cuerpo;
+
+
+        //Similar al FormLoad
+        $( document ).ready(function(){ //document indica toda la página, ready indica que ya se haya cargado el DOM
+          //Función que coloca el cursor en el textbox Nit del cliente, al momento de cargar la página
+          $('#bloque_caracteristicas_producto').hide(); //.hide() oculta el elemento con ese id
+          //$('input[type="checkbox"]').addClass("filled-in").addClass("filled-in"); //necesario para que se vean los checkbox
+          //$('#id_producto_codigo_producto').empty();
+//          estado_inicial_cuerpo=$("#formulario_venta").html();//$("#formulario_venta").clone().children('#id_bodega_idbodega').remove().children('#id_caja_idcaja').remove().end();
+          //$('id_caja_idcajaselect').material_select();
+        });
+
+        //var cantidadDefault= $("input#id_cantidad_venta").html();
+
+        //Para que funcione el boton de eliminar producto
+        function eliminar_fila(button){
+          $('#tabla_productos').on('click', '#boton_eliminar', function(){
+              $(this).closest ('tr').remove ();
+              sumar_valor_parcial(".suma_valor_parcial",'#id_total_venta');
+          });
+        }
+
+        //Funcion que oculta o muestra el elemento con el id del 2do parametro,
+        //al dar clic en el checkbox con el id del primer parametro
+        //aqui se envia el primer id como parametro sin #, solo el primero
+        click_ocultar_mostrar('check_mostrar',"#bloque_caracteristicas_producto");
+
+        //Función que realiza una acción al leer código de barras
+        $( 'input#id_codigobarras_producto' ).keydown(function(e){
+          var keyCode = e.keyCode || e.which; //la propiedad wich indica la tecla o el botón que se ha presionado específicamente
+                                              //puede ser del teclado o del mouse, normaliza dos eventos: event.keyCode y event.charCode
+          if(e.keyCode==13)
+          {
+            e.preventDefault();
+            obtener_producto('input#id_codigobarras_producto');
+            //Enviar como parametro el id del elemento txtBox, y el id del dropdown de bodega
+            //Importante editar tambien el "data :" en la definicion de la funcion
+          }
+        });
+
+        function buscar_caracteristicas(boton){
+          obtener_producto_caracteristicas('#id_codigoestilo_producto','#id_bodega_idbodega','#id_marca_id_marca','#id_tipo_producto_idtipo_producto','#id_talla_idtalla','#id_estilo_idestilo','#id_color_idcolor','#id_genero_idgener');
+        }
+
+        /*Espacio para Ajax
+        ============================================================================*/
+
+        function obtener_producto(codigo_buscado) {
+            $.ajax({
+                url : "/Buscar/TodosProductosExtra/", // La URL que llama a la vista
+                type : "POST", // Metodo http para realizar el request (peticion al servidor)
+                data : { codigobarras_producto : $(codigo_buscado).val()}, // Datos enviados con el request en formato JSON
+
+                // Si el response es correcto (si la respuesta del servidor es correcta)
+                success : function(json) {
+                    //console.log(json.recibido);
+                    $(codigo_buscado).val(''); // Se limpia el campo del codigo del producto
+                    //var res_valorprod=JSON.parse(json);
+                    $("#tabla_productos > tbody").html("");
+                    $.each(json, function(key,value) {
+                    $('#tabla_productos > tbody:last-child').append('<tr>'+
+                                                                    '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.pk+'</td>'+
+                                                                    '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.nombre_producto+'-'+value.genero_idgener__nombre_genero+' ['+value.talla_idtalla__nombre_talla+'] '+value.color_idcolor__nombre_color+'-'+value.estilo_idestilo__nombre_estilo+'</td>'+
+                                                                    '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.codigoestilo_producto+'</td>'+
+                                                                    '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.codigobarras_producto+'</td>'+
+                                                                    '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.marca_id_marca__nombre_marca+'</td>'+
+                                                                    '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.precio__valor_precio+'</td>'+
+                                                                    '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.inventarioproducto__bodega_idbodega__nombre_bodega+'</td>'+
+                                                                    '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.inventarioproducto__existencia_actual+'</td>'+
+                                                                   '</tr>')
+                    });
+
+
+                },
+                // Si el response no tuvo exito
+                error : function(xhr,errmsg,err) {
+                    $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Ha ocurrido un error: "+errmsg+
+                        " <a href='#' class='close'>&times;</a></div>"); // Se agrega el error al DOM
+                    console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
+                }
+            });
+        };
+
+
+        function obtener_producto_caracteristicas(codigo_estilo_buscar,bodega_que_vende,marca_buscar,tipo_buscar,talla_buscar,estilo_buscar,color_buscar,genero_buscar) {
+            $.ajax({
+                url : "/Buscar/TodosProductosCaracteristicasExtra/", // La URL que llama a la vista
+                type : "POST", // Metodo http para realizar el request (peticion al servidor)
+                data : { codigo_estilo_producto : $(codigo_estilo_buscar).val(), bodega_idbodega: $(bodega_que_vende+" option:selected").val(), marca_producto: $(marca_buscar+" option:selected").val(), tipo_producto: $(tipo_buscar+" option:selected").val(), estilo_producto: $(estilo_buscar+" option:selected").val(), color_producto: $(color_buscar+" option:selected").val(), talla_producto: $(talla_buscar+" option:selected").val(), genero_producto: $(genero_buscar+" option:selected").val()}, // Datos enviados con el request en formato JSON
+                success : function(json) {
+                  $("#tabla_productos > tbody").html("");
+                  $.each(json, function(key,value) {
+                  $('#tabla_productos > tbody:last-child').append('<tr>'+
+                                                                  '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.pk+'</td>'+
+                                                                  '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.nombre_producto+'-'+value.genero_idgener__nombre_genero+' ['+value.talla_idtalla__nombre_talla+'] '+value.color_idcolor__nombre_color+'-'+value.estilo_idestilo__nombre_estilo+'</td>'+
+                                                                  '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.codigoestilo_producto+'</td>'+
+                                                                  '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.codigobarras_producto+'</td>'+
+                                                                  '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.marca_id_marca__nombre_marca+'</td>'+
+                                                                  '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.precio__valor_precio+'</td>'+
+                                                                  '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.inventarioproducto__bodega_idbodega__nombre_bodega+'</td>'+
+                                                                  '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.inventarioproducto__existencia_actual+'</td>'+
+                                                                  '</tr>')
+                  });
+                },
+
+                error : function(xhr,errmsg,err) {
+                    $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Ha ocurrido un error: "+errmsg+
+                        " <a href='#' class='close'>&times;</a></div>");
+                    console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
+                }
+            });
+        };
+
+
+    </script>
+
+    <script type="text/javascript" src="{% static 'js/selectorStartsWith.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/token.js' %}"></script>
+    {% endblock %}

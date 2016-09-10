@@ -1,6 +1,6 @@
 from django.conf.urls import include, url
 from . import views
-from . import ViewProducto,ViewTrabajador,viewReporteProductos,viewModificarCliente,viewAsignarCaja,viewListadoProductos,viewBusquedaMercaderia,viewPrecios,viewCliente, viewIngresoMercaPorProveedor, viewCompra, viewPuntodeVenta, viewTrasladoMercaderia, viewCierreCaja, viewAnularVenta, viewInventario, viewPromocion,viewEmpleados, viewCotizacion,viewModificarVenta,viewReporteCompras,viewReporteComprasExcel,viewResumenes,viewReporteCompraEspecifica,viewReporteCompraEspecificaExcel,viewReporteTodosProductos,viewReporteTodosProductosExcel,viewReporteCierreCaja,viewReporteCierreCajaExcel,viewReporteDevolucion,viewReporteDevolucionExcel,viewReporteGastos,viewReporteGastosExcel,viewWebInicio,viewWebNoticias,viewWebProductos,viewWebConcacto,viewWebOfertas
+from . import ViewProducto,ViewTrabajador,viewReporteProductos,viewModificarCliente,viewAsignarCaja,viewListadoProductos,viewBusquedaMercaderia,viewPrecios,viewCliente, viewIngresoMercaPorProveedor, viewCompra, viewPuntodeVenta, viewTrasladoMercaderia, viewCierreCaja, viewAnularVenta, viewInventario, viewPromocion,viewEmpleados, viewCotizacion,viewModificarVenta,viewReporteCompras,viewReporteComprasExcel,viewResumenes,viewReporteCompraEspecifica,viewReporteCompraEspecificaExcel,viewReporteTodosProductos,viewReporteTodosProductosExcel,viewReporteCierreCaja,viewReporteCierreCajaExcel,viewReporteDevolucion,viewReporteDevolucionExcel,viewReporteGastos,viewReporteGastosExcel,viewWebInicio,viewWebNoticias,viewWebProductos,viewWebConcacto,viewWebOfertas,viewPublicarOfertarProductos_Web
 from . import viewTablas
 from . import viewReporteClientes,viewReporteClientesExcel
 from . import ViewReporteVentas, ViewReporteVentasExcel
@@ -104,4 +104,5 @@ url(r'^Ofertas/(?P<pk>[0-9]+)/$', viewWebOfertas.detalleofertas, name='DetalleOf
 url(r'^Ofertas/marca/(?P<marca>[0-9]+)/$', viewWebOfertas.ofertasmarca, name='CategoriaMarcaProductosWeb'),
 url(r'^Ofertas/genero/(?P<genero>[0-9]+)/$', viewWebOfertas.ofertasgenero, name='CategoriaGeneroProductosWeb'),
 url(r'^Ofertas/tipo/(?P<tipo>[0-9]+)/$', viewWebOfertas.ofertastipo, name='CategoriaTipoProductosWeb'),
+url(r'^PublicarOfertar/$', viewPublicarOfertarProductos_Web.publicarofertar, name='PublicarOfertarWeb'),
 ]
