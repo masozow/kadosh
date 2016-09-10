@@ -2,9 +2,19 @@ import django_tables2 as tables
 from .models import *
 
 class ProductosTabla(tables.Table):
+    pk=tables.Column(verbose_name= 'Cod') #lo que está a la izquierda del "igual" es el nombre del campo en el modelo, lo qeu esta después de "verbose name" es el nombre que se muestra, es como un alias (como el AS de SQL)
+    nombre_producto=tables.Column(verbose_name= 'Producto')
+    codigobarras_producto=tables.Column(verbose_name= 'CodBarras')
+    codigoestilo_producto=tables.Column(verbose_name= 'CodEstilo')
+    marca_id_marca__nombre_marca=tables.Column(verbose_name= 'Marca')
+    tipo_producto_idtipo_producto__nombre_tipoproducto=tables.Column(verbose_name= 'Tipo')
+    talla_idtalla__nombre_talla=tables.Column(verbose_name= 'Talla')
+    color_idcolor__nombre_color=tables.Column(verbose_name= 'Color')
+    genero_idgener__nombre_genero=tables.Column(verbose_name= 'Género')
+    estilo_idestilo__nombre_estilo=tables.Column(verbose_name= 'Estilo')
+    cantidad_vendida=tables.Column(verbose_name= 'Cantidad Vendida')
+    total_ventas=tables.Column(verbose_name= 'Total Ventas')
     class Meta:
-        model = Producto
-        fields=('pk','nombre_producto','codigobarras_producto','codigoestilo_producto','marca_id_marca__nombre_marca','tipo_producto_idtipo_producto__nombre_tipoproducto','talla_idtalla__nombre_talla','color_idcolor__nombre_color','genero_idgener__nombre_genero','estilo_idestilo__nombre_estilo','cantidad_vendida','total_ventas',)
         attrs = {'class': 'paleblue'}
 
 class CierreTabla(tables.Table):
@@ -57,21 +67,43 @@ class TodosProductosTabla(tables.Table):
         attrs = {'class': 'paleblue'}
 
 class ClientesTabla(tables.Table):
+    cliente_idcliente__pk=tables.Column(verbose_name= 'Cod') #lo que está a la izquierda del "igual" es el nombre del campo en el modelo, lo qeu esta después de "verbose name" es el nombre que se muestra, es como un alias (como el AS de SQL)
+    cliente_idcliente__nit_cliente=tables.Column(verbose_name= 'Nit')
+    cliente_idcliente__persona_idpersona__nombres_persona=tables.Column(verbose_name= 'Nombres')
+    cliente_idcliente__persona_idpersona__apellidos_persona=tables.Column(verbose_name= 'Apellidos')
+    month=tables.Column(verbose_name= 'Mes')
+    total_ventas=tables.Column(verbose_name= 'Total Ventas')
     class Meta:
-        model = Cliente
-        fields=('cliente_idcliente__pk','cliente_idcliente__nit_cliente','cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__persona_idpersona__apellidos_persona','month','total_ventas',)
         attrs = {'class': 'paleblue'}
 
 class VentasTabla(tables.Table):
+    vendedor_venta__persona_idpersona__nombres_persona=tables.Column(verbose_name= 'Nombres vendedor') #lo que está a la izquierda del "igual" es el nombre del campo en el modelo, lo qeu esta después de "verbose name" es el nombre que se muestra, es como un alias (como el AS de SQL)
+    vendedor_venta__persona_idpersona__apellidos_persona=tables.Column(verbose_name= 'Apellidos vendedor')
+    month=tables.Column(verbose_name= 'Mes')
+    total_ventas=tables.Column(verbose_name= 'Total Ventas')
     class Meta:
-        model = Venta
-        fields=('vendedor_venta__persona_idpersona__nombres_persona','vendedor_venta__persona_idpersona__apellidos_persona','month','total_ventas',)
         attrs = {'class': 'paleblue'}
 
 class ComprasTabla(tables.Table):
+    pk=tables.Column(verbose_name= 'Cod') #lo que está a la izquierda del "igual" es el nombre del campo en el modelo, lo qeu esta después de "verbose name" es el nombre que se muestra, es como un alias (como el AS de SQL)
+    proveedor_idproveedor=tables.Column(verbose_name= 'Proveedor')
+    tipo_pago_idtipo_pago=tables.Column(verbose_name= 'Tipo de pago')
+    estado_compra=tables.Column(verbose_name= 'Estado de la compra')
+    fecha_compra=tables.Column(verbose_name= 'Fecha en sistema')
+    total_compra=tables.Column(verbose_name= 'Total')
+    entregada_compra=tables.Column(verbose_name= 'Entregada')
+    contado_compra=tables.Column(verbose_name= 'Se pagó al contado')
+    empleado_idempleado=tables.Column(verbose_name= 'Empleado registró compra')
+    numero_guia=tables.Column(verbose_name= 'No. de guía')
+    vrf_compra=tables.Column(verbose_name= 'VRF')
+    fecha_recepcion_compra=tables.Column(verbose_name= 'Fecha recepción mercadería')
+    fecha_ralizacion_compra=tables.Column(verbose_name= 'Fecha factura compra')
+    casa_matriz=tables.Column(verbose_name= 'Casa matriz')
+    empleado_recibio=tables.Column(verbose_name= 'Empleado recibió mercadería')
+    empleado_reviso=tables.Column(verbose_name= 'Empleado revisó mercadería')
+    numero_invoice=tables.Column(verbose_name= 'No. Invoice')
+    numero_factura=tables.Column(verbose_name= 'No. Factura')
     class Meta:
-        model = Compra
-        #fields=('vendedor_venta__persona_idpersona__nombres_persona','vendedor_venta__persona_idpersona__apellidos_persona','month','total_ventas',)
         attrs = {'class': 'paleblue'}
 
 

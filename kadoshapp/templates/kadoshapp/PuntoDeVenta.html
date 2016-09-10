@@ -443,6 +443,27 @@
     /*Espacio para Ajax
     ============================================================================*/
 
+        function obtener_imagen_producto(producto_buscar,destino_imagen) {
+            $.ajax({
+                url : "/Buscar/ImagenProducto/", // La URL que llama a la vista
+                type : "POST", // Metodo http para realizar el request (peticion al servidor)
+                data : { codigo_producto : $(producto_buscar+' option:selected').val()}, // Datos enviados con el request en formato JSON
+                success : function(json) {
+                  try {
+                      $(destino_imagen).attr("src", "../../archivos"+json[0].fotografia_idfotografia__ruta_fotografia.substr(1));
+                  }
+                  catch(err) {
+                  }
+                },
+                error : function(xhr,errmsg,err) {
+                    $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Ha ocurrido un error: "+errmsg+
+                        " <a href='#' class='close'>&times;</a></div>");
+                    console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
+                }
+            });
+        };
+
+
         function obtener_producto(codigo_buscado,bodega_que_vende) {
             $.ajax({
                 url : "/Buscar/Producto/", // La URL que llama a la vista
@@ -481,8 +502,16 @@
                         " <a href='#' class='close'>&times;</a></div>"); // Se agrega el error al DOM
                     console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
                 }
+            }).done(function( data ) {
+              obtener_imagen_producto("#id_producto_codigo_producto","#imagen_producto");
+              //console.log('terminado el ajax');
+              $("#id_producto_codigo_producto").bind('change', function() {
+                //console.log('buscando la imagen');
+                  obtener_imagen_producto("#id_producto_codigo_producto","#imagen_producto");
+              });
             });
         };
+        
 
 
         function obtener_producto_caracteristicas(codigo_estilo_buscar,bodega_que_vende,marca_buscar,tipo_buscar,talla_buscar,estilo_buscar,color_buscar,genero_buscar) {
@@ -508,6 +537,7 @@
                     console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
                 }
             }).done(function( data ) {
+              obtener_imagen_producto("#id_producto_codigo_producto","#imagen_producto");
               //console.log('terminado el ajax');
               $("#id_producto_codigo_producto").bind('change', function() {
                 //console.log('buscando la imagen');
@@ -516,24 +546,7 @@
             });
         };
 
-        function obtener_imagen_producto(producto_buscar,destino_imagen) {
-            $.ajax({
-                url : "/Buscar/ImagenProducto/", // La URL que llama a la vista
-                type : "POST", // Metodo http para realizar el request (peticion al servidor)
-                data : { codigo_producto : $(producto_buscar+' option:selected').val()}, // Datos enviados con el request en formato JSON
-                success : function(json) {
-                  var res_fotografia=JSON.parse(json.fotografia);
-                  var campos_fotografia=res_fotografia[0].fields;
-                  $(destino_imagen).attr("src", "../../archivos"+campos_fotografia.ruta_fotografia.substr(1));
-                },
-
-                error : function(xhr,errmsg,err) {
-                    $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Ha ocurrido un error: "+errmsg+
-                        " <a href='#' class='close'>&times;</a></div>");
-                    console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
-                }
-            });
-        };
+        
 
         var resul_venta=0; //aquí se guarda el id del resultado de la venta, es importante no borrarlo, porque esto se le envía al archivo de excel
         function guardar_venta(arreglo_tabla) {

@@ -1,9 +1,23 @@
+/* Override a los Rows de materialize
+============================================================================*/
 .row{
-  /* Override a los Rows de materialize
-  ============================================================================*/
   margin-bottom: 0px !important;
 }
 
+textarea{
+  background-color: #FFFFFF !important;
+}
+
+/* Mi clase para etiquetas de código
+============================================================================*/
+.mietiqueta{
+  font-size: 130%;
+  background-color:#1f1f14;
+  color:#ebebe0;
+  padding-right:3px;
+  padding-left:3px;
+  border-radius:3px;
+}
 
 /* Divisor vertical
 ============================================================================*/

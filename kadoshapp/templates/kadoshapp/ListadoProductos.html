@@ -148,7 +148,7 @@ Listado Productos
                     //console.log(json.recibido);
                     $(codigo_buscado).val(''); // Se limpia el campo del codigo del producto
                     //var res_valorprod=JSON.parse(json);
-                    $("#tabla_empleados > tbody").html("");
+                    $("#tabla_productos > tbody").html("");
                     $.each(json, function(key,value) {
                     $('#tabla_productos > tbody:last-child').append('<tr>'+
                                                                     '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.pk+'</td>'+
@@ -180,11 +180,11 @@ Listado Productos
                 type : "POST", // Metodo http para realizar el request (peticion al servidor)
                 data : { codigo_estilo_producto : $(codigo_estilo_buscar).val(), bodega_idbodega: $(bodega_que_vende+" option:selected").val(), marca_producto: $(marca_buscar+" option:selected").val(), tipo_producto: $(tipo_buscar+" option:selected").val(), estilo_producto: $(estilo_buscar+" option:selected").val(), color_producto: $(color_buscar+" option:selected").val(), talla_producto: $(talla_buscar+" option:selected").val(), genero_producto: $(genero_buscar+" option:selected").val()}, // Datos enviados con el request en formato JSON
                 success : function(json) {
-                  $("#tabla_empleados > tbody").html("");
+                  $("#tabla_productos > tbody").html("");
                   $.each(json, function(key,value) {
                   $('#tabla_productos > tbody:last-child').append('<tr>'+
                                                                   '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.pk+'</td>'+
-                                                                  '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.nombre_producto+'</td>'+
+                                                                  '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.nombre_producto+'-'+value.genero_idgener__nombre_genero+' ['+value.talla_idtalla__nombre_talla+'] '+value.color_idcolor__nombre_color+'-'+value.estilo_idestilo__nombre_estilo+'</td>'+
                                                                   '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.codigoestilo_producto+'</td>'+
                                                                   '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.codigobarras_producto+'</td>'+
                                                                   '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.marca_id_marca__nombre_marca+'</td>'+

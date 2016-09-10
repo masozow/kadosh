@@ -57,15 +57,17 @@
             <br/>
             <input class="save btn btn-default" id="boton_buscar_caracteristicas" type="button" onclick="buscar_caracteristicas(this)" value="Buscar" name="btn_buscar_caracteristicas"/>
           </div>
-            <div  class="col l9 m12 s12">
-              <label for="producto_codigo_producto"><h6>Descripción Producto:</h6> </label>{{ form_InventarioProducto.producto_codigo_producto}}
-              <br/>
-            </div>
-            <div  class="col l3 m12 s12">
-              <br/>
-              <input class="save btn btn-default" id="boton_agregar_producto" type="button" onclick="agregar_producto(this)" value="Agregar" name="btn_agregar_producto"/>
-              <br/>
-            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col l9 m12 s12">
+          <label for="producto_codigo_producto"><h6>Descripción Producto:</h6> </label>{{ form_InventarioProducto.producto_codigo_producto}}
+          <br/>
+        </div>
+        <div  class="col l3 m12 s12">
+          <br/>
+          <input class="save btn btn-default" id="boton_agregar_producto" type="button" onclick="agregar_producto(this)" value="Agregar" name="btn_agregar_producto"/>
+          <br/>
         </div>
       </div>
       <div class="divider"></div>
@@ -199,7 +201,7 @@
          $('#tabla_productos > tbody:last-child').append('<tr>'+
                                                            '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+datos_producto[1]+'</td>'+
                                                            '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+cantidad+'</td>'+
-                                                           '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+datos_producto[2]+'</td>'+
+                                                           '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+datos_producto[2]+'-'+datos_producto[5]+'-'+datos_producto[8]+' ['+datos_producto[6]+'] '+datos_producto[7]+'</td>'+
                                                            '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+datos_producto[4]+'</td>'+
                                                            '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;"> <input id="boton_eliminar" "type="button" onclick="eliminar_fila(this)" value="Eliminar" name="Eliminar" style="text-align: center; margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;"/> </td>'+
                                                          '</tr>');
@@ -219,17 +221,20 @@
                        //console.log(json.recibido);
                        $(codigo_buscado).val(''); // Se limpia el campo del codigo del producto
                         $.each(json, function(key,value) {
-                       var cantidad=$('input#id_cantidad').val();
-                       var valor_parcial=cantidad*value.precio__valor_precio;
-                       $('#tabla_productos > tbody:last-child').append('<tr>'+
-                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.pk+'</td>'+
-                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+cantidad+'</td>'+
-                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.nombre_producto+'-'+value.marca_id_marca__nombre_marca+'-'+value.genero_idgener__nombre_genero+' ['+value.talla_idtalla__nombre_talla+'] '+value.color_idcolor__nombre_color+'</td>'+
-                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.precio__valor_precio+'</td>'+
-                                                                         '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;"> <input id="boton_eliminar" "type="button" onclick="eliminar_fila(this)" value="Eliminar" name="Eliminar" style="text-align: center; margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;"/> </td>'+
-                                                                       '</tr>');
-                       $('input#id_cantidad_venta').val(1);
-                     });
+                          if(key===0){
+                             var cantidad=$('input#id_cantidad').val();
+                             var valor_parcial=cantidad*value.precio__valor_precio;
+                             $('#tabla_productos > tbody:last-child').append('<tr>'+
+                                                                               '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.pk+'</td>'+
+                                                                               '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+cantidad+'</td>'+
+                                                                               '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.nombre_producto+'-'+value.marca_id_marca__nombre_marca+'-'+value.genero_idgener__nombre_genero+' ['+value.talla_idtalla__nombre_talla+'] '+value.color_idcolor__nombre_color+'</td>'+
+                                                                               '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.precio__valor_precio+'</td>'+
+                                                                               '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;"> <input id="boton_eliminar" "type="button" onclick="eliminar_fila(this)" value="Eliminar" name="Eliminar" style="text-align: center; margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;"/> </td>'+
+                                                                             '</tr>');
+                             $('input#id_cantidad_venta').val(1);
+                          }
+                          $('#id_producto_codigo_producto').append('<option value='+value.pk+'>'+ value.inventarioproducto__pk +'|'+ value.pk +'|'+ value.nombre_producto +'|'+ value.codigoestilo_producto +'|'+ value.precio__valor_precio +'|'+ value.marca_id_marca__nombre_marca +'|'+ value.talla_idtalla__nombre_talla +'|'+ value.color_idcolor__nombre_color+'|'+ value.genero_idgener__nombre_genero +'|'+ value.estilo_idestilo__nombre_estilo +'</option>');
+                      });
                    },
                    // Si el response no tuvo exito
                    error : function(xhr,errmsg,err) {
