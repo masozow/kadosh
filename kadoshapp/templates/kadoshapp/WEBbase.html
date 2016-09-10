@@ -72,22 +72,19 @@ h3 {
           <div class="container">
             <div class="row">
               <div class="col l12 m12 s12 center-align">
-                <h5 class="black-text">Kadosh</h5>
-                <p class="black-text">San Marcos,Guatemala.</p>
+                <h5 class="black-text">Boutique Kadosh</h5>
+                <p class="black-text">San Marcos, Guatemala</p>
               </div>
               <div class="col l12 m12 s12 center-align">
-                <h5 class="black-text">Conectar</h5>
-
-                  <a href="#" class="grey-text"><i class="material-icons">thumb_up</i></a>
-                  <a href="#" class="grey-text"><i class="material-icons  ">comment</i></a>
-                  <a href="#" class="grey-text"><i class="material-icons  ">video_library</i></a>
-
+                <h6 class="black-text">Conéctate con nosotros</h6>
+                <a href="https://www.facebook.com">
+                  <img class="responsive-img" src="{% static "imagenes/facebook-box.png" %}"></a>
               </div>
             </div>
           </div>
           <div class="footer-copyright white">
             <div class="container black-text center-align">
-            © 2016 Copyright Text
+            © 2016 Derechos reservados
 
             </div>
           </div>
@@ -113,6 +110,12 @@ $(document).ready(function(){
 $(document).ready(function(){
     $('.materialboxed').materialbox();
   });
+</script>
+<!--Funcion carousel-->
+<script type="text/javascript">
+ $(document).ready(function(){
+      $('.carousel').carousel();
+    });
 </script>
 {% block extrascripts%}
 {% endblock %}

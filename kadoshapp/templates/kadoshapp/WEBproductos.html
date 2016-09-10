@@ -6,165 +6,99 @@ h3{
 }
 <section class="contenido2 wrapper2"><!--Contenido de la pagina-->
 
-  <div class="row"><!--row seccion de login-->
+  <div class="row"><!--row seccion panel izquierdo-->
     <div class=" col l3 s12 m3">
-   <div class="card ">
-        <div class="card-content ">
-          <div class="row">
-              <form class="col s12">
-                <div class="row">
-                  <div class="input-field col s12">
-                    <i class="material-icons prefix">account_circle</i>
-                    <input id="icon_prefix" type="text" class="validate">
-                    <label for="icon_prefix">Usuario</label>
+     <div class="card ">
+          <div class="card-content ">
+            <!--Inicio del login-->
+            <!--div class="row"> 
+                <form class="col s12">
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <i class="material-icons prefix">account_circle</i>
+                      <input id="icon_prefix" type="text" class="validate">
+                      <label for="icon_prefix">Usuario</label>
+                    </div>
                   </div>
-                </div>
 
-                <div class="row">
-                  <div class="input-field col s12">
-                    <i class="material-icons prefix">lock_outline</i>
-                    <input id="icon_prefix" type="password" class="validate">
-                    <label for="icon_prefix">Contraseña</label>
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <i class="material-icons prefix">lock_outline</i>
+                      <input id="icon_prefix" type="password" class="validate">
+                      <label for="icon_prefix">Contraseña</label>
+                    </div>
                   </div>
+
+                  <div class="row">
+                  <div class="col s12">
+                  <a class="waves-effect waves-light btn green darken-1">Ingresar</a>
+
+
                 </div>
-
+                </div>
                 <div class="row">
-                <div class="col s12">
-                <a class="waves-effect waves-light btn green darken-1">Ingresar</a>
-
-
-              </div>
-              </div>
+                <div class=" col s12">
+                    <a href="recuperarcontrasena.html" class=" cyan-text">Olvide mi contraseña</a>
+                        <a href="registrarusuario.html" class=" cyan-text">Registrarse</a>
+                </div>
+                </div>
+                </form>
+              </div-->
+              <!--fin del login-->
+              <!--Inicio de categorias-->
               <div class="row">
-              <div class=" col s12">
-                  <a href="recuperarcontrasena.html" class=" cyan-text">Olvide mi contraseña</a>
-                      <a href="registrarusuario.html" class=" cyan-text">Registrarse</a>
+                <div class=" col s12">
+                  <h5>Tipo</h5>
+                  {% for tipo in tipos%}
+                  <div class="col s12">
+                      <a href="{% url 'kadoshapp.viewWebProductos.productostipo' tipo=tipo.pk%}" class=" cyan-text">{{tipo.nombre_tipoproducto}}</a>
+                  </div>
+                  {% endfor %}
+                  <h5>Sección</h5>
+                  {% for genero in generos%}
+                  <div class="col s12">
+                      <a href="{% url 'kadoshapp.viewWebProductos.productosgenero' genero=genero.pk%}" class=" cyan-text">{{genero.nombre_genero}}</a>
+                  </div>
+                  {% endfor %}
+                  <h5>Marca</h5>
+                  {% for marca in marcas%}
+                  <div class="col s12">
+                    <a href="{% url 'kadoshapp.viewWebProductos.productosmarca' marca=marca.pk%}">{{ marca.nombre_marca}}</a>
+                  </div>
+                  {% endfor %}
+                </div>
               </div>
-              </div>
-              </form>
-            </div>
-            <!--Inicio de categorias-->
-            <div class="row">
-              <div class=" col s12">
-                <h5>Categorias </h5>
-                <div class="col s12">
-                    <a href="#" class=" cyan-text">Damas</a>
-                </div>
-                <div class="col s12">
-                    <a href="#" class=" cyan-text">Caballeros</a>
-                </div>
-                <div class="col s12">
-                      <a href="#" class=" cyan-text">Niños</a>
-                </div>
-                <div class="col s12">
-                        <a href="#" class=" cyan-text">Varios</a>
-                </div>
+              <!--Fin de categorias-->
+          </div>
 
-
-              </div>
-            </div>
-            <!--Fin de categorias-->
         </div>
 
-      </div>
-
-  </div><!--Fin de login-->
+  </div><!--Fin de panel izquierdo-->
 
 <!--Galeria de imagenes-->
   <div class="col s12 l9 m9 ">
     <!--Imagenes de producto-->
-    <div class="row">
-
-      <div class=" col s12 l4 m4">
-          <div class="card hoverable">
-            <div class="card-image">
-              <img src="imagenes/5.jpg" class="  materialboxed" width="650" height="300">
-              <span class="card-title">Titulo</span>
-            </div>
-
-            <div class="card-action">
-              <a href="Detalleproducto.html">Detalle</a>
-            </div>
-          </div>
-        </div>
-
-      <div class=" col s12 l4 m4">
-          <div class="card hoverable">
-            <div class="card-image">
-              <img src="imagenes/r1.jpg" class=" materialboxed" width="650" height="300">
-              <span class="card-title">Titulo</span>
-            </div>
-            <div class="card-action">
-                <a href="Detalleproducto.html">Detalle</a>
-            </div>
-          </div>
-        </div>
-
-
-
-        <div class=" col s12 l4 m4">
-            <div class="card hoverable">
-              <div class="card-image" >
-                <img src="imagenes/4.jpg" class=" materialboxed" width="650" height="300">
-                <span class="card-title">Titulo</span>
-              </div>
-
-              <div class="card-action">
-                <a href="Detalleproducto.html">Detalle</a>
-              </div>
-            </div>
-          </div>
-
-        </div>
-     <!--Segunda columna-->
      <div class="row">
-
-       <div class=" col s12 l4 m4">
-           <div class="card hoverable">
-             <div class="card-image">
-               <img src="imagenes/5.jpg" class="  materialboxed" width="650" height="300">
-               <span class="card-title">Titulo</span>
-             </div>
-
-             <div class="card-action">
-                <a href="Detalleproducto.html">Detalle</a>
-             </div>
-           </div>
-         </div>
-
-       <div class=" col s12 l4 m4">
-           <div class="card hoverable">
-             <div class="card-image">
-               <img src="imagenes/r1.jpg" class=" materialboxed" width="650" height="300">
-               <span class="card-title">Titulo</span>
-             </div>
-             <div class="card-action">
-                <a href="Detalleproducto.html">Detalle</a>
-             </div>
-           </div>
-         </div>
-
-
-
-         <div class=" col s12 l4 m4">
+         {% for prod in productos%}
+          <div class=" col s12 l4 m4">
              <div class="card hoverable">
                <div class="card-image" >
-                 <img src="imagenes/4.jpg" class=" materialboxed" width="650" height="300">
-                 <span class="card-title">Titulo</span>
+                  <a href="{% url 'kadoshapp.viewWebProductos.detalleproductos' pk=prod.producto_codigo_producto__pk%}"><img src='/archivos{{ prod.fotografia_idfotografia__ruta_fotografia|slice:"1:"}}' width="650" height="300"></a>
                </div>
-
                <div class="card-action">
-                  <a href="Detalleproducto.html">Detalle</a>
+                  <a href="{% url 'kadoshapp.viewWebProductos.detalleproductos' pk=prod.producto_codigo_producto__pk%}"><b>{{ prod.producto_codigo_producto__nombre_producto}} -- {{prod.producto_codigo_producto__marca_id_marca__nombre_marca}}</b></a>
                </div>
              </div>
-           </div>
-
-         </div>
-
-    <!--Fin de seccion de noticas-->
-
-</div>
-  <!--fin de row-->
-
+          </div>
+            {% if forloop.counter|divisibleby:3 %}
+      </div>
+      <!--fin de row-->
+      <div class="row">
+            {% endif %}
+          {% endfor %}
+      </div>
+      <!--fin de row-->
+  </div>
 </section>
+<label id="lbl_tipo" style="display:none;">hola</label>
 {% endblock %}

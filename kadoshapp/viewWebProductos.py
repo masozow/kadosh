@@ -25,14 +25,41 @@ def ValuesQuerySetToDict(vqs):
 
 # Creat your views here.
 def productos(request):
-    productos_mostrar=ProductoHasFotografia.objects.filter(fotografia_idfotografia__principal_fotografia=1,fotografia_idfotografia__estado_fotografia=1,producto_codigo_producto__estado_producto=1,producto_codigo_producto__publicar_producto=1,producto_codigo_producto__oferta_producto=0).values('producto_codigo_producto__pk','producto_codigo_producto__marca_id_marca__nombre_marca','producto_codigo_producto__nombre_producto','producto_codigo_producto__descripcion_producto','producto_codigo_producto__tipo_producto_idtipo_producto__nombre_tipoproducto','producto_codigo_producto__color_idcolor__nombre_color','producto_codigo_producto__talla_idtalla__nombre_talla','producto_codigo_producto__estilo_idestilo__nombre_estilo','producto_codigo_producto__genero_idgener__nombre_genero','fotografia_idfotografia__pk','fotografia_idfotografia__ruta_fotografia').order_by('producto_codigo_producto__marca_id_marca__nombre__marca','producto_codigo_producto__talla_idtalla__nombre_talla')
-    return render(request,'kadoshapp/WEBproductos.html',{'productos':productos_mostrar})
+    productos_mostrar=ProductoHasFotografia.objects.filter(fotografia_idfotografia__principal_fotografia=1,fotografia_idfotografia__estado_fotografia=1,producto_codigo_producto__estado_producto=1,producto_codigo_producto__publicar_producto=1,producto_codigo_producto__oferta_producto=0).annotate(total=Count('producto_codigo_producto')).values('producto_codigo_producto__pk','producto_codigo_producto__nombre_producto','producto_codigo_producto__descripcion_producto','fotografia_idfotografia__pk','fotografia_idfotografia__ruta_fotografia','producto_codigo_producto__marca_id_marca__nombre_marca').order_by('producto_codigo_producto__nombre_producto')
+    marcas=Marca.objects.filter(estado_marca=1,producto__publicar_producto=1,producto__estado_producto=1,producto__oferta_producto=0).distinct()
+    generos=Genero.objects.filter(estado_genero=1,producto__publicar_producto=1,producto__estado_producto=1,producto__oferta_producto=0).distinct()
+    tipos=TipoProducto.objects.filter(estado_tipoproducto=1,producto__publicar_producto=1,producto__estado_producto=1,producto__oferta_producto=0).distinct()
+    return render(request,'kadoshapp/WEBproductos.html',{'productos':productos_mostrar,'marcas':marcas,'generos':generos,'tipos':tipos})
+
+def productosmarca(request,marca):
+    productos_mostrar=ProductoHasFotografia.objects.filter(producto_codigo_producto__marca_id_marca__pk=marca,fotografia_idfotografia__principal_fotografia=1,fotografia_idfotografia__estado_fotografia=1,producto_codigo_producto__estado_producto=1,producto_codigo_producto__publicar_producto=1,producto_codigo_producto__oferta_producto=0).annotate(total=Count('producto_codigo_producto')).values('producto_codigo_producto__pk','producto_codigo_producto__nombre_producto','producto_codigo_producto__descripcion_producto','fotografia_idfotografia__pk','fotografia_idfotografia__ruta_fotografia','producto_codigo_producto__marca_id_marca__nombre_marca').order_by('producto_codigo_producto__nombre_producto')
+    marcas=Marca.objects.filter(estado_marca=1,producto__publicar_producto=1,producto__estado_producto=1,producto__oferta_producto=0).distinct()
+    generos=Genero.objects.filter(estado_genero=1,producto__publicar_producto=1,producto__estado_producto=1,producto__oferta_producto=0).distinct()
+    tipos=TipoProducto.objects.filter(estado_tipoproducto=1,producto__publicar_producto=1,producto__estado_producto=1,producto__oferta_producto=0).distinct()
+    return render(request,'kadoshapp/WEBproductos.html',{'productos':productos_mostrar,'marcas':marcas,'generos':generos,'tipos':tipos})
+
+def productosgenero(request,genero):
+    productos_mostrar=ProductoHasFotografia.objects.filter(producto_codigo_producto__genero_idgener__pk=genero,fotografia_idfotografia__principal_fotografia=1,fotografia_idfotografia__estado_fotografia=1,producto_codigo_producto__estado_producto=1,producto_codigo_producto__publicar_producto=1,producto_codigo_producto__oferta_producto=0).annotate(total=Count('producto_codigo_producto')).values('producto_codigo_producto__pk','producto_codigo_producto__nombre_producto','producto_codigo_producto__descripcion_producto','fotografia_idfotografia__pk','fotografia_idfotografia__ruta_fotografia','producto_codigo_producto__marca_id_marca__nombre_marca').order_by('producto_codigo_producto__nombre_producto')
+    marcas=Marca.objects.filter(estado_marca=1,producto__publicar_producto=1,producto__estado_producto=1,producto__oferta_producto=0).distinct()
+    generos=Genero.objects.filter(estado_genero=1,producto__publicar_producto=1,producto__estado_producto=1,producto__oferta_producto=0).distinct()
+    tipos=TipoProducto.objects.filter(estado_tipoproducto=1,producto__publicar_producto=1,producto__estado_producto=1,producto__oferta_producto=0).distinct()
+    return render(request,'kadoshapp/WEBproductos.html',{'productos':productos_mostrar,'marcas':marcas,'generos':generos,'tipos':tipos})
+
+def productostipo(request,tipo):
+    productos_mostrar=ProductoHasFotografia.objects.filter(producto_codigo_producto__tipo_producto_idtipo_producto__pk=tipo,fotografia_idfotografia__principal_fotografia=1,fotografia_idfotografia__estado_fotografia=1,producto_codigo_producto__estado_producto=1,producto_codigo_producto__publicar_producto=1,producto_codigo_producto__oferta_producto=0).annotate(total=Count('producto_codigo_producto')).values('producto_codigo_producto__pk','producto_codigo_producto__nombre_producto','producto_codigo_producto__descripcion_producto','fotografia_idfotografia__pk','fotografia_idfotografia__ruta_fotografia','producto_codigo_producto__marca_id_marca__nombre_marca').order_by('producto_codigo_producto__nombre_producto')
+    marcas=Marca.objects.filter(estado_marca=1,producto__publicar_producto=1,producto__estado_producto=1,producto__oferta_producto=0).distinct()
+    generos=Genero.objects.filter(estado_genero=1,producto__publicar_producto=1,producto__estado_producto=1,producto__oferta_producto=0).distinct()
+    tipos=TipoProducto.objects.filter(estado_tipoproducto=1,producto__publicar_producto=1,producto__estado_producto=1,producto__oferta_producto=0).distinct()
+    return render(request,'kadoshapp/WEBproductos.html',{'productos':productos_mostrar,'marcas':marcas,'generos':generos,'tipos':tipos})
+
 
 
 def detalleproductos(request,pk):
-    producto=Producto.objects.filter(pk=pk)
+    producto=get_object_or_404(Producto,pk=pk)
+    precio=Precio.objects.filter(producto_codigo_producto=producto,estado_precio=1).order_by('-pk')
     fotografias=ProductoHasFotografia.objects.filter(producto_codigo_producto__pk=pk,fotografia_idfotografia__estado_fotografia=1).values('fotografia_idfotografia__pk','fotografia_idfotografia__ruta_fotografia')
-    return render(request,'kadoshapp/WEBdetalleproducto.html',{'producto':producto,'fotografias':fotografias})
+    return render(request,'kadoshapp/WEBdetalleproducto.html',{'producto':producto,'fotografias':fotografias,'precio':precio})
+
 
 def avanzar_retroceder_productos(request):
     if request.method == 'POST':
@@ -61,6 +88,67 @@ def avanzar_retroceder_productos(request):
             json.dumps({"nothing to see": "this isn't happening"}),
             content_type="application/json"
         )
+
+
+
+def avanzar_retroceder_productos_marca(request):
+    if request.method == 'POST':
+        inicio = int(request.POST.get('inicio'))
+        final = int(request.POST.get('final'))
+        todosproductos=ProductoHasFotografia.objects.filter(fotografia_idfotografia__principal_fotografia=1,fotografia_idfotografia__estado_fotografia=1,producto_codigo_producto__estado_producto=1,producto_codigo_producto__publicar_producto=1,producto_codigo_producto__oferta_producto=0).values('producto_codigo_producto__pk','producto_codigo_producto__marca_id_marca__nombre_marca','producto_codigo_producto__nombre_producto','producto_codigo_producto__descripcion_producto','producto_codigo_producto__tipo_producto_idtipo_producto__nombre_tipoproducto','producto_codigo_producto__color_idcolor__nombre_color','producto_codigo_producto__talla_idtalla__nombre_talla','producto_codigo_producto__estilo_idestilo__nombre_estilo','producto_codigo_producto__genero_idgener__nombre_genero','fotografia_idfotografia__pk','fotografia_idfotografia__ruta_fotografia').order_by('producto_codigo_producto__marca_id_marca__nombre__marca','producto_codigo_producto__talla_idtalla__nombre_talla').annotate(total=count('pk'))
+        
+        if inicio<0: #tope menor del inicio
+            inicio=0
+        if final<20: #tope menor del final
+            final=20
+        if inicio==final: #tope mayor del inicio
+            inicio=final-1
+        if final>=int(todosproductos.total): #tope mayor del final
+            final=int(todosproductos.total)
+        
+        #probar esto para avanzar o retroceder productos
+        productos=ProductoHasFotografia.objects.filter(fotografia__principal_fotografia=1,fotografia__estado_fotografia=1,producto__estado_producto=1,producto__publicar_producto=1,producto__oferta_producto=0).values('producto__pk','producto__marca_id_marca__nombre_marca','producto__nombre_producto','producto__descripcion_producto','producto__tipo_producto_idtipo_producto__nombre_tipoproducto','producto__color_idcolor__nombre_color','producto__talla_idtalla__nombre_talla','producto__estilo_idestilo__nombre_estilo','producto__genero_idgener__nombre_genero','fotografia__pk','fotografia__ruta_fotografia').order_by('producto__marca_id_marca__nombre__marca','producto__talla_idtalla__nombre_talla')[inicio:final]
+        dict_producto=ValuesQuerySetToDict(productos)
+        return HttpResponse(
+            json.dumps(dict_producto,cls=DjangoJSONEncoder),
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
+
+def avanzar_retroceder_productos_genero(request):
+    if request.method == 'POST':
+        inicio = int(request.POST.get('inicio'))
+        final = int(request.POST.get('final'))
+        todosproductos=ProductoHasFotografia.objects.filter(fotografia_idfotografia__principal_fotografia=1,fotografia_idfotografia__estado_fotografia=1,producto_codigo_producto__estado_producto=1,producto_codigo_producto__publicar_producto=1,producto_codigo_producto__oferta_producto=0).values('producto_codigo_producto__pk','producto_codigo_producto__marca_id_marca__nombre_marca','producto_codigo_producto__nombre_producto','producto_codigo_producto__descripcion_producto','producto_codigo_producto__tipo_producto_idtipo_producto__nombre_tipoproducto','producto_codigo_producto__color_idcolor__nombre_color','producto_codigo_producto__talla_idtalla__nombre_talla','producto_codigo_producto__estilo_idestilo__nombre_estilo','producto_codigo_producto__genero_idgener__nombre_genero','fotografia_idfotografia__pk','fotografia_idfotografia__ruta_fotografia').order_by('producto_codigo_producto__marca_id_marca__nombre__marca','producto_codigo_producto__talla_idtalla__nombre_talla').annotate(total=count('pk'))
+        
+        if inicio<0: #tope menor del inicio
+            inicio=0
+        if final<20: #tope menor del final
+            final=20
+        if inicio==final: #tope mayor del inicio
+            inicio=final-1
+        if final>=int(todosproductos.total): #tope mayor del final
+            final=int(todosproductos.total)
+        
+        #probar esto para avanzar o retroceder productos
+        productos=ProductoHasFotografia.objects.filter(fotografia__principal_fotografia=1,fotografia__estado_fotografia=1,producto__estado_producto=1,producto__publicar_producto=1,producto__oferta_producto=0).values('producto__pk','producto__marca_id_marca__nombre_marca','producto__nombre_producto','producto__descripcion_producto','producto__tipo_producto_idtipo_producto__nombre_tipoproducto','producto__color_idcolor__nombre_color','producto__talla_idtalla__nombre_talla','producto__estilo_idestilo__nombre_estilo','producto__genero_idgener__nombre_genero','fotografia__pk','fotografia__ruta_fotografia').order_by('producto__marca_id_marca__nombre__marca','producto__talla_idtalla__nombre_talla')[inicio:final]
+        dict_producto=ValuesQuerySetToDict(productos)
+        return HttpResponse(
+            json.dumps(dict_producto,cls=DjangoJSONEncoder),
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
+
+
+
 
 def parametros_busqueda(request):
     if request.method == 'POST':

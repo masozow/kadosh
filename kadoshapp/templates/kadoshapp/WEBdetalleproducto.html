@@ -11,53 +11,60 @@ h3{
 
   <div class="card ">
        <div class="card-content ">
-         <h5>Nombre de producto</h5>
-         <a>Precio Q.:00.00</a>
-         <p>Toda la descripcion descripcion descripcion descripcion descripcion descripcion descripcion
-         descripcion descripcion descripcion descripcion descripcion descripcion descripcion descripcion
-         descripcion descripcion descripcion descripcion descripcion descripcion descripcion descripcion
-         descripcion descripcion descripcion descripcion descripcion descripcion descripcion descripcion
-         descripcion descripcion descripcion descripcion descripcion descripcion descripcion descripcion</p>
-    <div class="row"><!--Talla-->
-    <div class="input-field col l3">
-     <select>
-       <option value="" disabled selected>Talla</option>
-       <option value="1">S</option>
-       <option value="2">M</option>
-       <option value="3">L</option>
-     </select>
-     <label>Talla</label>
-   </div>
-
-   </div>
-   <div class="row"><!--color-->
-   <div class="input-field col l3">
-    <select>
-      <option value="" disabled selected>Color</option>
-      <option value="1">Rojo</option>
-      <option value="2">Azul</option>
-      <option value="3">Negro</option>
-    </select>
-    <label>Talla</label>
-  </div> </div>
+         <h5><b>{{producto.nombre_producto}}</b></h5>
+         <a>Precio: Q.{{precio.first.valor_precio}}</a>
+         <p>{{producto.descripcion_producto|linebreaksbr}}</p>
+         <div class="row"><!--Genero-->
+            <div class="input-field col l3">
+             <label>{{producto.estilo_idestilo.nombre_estilo}}</label>
+            </div>
+         </div>
+         <div class="row"><!--Genero-->
+            <div class="input-field col l3">
+             <label><b>{{producto.genero_idgener.nombre_genero}}</b></label>
+            </div>
+         </div>
+         <div class="row"><!--Marca-->
+            <div class="input-field col l3">
+             <label>Marca: <b>{{producto.marca_id_marca.nombre_marca}}</b></label>
+            </div>
+         </div>
+         <div class="row"><!--Talla-->
+            <div class="input-field col l3">
+             <label>Talla: <b>{{producto.talla_idtalla.nombre_talla}}</b></label>
+            </div>
+         </div>
+         <div class="row"><!--Color-->
+            <div class="input-field col l3">
+             <label>Color: <b>{{producto.color_idcolor.nombre_color}}</b></label>
+            </div>
+         </div>
+      </div>
   </div>
-</div>
 
 </div>
 <div class=" col s12 l4 m4"><!--Imagen-->
     <div class="card hoverable">
       <div class="card-image">
-        <img src="imagenes/r1.jpg" class=" materialboxed" width="650" height="300">
-        <span class="card-title">Titulo</span>
+        <img id='imagen_grande' src='/archivos{{ fotografias.first.fotografia_idfotografia__ruta_fotografia|slice:"1:"}}' class=" materialboxed" width="650" height="300">
+        <!--span class="card-title">Titulo</span-->
       </div>
     </div>
     <div class=" carousel">
-    <a class="carousel-item" href="#one!"><img src="imagenes/1.jpg"></a>
-    <a class="carousel-item" href="#two!"><img src="imagenes/2.jpg"></a>
-    <a class="carousel-item" href="#three!"><img src="imagenes/3.jpg"></a>
-  </div>
-  </div>
+      {% for foto in fotografias %}
+      <div class="carousel-item"><img onclick="agrandar_imagen(this)" src='/archivos{{ foto.fotografia_idfotografia__ruta_fotografia|slice:"1:"}}'></div>
+      {% endfor %}
+    </div>
+</div>
 
 </div><!--fin producto-->
 </section><!--Fin de contenido de pagina-->
-<% endblock %>
+{% endblock %}
+{% block extrascripts%}
+<script type="text/javascript">
+ function agrandar_imagen(imagen){
+    $('#imagen_grande').prop('src',$(imagen).attr('src'));
+ }
+</script>
+
+{% endblock %}
