@@ -14,13 +14,13 @@ from django.db.models import Q #para poder usar el operador | que funciona como 
 def ValuesQuerySetToDict(vqs):
     return [item for item in vqs]
 
-def not_in_Traslado_group(user):
+def not_in_Web_group(user):
     if user:
-        return user.groups.filter(name='Traslado').count() != 0
+        return user.groups.filter(name='Web').count() != 0
     return False
 
 @login_required
-#@user_passes_test(not_in_Traslado_group, login_url='denegado')
+#@user_passes_test(not_in_Web_group, login_url='denegado')
 def publicarofertar(request):
     if request.method=='POST':
         form_producto=Form_Publicar_Producto(request.POST)
@@ -29,6 +29,7 @@ def publicarofertar(request):
     return render(request, 'kadoshapp/PublicarOfertarProductos_Web.html', {'form_producto':form_producto })
 
 @login_required
+#@user_passes_test(not_in_Web_group, login_url='denegado')
 def BuscarProductoExtra(request):
     if request.method == 'POST':
         txt_codigo_producto = request.POST.get('codigobarras_producto')
@@ -36,13 +37,10 @@ def BuscarProductoExtra(request):
         #pdb.set_trace()  #estos son los breakpoints de django
 
         response_data = {} #declarando un diccionario vacio
-        resultado=Producto.objects.filter(codigobarras_producto=txt_codigo_producto,estado_producto=1,precio__estado_precio=1).values('pk',
+        resultado=Producto.objects.filter(codigobarras_producto=txt_codigo_producto,estado_producto=1).values('pk',
                                                                                             'nombre_producto',
-                                                                                            'inventarioproducto__bodega_idbodega__nombre_bodega',
                                                                                             'codigobarras_producto',
-                                                                                            'inventarioproducto__existencia_actual',
                                                                                             'codigoestilo_producto',
-                                                                                            'precio__valor_precio',
                                                                                             'marca_id_marca__nombre_marca',
                                                                                             'tipo_producto_idtipo_producto__nombre_tipoproducto',
                                                                                             'estilo_idestilo__nombre_estilo',
@@ -63,10 +61,11 @@ def BuscarProductoExtra(request):
         )
 
 @login_required
+#@user_passes_test(not_in_Web_group, login_url='denegado')
 def BuscarProductoCaracteristicasExtra(request):
     if request.method == 'POST':
 
-        resp_producto=Producto.objects.filter(estado_producto=1,precio__estado_precio=1).values('pk','nombre_producto','inventarioproducto__bodega_idbodega__nombre_bodega','codigobarras_producto','inventarioproducto__existencia_actual','codigoestilo_producto','precio__valor_precio','marca_id_marca__nombre_marca','tipo_producto_idtipo_producto__nombre_tipoproducto','estilo_idestilo__nombre_estilo','genero_idgener__nombre_genero','talla_idtalla__nombre_talla','color_idcolor__nombre_color')
+        resp_producto=Producto.objects.filter(estado_producto=1).values('pk','nombre_producto','codigobarras_producto','codigoestilo_producto','marca_id_marca__nombre_marca','tipo_producto_idtipo_producto__nombre_tipoproducto','estilo_idestilo__nombre_estilo','genero_idgener__nombre_genero','talla_idtalla__nombre_talla','color_idcolor__nombre_color')
         
         txt_codigo_producto = request.POST.get('codigo_estilo_producto')
         if txt_codigo_producto:
@@ -100,6 +99,56 @@ def BuscarProductoCaracteristicasExtra(request):
         resultado_diccionario=ValuesQuerySetToDict(resp_producto)
         return HttpResponse(
             json.dumps(resultado_diccionario,cls=DjangoJSONEncoder),
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
+
+
+@login_required
+#@user_passes_test(not_in_Web_group, login_url='denegado')
+def BuscarProductoEspecifico(request):
+    if request.method == 'POST':
+        codigo_producto = request.POST.get('codigoproducto')
+        response_data = {} #declarando un diccionario vacio
+        resultado=Producto.objects.filter(pk=codigo_producto).values('pk','descripcion_producto','oferta_producto','publicar_producto')
+        resultado_diccionario=ValuesQuerySetToDict(resultado)
+        return HttpResponse(
+            json.dumps(resultado_diccionario,cls=DjangoJSONEncoder),
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
+
+@login_required
+#@user_passes_test(not_in_Web_group, login_url='denegado')
+def ActualizarProducto(request):
+    if request.method == 'POST':
+        codigo_producto = request.POST.get('codigoproducto')
+        oferta = request.POST.get('ofertar')
+        publicar = request.POST.get('publicar')
+        descripcion = request.POST.get('descripcionproducto')
+        if oferta=='true':
+            oferta=True
+        else:
+            oferta=False
+        if publicar=='true':
+            publicar=True
+        else:
+            publicar=False
+        try:
+            prod=Producto.objects.filter(pk=codigo_producto).update(oferta_producto=oferta,publicar_producto=publicar,descripcion_producto=descripcion)
+            resultado='Producto actualizado' #no cambiar este texto, porque de el depende un cambio en la funcion de ajax en la plantilla
+        except Exception as e:
+            resultado='Error: '+str(e)        
+        return HttpResponse(
+            json.dumps(resultado,cls=DjangoJSONEncoder),
             content_type="application/json"
         )
     else:

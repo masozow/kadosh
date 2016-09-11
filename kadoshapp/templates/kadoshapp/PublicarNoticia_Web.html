@@ -1,0 +1,41 @@
+{% extends 'kadoshapp/base.html' %}
+{% load staticfiles %}
+{% block titulo %}
+ Publicar noticia
+{% endblock %}
+<!--se añadió la fila anterior-->
+    {% block styles %}
+      <link type="text/css" rel="stylesheet" href="{% static "css/formularios.css" %}"/>
+    {% endblock %}
+      {% block encabezado %}Publicar noticia{% endblock %}
+
+    {% block content %}
+
+
+    <form method="POST" class="post-form" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="row" style="margin-bottom: 0px;">
+         <div class=" col l8 m12 s12">
+             {{form_noticia.as_p}}
+          </div>
+          <div class=" col l4 m12 s12">
+          </div>
+          <div class=" col l12 m12 s12">
+          <!--label for="id_ruta_fotografia"><h6>Fotografía: </h6></label-->
+          {{form_fotografia.as_p}}
+          </div>
+      </div>
+      <div class="row" style="margin-bottom: 0px;">
+        <div class=" col l12 m12 s12">
+              <br/>
+              <button type="submit" class="btn tooltipped" data-position="right" data-delay="50" data-tooltip="Los datos que guarde no podrán ser modificados">Guardar</button>
+        </div>
+      </div>
+      <div class="row" style="margin-bottom: 0px;">
+        <div class=" col l12 m12 s12">
+            
+        </div>
+      </div>
+  </form>
+    {% endblock %}
+    

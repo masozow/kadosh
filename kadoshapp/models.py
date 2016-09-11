@@ -580,7 +580,7 @@ class Noticia(models.Model):
 class NoticiaHasFotografia(models.Model):
     noticia_idnoticia = models.ForeignKey('Noticia', db_column='Noticia_idNoticia')  # Field name made lowercase.
     fotografia_idfotografia = models.ForeignKey('Fotografia', db_column='Fotografia_idFotografia')  # Field name made lowercase.
-    vista_previa = models.BooleanField(default=True)
+    vista_previa = models.BooleanField(default=False)
     idnoticiahasfotografia = models.AutoField(db_column='idnoticiahasfotografia', primary_key=True)
 
     def __str__(self):
