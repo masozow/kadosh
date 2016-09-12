@@ -20,7 +20,7 @@ def not_in_Web_group(user):
     return False
 
 @login_required
-#@user_passes_test(not_in_Web_group, login_url='denegado')
+@user_passes_test(not_in_Web_group, login_url='denegado')
 def publicarofertar(request):
     if request.method=='POST':
         form_producto=Form_Publicar_Producto(request.POST)
