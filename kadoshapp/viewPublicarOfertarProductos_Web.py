@@ -20,7 +20,7 @@ def not_in_Web_group(user):
     return False
 
 @login_required
-#@user_passes_test(not_in_Web_group, login_url='denegado')
+@user_passes_test(not_in_Web_group, login_url='denegado')
 def publicarofertar(request):
     if request.method=='POST':
         form_producto=Form_Publicar_Producto(request.POST)
@@ -29,7 +29,7 @@ def publicarofertar(request):
     return render(request, 'kadoshapp/PublicarOfertarProductos_Web.html', {'form_producto':form_producto })
 
 @login_required
-#@user_passes_test(not_in_Web_group, login_url='denegado')
+@user_passes_test(not_in_Web_group, login_url='denegado')
 def BuscarProductoExtra(request):
     if request.method == 'POST':
         txt_codigo_producto = request.POST.get('codigobarras_producto')
@@ -61,7 +61,7 @@ def BuscarProductoExtra(request):
         )
 
 @login_required
-#@user_passes_test(not_in_Web_group, login_url='denegado')
+@user_passes_test(not_in_Web_group, login_url='denegado')
 def BuscarProductoCaracteristicasExtra(request):
     if request.method == 'POST':
 
@@ -109,7 +109,7 @@ def BuscarProductoCaracteristicasExtra(request):
 
 
 @login_required
-#@user_passes_test(not_in_Web_group, login_url='denegado')
+@user_passes_test(not_in_Web_group, login_url='denegado')
 def BuscarProductoEspecifico(request):
     if request.method == 'POST':
         codigo_producto = request.POST.get('codigoproducto')
@@ -127,7 +127,7 @@ def BuscarProductoEspecifico(request):
         )
 
 @login_required
-#@user_passes_test(not_in_Web_group, login_url='denegado')
+@user_passes_test(not_in_Web_group, login_url='denegado')
 def ActualizarProducto(request):
     if request.method == 'POST':
         codigo_producto = request.POST.get('codigoproducto')
