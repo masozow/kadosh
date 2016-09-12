@@ -114,14 +114,14 @@ WSGI_APPLICATION = 'sistemakadosh.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'kadosh2',
-        #'NAME': 'enriquesaju$kadosh2',
-        'USER': 'root',
-        #'USER': 'enriquesaju',
-        'PASSWORD': 'hola1234',
-        #'PASSWORD': 'Kadosh2016',
-        'HOST': 'localhost',
-        #'HOST': 'enriquesaju.mysql.pythonanywhere-services.com',
+        #'NAME': 'kadosh2',
+        'NAME': 'enriquesaju$kadosh2',
+        #'USER': 'root',
+        'USER': 'enriquesaju',
+        #'PASSWORD': 'hola1234',
+        'PASSWORD': 'Kadosh2016',
+        #'HOST': 'localhost',
+        'HOST': 'enriquesaju.mysql.pythonanywhere-services.com',
         'PORT': '',
     }
 }

@@ -196,39 +196,45 @@ def ModificacionVenta(request):
 @user_passes_test(not_in_Caja_group, login_url='denegado')
 def BuscarProductoNuevo(request):
     if request.method == 'POST':
-        txt_codigo_barras = request.POST.get('codigobarras_producto')
-        txt_codigo_producto = request.POST.get('codigo_estilo_producto')
 
         id_bodega_que_vende = request.POST.get('bodega') #llamar por el nombre del objeto json que se envia como 'data' dentro de la consulta Ajax
         if not id_bodega_que_vende:
             id_bodega_que_vende=0
+        
+        resp_producto=Producto.objects.filter(estado_producto=1,inventarioproducto__bodega_idbodega__pk=int(id_bodega_que_vende),precio__estado_precio=1).values('pk','nombre_producto','codigobarras_producto','codigoestilo_producto','marca_id_marca__nombre_marca','genero_idgener__nombre_genero','talla_idtalla__nombre_talla','color_idcolor__nombre_color','inventarioproducto__pk','precio__valor_precio')
 
-        id_marca_producto = request.POST.get('marca_producto')
-        if not id_marca_producto:
-            id_marca_producto=0
+        txt_codigo_barras = request.POST.get('codigobarras_producto')
+        if txt_codigo_barras:
+            resp_producto=resp_producto.filter(codigobarras_producto=txt_codigo_barras)
+        else:
+            txt_codigo_producto = request.POST.get('codigo_estilo_producto')
+            if txt_codigo_producto:
+                resp_producto=resp_producto.filter(codigoestilo_producto=txt_codigo_producto)
+            
+            id_marca_producto = request.POST.get('marca_producto')
+            if id_marca_producto:
+                resp_producto=resp_producto.filter(marca_id_marca=id_marca_producto)
 
-        id_estilo_producto = request.POST.get('estilo_producto')
-        if not id_estilo_producto:
-            id_estilo_producto=0
+            id_estilo_producto = request.POST.get('estilo_producto')
+            if id_estilo_producto:
+                resp_producto=resp_producto.filter(estilo_idestilo=id_estilo_producto)
 
-        id_tipo_producto = request.POST.get('tipo_producto')
-        if not id_tipo_producto:
-            id_tipo_producto=0
+            id_tipo_producto = request.POST.get('tipo_producto')
+            if id_tipo_producto:
+                resp_producto=resp_producto.filter(tipo_producto_idtipo_producto=id_tipo_producto)
 
-        id_talla_producto = request.POST.get('talla_producto')
-        if not id_talla_producto:
-            id_talla_producto=0
+            id_talla_producto = request.POST.get('talla_producto')
+            if id_talla_producto:
+                resp_producto=resp_producto.filter(talla_idtalla=id_talla_producto)
 
-        id_color_producto = request.POST.get('color_producto')
-        if not id_color_producto:
-            id_color_producto=0
+            id_color_producto = request.POST.get('color_producto')
+            if id_color_producto:
+                resp_producto=resp_producto.filter(color_idcolor=id_color_producto)
 
-        id_genero_producto = request.POST.get('genero_producto')
-        if not id_genero_producto:
-            id_genero_producto=0
-        #response_data={}
-        #response_data['datos']=str(txt_codigo_barras)+'-'+str(txt_codigo_producto)+'-'+str(id_bodega_que_vende)+'-'+str(id_marca_producto)+'-'+str(id_tipo_producto)+'-'+str(id_estilo_producto)+'-'+str(id_color_producto)+'-'+str(id_genero_producto)+'-'+str(id_talla_producto)
-        resp_producto=Producto.objects.filter(Q(codigobarras_producto=txt_codigo_barras)|Q(codigoestilo_producto=txt_codigo_producto) | Q(marca_id_marca=id_marca_producto) | Q(estilo_idestilo=id_estilo_producto )| Q(tipo_producto_idtipo_producto=id_tipo_producto) | Q(talla_idtalla=id_talla_producto) | Q(color_idcolor=id_color_producto) | Q(genero_idgener=id_genero_producto),estado_producto=1,inventarioproducto__bodega_idbodega__pk=int(id_bodega_que_vende),precio__estado_precio=1).values('pk','nombre_producto','codigobarras_producto','codigoestilo_producto','marca_id_marca__nombre_marca','genero_idgener__nombre_genero','talla_idtalla__nombre_talla','color_idcolor__nombre_color','inventarioproducto__pk','precio__valor_precio')
+            id_genero_producto = request.POST.get('genero_producto')
+            if id_genero_producto:
+                resp_producto=resp_producto.filter(genero_idgener=id_genero_producto)
+
         producto_diccionario=ValuesQuerySetToDict(resp_producto)
         consulta=resp_producto.query
         return HttpResponse(
