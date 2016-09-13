@@ -7,7 +7,6 @@ from .models import *
 from .formPublicarNoticia_Web import *
 
 
-
 def ValuesQuerySetToDict(vqs):
     return [item for item in vqs]
 

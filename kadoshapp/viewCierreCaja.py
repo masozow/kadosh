@@ -62,12 +62,14 @@ def BuscarCaja(request):
         if not caja:
             caja=0
         response_data={}
-        hoy_min = datetime.datetime.combine(timezone.now(), datetime.time.min) #,tzinfo=pytz.UTC
-        hoy_min=hoy_min+timedelta(hours=6)
-        hoy_max = datetime.datetime.combine(timezone.now(), datetime.time.max) #,tzinfo=pytz.UTC
-        hoy_max=hoy_max+timedelta(hours=6)
-        hoy_min=pytz.utc.localize(hoy_min)
-        hoy_max=pytz.utc.localize(hoy_max)
+        #hoy_min = datetime.datetime.combine(timezone.now(), datetime.time.min) #,tzinfo=pytz.UTC
+        #hoy_min=hoy_min+timedelta(hours=6)
+        #hoy_max = datetime.datetime.combine(timezone.now(), datetime.time.max) #,tzinfo=pytz.UTC
+        #hoy_max=hoy_max+timedelta(hours=6)
+        #hoy_min=pytz.utc.localize(hoy_min)
+        #hoy_max=pytz.utc.localize(hoy_max)
+        hoy_min = datetime.datetime.combine(timezone.now(), datetime.time.min.replace(tzinfo=timezone.UTC())).astimezone(pytz.timezone('America/Guatemala'))
+        hoy_max = datetime.datetime.combine(timezone.now(), datetime.time.max.replace(tzinfo=timezone.UTC())).astimezone(pytz.timezone('America/Guatemala'))
         gastos=Gastos.objects.filter(caja_idcaja=int(caja),momento_gasto__range=(hoy_min,hoy_max)).values('caja_idcaja__pk').annotate(total_gastos=Sum('monto_gasto'))
         efectivo=Venta.objects.filter(estado_venta=1,es_cotizacion=0,tipo_pago_idtipo_pago=TipoPago(pk=1),fecha_venta__range=(hoy_min,hoy_max),caja_idcaja=Caja(pk=caja)).values('caja_idcaja__pk').annotate(total_efectivo=Sum('total_venta'))
         tarjeta=Venta.objects.filter(estado_venta=1,es_cotizacion=0,tipo_pago_idtipo_pago=TipoPago(pk=2),fecha_venta__range=(hoy_min,hoy_max),caja_idcaja=Caja(pk=caja)).values('caja_idcaja__pk').annotate(total_tarjeta=Sum('total_venta'))
