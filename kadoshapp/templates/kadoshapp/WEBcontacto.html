@@ -5,57 +5,68 @@ h3 {
     text-shadow: 2px 2px #212121;
 }
 <section class="contenido2 wrapper2"><!--Contenido de la pagina-->
-  <div class=" row">
-    <div class=" col s12 m6 l6"><!--Formulario-->
-       <div class="card ">
-            <div class="card-content ">
-              <div class="row">
-                  <form class="col s12">
-                    <div class="row">
-                      <div class="input-field col s12">
-                        <i class="material-icons prefix">email</i>
-                        <input id="icon_prefix" type="email" class="validate">
-                        <label for="icon_prefix">Correo electronico</label>
+  <form method="POST" id="formulario_contacto">
+    <div class=" row">
+      <div class=" col s12 m6 l6"><!--Formulario-->
+         <div class="card ">
+              <div class="card-content ">
+                <div class="row">
+                    <form method="POST" id="formulario_contacto">
+                      {% csrf_token %}
+                      <div class="row">
+                        <div class="input-field col s12">
+                          <i class="material-icons prefix">email</i>
+                          {{form_contacto.correo_contacto}}
+                          <!--input id="icon_prefix" type="email" class="validate"-->
+                          <label for="icon_prefix">Correo electrónico</label>
+                          {% if form_contacto.correo_contacto.errors%}
+                          <p style="color:red;"><b>Debe escribir un correo electrónico</b></p>
+                          {% endif %}
+                        </div>
                       </div>
+
+                      <div class="row">
+                        <div class="input-field col s12">
+                          <i class="material-icons prefix">account_circle</i>
+                          <!--input id="icon_prefix" type="text" class="validate"-->
+                          {{form_contacto.nombre_contacto}}
+                          <label for="icon_prefix">Nombre</label>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="input-field col s12">
+                          <i class="material-icons prefix">mode_edit</i>
+                          {{form_contacto.asunto_contacto}}
+                          <!--input id="icon_prefix" type="text" class="validate"-->
+                          <label for="icon_prefix">Asunto</label>
+                          {% if form_contacto.asunto_contacto.errors%}
+                          <p style="color:red;"><b>Debe escribir un asunto</b></p>
+                          {% endif %}
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="input-field col s12">
+                          <i class="material-icons prefix">message</i>
+                          {{form_contacto.mensaje_contacto}}
+                          <!--textarea id="textarea1" class="materialize-textarea"></textarea-->
+                          <label for="textarea1">Mensaje</label>
+                        </div>
+                      </div>
+
+
+                      <div class="row">
+                      <div class="col s12">
+                      <button type="submit" class="waves-effect waves-light btn green darken-1">Enviar</button>
+
+                    </div>
                     </div>
 
-                    <div class="row">
-                      <div class="input-field col s12">
-                        <i class="material-icons prefix">account_circle</i>
-                        <input id="icon_prefix" type="text" class="validate">
-                        <label for="icon_prefix">Nombre</label>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="input-field col s12">
-                        <i class="material-icons prefix">mode_edit</i>
-                        <input id="icon_prefix" type="text" class="validate">
-                        <label for="icon_prefix">Asunto</label>
-                      </div>
-                    </div>
-
-
-                    <div class="row">
-                      <div class="input-field col s12">
-                        <i class="material-icons prefix">message</i>
-                        <textarea id="textarea1" class="materialize-textarea"></textarea>
-                        <label for="textarea1">Mensaje</label>
-                      </div>
-                    </div>
-
-
-                    <div class="row">
-                    <div class="col s12">
-                    <a class="waves-effect waves-light btn green darken-1">Enviar</a>
-
-
+                    </form>
                   </div>
-                  </div>
-
-                  </form>
-                </div>
+      </div>
     </div>
-  </div>
 
 </div><!--Fin de form de contacto-->
 

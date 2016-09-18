@@ -1,42 +1,38 @@
 {% extends 'kadoshapp/WEBbase.html' %}
 {% block titulo %}Noticia{% endblock %}
 {% block content %}
+<style type="text/css">
 h3{
     text-shadow: 2px 2px #212121
 }
+</style>
 <section class="contenido2 wrapper2"><!--Contenido de la pagina-->
 
-<div class="row"><!--noticia-->
-  <div class=" col s12 l4 m4"><!--Imagen-->
+  <div class="row"><!--noticia-->
+    <div class=" col s12 l4 m4"><!--Imagen-->
       <div class="card hoverable">
         <div class="card-image">
-          <img src="imagenes/5.jpg" class=" materialboxed" width="650" height="300">
-          <span class="card-title">Titulo</span>
+          <img src='/archivos{{ fotografias.first.fotografia_idfotografia__ruta_fotografia|slice:"1:"}}' class=" materialboxed" width="400" height="300">
+            <!--span class="card-title"></span-->
         </div>
       </div>
-      <div class=" carousel">
-      <a class="carousel-item" href="#one!"><img src="imagenes/1.jpg"></a>
-      <a class="carousel-item" href="#two!"><img src="imagenes/2.jpg"></a>
-      <a class="carousel-item" href="#three!"><img src="imagenes/3.jpg"></a>
+    <div class=" carousel">
+      {% for foto in fotografias %}
+        <a class="carousel-item" href=""><img src='/archivos{{ foto.fotografia_idfotografia__ruta_fotografia|slice:"1:"}}'></a>
+      {% endfor %}
     </div>
-    </div>
-
-<div class="col l8 s12 m12"><!--Texto-->
-
-  <div class="card ">
-       <div class="card-content ">
-         <h5>Noticia</h5>
-         <a>Fecha: x/x/x</a>
-         <p>Toda la descripcion descripcion descripcion descripcion descripcion descripcion descripcion
-         descripcion descripcion descripcion descripcion descripcion descripcion descripcion descripcion
-         descripcion descripcion descripcion descripcion descripcion descripcion descripcion descripcion
-         descripcion descripcion descripcion descripcion descripcion descripcion descripcion descripcion
-         descripcion descripcion descripcion descripcion descripcion descripcion descripcion descripcion</p>
   </div>
-</div>
-</div>
 
+  <div class="col l8 s12 m12"><!--Texto-->
+    <div class="card ">
+      <div class="card-content ">
 
+        <h5>{{noticia.titulo_noticia}}</h5>
+        <a>Fecha: {{noticia.momento_publicacion_noticia|date:"SHORT_DATE_FORMAT"}}</a>
+        <p>{{noticia.contenido_noticia|linebreaksbr}}</p>
+      </div>
+    </div>
+  </div>
 </div><!--fin noticia-->
 </section><!--Fin de contenido de pagina-->
 {% endblock %}

@@ -1,98 +1,34 @@
 {% extends 'kadoshapp/WEBbase.html' %}
-{% block titulo %}News{% endblock %}
+{% block titulo %}Noticias{% endblock %}
 {% block content %}
 h3{
     text-shadow: 2px 2px #212121
 }
 <section class="contenido2 wrapper2"><!--Contenido de la pagina-->
-
-<div class="row"><!--Arituclo-->
-<div class=" col l12">
-<div class="card hoverable">
-<div class="content">
-<div class="col l3 m12 s12"><!--Imagen-->
-<img src="imagenes/5.jpg" class="  materialboxed" width="300" height="150">
-</div>
-<div class=" col l9 m12 s12"><!-- texto-->
-  <h5>Titulo</h5>
-  <a>Fecha:x/x/x</a>
-  <p>Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto
-  Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto
-  Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto</p>
-</div>
-<div class="card-action">
-  <a href="detallenoticia.html">Detalle</a>
-</div>
-</div>
-</div>
-</div>
-</div><!--FIn Arituclo-->
-
-<div class="row"><!--Arituclo-->
-<div class=" col l12">
-<div class="card hoverable">
-<div class="content">
-<div class="col l3 m12 s12"><!--Imagen-->
-<img src="imagenes/5.jpg" class="  materialboxed" width="300" height="150">
-</div>
-<div class=" col l9 m12 s12"><!-- texto-->
-  <h5>Titulo</h5>
-  <a>Fecha:x/x/x</a>
-  <p>Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto
-  Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto
-  Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto</p>
-</div>
-<div class="card-action">
-  <a href="detallenoticia.html">Detalle</a>
-</div>
-</div>
-</div>
-</div>
-</div><!--FIn Arituclo-->
-
-<div class="row"><!--Arituclo-->
-<div class=" col l12">
-<div class="card hoverable">
-<div class="content">
-<div class="col l3 m12 s12"><!--Imagen-->
-<img src="imagenes/5.jpg" class="  materialboxed" width="300" height="150">
-</div>
-<div class=" col l9 m12 s12"><!-- texto-->
-  <h5>Titulo</h5>
-  <a>Fecha:x/x/x</a>
-  <p>Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto
-  Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto
-  Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto</p>
-</div>
-<div class="card-action">
-  <a href="detallenoticia.html">Detalle</a>
-</div>
-</div>
-</div>
-</div>
-</div><!--FIn Arituclo-->
-
-
-<div class="row"><!--Arituclo-->
-<div class=" col l12">
-<div class="card hoverable">
-<div class="content">
-<div class="col l3 m12 s12"><!--Imagen-->
-<img src="imagenes/5.jpg" class="  materialboxed" width="300" height="150">
-</div>
-<div class=" col l9 m12 s12"><!-- texto-->
-  <h5>Titulo</h5>
-  <a>Fecha:x/x/x</a>
-  <p>Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto
-  Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto
-  Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto</p>
-</div>
-<div class="card-action">
-  <a href="detallenoticia.html">Detalle</a>
-</div>
-</div>
-</div>
-</div>
-</div><!--FIn Arituclo-->
+  {% for noticia in noticias %}
+  <div class="row"><!--Arituclo-->
+    <div class=" col l12 m12 s12">
+      <div class="card hoverable">
+        <div class="content">
+          <div class="col l3 m12 s12"><!--Imagen-->
+           <div class="card-image" >
+                  <a href="{% url 'kadoshapp.viewWebNoticias.detallenoticias' pk=noticia.noticia_idnoticia__pk%}">
+                  <img src='/archivos{{ noticia.fotografia_idfotografia__ruta_fotografia|slice:"1:"}}' width="200" height="150">
+                  </a>
+           </div>            
+          </div>
+          <div class=" col l9 m12 s12"><!-- texto-->
+            <a href="{% url 'kadoshapp.viewWebNoticias.detallenoticias' pk=noticia.noticia_idnoticia__pk%}"><h5>{{noticia.noticia_idnoticia__titulo_noticia}}</h5></a>
+            <a>Fecha: {{noticia.noticia_idnoticia__momento_publicacion_noticia|date:"SHORT_DATE_FORMAT"}}</a>
+            <p>{{noticia.noticia_idnoticia__contenido_noticia|slice:"0:100"}}...</p>
+          </div>
+          <!--div class="card-action">
+            <a href="{% url 'kadoshapp.viewWebNoticias.detallenoticias' pk=noticia.noticia_idnoticia__pk%}">Detalle</a>
+          </div-->
+        </div>
+      </div>
+    </div>
+  </div><!--FIn Arituclo-->
+  {% endfor %}
 </section><!--Fin de contenido de pagina-->
 {% endblock %}

@@ -10,7 +10,17 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 
+from .email_info import EMAIL_USE_TLS,EMAIL_HOST,EMAIL_HOST_USER,EMAIL_HOST_PASSWORD,EMAIL_PORT
+
+#EMAIL_BACKEND=EMAIL_BACKEND
+EMAIL_USE_TLS=EMAIL_USE_TLS
+EMAIL_HOST=EMAIL_HOST
+EMAIL_HOST_USER=EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD=EMAIL_HOST_PASSWORD
+EMAIL_PORT=EMAIL_PORT
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -28,7 +38,7 @@ SECRET_KEY = '*5-fe-0ao1jir_e+4ft*r6gxrk6z13o^l@=d_zf=8%##mga7&)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG =  True #False
 
-ALLOWED_HOSTS = ['localhost','127.0.0.1','django.kadosh'] #si el debug es falso, hay que configurar los hosts aqui
+ALLOWED_HOSTS = ['localhost','127.0.0.1','django.kadosh','enriquesaju.pythonanywhere.com','www.pythonanywhere.com'] #si el debug es falso, hay que configurar los hosts aqui
 #esta parte la escribi para hacer el logueo
 from django.core.urlresolvers import reverse_lazy
 LOGIN_URL=reverse_lazy('login')

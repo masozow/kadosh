@@ -47,7 +47,7 @@ def Compras(request):
         form_fecha=Form_Busqueda_Fechas()
         form_vendedor=Form_Busqueda_Vendedor()
         form_check=Form_Busqueda_Checkbox()
-        consulta=Compra.objects.all()[:1]
+        consulta=Compra.objects.all()
         reporte1=ComprasTabla(consulta)
         RequestConfig(request, paginate={'per_page': 25}).configure(reporte1)
         return render(request,'kadoshapp/ReporteCompras.html',{'reporte1':reporte1,'form_fecha':form_fecha,'form_vendedor':form_vendedor,'form_check':form_check})

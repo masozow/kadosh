@@ -7,5 +7,9 @@ from .models import *
 class Form_Contacto(forms.ModelForm):
     class Meta:
         model=Contacto
-        exclude=('estado_contacto',)
+        exclude=('estado_contacto','fecha_contacto')
+        widgets = {
+            'correo_contacto': forms.EmailInput(attrs={'class': 'validate'}),
+            'mensaje_contacto': forms.Textarea()
+        }
         

@@ -180,9 +180,9 @@ class Compra(models.Model):
 
 class Contacto(models.Model):
     idcontacto = models.AutoField(db_column='idContacto', primary_key=True)  # Field name made lowercase.
-    correo_contacto = models.CharField(max_length=45, blank=True, null=True)
+    correo_contacto = models.CharField(max_length=45)
     nombre_contacto = models.CharField(max_length=50, blank=True, null=True)
-    asunto_contacto = models.CharField(max_length=60, blank=True, null=True)
+    asunto_contacto = models.CharField(max_length=60)
     mensaje_contacto = models.CharField(max_length=400, blank=True, null=True)
     estado_contacto = models.BooleanField(default=True)
     fecha_contacto = models.DateField(default=timezone.now)
