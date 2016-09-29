@@ -92,6 +92,24 @@ def BuscarProducto(request):
         )
 
 @login_required
+def BuscarProductoAutocompletar(request):
+    if request.method == 'POST':
+        txt_producto = str(request.POST.get('producto_buscado'))
+        id_bodega_que_vende = request.POST.get('bodega_idbodega')
+        producto=Producto.objects.filter(Q(nombre_producto__icontains=txt_producto)|Q(marca_id_marca__nombre_marca__icontains=txt_producto)|Q(estilo_idestilo__nombre_estilo__icontains=txt_producto)|Q(tipo_producto_idtipo_producto__nombre_tipoproducto__icontains=txt_producto)|Q(color_idcolor__nombre_color__icontains=txt_producto)|Q(talla_idtalla__nombre_talla__icontains=txt_producto)|Q(genero_idgener__nombre_genero__icontains=txt_producto),estado_producto=1,inventarioproducto__bodega_idbodega=id_bodega_que_vende,precio__estado_precio=1).values('pk','nombre_producto','marca_id_marca__nombre_marca','talla_idtalla__nombre_talla','color_idcolor__nombre_color','genero_idgener__nombre_genero','inventarioproducto__pk','precio__valor_precio','precio__pk','estilo_idestilo__nombre_estilo','codigoestilo_producto').order_by('-precio__pk')
+        dict_producto=ValuesQuerySetToDict(producto)
+
+        return HttpResponse(
+            json.dumps(dict_producto,cls=DjangoJSONEncoder),
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
+
+@login_required
 def BuscarProductoCaracteristicas(request):
     if request.method == 'POST':
         id_bodega_que_vende = request.POST.get('bodega_idbodega') #llamar por el nombre del objeto json que se envia como 'data' dentro de la consulta Ajax

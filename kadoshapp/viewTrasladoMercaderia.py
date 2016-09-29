@@ -55,6 +55,7 @@ def TrasladoMercaderia(request):
         form_InventarioProducto=Form_TrasladoMerca_InventarioProducto()
         form_cantidad=Form_TrasladoMerca_Cantidad()
         form_Tabla=FormTabla()
+        form_busqueda=Form_busquedas()
         #A continuación se filtran los datos de los combobox, para que se muestren solo los que cumplan con las condiciones
         #descritas en el filtro
         form_Traslado.fields["bodega_egreso"].queryset = Bodega.objects.filter(estado_bodega=1)
@@ -66,13 +67,14 @@ def TrasladoMercaderia(request):
         form_Producto.fields["talla_idtalla"].queryset = Talla.objects.filter(estado_talla=1)
         form_Producto.fields["color_idcolor"].queryset = Color.objects.filter(estado_color=1)
         form_Producto.fields["genero_idgener"].queryset = Genero.objects.filter(estado_genero=1)
-        return render(request, 'kadoshapp/TrasladoMerca.html', {'form_Producto':form_Producto ,'form_InventarioProducto':form_InventarioProducto, 'form_Tabla':form_Tabla,'form_Traslado':form_Traslado, 'form_cantidad':form_cantidad })
+        #return render(request, 'kadoshapp/TrasladoMerca.html', {'form_Producto':form_Producto ,'form_InventarioProducto':form_InventarioProducto, 'form_Tabla':form_Tabla,'form_Traslado':form_Traslado, 'form_cantidad':form_cantidad })
     else:
         form_Traslado=Form_TrasladoMerca_TrasaladoMercaderia()
         form_Producto=Form_TrasladoMerca_Producto()
         form_InventarioProducto=Form_TrasladoMerca_InventarioProducto()
         form_cantidad=Form_TrasladoMerca_Cantidad()
         form_Tabla=FormTabla()
+        form_busqueda=Form_busquedas()
         #A continuación se filtran los datos de los combobox, para que se muestren solo los que cumplan con las condiciones
         #descritas en el filtro
         form_Traslado.fields["bodega_egreso"].queryset = Bodega.objects.filter(estado_bodega=1)
@@ -84,7 +86,7 @@ def TrasladoMercaderia(request):
         form_Producto.fields["talla_idtalla"].queryset = Talla.objects.filter(estado_talla=1)
         form_Producto.fields["color_idcolor"].queryset = Color.objects.filter(estado_color=1)
         form_Producto.fields["genero_idgener"].queryset = Genero.objects.filter(estado_genero=1)
-    return render(request, 'kadoshapp/TrasladoMerca.html', {'form_Producto':form_Producto ,'form_InventarioProducto':form_InventarioProducto, 'form_Tabla':form_Tabla,'form_Traslado':form_Traslado, 'form_cantidad':form_cantidad })
+    return render(request, 'kadoshapp/TrasladoMerca.html', {'form_Producto':form_Producto ,'form_InventarioProducto':form_InventarioProducto, 'form_Tabla':form_Tabla,'form_Traslado':form_Traslado, 'form_cantidad':form_cantidad,'form_busqueda':form_busqueda })
 
 @login_required
 @user_passes_test(not_in_Traslado_group, login_url='denegado')
@@ -159,7 +161,23 @@ def BuscarProductoCaracteristicas(request):
             content_type="application/json"
         )
 
+@login_required
+def BuscarProductoAutocompletarTraslado(request):
+    if request.method == 'POST':
+        txt_producto = str(request.POST.get('producto_buscado'))
+        id_bodega_que_vende = request.POST.get('bodega_idbodega')
+        producto=Producto.objects.filter(Q(nombre_producto__icontains=txt_producto)|Q(marca_id_marca__nombre_marca__icontains=txt_producto)|Q(estilo_idestilo__nombre_estilo__icontains=txt_producto)|Q(tipo_producto_idtipo_producto__nombre_tipoproducto__icontains=txt_producto)|Q(color_idcolor__nombre_color__icontains=txt_producto)|Q(talla_idtalla__nombre_talla__icontains=txt_producto)|Q(genero_idgener__nombre_genero__icontains=txt_producto),estado_producto=1,inventarioproducto__bodega_idbodega=id_bodega_que_vende,precio__estado_precio=1).values('pk','nombre_producto','marca_id_marca__nombre_marca','talla_idtalla__nombre_talla','color_idcolor__nombre_color','genero_idgener__nombre_genero','inventarioproducto__pk','precio__valor_precio','precio__pk','estilo_idestilo__nombre_estilo','codigoestilo_producto').order_by('-precio__pk')
+        dict_producto=ValuesQuerySetToDict(producto)
 
+        return HttpResponse(
+            json.dumps(dict_producto,cls=DjangoJSONEncoder),
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
 
 def consulta_sql_personalizada(bodega,codestilo,marca,tipo,estilo,talla,color,genero):
     from django.db import connection, transaction #importando librerias para manejar directamente la BD

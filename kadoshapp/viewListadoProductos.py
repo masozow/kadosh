@@ -23,14 +23,12 @@ def not_in_Traslado_group(user):
 @user_passes_test(not_in_Traslado_group, login_url='denegado')
 def Listado(request):
     if request.method=='POST':
-        form_prducto=Form_Busqueda_Listado_Precio(request.POST)
-        if form_prducto.is_valid():
-            ultima_busqueda=form_producto.save()
-        return render(request, 'kadoshapp/ingreso_mercaderia.html',{})
+        form_producto=Form_Listado_Producto(request.POST)
+        form_busqueda=Form_busquedas(request.POST)
     else:
         form_producto=Form_Listado_Producto()
-
-    return render(request, 'kadoshapp/ListadoProductos.html', {'form_producto':form_producto })
+        form_busqueda=Form_busquedas()
+    return render(request, 'kadoshapp/ListadoProductos.html', {'form_producto':form_producto,'form_busqueda':form_busqueda })
 
 @login_required
 def BuscarProductoExtra(request):
@@ -104,6 +102,23 @@ def BuscarProductoCaracteristicasExtra(request):
         resultado_diccionario=ValuesQuerySetToDict(resp_producto)
         return HttpResponse(
             json.dumps(resultado_diccionario,cls=DjangoJSONEncoder),
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
+
+@login_required
+def BuscarProductoAutocompletarExtra(request):
+    if request.method == 'POST':
+        txt_producto = str(request.POST.get('producto_buscado'))
+        producto=Producto.objects.filter(Q(nombre_producto__icontains=txt_producto)|Q(marca_id_marca__nombre_marca__icontains=txt_producto)|Q(estilo_idestilo__nombre_estilo__icontains=txt_producto)|Q(tipo_producto_idtipo_producto__nombre_tipoproducto__icontains=txt_producto)|Q(color_idcolor__nombre_color__icontains=txt_producto)|Q(talla_idtalla__nombre_talla__icontains=txt_producto)|Q(genero_idgener__nombre_genero__icontains=txt_producto),estado_producto=1,precio__estado_precio=1).values('pk','nombre_producto','inventarioproducto__bodega_idbodega__nombre_bodega','codigobarras_producto','inventarioproducto__existencia_actual','codigoestilo_producto','precio__valor_precio','marca_id_marca__nombre_marca','tipo_producto_idtipo_producto__nombre_tipoproducto','estilo_idestilo__nombre_estilo','genero_idgener__nombre_genero','talla_idtalla__nombre_talla','color_idcolor__nombre_color')
+        dict_producto=ValuesQuerySetToDict(producto)
+
+        return HttpResponse(
+            json.dumps(dict_producto,cls=DjangoJSONEncoder),
             content_type="application/json"
         )
     else:

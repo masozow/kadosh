@@ -39,6 +39,9 @@ Listado Productos
       <br/>
       <input class="save btn btn-default" id="boton_buscar_caracteristicas" type="button" onclick="buscar_caracteristicas(this)" value="Buscar" name="btn_buscar_caracteristicas"/>
     </div>
+    <div class="col l9 s12 m12">
+    Buscar productos(texto): {{form_busqueda.busqueda_producto}}
+    </div>
   </div>
 </div>
 <div class="divider"></div>
@@ -134,6 +137,22 @@ Listado Productos
           obtener_producto_caracteristicas('#id_codigoestilo_producto','#id_bodega_idbodega','#id_marca_id_marca','#id_tipo_producto_idtipo_producto','#id_talla_idtalla','#id_estilo_idestilo','#id_color_idcolor','#id_genero_idgener');
         }
 
+        //funcion para buscar producto por texto
+        $( 'input#id_busqueda_producto' ).keyup(function(e){
+          if($('#id_bodega_idbodega').val()===''){
+            alert('Debe elegir una bodega válida');
+          }
+          else {
+            if($('#id_busqueda_producto').val()===''){
+              
+            }
+            else{
+              obtener_producto_autocompletar('#id_busqueda_producto','#id_bodega_idbodega');
+            }
+            //console.log($('#id_busqueda_producto').val());
+          }
+        });
+
         /*Espacio para Ajax
         ============================================================================*/
 
@@ -163,6 +182,38 @@ Listado Productos
                     });
 
 
+                },
+                // Si el response no tuvo exito
+                error : function(xhr,errmsg,err) {
+                    $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Ha ocurrido un error: "+errmsg+
+                        " <a href='#' class='close'>&times;</a></div>"); // Se agrega el error al DOM
+                    console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
+                }
+            });
+        };
+
+        function obtener_producto_autocompletar(buscar_producto) {
+            $.ajax({
+                url : "/Buscar/TodosProductosExtra/Autocompletar/", // La URL que llama a la vista
+                type : "POST", // Metodo http para realizar el request (peticion al servidor)
+                data : { producto_buscado : $(buscar_producto).val()}, // Datos enviados con el request en formato JSON
+
+                // Si el response es correcto (si la respuesta del servidor es correcta)
+                success : function(json) {
+                    //console.log(json.recibido);
+                  $("#tabla_productos > tbody").html("");
+                  $.each(json, function(key,value) {
+                  $('#tabla_productos > tbody:last-child').append('<tr>'+
+                                                                  '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.pk+'</td>'+
+                                                                  '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.nombre_producto+'-'+value.genero_idgener__nombre_genero+' ['+value.talla_idtalla__nombre_talla+'] '+value.color_idcolor__nombre_color+'-'+value.estilo_idestilo__nombre_estilo+'</td>'+
+                                                                  '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.codigoestilo_producto+'</td>'+
+                                                                  '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.codigobarras_producto+'</td>'+
+                                                                  '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.marca_id_marca__nombre_marca+'</td>'+
+                                                                  '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.precio__valor_precio+'</td>'+
+                                                                  '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.inventarioproducto__bodega_idbodega__nombre_bodega+'</td>'+
+                                                                  '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.inventarioproducto__existencia_actual+'</td>'+
+                                                                  '</tr>')
+                  });
                 },
                 // Si el response no tuvo exito
                 error : function(xhr,errmsg,err) {

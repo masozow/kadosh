@@ -44,6 +44,9 @@ class FormTabla(forms.Form):
             #raise forms.ValidationError("Invalid data in jsonfield")
          return jdata
 
+class Form_busquedas(forms.Form):
+    busqueda_producto = forms.CharField(label='Nombre promocion',max_length=100)
+
 
 #class form_tabla(forms.Form):
 #    inventario = forms.IntegerField(label='Inv')

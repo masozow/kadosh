@@ -37,6 +37,7 @@ class Form_PuntoVenta_busquedas(forms.Form):
     nit_del_cliente = forms.CharField(label='Buscar Nit',max_length=50)
     nombre_delapromocion = forms.CharField(label='Nombre promocion',max_length=50)
     codigo_autorizacion = forms.CharField(label='Codigo de autorización',max_length=50)
+    busqueda_producto = forms.CharField(label='Nombre promocion',max_length=100)
 
 class Form_PuntoVenta_Venta(forms.ModelForm):
     #cliente_idcliente = forms.ModelChoiceField(
