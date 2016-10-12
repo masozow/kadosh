@@ -1,6 +1,6 @@
 from django.conf.urls import include, url
 from . import views
-from . import ViewProducto,ViewTrabajador,viewReporteProductos,viewModificarCliente,viewAsignarCaja,viewListadoProductos,viewBusquedaMercaderia,viewPrecios,viewCliente, viewIngresoMercaPorProveedor, viewCompra, viewPuntodeVenta, viewTrasladoMercaderia, viewCierreCaja, viewAnularVenta, viewInventario, viewPromocion,viewEmpleados, viewCotizacion,viewModificarVenta,viewReporteCompras,viewReporteComprasExcel,viewResumenes,viewReporteCompraEspecifica,viewReporteCompraEspecificaExcel,viewReporteTodosProductos,viewReporteTodosProductosExcel,viewReporteCierreCaja,viewReporteCierreCajaExcel,viewReporteDevolucion,viewReporteDevolucionExcel,viewReporteGastos,viewReporteGastosExcel,viewWebInicio,viewWebNoticias,viewWebProductos,viewWebConcacto,viewWebOfertas,viewPublicarOfertarProductos_Web, viewPublicarNoticia_Web
+from . import ViewCuentasPorCobrar,ViewProducto,ViewTrabajador,viewReporteProductos,viewModificarCliente,viewAsignarCaja,viewListadoProductos,viewBusquedaMercaderia,viewPrecios,viewCliente, viewIngresoMercaPorProveedor, viewCompra, viewPuntodeVenta, viewTrasladoMercaderia, viewCierreCaja, viewAnularVenta, viewInventario, viewPromocion,viewEmpleados, viewCotizacion,viewModificarVenta,viewReporteCompras,viewReporteComprasExcel,viewResumenes,viewReporteCompraEspecifica,viewReporteCompraEspecificaExcel,viewReporteTodosProductos,viewReporteTodosProductosExcel,viewReporteCierreCaja,viewReporteCierreCajaExcel,viewReporteDevolucion,viewReporteDevolucionExcel,viewReporteGastos,viewReporteGastosExcel,viewWebInicio,viewWebNoticias,viewWebProductos,viewWebConcacto,viewWebOfertas,viewPublicarOfertarProductos_Web, viewPublicarNoticia_Web
 from . import viewTablas
 from . import viewReporteClientes,viewReporteClientesExcel
 from . import ViewReporteVentas, ViewReporteVentasExcel
@@ -12,6 +12,7 @@ url(r'^sistema/$','django.contrib.auth.views.login',
 url(r'^cerrar/$','django.contrib.auth.views.logout_then_login',name='logout'),
 url(r'^index/kadosh/$', views.ingreso_mercaderia, name='ingreso_mercaderia'),
 url(r'^Acceso/Denegado/$', views.denegado, name='denegado'),
+url(r'^Venta/Apartados/$', ViewCuentasPorCobrar.Abonos, name='Apartados'),
 url(r'^ingreso/cliente/$', viewCliente.registro_cliente, name='registroCliente'),
 url(r'^Registro/empleado/$', ViewTrabajador.registro_trabajador, name='registro_trabajador'),
 url(r'^Elementos/Producto/$', ViewProducto.CosasProducto, name='Elementos'),
