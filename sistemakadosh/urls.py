@@ -13,4 +13,4 @@ urlpatterns = [
     #url(r'^media/(?P<path>.*)$', 'django.views.static.serve',
     #                    {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
 
-] #+ static(settings.MEDIA_URL, docment_root=settings.MEDIA_ROOT) #comentar esto cuando Debug=False
+] + static(settings.MEDIA_URL, docment_root=settings.MEDIA_ROOT) #comentar esto cuando Debug=False
