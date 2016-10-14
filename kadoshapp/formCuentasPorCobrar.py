@@ -28,7 +28,8 @@ class Form_Abonos_Persona(forms.ModelForm):
 class Form_Abonos_PagosCuentasPorCobrar(forms.ModelForm):
     class Meta:
         model=PagosCuentaPorCobrar
-        fields=('monto_pago_cuentaporcobrar','tipo_pago_idtipo_pago')
+        fields=('monto_pago_cuentaporcobrar','tipo_pago_idtipo_pago','caja_idcaja')
+
 class Form_Abonos_DetalleVenta(forms.ModelForm):
     class Meta:
         model=DetalleVenta

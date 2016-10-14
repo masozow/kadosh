@@ -43,11 +43,13 @@ Apartados
 
          <div class="row" style="margin-bottom: 0px;">
            <div class="col l6 m12 s12">
+              <br/>
               <input class="btn tooltipped" data-position="right" data-delay="5" data-tooltip="Si dos o más datos no concuerdan entre sí, solo se buscará a uno de ellos, ignorando a cualquier otro" id="boton_buscar" type="button" onclick="buscar(this)" value="Buscar" name="btn_buscar"/>
            </div>
         </div>
 
          <div class="row">
+           <br/>
            <table id="tabla_venta" class="grey lighten-2">
              <thead>
                <tr>
@@ -72,15 +74,13 @@ Apartados
             <div id="bloque_tabla">
               <div class="col l12 m12 s12">
                 <h5>Cuentas Por Cobrar</h5>
-                <table id="tabla CuentaPorCobrar" class="grey lighten-2">
+                <table id="tabla_cuentaporcobrar" class="grey lighten-2">
                   <thead>
                     <tr style="margin-bottom: 0px; margin-top: 0px; padding-top:0px; padding-botton:0px;">
-                      <th data-field="id" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">CodPCC</th>
+                      <th data-field="id" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">CodCuenta</th>
                         <th data-field="id" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">CodVent</th>
                         <th data-field="name" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">S.Inicial</th>
                         <th data-field="price" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">S.Actual</th>
-                        <th data-field="price" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">Estado</th>
-
                     </tr>
                   </thead>
                   <tbody>
@@ -89,53 +89,357 @@ Apartados
               </div>
             </div>
           </div>
+          <p class="blue-text text-darken-2">Cuenta por cobrar seleccionada: <label id="lbl_cuenta" class="mietiqueta"></label></p>
          <div class="divider"></div>
          <div class="divider"></div>
          <div id="bloque_caracteristicas_producto" style="background-color:#b3cccc;border-radius:10px;">
            <div class="row" margin-bottom: 0px;>
              <h5>Abonos</h5>
-             <div class="col l6 m12 s12">
-
-               <label for="id_bodega_idbodega"><h6>Monto</h6> </label>{{form_PCC.monto_pago_cuentaporcobrar}}
-               <label for="id_bodega_idbodega"><h6>Tipo de pago</h6> </label>{{ form_PCC.tipo_pago_idtipo_pago}}
+             <div class="col l4 m12 s12">
+               <label for="id_caja_idcaja"><h6>Caja que cobra:</h6> </label>{{ form_PCC.caja_idcaja}}
+               <label for="id_monto_pago_cuentaporcobrar"><h6>Monto</h6> </label>{{form_PCC.monto_pago_cuentaporcobrar}}
+               <label for="id_tipo_pago_idtipo_pago"><h6>Tipo de pago</h6> </label>{{ form_PCC.tipo_pago_idtipo_pago}}
              </div>
-             <div class="col l6 m12 s12">
-               <table id="pagos cuentas por cobrar" class="grey lighten-2">
+             <div class="col l8 m12 s12">
+               <table id="tabla_pagos" class="grey lighten-2">
                  <thead>
                    <tr style="margin-bottom: 0px; margin-top: 0px; padding-top:0px; padding-botton:0px;">
                       <th data-field="id" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">CodPago</th>
-                     <th data-field="id" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">CodPCC</th>
+                     <th data-field="id" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">CodCuenta</th>
                        <th data-field="name" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">Monto</th>
                         <th data-field="name" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">Fecha</th>
-                       <th data-field="id" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">CodTPago</th>
+                       <th data-field="id" style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">TipoPago</th>
 
                    </tr>
                  </thead>
                  <tbody>
                  </tbody>
              </table>
-
+             <input class="btn tooltipped" data-position="right" data-delay="5" data-tooltip="Entregar el producto" id="boton_entregar" type="button" onclick="entregar_producto(this)" value="Entregar producto" name="btn_entregar"/>
              </div>
            </div>
-
-        </div>
-
-
-         <div class="row" margin-bottom: 0px;>
-
-           <div class="col l4 m12 s12">
-            </br>
-             <button type="submit" class="btn tooltipped" data-position="right" data-delay="50" data-tooltip="Se modificará ese detalle de la venta" id="boton_anular" name="btn_anular">Guardar Pago</button>
+           <div class="row" margin-bottom: 0px;>
+            <div class="col l4 m12 s12">
+              <br/>
+              <button type="submit" class="btn tooltipped" data-position="right" data-delay="50" data-tooltip="Revise bien los datos antes de guardar" id="boton_guardar_pago" name="btn_guardar_pago">Guardar Pago</button>
+            </div>
+            <div class="col l8 m12 s12">
+            </div>
            </div>
-         </div>
-
+        </div>
 
        </form>
 
    {% endblock %}
-   {% block extra_scripts %}
+  
+  {% block extra_scripts %}
    <script type="text/javascript" src="{% static 'js/funciones.js' %}"></script>
+   <script type="text/javascript">
 
+   /*Espacio para JQuery y busquedas dentro del DOM
+   ===========================================================================*/
+     //Similar al FormLoad
+       $( document ).ready(function(){ //document indica toda la página, ready indica que ya se haya cargado el DOM
+         $('#id_fecha_venta').val('');
+         $("#id_producto_codigo_producto").empty();
+         $('#bloque_caracteristicas_producto').find('input').not('#boton_buscar_caracteristicas,#boton_limpiar,#id_bodega_idbodega').val('');
+         $('#bloque_caracteristicas_producto').find('text').not('#boton_buscar_caracteristicas,#boton_limpiar,#id_bodega_idbodega').val('');
+         $('#bloque_caracteristicas_producto').find('textarea').not('#boton_buscar_caracteristicas,#boton_limpiar,#id_bodega_idbodega').val('');
+         $('#bloque_caracteristicas_producto').find('select').not('#boton_buscar_caracteristicas,#boton_limpiar,#id_bodega_idbodega').val('');
+         $("#id_cantidad_venta").val(1);
+         $("#id_bodega_idbodega").val(1);
+         //$("#id_cantidad_devuelta").val(1);
+         $('#id_inventario_producto_idinventario_producto').find(':not(:selected)').prop('disabled',true);
+         $("#id_codigobarras_producto").val('');
+         $("#id_valor_precio").val(0);
+         $("#id_valor_parcial_venta").val(0);
+         $("#id_codigoestilo_producto").val('');
+         //$("#id_inventario_producto_idinventario_producto").prop('readonly',true);
+       });
+
+
+       $( 'input#id_codigobarras_producto' ).keydown(function(e){
+         var keyCode = e.keyCode || e.which; //la propiedad wich indica la tecla o el botón que se ha presionado específicamente
+                                             //puede ser del teclado o del mouse, normaliza dos eventos: event.keyCode y event.charCode
+         if(e.keyCode==13)
+         {
+           e.preventDefault();
+           if($('#id_bodega_idbodega').val()===''){
+             alert('Debe elegir una bodega válida');
+           }
+           else{
+              obtener_productonuevo('input#id_codigobarras_producto','#id_codigoestilo_producto','#id_marca_id_marca','#id_tipo_producto_idtipo_producto','#id_talla_idtalla','#id_estilo_idestilo','#id_color_idcolor','#id_genero_idgener','#id_bodega_idbodega');
+           }
+         }
+       });
+
+       $( 'input#id_codigoestilo_producto' ).keydown(function(e){
+         var keyCode = e.keyCode || e.which; //la propiedad wich indica la tecla o el botón que se ha presionado específicamente
+                                             //puede ser del teclado o del mouse, normaliza dos eventos: event.keyCode y event.charCode
+         if(e.keyCode==13)
+         {
+           e.preventDefault();
+           obtener_productonuevo('input#id_codigobarras_producto','#id_codigoestilo_producto','#id_marca_id_marca','#id_tipo_producto_idtipo_producto','#id_talla_idtalla','#id_estilo_idestilo','#id_color_idcolor','#id_genero_idgener','#id_bodega_idbodega');
+         }
+       });
+
+       $( 'input#id_nit_cliente' ).keydown(function(e){
+         var keyCode = e.keyCode || e.which; //la propiedad wich indica la tecla o el botón que se ha presionado específicamente
+                                             //puede ser del teclado o del mouse, normaliza dos eventos: event.keyCode y event.charCode
+         if(e.keyCode==13)
+         {
+           e.preventDefault();
+           $( 'input#id_nombres_persona' ).focus()
+         }
+       });
+       $( 'input#id_nombres_persona' ).keydown(function(e){
+         var keyCode = e.keyCode || e.which; //la propiedad wich indica la tecla o el botón que se ha presionado específicamente
+                                             //puede ser del teclado o del mouse, normaliza dos eventos: event.keyCode y event.charCode
+         if(e.keyCode==13)
+         {
+           e.preventDefault();
+           $( 'input#id_apellidos_persona' ).focus()
+         }
+       });
+       $( 'input#id_apellidos_persona' ).keydown(function(e){
+         var keyCode = e.keyCode || e.which; //la propiedad wich indica la tecla o el botón que se ha presionado específicamente
+                                             //puede ser del teclado o del mouse, normaliza dos eventos: event.keyCode y event.charCode
+         if(e.keyCode==13)
+         {
+           e.preventDefault();
+         }
+       });
+       $( '#id_cantidad_venta' ).keydown(function(e){
+         var keyCode = e.keyCode || e.which; //la propiedad wich indica la tecla o el botón que se ha presionado específicamente
+                                             //puede ser del teclado o del mouse, normaliza dos eventos: event.keyCode y event.charCode
+         if(e.keyCode==13)
+         {
+           e.preventDefault();
+           $('#id_valor_parcial_venta').val($('#id_cantidad_venta').val()*$('#id_precio_producto').val());
+         }
+       });
+       $("#id_nit_cliente").focus(function() {
+         Materialize.toast('Escriba el nit incluyendo el guión', 4000);
+       });
+
+       $( "#id_venta_idventa" ).change(function() {
+         $("#lbl_venta").text($("#id_venta_idventa option:selected").val());
+       });
+
+
+       $( "#id_cantidad_venta" ).change(function() {
+         $('#id_valor_parcial_venta').val($('#id_cantidad_venta').val()*$('#id_precio_producto').val());
+       });
+
+       //función que limpia los valores de la sección de características del producto
+       function limpiar(boton){
+         $('#bloque_caracteristicas_producto').find('input, textarea, select').not("#boton_limpiar,#boton_buscar_caracteristicas,#id_cantidad_venta,#id_bodega_idbodega").val("");
+         $('#id_cantidad_venta').val(1);
+         $('#id_bodega_idbodega').val(1);
+       }
+
+       //Con esta funcion se buscan los productos de acuerdo a sus caracteristicas
+       function buscar(boton){
+           obtener_venta_abono($("#id_venta_idventa option:selected").val(),$('#id_apellidos_persona').val(),$('#id_nombres_persona').val(),$('#id_fecha_venta').val(),$('#id_nit_cliente').val());
+           $("#lbl_venta").text("");
+       }
+       var venta=0;
+       //esta funcion se activa al dar clic sobre una fila de la tabla
+       function seleccionar_fila(fila){
+         var datos = $(fila).find('td').get().map(function(cell) {
+             return $(cell).html();
+         });
+         Materialize.toast('Se selecionó la venta: '+datos[0], 4000);
+         venta=datos[0];
+         $('#lbl_venta').text(datos[0]);
+         obtener_cuentaporcobrar(datos[0]);
+       }
+       var cuenta=0;
+       //esta funcion se activa al dar clic sobre una fila de la tabla
+       function seleccionar_filacuentaporcobrar(fila){
+         var datos = $(fila).find('td').get().map(function(cell) {
+             return $(cell).html();
+         });
+         if (datos[1]==='0') {
+            Materialize.toast('No se puede seleccionar la cuenta: '+datos[0], 4000);
+         }else {
+           cuenta=datos[0];
+           $('#lbl_cuenta').text(datos[0]);
+           Materialize.toast('Se selecionó la cuenta: '+datos[0], 4000);
+           obtener_pago(datos[0]);
+         }
+       }
+       //evitando que se actualice la página, guardando el precio y limpiando los items
+
+       $('#formulario_anular').on('submit', function(event){
+           event.preventDefault();
+           if(venta===0)
+           {
+             alert('No eligió ninguna venta');
+           }
+           else if (detalle===0) {
+             alert('No eligió ningun detalle a modificar');
+           }
+           else if ($('#id_producto_codigo_producto').val()==='') {
+             alert('No eligió ningun producto a agregar');
+           }
+           else if ($('#id_inventario_producto_idinventario_producto option:selected').val()==='') {
+             alert('Debe elegir un inventario válido');
+           }
+           else{
+             modificar_detalle(venta,detalle,$('#id_inventario_producto_idinventario_producto option:selected').val(),$("#id_empleado_idempleado option:selected").val(),$("#id_codigo_autorizacion_empleado").val(),$('#id_cantidad_venta').val(),$('#id_valor_parcial_venta').val(),$('#id_motivo_devolucion').val());
+           }
+           //anular_venta($("#lbl_venta").text(),$("#id_empleado_idempleado option:selected").val(),$("#id_codigo_autorizacion_empleado").val());
+
+           //$('#formulario_precio').find('input, textarea, select').not("#boton_buscar, #boton_guardar").val("");
+           //$('#formulario_precio').find('.mietiqueta').text("");
+           //$("#tabla_venta > tbody").html("");
+       });
+
+       $( "#id_producto_codigo_producto" ).change(function() {
+         var prod=$( "#id_producto_codigo_producto option:selected" ).text().split('|');
+         //alert(prod[7]);
+         $("#id_inventario_producto_idinventario_producto").val(parseInt(prod[7]));
+         $("#id_precio_producto").val(prod[8]);
+         $('#id_valor_parcial_venta').val(prod[8]*$('#id_cantidad_venta').val());
+       });
+
+       function buscar_caracteristicas(boton){
+         if($('#id_bodega_idbodega').val()===''){
+           alert('Debe elegir una bodega válida');
+         }
+         else{
+            obtener_productonuevo('input#id_codigobarras_producto','#id_codigoestilo_producto','#id_marca_id_marca','#id_tipo_producto_idtipo_producto','#id_talla_idtalla','#id_estilo_idestilo','#id_color_idcolor','#id_genero_idgener','#id_bodega_idbodega');
+         }
+          //console.log($('#id_bodega_idbodega option:selected').val());
+       }
+/*
+Pensar en qué caja se debe agregar el pago del abono
+Agregar la nota al cierre de caja
+Actualizar la Cuenta por cobrar al hacer un abono
+Crear la cuenta por cobrar al momento de hacer la venta que no es al contado
+Filtrar por venta al contado en todos los reportes y en el cierre de caja
+No hacer descarga de inventario hasta que se haya pagado por completo
+*/
+   /*Espacio para Ajax
+   ============================================================================*/
+
+       function obtener_venta_abono(num_venta,ape_cliente,nom_cliente,fventa,nitcliente) {
+           $.ajax({
+               url : "/Buscar/VentaAbono/", // La URL que llama a la vista
+               type : "POST", // Metodo http para realizar el request (peticion al servidor)
+               data : { numeroventa:num_venta,apellidos:ape_cliente,nombres:nom_cliente,fecha:fventa,nit:nitcliente}, // Datos enviados con el request en formato JSON
+
+               // Si el response es correcto (si la respuesta del servidor es correcta)
+               success : function(json) {
+                   $("#tabla_venta > tbody").html("");
+                   //console.log(json);
+                   $.each(json, function(key,value) {
+                     $('#tabla_venta > tbody:last-child').append('<tr onclick="seleccionar_fila(this)">'+
+                                                                       '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.pk+'</td>'+
+                                                                       '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.cliente_idcliente__persona_idpersona__nombres_persona+' '+value.cliente_idcliente__persona_idpersona__apellidos_persona +'</td>'+
+                                                                       '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.fecha_venta+'</td>'+
+                                                                       '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.vendedor_venta__pk+'</td>'+
+                                                                       //'<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.empleado_idempleado__pk+'</td>'+
+                                                                       '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.total_venta+'</td>'+
+                                                                       '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.anotaciones_venta+'</td>'+
+                                                                     '</tr>');
+                   });
+               },
+               // Si el response no tuvo exito
+               error : function(xhr,errmsg,err) {
+                   $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Ha ocurrido un error: "+errmsg+
+                       " <a href='#' class='close'>&times;</a></div>"); // Se agrega el error al DOM
+                   console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
+               }
+           });
+       };
+
+       function obtener_cuentaporcobrar(num_venta) {
+           $.ajax({
+               url : "/Buscar/CuentaPorCobrar/", // La URL que llama a la vista
+               type : "POST", // Metodo http para realizar el request (peticion al servidor)
+               data : { numeroventa:num_venta}, // Datos enviados con el request en formato JSON
+
+               // Si el response es correcto (si la respuesta del servidor es correcta)
+               success : function(json) {
+                   $("#tabla_cuentaporcobrar > tbody").html("");
+                   //console.log(json);
+                   $.each(json, function(key,value) {
+                       $('#tabla_cuentaporcobrar > tbody:last-child').append('<tr onclick="seleccionar_filacuentaporcobrar(this)">'+
+                                                                               '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.pk+'</td>'+
+                                                                               '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.venta_idventa__pk+'</td>'+
+                                                                               '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.saldo_inicial_cuentaporcobrar+'</td>'+
+                                                                               '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.saldo_actual_cuentaporcobrar+'</td>'+
+                                                                             '</tr>');
+                   });
+               },
+               // Si el response no tuvo exito
+               error : function(xhr,errmsg,err) {
+                   $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Ha ocurrido un error: "+errmsg+
+                       " <a href='#' class='close'>&times;</a></div>"); // Se agrega el error al DOM
+                   console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
+               }
+           });
+       };
+
+       function obtener_pago(num_cuenta) {
+           $.ajax({
+               url : "/Buscar/Pago/", // La URL que llama a la vista
+               type : "POST", // Metodo http para realizar el request (peticion al servidor)
+               data : { numerocuenta:num_cuenta}, // Datos enviados con el request en formato JSON
+
+               // Si el response es correcto (si la respuesta del servidor es correcta)
+               success : function(json) {
+                   $("#tabla_pagos > tbody").html("");
+                   //console.log(json);
+                   $.each(json, function(key,value) {
+                       $('#tabla_pagos > tbody:last-child').append('<tr>'+
+                                                                    '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.pk+'</td>'+
+                                                                    '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.cuenta_por_cobrar_idcuenta_por_cobrar__pk+'</td>'+
+                                                                    '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.monto_pago_cuentaporcobrar+'</td>'+
+                                                                    '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.fecha_pago_cuentaporcobrar+'</td>'+
+                                                                    '<td style="margin-bottom: 0px;margin-top: 0px; padding-top:0px; padding-botton:0px;">'+value.tipo_pago_idtipo_pago__nombre_tipopago+'</td>'+
+                                                                   '</tr>');
+                   });
+               },
+               // Si el response no tuvo exito
+               error : function(xhr,errmsg,err) {
+                   $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Ha ocurrido un error: "+errmsg+
+                       " <a href='#' class='close'>&times;</a></div>"); // Se agrega el error al DOM
+                   console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
+               }
+           });
+       };
+
+       var res;
+       function guardar_pago(num_cuenta,monto_pago,idinventario,idempleado,autorizacion,cantventa,valparventa,motivo) {
+           $.ajax({
+               url : "/Modificacion/Venta/", // La URL que llama a la vista
+               type : "POST", // Metodo http para realizar el request (peticion al servidor)
+               data : { cod_venta:idventa,cod_detalle : iddetalle, cod_inventario:idinventario, cod_empleado : idempleado, codigo : autorizacion,cant_venta:cantventa,val_parcial:valparventa,motivo_devolucion:motivo}, // Datos enviados con el request en formato JSON
+               // Si el response es correcto (si la respuesta del servidor es correcta)
+               success : function(json) {
+                   res=json;
+                   alert(json);
+               },
+               // Si el response no tuvo exito
+               error : function(xhr,errmsg,err) {
+                   $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Ha ocurrido un error: "+errmsg+
+                       " <a href='#' class='close'>&times;</a></div>"); // Se agrega el error al DOM
+                   console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
+               }
+           }).done(function( data ) {
+             if (res==="Detalle actualizado") {
+               $("#id_codigo_autorizacion_empleado").val("");
+               $("#id_empleado_idempleado").val("");
+               location.reload();
+             }
+           });
+       };
+
+
+   </script>
 
    <script type="text/javascript" src="{% static 'js/selectorStartsWith.js' %}"></script>
    <script type="text/javascript" src="{% static 'js/token.js' %}"></script>

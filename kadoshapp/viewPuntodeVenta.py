@@ -220,32 +220,16 @@ def GuardarVenta(request):
                 datos=[] #creando una lista
                 for elemento in fila:
                     datos.append(elemento) #agregando datos a la lista
-                #if datos[0]=='0' and datos[1]=='0':  #si no hay codigo de inventario ni codigo de producto, entonces es promocion
-                #    separacion=datos[3].split("|")
-                #    detalleNuevo=DetalleVenta(venta_idventa=ventaNueva,promocion_idpromocion=Promocion(idpromocion=separacion[0]),cantidad_venta=datos[2],valor_parcial_venta=datos[5])
-                #    #El siguiente bloque de código es para actualizar las existencias de los inventarios de todos los productos en promoción
-                #    productos_promocion=PromocionHasProducto.objects.filter(promocion_idpromocion=separacion[0])
-                #    for prod in productos_promocion:
-                #        cantidad_prod=prod.cantidad_productoenpromocion
-                #        cantidad_real=cantidad_prod*datos[2]
-                #        if not rec_es_cotizacion: #solo si no es cotizacion se va a actualizar las existencias
-                #            InventarioProducto.objects.filter(pk=prod.inventario_producto_idinventario_producto.pk).update(existencia_actual=F('existencia_actual') - cantidad_real)
-                #    #Aquí termina el bloque de inventarios en promoción
-                #else:
                 if datos[0]=='0': #sí es un descuento
                     detalleNuevo=DetalleVenta(venta_idventa=ventaNueva,descuento_iddescuento=Descuento(iddescuento=datos[1]),cantidad_venta=datos[2],valor_parcial_venta=datos[5])
                 else: #es un producto normal
                     detalleNuevo=DetalleVenta(venta_idventa=ventaNueva,inventario_producto_idinventario_producto=InventarioProducto(pk=datos[0]),cantidad_venta=datos[2],valor_parcial_venta=datos[5])
-                    if rec_es_cotizacion==0:  #solo si no es cotizacion se va a actualizar las existencias
+                    if rec_es_cotizacion==0 and rec_contado_venta==1:  #solo si no es cotizacion y si es al contado, se van a actualizar las existencias
                         invent=InventarioProducto.objects.filter(pk=datos[0]).update(existencia_actual=F('existencia_actual') - datos[2]) #Haciendo un update a las existencias del inventario con esa PK
                 detalleNuevo.save()
             #los siguientes datos son para revision solamente, asi se tiene una respuesta de exito en la consola
-            #if invent:
             response_data['total']=ventaNueva.total_venta
-            #else:
-            #    response_data['total']='No se actualizo'
             response_data['idventa']=ventaNueva.pk
-            #response_data['total']=ventaNueva.total_venta
         except Exception as e:
             response_data['idventa']="Ha ocurrido un error: "+str(e)
         return HttpResponse(

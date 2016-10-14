@@ -613,6 +613,7 @@ class PagosCuentaPorCobrar(models.Model):
     fecha_pago_cuentaporcobrar = models.DateTimeField(db_column='fecha_pago_cuentaPorCobrar', default=timezone.now)  # Field name made lowercase.
     monto_pago_cuentaporcobrar = models.DecimalField(db_column='monto_pago_cuentaPorCobrar', max_digits=12, decimal_places=2, blank=True, null=True)  # Field name made lowercase.
     tipo_pago_idtipo_pago = models.ForeignKey('TipoPago', db_column='Tipo_pago_idTipo_pago')  # Field name made lowercase.
+    caja_idcaja = models.ForeignKey('Caja', db_column='Caja_idCaja')  # Field name made lowercase.
 
     def __str__(self):
         return 'Id:%s - %s - F: %s' % (self.idpagos_cuenta_por_cobrar, self.cuenta_por_cobrar_idcuenta_por_cobrar,self.fecha_pago_cuentaporcobrar)
