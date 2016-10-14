@@ -48,14 +48,14 @@ def ingreso_mercaderia(request):
     if request.method == 'POST':
         fecha=datetime.today()
         fecha2= fecha + timedelta(days=1)
-        clientes=Cliente.objects.filter(persona_idpersona__fecha_nacimiento_persona__day=fecha2.day,persona_idpersona__fecha_nacimiento_persona__month=fecha2.month,venta__estado_venta=1,venta__es_cotizacion=0,estado_cliente=1).values('pk','persona_idpersona__nombres_persona','persona_idpersona__apellidos_persona','persona_idpersona__correoelectronico_persona','persona_idpersona__fecha_nacimiento_persona','tipo_cliente_idtipo_cliente__nombre_tipocliente','persona_idpersona__telefonos_persona').annotate(total_ventas=Sum('venta__total_venta'))
+        clientes=Cliente.objects.filter(persona_idpersona__fecha_nacimiento_persona__day=fecha2.day,persona_idpersona__fecha_nacimiento_persona__month=fecha2.month,venta__estado_venta=1,venta__es_cotizacion=0,venta__contado_venta=1,estado_cliente=1).values('pk','persona_idpersona__nombres_persona','persona_idpersona__apellidos_persona','persona_idpersona__correoelectronico_persona','persona_idpersona__fecha_nacimiento_persona','tipo_cliente_idtipo_cliente__nombre_tipocliente','persona_idpersona__telefonos_persona').annotate(total_ventas=Sum('venta__total_venta'))
         reporte1=RecordatorioClientesTabla(clientes)
         RequestConfig(request, paginate={'per_page': 25}).configure(reporte1)
         return render(request,'kadoshapp/ingreso_mercaderia.html',{'reporte1':reporte1})
     else:
         fecha=datetime.today()
         fecha2= fecha + timedelta(days=1)
-        clientes=Cliente.objects.filter(persona_idpersona__fecha_nacimiento_persona__day=fecha2.day,persona_idpersona__fecha_nacimiento_persona__month=fecha2.month,venta__estado_venta=1,venta__es_cotizacion=0,estado_cliente=1).values('pk','persona_idpersona__nombres_persona','persona_idpersona__apellidos_persona','persona_idpersona__correoelectronico_persona','persona_idpersona__fecha_nacimiento_persona','tipo_cliente_idtipo_cliente__nombre_tipocliente','persona_idpersona__telefonos_persona').annotate(total_ventas=Sum('venta__total_venta'))
+        clientes=Cliente.objects.filter(persona_idpersona__fecha_nacimiento_persona__day=fecha2.day,persona_idpersona__fecha_nacimiento_persona__month=fecha2.month,venta__estado_venta=1,venta__es_cotizacion=0,venta__contado_venta=1,estado_cliente=1).values('pk','persona_idpersona__nombres_persona','persona_idpersona__apellidos_persona','persona_idpersona__correoelectronico_persona','persona_idpersona__fecha_nacimiento_persona','tipo_cliente_idtipo_cliente__nombre_tipocliente','persona_idpersona__telefonos_persona').annotate(total_ventas=Sum('venta__total_venta'))
         reporte1=RecordatorioClientesTabla(clientes)
         RequestConfig(request, paginate={'per_page': 25}).configure(reporte1)
         return render(request,'kadoshapp/ingreso_mercaderia.html',{'reporte1':reporte1})

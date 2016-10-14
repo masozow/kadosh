@@ -64,13 +64,13 @@ class ReporteVentas(TemplateView):
             fechafinal_real=fechafinal_real+datetime.timedelta(hours=6)
             if checo=="true":
                 pormes=True
-                ventas_vendedor = qs.filter(es_cotizacion=0,estado_venta=1,vendedor_venta=int(empleado),fecha_venta__range=(fechainicial_real, fechafinal_real)).values('month','vendedor_venta__persona_idpersona__nombres_persona','vendedor_venta__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('month') #este y funciona con las horas
+                ventas_vendedor = qs.filter(contado_venta=1,es_cotizacion=0,estado_venta=1,vendedor_venta=int(empleado),fecha_venta__range=(fechainicial_real, fechafinal_real)).values('month','vendedor_venta__persona_idpersona__nombres_persona','vendedor_venta__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('month') #este y funciona con las horas
                 if not ventas_vendedor:
-                    ventas_vendedor = qs.filter(es_cotizacion=0,estado_venta=1,fecha_venta__range=(fechainicial_real,fechafinal_real)).values('month','vendedor_venta__persona_idpersona__nombres_persona','vendedor_venta__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('month') #este y funciona con las horas
+                    ventas_vendedor = qs.filter(contado_venta=1,es_cotizacion=0,estado_venta=1,fecha_venta__range=(fechainicial_real,fechafinal_real)).values('month','vendedor_venta__persona_idpersona__nombres_persona','vendedor_venta__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('month') #este y funciona con las horas
             else:
-                ventas_vendedor = Venta.objects.filter(es_cotizacion=0,estado_venta=1,vendedor_venta=int(empleado),fecha_venta__range=(fechainicial_real, fechafinal_real)).values('vendedor_venta__persona_idpersona__nombres_persona','vendedor_venta__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('total_ventas')
+                ventas_vendedor = Venta.objects.filter(contado_venta=1,es_cotizacion=0,estado_venta=1,vendedor_venta=int(empleado),fecha_venta__range=(fechainicial_real, fechafinal_real)).values('vendedor_venta__persona_idpersona__nombres_persona','vendedor_venta__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('total_ventas')
                 if not ventas_vendedor:
-                    ventas_vendedor = Venta.objects.filter(es_cotizacion=0,estado_venta=1,fecha_venta__range=(fechainicial_real, fechafinal_real)).values('vendedor_venta__persona_idpersona__nombres_persona','vendedor_venta__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('total_ventas')
+                    ventas_vendedor = Venta.objects.filter(contado_venta=1,es_cotizacion=0,estado_venta=1,fecha_venta__range=(fechainicial_real, fechafinal_real)).values('vendedor_venta__persona_idpersona__nombres_persona','vendedor_venta__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('total_ventas')
 
         if not ventas_vendedor:
             ventas_vendedor=qs.values('month','vendedor_venta__persona_idpersona__nombres_persona','vendedor_venta__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('month','total_ventas')
