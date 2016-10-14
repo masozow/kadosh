@@ -245,6 +245,11 @@ Apartados
            obtener_venta_abono($("#id_venta_idventa option:selected").val(),$('#id_apellidos_persona').val(),$('#id_nombres_persona').val(),$('#id_fecha_venta').val(),$('#id_nit_cliente').val());
            $("#lbl_venta").text("");
        }
+       function entregar_producto(boton){
+           entrega_de_producto(cuenta,venta);
+       }
+
+       
        var venta=0;
        //esta funcion se activa al dar clic sobre una fila de la tabla
        function seleccionar_fila(fila){
@@ -444,6 +449,25 @@ Crear la cuenta por cobrar al momento de hacer la venta que no es al contado
                location.reload();
              }
            });*/
+       };
+
+       function entrega_de_producto(num_cuenta,num_venta) {
+           $.ajax({
+               url : "/Entregar/Producto/", // La URL que llama a la vista
+               type : "POST", // Metodo http para realizar el request (peticion al servidor)
+               data : { numerocuenta:num_cuenta,numeroventa:num_venta}, // Datos enviados con el request en formato JSON
+
+               // Si el response es correcto (si la respuesta del servidor es correcta)
+               success : function(json) {
+                   alert(json.resultado);
+               },
+               // Si el response no tuvo exito
+               error : function(xhr,errmsg,err) {
+                   $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Ha ocurrido un error: "+errmsg+
+                       " <a href='#' class='close'>&times;</a></div>"); // Se agrega el error al DOM
+                   console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
+               }
+           });
        };
 
 

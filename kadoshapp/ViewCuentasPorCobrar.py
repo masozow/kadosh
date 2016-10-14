@@ -151,3 +151,29 @@ def GuardarPago(request):
             json.dumps({"nothing to see": "this isn't happening"}),
             content_type="application/json"
         )
+
+@login_required
+@user_passes_test(not_in_Caja_group, login_url='denegado')
+def EntregarProducto(request):
+    if request.method == 'POST':
+        cod_venta = request.POST.get('numeroventa')
+        cod_cuenta = request.POST.get('numerocuenta')
+        response_data={}
+        try:
+            detalleventa=DetalleVenta.objects.filter(venta_idventa=Venta(pk=cod_venta)).values('inventario_producto_idinventario_producto__pk','cantidad_venta')
+            detalleventa_diccionario=ValuesQuerySetToDict(detalleventa)
+            for deta in detalleventa_diccionario:
+                actualizarinventario=InventarioProducto.objects.filter(pk=deta['inventario_producto_idinventario_producto__pk']).update(existencia_actual=F('existencia_actual') - deta['cantidad_venta'])
+            actualizarventa=Venta.objects.filter(pk=cod_venta).update(entregada_venta=1)
+            response_data['resultado']='Producto entregado con éxito'
+        except Exception as e:
+            response_data['resultado']='Error: ' + str(e)    
+        return HttpResponse(
+            json.dumps(response_data,cls=DjangoJSONEncoder),
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )

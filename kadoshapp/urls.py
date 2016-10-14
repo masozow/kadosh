@@ -44,6 +44,7 @@ url(r'^Buscar/VentaAbono/$', ViewCuentasPorCobrar.BuscarVentaAbono, name='Busque
 url(r'^Buscar/CuentaPorCobrar/$', ViewCuentasPorCobrar.BuscarCuentaPorCobrar, name='BusquedaCuentaCobrar'),
 url(r'^Buscar/Pago/$', ViewCuentasPorCobrar.BuscarPago, name='BusquedaPago'),
 url(r'^Guardar/Pago/$', ViewCuentasPorCobrar.GuardarPago, name='GuardarPago'),
+url(r'^Entregar/Producto/$', ViewCuentasPorCobrar.EntregarProducto, name='EntrearProducto'),
 url(r'^Buscar/ProductoCaracteristicas/$', viewPuntodeVenta.BuscarProductoCaracteristicas, name='BusquedaProdCar'),
 url(r'^Buscar/ProductoCaracteristicas/Traslado/$', viewTrasladoMercaderia.BuscarProductoCaracteristicas, name='BusquedaProdCarTraslado'),
 url(r'^Buscar/ImagenProducto/$', viewPuntodeVenta.BuscarProductoImagenPrincipal, name='BusquedaProdImg'),
