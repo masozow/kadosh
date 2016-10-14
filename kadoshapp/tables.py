@@ -106,6 +106,16 @@ class ComprasTabla(tables.Table):
     class Meta:
         attrs = {'class': 'paleblue'}
 
+class ApartadosTabla(tables.Table):
+    pk=tables.Column(verbose_name= 'Cod Venta')
+    cliente_idcliente__persona_idpersona__nombres_persona=tables.Column(verbose_name= 'Nombres Cliente')
+    cliente_idcliente__persona_idpersona__apellidos_persona=tables.Column(verbose_name= 'Apellidos Cliente')
+    total_venta=tables.Column(verbose_name= 'Total Venta')
+    cuentaporcobrar__pk=tables.Column(verbose_name= 'Cod Cuenta')
+    cuentaporcobrar__saldo_inicial_cuentaporcobrar=tables.Column(verbose_name= 'Saldo Inicial')
+    cuentaporcobrar__saldo_actual_cuentaporcobrar=tables.Column(verbose_name= 'Saldo Actual')
+    class Meta:
+        attrs = {'class': 'paleblue'}
 
 
 class RecordatorioClientesTabla(tables.Table):
