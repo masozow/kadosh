@@ -315,12 +315,12 @@ Apartados
           //console.log($('#id_bodega_idbodega option:selected').val());
        }
 /*
-Pensar en qué caja se debe agregar el pago del abono
+(ya)Pensar en qué caja se debe agregar el pago del abono
 Agregar la nota al cierre de caja
 Actualizar la Cuenta por cobrar al hacer un abono
 Crear la cuenta por cobrar al momento de hacer la venta que no es al contado
-Filtrar por venta al contado en todos los reportes y en el cierre de caja
-No hacer descarga de inventario hasta que se haya pagado por completo
+(ya)Filtrar por venta al contado en todos los reportes y en el cierre de caja
+(ya)No hacer descarga de inventario hasta que se haya pagado por completo
 */
    /*Espacio para Ajax
    ============================================================================*/
@@ -414,11 +414,11 @@ No hacer descarga de inventario hasta que se haya pagado por completo
        };
 
        var res;
-       function guardar_pago(num_cuenta,monto_pago,idinventario,idempleado,autorizacion,cantventa,valparventa,motivo) {
+       function guardar_pago(num_cuenta,monto_pago,tipopago,cajapago) {
            $.ajax({
                url : "/Modificacion/Venta/", // La URL que llama a la vista
                type : "POST", // Metodo http para realizar el request (peticion al servidor)
-               data : { cod_venta:idventa,cod_detalle : iddetalle, cod_inventario:idinventario, cod_empleado : idempleado, codigo : autorizacion,cant_venta:cantventa,val_parcial:valparventa,motivo_devolucion:motivo}, // Datos enviados con el request en formato JSON
+               data : { numerocuenta:num_cuenta, montopago: monto_pago, tipo_pago: tipopago, caja_pago: cajapago}, // Datos enviados con el request en formato JSON
                // Si el response es correcto (si la respuesta del servidor es correcta)
                success : function(json) {
                    res=json;
