@@ -44,13 +44,13 @@ def Ventas(request):
             if not empleado:
                 empleado=0
             if box:
-                ventas_vendedor = qs.filter(es_cotizacion=0,estado_venta=1,vendedor_venta=int(empleado),fecha_venta__range=(fechainicial_real,fechafinal_real )).values('month','vendedor_venta__persona_idpersona__nombres_persona','vendedor_venta__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('month') #este y funciona con las horas
+                ventas_vendedor = qs.filter(contado_venta=1,es_cotizacion=0,estado_venta=1,vendedor_venta=int(empleado),fecha_venta__range=(fechainicial_real,fechafinal_real )).values('month','vendedor_venta__persona_idpersona__nombres_persona','vendedor_venta__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('month') #este y funciona con las horas
                 if not ventas_vendedor:
-                    ventas_vendedor = qs.filter(es_cotizacion=0,estado_venta=1,fecha_venta__range=(fechainicial_real,fechafinal_real)).values('month','vendedor_venta__persona_idpersona__nombres_persona','vendedor_venta__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('month') #este y funciona con las horas
+                    ventas_vendedor = qs.filter(contado_venta=1,es_cotizacion=0,estado_venta=1,fecha_venta__range=(fechainicial_real,fechafinal_real)).values('month','vendedor_venta__persona_idpersona__nombres_persona','vendedor_venta__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('month') #este y funciona con las horas
             else:
-                ventas_vendedor = Venta.objects.filter(es_cotizacion=0,estado_venta=1,vendedor_venta=int(empleado),fecha_venta__range=(fechainicial_real, fechafinal_real)).values('vendedor_venta__persona_idpersona__nombres_persona','vendedor_venta__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('total_ventas')
+                ventas_vendedor = Venta.objects.filter(contado_venta=1,es_cotizacion=0,estado_venta=1,vendedor_venta=int(empleado),fecha_venta__range=(fechainicial_real, fechafinal_real)).values('vendedor_venta__persona_idpersona__nombres_persona','vendedor_venta__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('total_ventas')
                 if not ventas_vendedor:
-                    ventas_vendedor = Venta.objects.filter(es_cotizacion=0,estado_venta=1,fecha_venta__range=(fechainicial_real, fechafinal_real)).values('vendedor_venta__persona_idpersona__nombres_persona','vendedor_venta__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('total_ventas')
+                    ventas_vendedor = Venta.objects.filter(contado_venta=1,es_cotizacion=0,estado_venta=1,fecha_venta__range=(fechainicial_real, fechafinal_real)).values('vendedor_venta__persona_idpersona__nombres_persona','vendedor_venta__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('total_ventas')
 
         reporte1=VentasTabla(ventas_vendedor)
         RequestConfig(request, paginate={'per_page': 25}).configure(reporte1)
@@ -59,7 +59,7 @@ def Ventas(request):
         form_fecha=Form_Busqueda_Fechas()
         form_vendedor=Form_Busqueda_Vendedor()
         form_check=Form_Busqueda_Checbox()
-        consulta=ventas_vendedor = Venta.objects.filter(es_cotizacion=0,estado_venta=1).values('vendedor_venta__persona_idpersona__nombres_persona','vendedor_venta__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('total_ventas')
+        consulta=ventas_vendedor = Venta.objects.filter(contado_venta=1,es_cotizacion=0,estado_venta=1).values('vendedor_venta__persona_idpersona__nombres_persona','vendedor_venta__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('total_ventas')
         reporte1=VentasTabla(consulta)
         RequestConfig(request, paginate={'per_page': 25}).configure(reporte1)
         return render(request,'kadoshapp/ReporteVentas.html',{'reporte1':reporte1,'form_fecha':form_fecha,'form_vendedor':form_vendedor,'form_check':form_check})
