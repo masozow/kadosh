@@ -213,7 +213,7 @@ def GuardarVenta(request):
             #empleado=Empleado.objects.get(auth_user=request.user)
             ventaNueva=Venta(anotaciones_venta=rec_anotaciones_venta,cliente_idcliente=Cliente.objects.get(idcliente=rec_cliente_idcliente),tipo_pago_idtipo_pago=TipoPago.objects.get(idtipo_pago=rec_tipo_pago_idtipo_pago),contado_venta=rec_contado_venta,vendedor_venta=Empleado.objects.get(idempleado=rec_vendedor_venta),caja_idcaja=Caja.objects.get(idcaja=rec_caja_idcaja),es_cotizacion=rec_es_cotizacion,total_venta=rec_total_venta)
             ventaNueva.save()
-            if rec_es_cotizacion==0 and rec_contado_venta==1:
+            if rec_es_cotizacion==0 and rec_contado_venta==0:
                 cuentaNueva=CuentaPorCobrar(venta_idventa=ventaNueva,saldo_inicial_cuentaporcobrar=rec_total_venta,fecha_pagofinal_cuentaporcobrar=datetime.date.now())
                 cuentaNueva.save()
             tablaJson=json.loads(rec_tabla)#el loads es necesario, si no los datos aparecen como un arreglo, incluidos los corchetes y las comas
