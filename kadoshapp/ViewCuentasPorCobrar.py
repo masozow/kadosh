@@ -131,20 +131,19 @@ def GuardarPago(request):
         if not tipo_pago:
             tipo_pago=0
         response_data={}
-        nuevopago=PagosCuentaPorCobrar(monto_pago_cuentaporcobrar=monto_pago,tipo_pago_idtipo_pago=tipo_pago,caja_idcaja=caja_pago)
+        nuevopago=PagosCuentaPorCobrar(cuenta_por_cobrar_idcuenta_por_cobrar=CuentaPorCobrar(pk=cod_cuenta),monto_pago_cuentaporcobrar=monto_pago,tipo_pago_idtipo_pago=TipoPago(pk=tipo_pago),caja_idcaja=Caja(pk=caja_pago))
         #verificar en el frontend que el monto del pago no sea mayor que el saldo inicial
-        actualizarcuenta=CuentaPorCobrar.objects.filter(pk=cod_cuenta).update(saldo_actual_cuentaporcobrar=F('saldo_actual_cuentaporcobrar')-montopago)
+        actualizarcuenta=CuentaPorCobrar.objects.filter(pk=cod_cuenta).update(saldo_actual_cuentaporcobrar=F('saldo_actual_cuentaporcobrar')-monto_pago)
         if actualizarcuenta: #solo si se actualizó la cuenta
             response_data['nuevopago']=nuevopago.save()
-            response_data['actualizarventa']=actualizarventa
-        if nuevopago and actualizarventa:
+            response_data['actualizarcuenta']=actualizarcuenta
+        if nuevopago and actualizarcuenta:
             response_data['resultado']='Pago almacenado con éxito'
         else:
             response_data['resultado']='No se almacenó el pago'
 
-        pago_diccionario=ValuesQuerySetToDict(pago)
         return HttpResponse(
-            json.dumps(pago_diccionario,cls=DjangoJSONEncoder),
+            json.dumps(response_data,cls=DjangoJSONEncoder),
             content_type="application/json"
         )
     else:

@@ -75,21 +75,27 @@
             success : function(json) {
               var cheque=0;
               var efectivo=0;
-              var gasto=0;
               var tarjeta=0;
+              var chequepago=0;
+              var efectivopago=0;
+              var tarjetapago=0;
               var grantotal=0;
+              var gasto=0;
               try{
                 efectivo=parseFloat(json.efectivo[0].total_efectivo);
+                efectivopago=parseFloat(json.efectivopago[0].total_efectivopago);
               }catch(e){
 
               }
               try{
                 cheque=parseFloat(json.cheque[0].total_cheque);
+                chequepago=parseFloat(json.chequepago[0].total_chequepago);
               }catch(e){
 
               }
               try{
                 tarjeta=parseFloat(json.tarjeta[0].total_tarjeta);
+                tarjetapago=parseFloat(json.tarjetapago[0].total_tarjetapago);
               }catch(e){
 
               }
@@ -98,11 +104,11 @@
               }catch(e){
 
               }
-              grantotal=efectivo+tarjeta+cheque-gasto;
+              grantotal=efectivo+tarjeta+cheque+efectivopago+tarjetapago+chequepago-gasto;
               $('#id_total_calculado_cierredecaja').val(grantotal);
-              $('#id_total_efectivo_cierredecaja').val(efectivo);
-              $('#id_total_cheque_cierredecaja').val(cheque);
-              $('#id_total_tarjeta_cierredecaja').val(tarjeta);
+              $('#id_total_efectivo_cierredecaja').val(efectivo+efectivopago);
+              $('#id_total_cheque_cierredecaja').val(cheque+chequepago);
+              $('#id_total_tarjeta_cierredecaja').val(tarjeta+tarjetapago);
               $('#id_total_egresos_cierredecaja').val(gasto);
               /*console.log(json.gastos[0].total_gastos);
               console.log(json.efectivo[0].total_efectivo);

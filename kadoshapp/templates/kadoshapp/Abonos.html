@@ -275,8 +275,10 @@ Apartados
 
        $('#formulario_anular').on('submit', function(event){
            event.preventDefault();
-           guardar_pago(cuenta,$('id_monto_pago_cuentaporcobrar').val(),$('id_tipo_pago_idtipo_pago option:selected').val(),$('#id_caja_idcaja option:selected').val());
-           obtener_cuentaporcobrar(cuenta);
+           //(num_cuenta,monto_pago,tipopago,cajapago)
+           guardar_pago(cuenta,$('#id_monto_pago_cuentaporcobrar').val(),$('#id_tipo_pago_idtipo_pago option:selected').val(),$('#id_caja_idcaja option:selected').val());
+           obtener_cuentaporcobrar(venta);
+           obtener_pago(cuenta);
            /*
            if(venta===0)
            {
@@ -419,15 +421,15 @@ Crear la cuenta por cobrar al momento de hacer la venta que no es al contado
        };
 
        var res;
-       function guardar_pago(num_cuenta,monto_pago,tipopago,cajapago) {
+       function guardar_pago(num_cuenta,monto_pago,tipo_pago,caja_pago) {
            $.ajax({
                url : "/Guardar/Pago/", // La URL que llama a la vista
                type : "POST", // Metodo http para realizar el request (peticion al servidor)
-               data : { numerocuenta:num_cuenta, montopago: monto_pago, tipo_pago: tipopago, caja_pago: cajapago}, // Datos enviados con el request en formato JSON
+               data : { numerocuenta:num_cuenta, montopago: monto_pago, tipopago: tipo_pago, cajapago: caja_pago}, // Datos enviados con el request en formato JSON
                // Si el response es correcto (si la respuesta del servidor es correcta)
                success : function(json) {
                    res=json;
-                   alert(json[0].resultado);
+                   alert(json.resultado);
                },
                // Si el response no tuvo exito
                error : function(xhr,errmsg,err) {

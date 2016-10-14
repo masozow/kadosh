@@ -75,17 +75,32 @@ def BuscarCaja(request):
         hoy_max=hoy_max+timedelta(hours=6)
         hoy_min=hoy_min+timedelta(hours=6)
         gastos=Gastos.objects.filter(caja_idcaja=int(caja),momento_gasto__range=(hoy_min,hoy_max)).values('caja_idcaja__pk').annotate(total_gastos=Sum('monto_gasto'))
-        efectivo=Venta.objects.filter(estado_venta=1,es_cotizacion=0,tipo_pago_idtipo_pago=TipoPago(pk=1),fecha_venta__range=(hoy_min,hoy_max),caja_idcaja=Caja(pk=caja)).values('caja_idcaja__pk').annotate(total_efectivo=Sum('total_venta'))
-        tarjeta=Venta.objects.filter(estado_venta=1,es_cotizacion=0,tipo_pago_idtipo_pago=TipoPago(pk=3),fecha_venta__range=(hoy_min,hoy_max),caja_idcaja=Caja(pk=caja)).values('caja_idcaja__pk').annotate(total_tarjeta=Sum('total_venta'))
-        cheque=Venta.objects.filter(estado_venta=1,es_cotizacion=0,tipo_pago_idtipo_pago=TipoPago(pk=2),fecha_venta__range=(hoy_min,hoy_max),caja_idcaja=Caja(pk=caja)).values('caja_idcaja__pk').annotate(total_cheque=Sum('total_venta'))
+        efectivo=Venta.objects.filter(estado_venta=1,es_cotizacion=0,contado_venta=1,tipo_pago_idtipo_pago=TipoPago(pk=1),fecha_venta__range=(hoy_min,hoy_max),caja_idcaja=Caja(pk=caja)).values('caja_idcaja__pk').annotate(total_efectivo=Sum('total_venta'))
+        tarjeta=Venta.objects.filter(estado_venta=1,es_cotizacion=0,contado_venta=1,tipo_pago_idtipo_pago=TipoPago(pk=3),fecha_venta__range=(hoy_min,hoy_max),caja_idcaja=Caja(pk=caja)).values('caja_idcaja__pk').annotate(total_tarjeta=Sum('total_venta'))
+        cheque=Venta.objects.filter(estado_venta=1,es_cotizacion=0,contado_venta=1,tipo_pago_idtipo_pago=TipoPago(pk=2),fecha_venta__range=(hoy_min,hoy_max),caja_idcaja=Caja(pk=caja)).values('caja_idcaja__pk').annotate(total_cheque=Sum('total_venta'))
+
+        #fecha_hoy=datetime.date.today()
+        #fecha_hoy=pytz.utc.localize(fecha_hoy)
+        #fecha_hoy=fecha_hoy+timedelta(hours=6)
+
+        efectivopago=PagosCuentaPorCobrar.objects.filter(tipo_pago_idtipo_pago=TipoPago(pk=1),fecha_pago_cuentaporcobrar__range=(hoy_min,hoy_max),caja_idcaja=Caja(pk=caja)).values('caja_idcaja__pk').annotate(total_efectivopago=Sum('monto_pago_cuentaporcobrar'))
+        tarjetapago=PagosCuentaPorCobrar.objects.filter(tipo_pago_idtipo_pago=TipoPago(pk=3),fecha_pago_cuentaporcobrar__range=(hoy_min,hoy_max),caja_idcaja=Caja(pk=caja)).values('caja_idcaja__pk').annotate(total_tarjetapago=Sum('monto_pago_cuentaporcobrar'))
+        chequepago=PagosCuentaPorCobrar.objects.filter(tipo_pago_idtipo_pago=TipoPago(pk=2),fecha_pago_cuentaporcobrar__range=(hoy_min,hoy_max),caja_idcaja=Caja(pk=caja)).values('caja_idcaja__pk').annotate(total_chequepago=Sum('monto_pago_cuentaporcobrar'))
+        
         gastos_dic=ValuesQuerySetToDict(gastos)
         efectivo_dic=ValuesQuerySetToDict(efectivo)
         tarjeta_dic=ValuesQuerySetToDict(tarjeta)
         cheque_dic=ValuesQuerySetToDict(cheque)
+        efectivopago_dic=ValuesQuerySetToDict(efectivopago)
+        tarjetapago_dic=ValuesQuerySetToDict(tarjetapago)
+        chequepago_dic=ValuesQuerySetToDict(chequepago)
         response_data['gastos']=gastos_dic
         response_data['efectivo']=efectivo_dic#serializers.serialize('json', list(efectivo))
         response_data['tarjeta']=tarjeta_dic#serializers.serialize('json', list(tarjeta))
         response_data['cheque']=cheque_dic#serializers.serialize('json', list(cheque))
+        response_data['efectivopago']=efectivopago_dic#serializers.serialize('json', list(efectivo))
+        response_data['tarjetapago']=tarjetapago_dic#serializers.serialize('json', list(tarjeta))
+        response_data['chequepago']=chequepago_dic#serializers.serialize('json', list(cheque))
         #ingresos=
         return HttpResponse(
             json.dumps(response_data,cls=DjangoJSONEncoder),
