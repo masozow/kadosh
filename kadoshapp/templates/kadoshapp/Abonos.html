@@ -274,6 +274,9 @@ Apartados
 
        $('#formulario_anular').on('submit', function(event){
            event.preventDefault();
+           guardar_pago(cuenta,$('id_monto_pago_cuentaporcobrar').val(),$('id_tipo_pago_idtipo_pago option:selected').val(),$('#id_caja_idcaja option:selected').val());
+           obtener_cuentaporcobrar(cuenta);
+           /*
            if(venta===0)
            {
              alert('No eligió ninguna venta');
@@ -290,6 +293,7 @@ Apartados
            else{
              modificar_detalle(venta,detalle,$('#id_inventario_producto_idinventario_producto option:selected').val(),$("#id_empleado_idempleado option:selected").val(),$("#id_codigo_autorizacion_empleado").val(),$('#id_cantidad_venta').val(),$('#id_valor_parcial_venta').val(),$('#id_motivo_devolucion').val());
            }
+           */
            //anular_venta($("#lbl_venta").text(),$("#id_empleado_idempleado option:selected").val(),$("#id_codigo_autorizacion_empleado").val());
 
            //$('#formulario_precio').find('input, textarea, select').not("#boton_buscar, #boton_guardar").val("");
@@ -416,13 +420,13 @@ Crear la cuenta por cobrar al momento de hacer la venta que no es al contado
        var res;
        function guardar_pago(num_cuenta,monto_pago,tipopago,cajapago) {
            $.ajax({
-               url : "/Modificacion/Venta/", // La URL que llama a la vista
+               url : "/Guardar/Pago/", // La URL que llama a la vista
                type : "POST", // Metodo http para realizar el request (peticion al servidor)
                data : { numerocuenta:num_cuenta, montopago: monto_pago, tipo_pago: tipopago, caja_pago: cajapago}, // Datos enviados con el request en formato JSON
                // Si el response es correcto (si la respuesta del servidor es correcta)
                success : function(json) {
                    res=json;
-                   alert(json);
+                   alert(json[0].resultado);
                },
                // Si el response no tuvo exito
                error : function(xhr,errmsg,err) {
@@ -430,13 +434,13 @@ Crear la cuenta por cobrar al momento de hacer la venta que no es al contado
                        " <a href='#' class='close'>&times;</a></div>"); // Se agrega el error al DOM
                    console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
                }
-           }).done(function( data ) {
-             if (res==="Detalle actualizado") {
+           });/*.done(function( data ) {
+             if (res==="Pago almacenado con éxito") {
                $("#id_codigo_autorizacion_empleado").val("");
                $("#id_empleado_idempleado").val("");
                location.reload();
              }
-           });
+           });*/
        };
 
 

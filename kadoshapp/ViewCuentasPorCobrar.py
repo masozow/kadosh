@@ -130,11 +130,17 @@ def GuardarPago(request):
             cod_cuenta=0
         if not tipo_pago:
             tipo_pago=0
-        nuevopago=PagosCuentaPorCobrar(monto_pago_cuentaporcobrar=monto_pago,tipo_pago_idtipo_pago=tipo_pago,caja_idcaja=cajapago)
+        response_data={}
+        nuevopago=PagosCuentaPorCobrar(monto_pago_cuentaporcobrar=monto_pago,tipo_pago_idtipo_pago=tipo_pago,caja_idcaja=caja_pago)
         #verificar en el frontend que el monto del pago no sea mayor que el saldo inicial
-        actualizarcuenta=CuentaPorCobrar.objects.filter(pk=cod_cuenta).update(saldo_actual_cuentaporcobrar=F(saldo_actual_cuentaporcobrar)-montopago)
+        actualizarcuenta=CuentaPorCobrar.objects.filter(pk=cod_cuenta).update(saldo_actual_cuentaporcobrar=F('saldo_actual_cuentaporcobrar')-montopago)
         if actualizarcuenta: #solo si se actualizó la cuenta
-            nuevopago.save()
+            response_data['nuevopago']=nuevopago.save()
+            response_data['actualizarventa']=actualizarventa
+        if nuevopago and actualizarventa:
+            response_data['resultado']='Pago almacenado con éxito'
+        else:
+            response_data['resultado']='No se almacenó el pago'
 
         pago_diccionario=ValuesQuerySetToDict(pago)
         return HttpResponse(
