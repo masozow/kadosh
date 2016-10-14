@@ -215,6 +215,7 @@ def GuardarVenta(request):
             ventaNueva.save()
             if rec_es_cotizacion==0 and rec_contado_venta==1:
                 cuentaNueva=CuentaPorCobrar(venta_idventa=ventaNueva,saldo_inicial_cuentaporcobrar=rec_total_venta,fecha_pagofinal_cuentaporcobrar=datetime.date.now())
+                cuentaNueva.save()
             tablaJson=json.loads(rec_tabla)#el loads es necesario, si no los datos aparecen como un arreglo, incluidos los corchetes y las comas
 
             #Iterando dentro de los arreglos de json:
