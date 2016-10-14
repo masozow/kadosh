@@ -1,9 +1,9 @@
 from django.conf.urls import include, url
 from . import views
-from . import ViewCuentasPorCobrar,ViewProducto,ViewTrabajador,viewReporteProductos,viewModificarCliente,viewAsignarCaja,viewListadoProductos,viewBusquedaMercaderia,viewPrecios,viewCliente, viewIngresoMercaPorProveedor, viewCompra, viewPuntodeVenta, viewTrasladoMercaderia, viewCierreCaja, viewAnularVenta, viewInventario, viewPromocion,viewEmpleados, viewCotizacion,viewModificarVenta,viewReporteCompras,viewReporteComprasExcel,viewResumenes,viewReporteCompraEspecifica,viewReporteCompraEspecificaExcel,viewReporteTodosProductos,viewReporteTodosProductosExcel,viewReporteCierreCaja,viewReporteCierreCajaExcel,viewReporteDevolucion,viewReporteDevolucionExcel,viewReporteGastos,viewReporteGastosExcel,viewWebInicio,viewWebNoticias,viewWebProductos,viewWebConcacto,viewWebOfertas,viewPublicarOfertarProductos_Web, viewPublicarNoticia_Web
+from . import viewReporteApartados,ViewCuentasPorCobrar,ViewProducto,ViewTrabajador,viewReporteProductos,viewModificarCliente,viewAsignarCaja,viewListadoProductos,viewBusquedaMercaderia,viewPrecios,viewCliente, viewIngresoMercaPorProveedor, viewCompra, viewPuntodeVenta, viewTrasladoMercaderia, viewCierreCaja, viewAnularVenta, viewInventario, viewPromocion,viewEmpleados, viewCotizacion,viewModificarVenta,viewReporteCompras,viewReporteComprasExcel,viewResumenes,viewReporteCompraEspecifica,viewReporteCompraEspecificaExcel,viewReporteTodosProductos,viewReporteTodosProductosExcel,viewReporteCierreCaja,viewReporteCierreCajaExcel,viewReporteDevolucion,viewReporteDevolucionExcel,viewReporteGastos,viewReporteGastosExcel,viewWebInicio,viewWebNoticias,viewWebProductos,viewWebConcacto,viewWebOfertas,viewPublicarOfertarProductos_Web, viewPublicarNoticia_Web
 from . import viewTablas
 from . import viewReporteClientes,viewReporteClientesExcel
-from . import ViewReporteVentas, ViewReporteVentasExcel
+from . import ViewReporteVentas, ViewReporteVentasExcel, viewReporteApartadosExcel
 urlpatterns=[
 #urls para loguear
 url(r'^sistema/$','django.contrib.auth.views.login',
@@ -16,6 +16,7 @@ url(r'^Venta/Apartados/$', ViewCuentasPorCobrar.Abonos, name='Apartados'),
 url(r'^ingreso/cliente/$', viewCliente.registro_cliente, name='registroCliente'),
 url(r'^Registro/empleado/$', ViewTrabajador.registro_trabajador, name='registro_trabajador'),
 url(r'^Elementos/Producto/$', ViewProducto.CosasProducto, name='Elementos'),
+url(r'^Reporte/Apartados/$', viewReporteApartados.reporte_apartados, name='ReporteApartados'),
 url(r'^modificar/cliente/$', viewModificarCliente.mod_cliente, name='modcliente'),
 url(r'^ingreso/MercaderiaPoProveedor/$',viewIngresoMercaPorProveedor.ingresodemercaderiaporProveedor, name='IngresoMercaPorProveedor'),
 url(r'^ingreso/Compra/$', viewCompra.Compra, name='Compra'),
@@ -94,6 +95,7 @@ url(r'^Reporte/Ventas/$', ViewReporteVentas.Ventas, name='RVentas'),
 url(r'^reporte_ventas_excel/$',ViewReporteVentasExcel.ReporteVentas.as_view(), name="reporte_ventas_excel"),
 url(r'^reporte_compras_excel/$',viewReporteComprasExcel.ReporteCompras.as_view(), name="reporte_compras_excel"),
 url(r'^Reporte/CompraEspecifica/$', viewReporteCompraEspecifica.CompraEspecifica, name='Rcompraespecifica'),
+url(r'^reporte_apartados_excel/$',viewReporteApartadosExcel.ReporteApartados.as_view(), name="reporte_apartado_excel"),
 #url(r'^reporte_comprasespecificas_excel/$',viewReporteCompraEspecificaExcel.ReporteCompraEspecifica.as_view(), name="reporte_compraespecifica_excel"),
 
 #direcciones del sitio web
