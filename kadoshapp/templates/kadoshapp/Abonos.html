@@ -92,7 +92,7 @@ Apartados
           <p class="blue-text text-darken-2">Cuenta por cobrar seleccionada: <label id="lbl_cuenta" class="mietiqueta"></label></p>
          <div class="divider"></div>
          <div class="divider"></div>
-         <div id="bloque_caracteristicas_producto" style="background-color:#b3cccc;border-radius:10px;">
+         <div  style="background-color:#b3cccc; border-radius:10px;">
            <div class="row" margin-bottom: 0px;>
              <h5>Abonos</h5>
              <div class="col l4 m12 s12">
@@ -115,23 +115,24 @@ Apartados
                  <tbody>
                  </tbody>
              </table>
+                <div class="divider"></div>
+             <div class="col s12">
              <input class="btn tooltipped" data-position="right" data-delay="5" data-tooltip="Entregar el producto" id="boton_entregar" type="button" onclick="entregar_producto(this)" value="Entregar producto" name="btn_entregar"/>
-             </div>
+           </div>
+            </div>
            </div>
            <div class="row" margin-bottom: 0px;>
             <div class="col l4 m12 s12">
               <br/>
               <button type="submit" class="btn tooltipped" data-position="right" data-delay="50" data-tooltip="Revise bien los datos antes de guardar" id="boton_guardar_pago" name="btn_guardar_pago">Guardar Pago</button>
             </div>
-            <div class="col l8 m12 s12">
-            </div>
+
            </div>
         </div>
-
        </form>
 
    {% endblock %}
-  
+
   {% block extra_scripts %}
    <script type="text/javascript" src="{% static 'js/funciones.js' %}"></script>
    <script type="text/javascript">
