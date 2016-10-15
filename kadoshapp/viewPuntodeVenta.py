@@ -211,31 +211,47 @@ def GuardarVenta(request):
         response_data = {} #declarando un diccionario vacio
         try:
             #empleado=Empleado.objects.get(auth_user=request.user)
-            if rec_contado_venta==1:
-                ventaNueva=Venta(anotaciones_venta=rec_anotaciones_venta,cliente_idcliente=Cliente.objects.get(idcliente=rec_cliente_idcliente),tipo_pago_idtipo_pago=TipoPago.objects.get(idtipo_pago=rec_tipo_pago_idtipo_pago),contado_venta=rec_contado_venta,vendedor_venta=Empleado.objects.get(idempleado=rec_vendedor_venta),caja_idcaja=Caja.objects.get(idcaja=rec_caja_idcaja),es_cotizacion=rec_es_cotizacion,total_venta=rec_total_venta,entregada_venta=1)
-            elif rec_contado_venta==0:
-                ventaNueva=Venta(anotaciones_venta=rec_anotaciones_venta,cliente_idcliente=Cliente.objects.get(idcliente=rec_cliente_idcliente),tipo_pago_idtipo_pago=TipoPago.objects.get(idtipo_pago=rec_tipo_pago_idtipo_pago),contado_venta=rec_contado_venta,vendedor_venta=Empleado.objects.get(idempleado=rec_vendedor_venta),caja_idcaja=Caja.objects.get(idcaja=rec_caja_idcaja),es_cotizacion=rec_es_cotizacion,total_venta=rec_total_venta,entregada_venta=0)
-            ventaNueva.save()
-            if rec_es_cotizacion==0 and rec_contado_venta==0:
-                cuentaNueva=CuentaPorCobrar(venta_idventa=ventaNueva,saldo_inicial_cuentaporcobrar=rec_total_venta,saldo_actual_cuentaporcobrar=rec_total_venta,fecha_pagofinal_cuentaporcobrar=datetime.date.today())
-                cuentaNueva.save()
+            se_puede=True
             tablaJson=json.loads(rec_tabla)#el loads es necesario, si no los datos aparecen como un arreglo, incluidos los corchetes y las comas
-
-            #Iterando dentro de los arreglos de json:
             for fila in tablaJson:
                 datos=[] #creando una lista
                 for elemento in fila:
                     datos.append(elemento) #agregando datos a la lista
                 if datos[0]=='0': #sí es un descuento
-                    detalleNuevo=DetalleVenta(venta_idventa=ventaNueva,descuento_iddescuento=Descuento(iddescuento=datos[1]),cantidad_venta=datos[2],valor_parcial_venta=datos[5])
+                    hola=3
                 else: #es un producto normal
-                    detalleNuevo=DetalleVenta(venta_idventa=ventaNueva,inventario_producto_idinventario_producto=InventarioProducto(pk=datos[0]),cantidad_venta=datos[2],valor_parcial_venta=datos[5])
-                    if rec_es_cotizacion==0 and rec_contado_venta==1:  #solo si no es cotizacion y si es al contado, se van a actualizar las existencias
-                        invent=InventarioProducto.objects.filter(pk=datos[0]).update(existencia_actual=F('existencia_actual') - datos[2]) #Haciendo un update a las existencias del inventario con esa PK
-                detalleNuevo.save()
-            #los siguientes datos son para revision solamente, asi se tiene una respuesta de exito en la consola
-            response_data['total']=ventaNueva.total_venta
-            response_data['idventa']=ventaNueva.pk
+                    obtenerexistencia=InventarioProducto.objects.filter(pk=datos[0]).values_list('existencia_actual',flat=True)[0]
+                    if int(obtenerexistencia)<int(datos[2]):
+                        se_puede=False
+            if se_puede:
+                if rec_contado_venta==1:
+                    ventaNueva=Venta(anotaciones_venta=rec_anotaciones_venta,cliente_idcliente=Cliente.objects.get(idcliente=rec_cliente_idcliente),tipo_pago_idtipo_pago=TipoPago.objects.get(idtipo_pago=rec_tipo_pago_idtipo_pago),contado_venta=rec_contado_venta,vendedor_venta=Empleado.objects.get(idempleado=rec_vendedor_venta),caja_idcaja=Caja.objects.get(idcaja=rec_caja_idcaja),es_cotizacion=rec_es_cotizacion,total_venta=rec_total_venta,entregada_venta=1)
+                elif rec_contado_venta==0:
+                    ventaNueva=Venta(anotaciones_venta=rec_anotaciones_venta,cliente_idcliente=Cliente.objects.get(idcliente=rec_cliente_idcliente),tipo_pago_idtipo_pago=TipoPago.objects.get(idtipo_pago=rec_tipo_pago_idtipo_pago),contado_venta=rec_contado_venta,vendedor_venta=Empleado.objects.get(idempleado=rec_vendedor_venta),caja_idcaja=Caja.objects.get(idcaja=rec_caja_idcaja),es_cotizacion=rec_es_cotizacion,total_venta=rec_total_venta,entregada_venta=0)
+                ventaNueva.save()
+                if rec_es_cotizacion==0 and rec_contado_venta==0:
+                    cuentaNueva=CuentaPorCobrar(venta_idventa=ventaNueva,saldo_inicial_cuentaporcobrar=rec_total_venta,saldo_actual_cuentaporcobrar=rec_total_venta,fecha_pagofinal_cuentaporcobrar=datetime.date.today())
+                    cuentaNueva.save()
+                
+                
+                #Iterando dentro de los arreglos de json:
+                for fila in tablaJson:
+                    datos=[] #creando una lista
+                    for elemento in fila:
+                        datos.append(elemento) #agregando datos a la lista
+                    if datos[0]=='0': #sí es un descuento
+                        detalleNuevo=DetalleVenta(venta_idventa=ventaNueva,descuento_iddescuento=Descuento(iddescuento=datos[1]),cantidad_venta=datos[2],valor_parcial_venta=datos[5])
+                    else: #es un producto normal
+                        obtenerexistencia=InventarioProducto.objects.filter(pk=datos[0]).values_list('existencia_actual',flat=True)
+                        detalleNuevo=DetalleVenta(venta_idventa=ventaNueva,inventario_producto_idinventario_producto=InventarioProducto(pk=datos[0]),cantidad_venta=datos[2],valor_parcial_venta=datos[5])
+                        if rec_es_cotizacion==0 and rec_contado_venta==1:  #solo si no es cotizacion y si es al contado, se van a actualizar las existencias
+                            invent=InventarioProducto.objects.filter(pk=datos[0]).update(existencia_actual=F('existencia_actual') - datos[2]) #Haciendo un update a las existencias del inventario con esa PK
+                    detalleNuevo.save()
+                #los siguientes datos son para revision solamente, asi se tiene una respuesta de exito en la consola
+                response_data['total']=ventaNueva.total_venta
+                response_data['idventa']=ventaNueva.pk
+            else:
+                response_data['resultado']='No se tienen existencias suficientes de uno de los productos'
         except Exception as e:
             response_data['idventa']="Ha ocurrido un error: "+str(e)
         return HttpResponse(

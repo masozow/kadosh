@@ -444,17 +444,6 @@
 
               guardar_venta(tblJson);
 
-              //A continuación se resetean todos los controles, excepto los que se encuentran dentro de "not"
-              $('#formulario_venta').find('input, textarea, select').not("#boton_agregar_descuento,#id_bodega_idbodega, #id_caja_idcaja, #boton_buscar_caracteristicas, #boton_agregar_producto, #id_cantidad_venta, #boton_agregar_promocion, #id_tipo_pago_idtipo_pago").val("");
-              $('#formulario_venta').find(':checkbox').not('#id_contado_venta,#id_es_cotizacion').prop('checked', false); //buscando todos los checkbox del form, excepto el de venta al contado, y seteandolos a falso
-              $('#id_contado_venta').prop('checked', true); //seteando a true el checkbox de venta al contado
-              $("#tabla_productos > tbody").html(""); //Se borra la tabla de productos
-              //$('#bloque_promocion').hide(); //Se oculta el bloque
-              $('#bloque_descuento').hide(); //Se oculta el bloque
-              $('input#id_cantidad_venta').val(1); //Se pone valor de uno a la cantidad
-              $('#bloque_caracteristicas_producto').hide(); //Se oculta el bloque
-              $('#id_tipo_pago_idtipo_pago').val(1);
-
             }
         });
     /*Espacio para Ajax
@@ -607,6 +596,21 @@
                   resul_venta=res_idventa;
                   console.log(res_total);
                   $("#resultado_venta").text(res_idventa);
+                  if (json.resultado==='No se tienen existencias suficientes de uno de los productos') {
+                    alert(json.resultado);
+                  }
+                  else{
+                    //A continuación se resetean todos los controles, excepto los que se encuentran dentro de "not"
+                    $('#formulario_venta').find('input, textarea, select').not("#boton_agregar_descuento,#id_bodega_idbodega, #id_caja_idcaja, #boton_buscar_caracteristicas, #boton_agregar_producto, #id_cantidad_venta, #boton_agregar_promocion, #id_tipo_pago_idtipo_pago").val("");
+                    $('#formulario_venta').find(':checkbox').not('#id_contado_venta,#id_es_cotizacion').prop('checked', false); //buscando todos los checkbox del form, excepto el de venta al contado, y seteandolos a falso
+                    $('#id_contado_venta').prop('checked', true); //seteando a true el checkbox de venta al contado
+                    $("#tabla_productos > tbody").html(""); //Se borra la tabla de productos
+                    //$('#bloque_promocion').hide(); //Se oculta el bloque
+                    $('#bloque_descuento').hide(); //Se oculta el bloque
+                    $('input#id_cantidad_venta').val(1); //Se pone valor de uno a la cantidad
+                    $('#bloque_caracteristicas_producto').hide(); //Se oculta el bloque
+                    $('#id_tipo_pago_idtipo_pago').val(1);
+                  }
                 },
 
                 error : function(xhr,errmsg,err) {
