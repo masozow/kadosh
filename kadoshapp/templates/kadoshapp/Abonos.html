@@ -99,6 +99,8 @@ Apartados
                <label for="id_caja_idcaja"><h6>Caja que cobra:</h6> </label>{{ form_PCC.caja_idcaja}}
                <label for="id_monto_pago_cuentaporcobrar"><h6>Monto</h6> </label>{{form_PCC.monto_pago_cuentaporcobrar}}
                <label for="id_tipo_pago_idtipo_pago"><h6>Tipo de pago</h6> </label>{{ form_PCC.tipo_pago_idtipo_pago}}
+               <br/>
+               <button type="submit" class="btn tooltipped" data-position="right" data-delay="50" data-tooltip="Revise bien los datos antes de guardar" id="boton_guardar_pago" name="btn_guardar_pago">Guardar Pago</button>
              </div>
              <div class="col l8 m12 s12">
                <table id="tabla_pagos" class="grey lighten-2">
@@ -122,13 +124,7 @@ Apartados
            </div>
             </div>
            </div>
-           <div class="row" margin-bottom: 0px;>
-            <div class="col m12 s12">
-              <br/>
-              <button type="submit" class="btn tooltipped" data-position="right" data-delay="50" data-tooltip="Revise bien los datos antes de guardar" id="boton_guardar_pago" name="btn_guardar_pago">Guardar Pago</button>
-            </div>
-
-           </div>
+          
         </div>
        </form>
 
@@ -249,7 +245,7 @@ Apartados
            entrega_de_producto(cuenta,venta);
        }
 
-       
+
        var venta=0;
        //esta funcion se activa al dar clic sobre una fila de la tabla
        function seleccionar_fila(fila){
