@@ -14,6 +14,7 @@ from datetime import timedelta
 #from django.db.models import F #para hacer llamadas u operaciones en la BD, sin cargarlas en memoria (no las procesa django, sino directamente el SGBD)
 import pytz #para usar la zona horaria
 import datetime #para que se pueda dar formato a la fecha
+from decimal import *
 
 def not_in_Caja_group(user):
     if user:
@@ -133,7 +134,7 @@ def GuardarPago(request):
         response_data={}
         try:
             obtenersaldo=CuentaPorCobrar.objects.filter(pk=cod_cuenta).values_list('saldo_actual_cuentaporcobrar',flat=True)[0]
-            if int(obtenersaldo)>=int(monto_pago):
+            if Decimal(obtenersaldo)>=Decimal(monto_pago):
                 nuevopago=PagosCuentaPorCobrar(cuenta_por_cobrar_idcuenta_por_cobrar=CuentaPorCobrar(pk=cod_cuenta),monto_pago_cuentaporcobrar=monto_pago,tipo_pago_idtipo_pago=TipoPago(pk=tipo_pago),caja_idcaja=Caja(pk=caja_pago))
                 #verificar en el frontend que el monto del pago no sea mayor que el saldo inicial
                 actualizarcuenta=CuentaPorCobrar.objects.filter(pk=cod_cuenta).update(saldo_actual_cuentaporcobrar=F('saldo_actual_cuentaporcobrar')-monto_pago)
@@ -148,7 +149,7 @@ def GuardarPago(request):
                 response_data['resultado']='El monto del pago realizado es mayor al saldo actual'
         except Exception as e:
             response_data['resultado']='Error: ' + str(e)
-            
+
         return HttpResponse(
             json.dumps(response_data,cls=DjangoJSONEncoder),
             content_type="application/json"
