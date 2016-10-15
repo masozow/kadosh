@@ -128,7 +128,7 @@ DATABASES = {
         #'NAME': 'enriquesaju$kadosh2',
         'USER': 'root',
         #'USER': 'enriquesaju',
-        'PASSWORD': 'rena',
+        'PASSWORD': 'hola1234',
         #'PASSWORD': 'Kadosh2016',
         'HOST': 'localhost',
         #'HOST': 'enriquesaju.mysql.pythonanywhere-services.com',
