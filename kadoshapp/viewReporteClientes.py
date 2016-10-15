@@ -45,13 +45,13 @@ def Clientes(request):
             if not cliente:
                 cliente=0
             if box:
-                compras_clientes = qs.filter(contado_venta=1,es_cotizacion=0,estado_venta=1,cliente_idcliente=int(cliente),fecha_venta__range=(fechainicial_real, fechafinal_real)).values('month','cliente_idcliente__nit_cliente','cliente_idcliente__pk','cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('month')
+                compras_clientes = qs.filter(entregada_venta=1,es_cotizacion=0,estado_venta=1,cliente_idcliente=int(cliente),fecha_venta__range=(fechainicial_real, fechafinal_real)).values('month','cliente_idcliente__nit_cliente','cliente_idcliente__pk','cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('month')
                 if not compras_clientes:
-                    compras_clientes= qs.filter(contado_venta=1,es_cotizacion=0,estado_venta=1,fecha_venta__range=(fechainicial_real, fechafinal_real)).values('month','cliente_idcliente__nit_cliente','cliente_idcliente__pk','cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('month') #este y funciona con las horas
+                    compras_clientes= qs.filter(entregada_venta=1,es_cotizacion=0,estado_venta=1,fecha_venta__range=(fechainicial_real, fechafinal_real)).values('month','cliente_idcliente__nit_cliente','cliente_idcliente__pk','cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('month') #este y funciona con las horas
             else:
-                compras_clientes = Venta.objects.filter(contado_venta=1,es_cotizacion=0,estado_venta=1,cliente_idcliente=int(cliente),fecha_venta__range=(fechainicial_real, fechafinal_real)).values('cliente_idcliente__nit_cliente','cliente_idcliente__pk','cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('total_ventas')
+                compras_clientes = Venta.objects.filter(entregada_venta=1,es_cotizacion=0,estado_venta=1,cliente_idcliente=int(cliente),fecha_venta__range=(fechainicial_real, fechafinal_real)).values('cliente_idcliente__nit_cliente','cliente_idcliente__pk','cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('total_ventas')
                 if not compras_clientes:
-                    compras_clientes = Venta.objects.filter(contado_venta=1,es_cotizacion=0,estado_venta=1,fecha_venta__range=(fechainicial_real, fechafinal_real)).values('cliente_idcliente__nit_cliente','cliente_idcliente__pk','cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('total_ventas')
+                    compras_clientes = Venta.objects.filter(entregada_venta=1,es_cotizacion=0,estado_venta=1,fecha_venta__range=(fechainicial_real, fechafinal_real)).values('cliente_idcliente__nit_cliente','cliente_idcliente__pk','cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('total_ventas')
 
         #form_fecha=Form_Busqueda_Fechas()
         #form_cliente=Form_Busqueda_Cliente()
@@ -63,7 +63,7 @@ def Clientes(request):
         form_fecha=Form_Busqueda_Fechas()
         form_cliente=Form_Busqueda_Cliente()
         form_check=Form_Busqueda_Checbox()
-        consulta=Venta.objects.filter(contado_venta=1,es_cotizacion=0,estado_venta=1).values('cliente_idcliente__nit_cliente','cliente_idcliente__pk','cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('total_ventas')
+        consulta=Venta.objects.filter(entregada_venta=1,es_cotizacion=0,estado_venta=1).values('cliente_idcliente__nit_cliente','cliente_idcliente__pk','cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__persona_idpersona__apellidos_persona').annotate(total_ventas=Sum('total_venta')).order_by('total_ventas')
         reporte1=ClientesTabla(consulta)
         RequestConfig(request, paginate={'per_page': 25}).configure(reporte1)
         return render(request,'kadoshapp/ReportesClientes.html',{'reporte1':reporte1,'form_fecha':form_fecha,'form_cliente':form_cliente,'form_check':form_check})

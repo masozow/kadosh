@@ -16,11 +16,11 @@ def not_in_AdministradorSistema_group(user):
 @user_passes_test(not_in_AdministradorSistema_group, login_url='denegado') #linea para no permitir acceso al grupo
 def reporte_apartados(request):
     if request.method == 'POST':
-        reportedeudas=Venta.objects.filter(estado_venta=1,es_cotizacion=0,contado_venta=0).values('pk','cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__persona_idpersona__apellidos_persona','total_venta','cuentaporcobrar__pk','cuentaporcobrar__saldo_inicial_cuentaporcobrar','cuentaporcobrar__saldo_actual_cuentaporcobrar')
+        reportedeudas=Venta.objects.filter(estado_venta=1,es_cotizacion=0,entregada_venta=0).values('pk','cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__persona_idpersona__apellidos_persona','total_venta','cuentaporcobrar__pk','cuentaporcobrar__saldo_inicial_cuentaporcobrar','cuentaporcobrar__saldo_actual_cuentaporcobrar')
         reporte1=ApartadosTabla(reportedeudas)
         RequestConfig(request).configure(reporte1)
     else:
-        reportedeudas=Venta.objects.filter(estado_venta=1,es_cotizacion=0,contado_venta=0).values('pk','cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__persona_idpersona__apellidos_persona','total_venta','cuentaporcobrar__pk','cuentaporcobrar__saldo_inicial_cuentaporcobrar','cuentaporcobrar__saldo_actual_cuentaporcobrar')
+        reportedeudas=Venta.objects.filter(estado_venta=1,es_cotizacion=0,entregada_venta=0).values('pk','cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__persona_idpersona__apellidos_persona','total_venta','cuentaporcobrar__pk','cuentaporcobrar__saldo_inicial_cuentaporcobrar','cuentaporcobrar__saldo_actual_cuentaporcobrar')
         reporte1=ApartadosTabla(reportedeudas)
         RequestConfig(request, paginate={'per_page': 25}).configure(reporte1)
     return render(request,'kadoshapp/ReporteApartados.html',{'reporte1':reporte1})

@@ -477,7 +477,9 @@
                         " <a href='#' class='close'>&times;</a></div>");
                     console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
                 }
-            });
+            }).done(function( data ) {
+                Materialize.toast('Imagen obtenida', 2000);
+             });
         };
 
 

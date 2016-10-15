@@ -434,7 +434,9 @@ Crear la cuenta por cobrar al momento de hacer la venta que no es al contado
                // Si el response es correcto (si la respuesta del servidor es correcta)
                success : function(json) {
                    res=json;
-                   alert(json.resultado);
+                   if(String(json.resultado)!='Pago almacenado con éxito'){
+                       alert(json.resultado);
+                   }
                },
                // Si el response no tuvo exito
                error : function(xhr,errmsg,err) {
@@ -459,7 +461,9 @@ Crear la cuenta por cobrar al momento de hacer la venta que no es al contado
 
                // Si el response es correcto (si la respuesta del servidor es correcta)
                success : function(json) {
-                   alert(json.resultado);
+                  
+                     alert(json.resultado); 
+                  
                },
                // Si el response no tuvo exito
                error : function(xhr,errmsg,err) {
@@ -467,7 +471,10 @@ Crear la cuenta por cobrar al momento de hacer la venta que no es al contado
                        " <a href='#' class='close'>&times;</a></div>"); // Se agrega el error al DOM
                    console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
                }
-           });
+           });/*.done(function( data ) {
+                obtener_cuentaporcobrar(venta);
+                obtener_pago(cuenta);
+             });*/
        };
 
 

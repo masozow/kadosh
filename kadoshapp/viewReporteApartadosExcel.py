@@ -19,7 +19,7 @@ def ValuesQuerySetToDict(vqs):
 class ReporteApartados(TemplateView):
     def get(self, request, *args, **kwargs):
         #recibo los datos
-        reportedeudas=Venta.objects.filter(estado_venta=1,es_cotizacion=0,contado_venta=0).values('pk','cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__persona_idpersona__apellidos_persona','total_venta','cuentaporcobrar__pk','cuentaporcobrar__saldo_inicial_cuentaporcobrar','cuentaporcobrar__saldo_actual_cuentaporcobrar')
+        reportedeudas=Venta.objects.filter(estado_venta=1,es_cotizacion=0,entregada_venta=0).values('pk','cliente_idcliente__persona_idpersona__nombres_persona','cliente_idcliente__persona_idpersona__apellidos_persona','total_venta','cuentaporcobrar__pk','cuentaporcobrar__saldo_inicial_cuentaporcobrar','cuentaporcobrar__saldo_actual_cuentaporcobrar')
         reporteApartado=ValuesQuerySetToDict(reportedeudas)
         #Creamos el libro de trabajo
         wb = Workbook()
