@@ -30,7 +30,7 @@ class ReporteDevolucion(TemplateView):
             mes=fechasplit1[1]
             anio=fechasplit1[2]
             fecha1=datetime(int(anio),int(mes), int(dia),0,0,0,tzinfo=pytz.UTC)
-            fecha1=fecha1+datetime.timedelta(hours=6)
+            fecha1=fecha1+timedelta(hours=6)
         else:
             fecha1=''
 
@@ -40,7 +40,7 @@ class ReporteDevolucion(TemplateView):
             mes=fechasplit2[1]
             anio=fechasplit2[2]
             fecha2=datetime(int(anio),int(mes), int(dia),23,59,59,tzinfo=pytz.UTC)
-            fecha2=fecha2+datetime.timedelta(hours=6)
+            fecha2=fecha2+timedelta(hours=6)
         else:
             fecha2=''
 

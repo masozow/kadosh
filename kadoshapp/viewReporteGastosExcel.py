@@ -11,6 +11,10 @@ from django.http.response import HttpResponse
 from .models import *
 from django.db.models import Sum
 from django.db.models import Q
+from datetime import timedelta
+#import datetime
+import pytz
+
 #El siguiente método convierte el resultado de "values" en un diccionario
 def ValuesQuerySetToDict(vqs):
     return [item for item in vqs]
@@ -21,6 +25,7 @@ class ReporteGastos(TemplateView):
         #recibo los datos
         caja= self.request.GET.get('caja_idcaja')
         fecha= self.request.GET.get('momento_gasto')
+        import datetime
         if fecha:
             fecha1_split=str(fecha).split('/')
             fechainicial_real=datetime.datetime(int(fecha1_split[2]),int(fecha1_split[1]), int(fecha1_split[0]),0,0,0,tzinfo=pytz.UTC)
@@ -31,11 +36,15 @@ class ReporteGastos(TemplateView):
         if not caja:
             caja=0
 
-        if not caja and not fecha:
-            resultado_gastos=Gastos.objects.all()
+        if not fecha:
+            resultado_gastos=Gastos.objects.filter(caja_idcaja=caja)
         else:
-		   #Cuando existe por lo menos un parámetro (los números dentro de filter deben reemplazarse por los parámetros que envía el usuario)
-            resultado_gastos=Gastos.objects.filter(Q(caja_idcaja=caja)|Q(momento_gasto__range=(fechainicial_real,fechafinal_real)))
+            if caja:
+                resultado_gastos=Gastos.objects.filter(caja_idcaja=caja,momento_gasto__range=(fechainicial_real,fechafinal_real))
+            elif fecha:
+                resultado_gastos=Gastos.objects.filter(momento_gasto__range=(fechainicial_real,fechafinal_real))
+            else:
+                resultado_gastos=Gastos.objects.all()
         #if not resultado_cierre:
 
 		   #Cuando existe por lo menos un parámetro (los números dentro de filter deben reemplazarse por los parámetros que envía el usuario)

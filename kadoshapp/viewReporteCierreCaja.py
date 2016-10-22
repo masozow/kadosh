@@ -30,12 +30,21 @@ def cierre_caja(request):
          #el not indica que la cadena está vacía, o que la variable es null
         if not caja:
             caja=0
-
-        if not caja and not fecha:
-            resultado_cierre=CierreDeCaja.objects.all()
+        
+        if not fecha:
+            resultado_cierre=CierreDeCaja.objects.filter(caja_idcaja=caja)
         else:
+            if caja:
+                resultado_cierre=CierreDeCaja.objects.filter(caja_idcaja=caja,fecha_cierredecaja=fecha)
+            elif fecha:
+                resultado_cierre=CierreDeCaja.objects.filter(fecha_cierredecaja=fecha)
+            else:
+                resultado_cierre=CierreDeCaja.objects.all()
+        #elif not caja:
+        #    resultado_cierre=CierreDeCaja.objects.all()
+        #else:
 		   #Cuando existe por lo menos un parámetro (los números dentro de filter deben reemplazarse por los parámetros que envía el usuario)
-            resultado_cierre=CierreDeCaja.objects.filter(Q(caja_idcaja=caja)|Q(fecha_cierredecaja=fecha))
+        #    resultado_cierre=CierreDeCaja.objects.filter(Q(caja_idcaja=caja)|Q(fecha_cierredecaja=fecha))
         reporte1=CierreTabla(resultado_cierre)
         RequestConfig(request).configure(reporte1)
         return render(request,'kadoshapp/ReporteCierreCaja.html',{'reporte1':reporte1,'form_cierre':form_cierre})

@@ -32,11 +32,16 @@ class ReporteProductos(TemplateView):
          #el not indica que la cadena está vacía, o que la variable es null
         if not caja:
             caja=0
-
-        if not fecha and not caja:
-            resultado_cierre=CierreDeCaja.objects.all()
+        
+        if not fecha:
+            resultado_cierre=CierreDeCaja.objects.filter(caja_idcaja=caja)
         else:
-            resultado_cierre=CierreDeCaja.objects.filter(Q(caja_idcaja=caja)|Q(fecha_cierredecaja=fecha))
+            if caja:
+                resultado_cierre=CierreDeCaja.objects.filter(caja_idcaja=caja,fecha_cierredecaja=fecha)
+            elif fecha:
+                resultado_cierre=CierreDeCaja.objects.filter(fecha_cierredecaja=fecha)
+            else:
+                resultado_cierre=CierreDeCaja.objects.all()
         #if not resultado_cierre:
 
 		   #Cuando existe por lo menos un parámetro (los números dentro de filter deben reemplazarse por los parámetros que envía el usuario)

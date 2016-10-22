@@ -33,11 +33,22 @@ def gastos(request):
         if not caja:
             caja=0
 
-        if not caja and not fecha:
-            resultado_gastos=Gastos.objects.all()
+        if not fecha:
+            resultado_gastos=Gastos.objects.filter(caja_idcaja=caja)
         else:
+            if caja:
+                resultado_gastos=Gastos.objects.filter(caja_idcaja=caja,momento_gasto__range=(fechainicial_real,fechafinal_real))
+            elif fecha:
+                resultado_gastos=Gastos.objects.filter(momento_gasto__range=(fechainicial_real,fechafinal_real))
+            else:
+                resultado_gastos=Gastos.objects.all()
+
+
+        #if not caja and not fecha:
+        #    resultado_gastos=Gastos.objects.all()
+        #else:
 		   #Cuando existe por lo menos un parámetro (los números dentro de filter deben reemplazarse por los parámetros que envía el usuario)
-            resultado_gastos=Gastos.objects.filter(Q(caja_idcaja=caja)|Q(momento_gasto__range=(fechainicial_real,fechafinal_real)))
+        #    resultado_gastos=Gastos.objects.filter(Q(caja_idcaja=caja)|Q(momento_gasto__range=(fechainicial_real,fechafinal_real)))
         reporte1=GastosTabla(resultado_gastos)
         RequestConfig(request).configure(reporte1)
         return render(request,'kadoshapp/ReporteGastos.html',{'reporte1':reporte1,'form_gastos':form_gastos})
