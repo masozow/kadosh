@@ -124,26 +124,10 @@
           <input class="save btn btn-default" id="boton_agregar_producto" type="button" onclick="agregar_producto(this)" value="Agregar" name="btn_agregar_producto"/>
       </div>
   </div>
-  <div class="divider"></div>
-  <!--div class="row" style="margin-bottom: 0px;">
-    <div id="bloque_promocion">
-      <p style="color: #80bfff;"><b>Promoción</b></p>
-      <div class="col l4 m12 s12">
-        Nombre de la promocion: {{form_cliente.nombre_delapromocion}}
-      </div>
-      <div class="col l6 m12 s12">
-        <br/>
-        {{form_promocionhasproducto.promocion_idpromocion}}
-      </div>
-      <div class="col l2 m12 s12">
-        <br/>
-        <input class="save btn btn-default" id="boton_agregar_promocion" type="button" onclick="agregar_promocion(this)" value="Agregar" name="btn_agregar_promocion"/>
-      </div>
-    </div>
-  </div-->
-
 
   <div class="divider"></div>
+  <div class="divider"></div>
+
   <div class="row" style="margin-bottom: 0px;">
     <div id="bloque_descuento">
     <div class="col l6 m12 s12">
@@ -460,15 +444,14 @@
                   }
                   catch(err) {
                   }
+                  Materialize.toast('Imagen obtenida', 2000);
                 },
                 error : function(xhr,errmsg,err) {
                     $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Ha ocurrido un error: "+errmsg+
                         " <a href='#' class='close'>&times;</a></div>");
                     console.log(xhr.status + ": " + xhr.responseText); // Se envia el codigo del status y el texto que ha devuelto el response
                 }
-            }).done(function( data ) {
-                Materialize.toast('Imagen obtenida', 2000);
-             });
+            });
         };
 
 
