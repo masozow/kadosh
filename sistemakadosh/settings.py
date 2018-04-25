@@ -125,13 +125,13 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         #'NAME': 'kadosh2',
-        'NAME': 'enriquesaju$kadosh2',
+        'NAME': 'masozow$kadosh',
         #'USER': 'root',
-        'USER': 'enriquesaju',
+        'USER': 'masozow',
         #'PASSWORD': 'hola1234',
-        'PASSWORD': 'Kadosh2016',
+        'PASSWORD': 'hola1234',
         #'HOST': 'localhost',
-        'HOST': 'enriquesaju.mysql.pythonanywhere-services.com',
+        'HOST': 'masozow.mysql.pythonanywhere-services.com',
         'PORT': '',
     }
 }
