@@ -70,7 +70,7 @@ class Caja(models.Model):
 
 
 class CajaHasEmpleado(models.Model):
-    idcaja_has_empleado = models.AutoField(db_column='idcaja_has_empleado', primary_key=True)  # Field name made lowercase.
+    idcaja_has_empleado = models.AutoField(db_column='idcaja_has_empleado', primary_key=True, default=1)  # Field name made lowercase.
     caja_idcaja = models.ForeignKey(Caja, db_column='Caja_idCaja')  # Field name made lowercase.
     empleado_idempleado = models.ForeignKey('Empleado', db_column='Empleado_idEmpleado')  # Field name made lowercase.
     momento_asignacion_caja = models.DateTimeField(default=timezone.now)
