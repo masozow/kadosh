@@ -36,7 +36,7 @@ MEDIA_URL = '/archivos/'  #put whatever you want that when url is rendered it wi
 SECRET_KEY = '*5-fe-0ao1jir_e+4ft*r6gxrk6z13o^l@=d_zf=8%##mga7&)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True #False
+DEBUG = False #True 
 
 ALLOWED_HOSTS = ['localhost','127.0.0.1','django.kadosh','masozow.pythonanywhere.com','www.pythonanywhere.com','www.boutiquekadosh.com'] #si el debug es falso, hay que configurar los hosts aqui
 #esta parte la escribi para hacer el logueo
