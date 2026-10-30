@@ -1,0 +1,8 @@
+# Probado con Python 3.8. Django 1.8 NO funciona con Python 3.10+.
+Django==1.8.19
+django-tables2==1.14.2
+openpyxl==2.6.4
+Pillow==10.4.0
+pytz
+gunicorn==20.1.0
+whitenoise==3.3.1

@@ -67,7 +67,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'managed': True,
-                'db_table': 'EstandarCliente',
+                'db_table': 'Estandares_vendedor',
             },
         ),
         migrations.CreateModel(

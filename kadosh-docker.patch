@@ -1,0 +1,235 @@
+diff --git a/.dockerignore b/.dockerignore
+new file mode 100644
+index 0000000..3088734
+--- /dev/null
++++ b/.dockerignore
+@@ -0,0 +1,9 @@
++.git
++**/__pycache__
++*.pyc
++db.sqlite3
++debug.log
++*.log
++kadoshvenv
++venv
++.venv
+diff --git a/Dockerfile b/Dockerfile
+new file mode 100644
+index 0000000..923c4b8
+--- /dev/null
++++ b/Dockerfile
+@@ -0,0 +1,21 @@
++FROM python:3.8-slim-bullseye
++
++ENV PYTHONDONTWRITEBYTECODE=1 \
++    PYTHONUNBUFFERED=1 \
++    DJANGO_SETTINGS_MODULE=sistemakadosh.settings_demo
++
++WORKDIR /app
++
++# Librerías del sistema para compilar el driver de MySQL
++RUN apt-get update \
++    && apt-get install -y --no-install-recommends gcc pkg-config default-libmysqlclient-dev \
++    && rm -rf /var/lib/apt/lists/*
++
++COPY requirements.txt .
++RUN pip install --no-cache-dir -r requirements.txt mysqlclient==1.4.6
++
++COPY . .
++RUN python manage.py collectstatic --noinput
++
++EXPOSE 8000
++CMD ["gunicorn", "sistemakadosh.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "3"]
+diff --git a/crear_demo.py b/crear_demo.py
+new file mode 100644
+index 0000000..1bb198e
+--- /dev/null
++++ b/crear_demo.py
+@@ -0,0 +1,38 @@
++"""
++Crea un usuario administrador de demo y los grupos que exige la aplicación.
++
++Las vistas de Kadosh solo dejan entrar a usuarios que pertenezcan a ciertos
++grupos (ni siquiera un superusuario pasa sin ellos), por eso este script
++crea los 6 grupos y mete al usuario en todos.
++
++Uso:  python crear_demo.py [usuario] [contraseña]
++"""
++import os
++import sys
++
++os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'sistemakadosh.settings_demo')
++
++import django
++django.setup()
++
++from django.contrib.auth.models import Group, User
++
++GRUPOS = ['Caja', 'Bodega', 'AdministradorSistema', 'Supervisor', 'Web', 'Traslado']
++
++usuario = sys.argv[1] if len(sys.argv) > 1 else 'admin'
++clave = sys.argv[2] if len(sys.argv) > 2 else 'admin1234'
++
++user, creado = User.objects.get_or_create(
++    username=usuario,
++    defaults={'is_staff': True, 'is_superuser': True, 'email': usuario + '@example.com'},
++)
++if creado:
++    user.set_password(clave)
++    user.save()
++
++for nombre in GRUPOS:
++    grupo, _ = Group.objects.get_or_create(name=nombre)
++    user.groups.add(grupo)
++
++print('Usuario: %s (%s)' % (usuario, 'creado, clave: ' + clave if creado else 'ya existía, clave sin cambios'))
++print('Grupos asignados: ' + ', '.join(GRUPOS))
+diff --git a/docker-compose.yml b/docker-compose.yml
+new file mode 100644
+index 0000000..3fe5ab6
+--- /dev/null
++++ b/docker-compose.yml
+@@ -0,0 +1,43 @@
++services:
++  db:
++    image: mysql:5.7
++    platform: linux/amd64          # necesario en Mac con chip Apple (M1/M2/M3)
++    restart: unless-stopped
++    command: >
++      --character-set-server=utf8
++      --collation-server=utf8_general_ci
++      --sql-mode=STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION
++    environment:
++      MYSQL_DATABASE: kadosh
++      MYSQL_USER: kadosh
++      MYSQL_PASSWORD: kadosh_pass
++      MYSQL_ROOT_PASSWORD: root_pass
++    volumes:
++      - db_data:/var/lib/mysql
++    healthcheck:
++      test: ["CMD-SHELL", "mysqladmin ping -h localhost -uroot -p$$MYSQL_ROOT_PASSWORD"]
++      interval: 5s
++      timeout: 5s
++      retries: 30
++
++  web:
++    build: .
++    restart: unless-stopped
++    environment:
++      DB_HOST: db
++      DB_NAME: kadosh
++      DB_USER: kadosh
++      DB_PASSWORD: kadosh_pass
++      SECRET_KEY: cambia-esto-por-una-clave-larga-y-aleatoria
++    depends_on:
++      db:
++        condition: service_healthy
++    ports:
++      - "8000:8000"
++    volumes:
++      - media:/app/sistemakadosh/archivos
++    command: sh -c "python manage.py migrate --noinput && gunicorn sistemakadosh.wsgi:application --bind 0.0.0.0:8000 --workers 3"
++
++volumes:
++  db_data:
++  media:
+diff --git a/kadoshapp/migrations/0021_auto_20160729_2151.py b/kadoshapp/migrations/0021_auto_20160729_2151.py
+index 2881190..22bc741 100644
+--- a/kadoshapp/migrations/0021_auto_20160729_2151.py
++++ b/kadoshapp/migrations/0021_auto_20160729_2151.py
+@@ -67,7 +67,7 @@ class Migration(migrations.Migration):
+             ],
+             options={
+                 'managed': True,
+-                'db_table': 'EstandarCliente',
++                'db_table': 'Estandares_vendedor',
+             },
+         ),
+         migrations.CreateModel(
+diff --git a/requirements.txt b/requirements.txt
+new file mode 100644
+index 0000000..3003b21
+--- /dev/null
++++ b/requirements.txt
+@@ -0,0 +1,8 @@
++# Probado con Python 3.8. Django 1.8 NO funciona con Python 3.10+.
++Django==1.8.19
++django-tables2==1.14.2
++openpyxl==2.6.4
++Pillow==10.4.0
++pytz
++gunicorn==20.1.0
++whitenoise==3.3.1
+diff --git a/sistemakadosh/settings_demo.py b/sistemakadosh/settings_demo.py
+new file mode 100644
+index 0000000..5552883
+--- /dev/null
++++ b/sistemakadosh/settings_demo.py
+@@ -0,0 +1,50 @@
++"""
++Configuración para correr el proyecto localmente / en Docker sin tocar settings.py.
++
++- Si existe la variable DB_HOST usa MySQL (modo Docker).
++- Si no existe, usa SQLite (db.sqlite3) y no necesitas instalar MySQL.
++"""
++import os
++
++from .settings import *  # noqa: F401,F403
++from .settings import BASE_DIR, MIDDLEWARE_CLASSES, SECRET_KEY
++
++DEBUG = False
++SECRET_KEY = os.environ.get('SECRET_KEY', SECRET_KEY)
++ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',')
++
++if os.environ.get('DB_HOST'):
++    DATABASES = {
++        'default': {
++            'ENGINE': 'django.db.backends.mysql',
++            'NAME': os.environ.get('DB_NAME', 'kadosh'),
++            'USER': os.environ.get('DB_USER', 'kadosh'),
++            'PASSWORD': os.environ.get('DB_PASSWORD', ''),
++            'HOST': os.environ['DB_HOST'],
++            'PORT': os.environ.get('DB_PORT', '3306'),
++        }
++    }
++else:
++    DATABASES = {
++        'default': {
++            'ENGINE': 'django.db.backends.sqlite3',
++            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
++        }
++    }
++
++# Logs a la consola (docker logs) en vez de un archivo debug.log
++LOGGING = {
++    'version': 1,
++    'disable_existing_loggers': False,
++    'handlers': {'console': {'level': 'WARNING', 'class': 'logging.StreamHandler'}},
++    'root': {'handlers': ['console'], 'level': 'WARNING'},
++}
++
++# WhiteNoise sirve los archivos estáticos (css/js) aunque DEBUG sea False
++MIDDLEWARE_CLASSES = (
++    'django.middleware.security.SecurityMiddleware',
++    'whitenoise.middleware.WhiteNoiseMiddleware',
++) + tuple(m for m in MIDDLEWARE_CLASSES if m != 'django.middleware.security.SecurityMiddleware')
++
++# Esta urlconf agrega la ruta para servir las imágenes subidas (/archivos/)
++ROOT_URLCONF = 'sistemakadosh.urls_demo'
+diff --git a/sistemakadosh/urls_demo.py b/sistemakadosh/urls_demo.py
+new file mode 100644
+index 0000000..0df8b7e
+--- /dev/null
++++ b/sistemakadosh/urls_demo.py
+@@ -0,0 +1,11 @@
++from django.conf import settings
++from django.conf.urls import url
++from django.views.static import serve
++
++from .urls import urlpatterns as base_urlpatterns
++
++# Sirve las imágenes subidas (MEDIA_ROOT) aunque DEBUG sea False.
++# Suficiente para una demo; en un hosting real usa nginx para esto.
++urlpatterns = list(base_urlpatterns) + [
++    url(r'^archivos/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
++]

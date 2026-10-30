@@ -1,0 +1,43 @@
+services:
+  db:
+    image: mysql:5.7
+    platform: linux/amd64          # necesario en Mac con chip Apple (M1/M2/M3)
+    restart: unless-stopped
+    command: >
+      --character-set-server=utf8
+      --collation-server=utf8_general_ci
+      --sql-mode=STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION
+    environment:
+      MYSQL_DATABASE: kadosh
+      MYSQL_USER: kadosh
+      MYSQL_PASSWORD: kadosh_pass
+      MYSQL_ROOT_PASSWORD: root_pass
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -uroot -p$$MYSQL_ROOT_PASSWORD"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  web:
+    build: .
+    restart: unless-stopped
+    environment:
+      DB_HOST: db
+      DB_NAME: kadosh
+      DB_USER: kadosh
+      DB_PASSWORD: kadosh_pass
+      SECRET_KEY: cambia-esto-por-una-clave-larga-y-aleatoria
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    volumes:
+      - media:/app/sistemakadosh/archivos
+    command: sh -c "python manage.py migrate --noinput && gunicorn sistemakadosh.wsgi:application --bind 0.0.0.0:8000 --workers 3"
+
+volumes:
+  db_data:
+  media:
