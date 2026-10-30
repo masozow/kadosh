@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='productohasfotografia',
             name='idproductohasfotografia',
-            field=models.AutoField(default=1, primary_key=True, serialize=False, db_column='idproductohasfotografia'),
+            field=models.AutoField(primary_key=True, serialize=False, db_column='idproductohasfotografia'),
             preserve_default=False,
         ),
         migrations.AlterField(

@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='indexhasfotografia',
             name='idindexhasfotografia',
-            field=models.AutoField(default=1, db_column='idindexhasfotografia', serialize=False, primary_key=True),
+            field=models.AutoField(db_column='idindexhasfotografia', serialize=False, primary_key=True),
             preserve_default=False,
         ),
     ]

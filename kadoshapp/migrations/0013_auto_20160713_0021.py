@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='detalleinventariorealizado',
             name='iddetalleinventariorealizado',
-            field=models.AutoField(serialize=False, db_column='iddetalleinventariorealizado', default=1, primary_key=True),
+            field=models.AutoField(serialize=False, db_column='iddetalleinventariorealizado', primary_key=True),
             preserve_default=False,
         ),
     ]

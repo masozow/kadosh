@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='cajahasempleado',
             name='idcaja_has_empleado',
-            field=models.AutoField(serialize=False, default=1, primary_key=True, db_column='idcaja_has_empleado'),
+            field=models.AutoField(serialize=False, primary_key=True, db_column='idcaja_has_empleado'),
             preserve_default=False,
         ),
     ]

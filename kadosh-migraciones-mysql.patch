@@ -1,0 +1,91 @@
+diff --git a/kadoshapp/migrations/0005_auto_20160709_2322.py b/kadoshapp/migrations/0005_auto_20160709_2322.py
+index d5b3bb2..96cb48e 100644
+--- a/kadoshapp/migrations/0005_auto_20160709_2322.py
++++ b/kadoshapp/migrations/0005_auto_20160709_2322.py
+@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
+         migrations.AddField(
+             model_name='cajahasempleado',
+             name='idcaja_has_empleado',
+-            field=models.AutoField(serialize=False, default=1, primary_key=True, db_column='idcaja_has_empleado'),
++            field=models.AutoField(serialize=False, primary_key=True, db_column='idcaja_has_empleado'),
+             preserve_default=False,
+         ),
+     ]
+diff --git a/kadoshapp/migrations/0009_auto_20160711_1049.py b/kadoshapp/migrations/0009_auto_20160711_1049.py
+index 441f72a..60a37f7 100644
+--- a/kadoshapp/migrations/0009_auto_20160711_1049.py
++++ b/kadoshapp/migrations/0009_auto_20160711_1049.py
+@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
+         migrations.AddField(
+             model_name='productohasfotografia',
+             name='idproductohasfotografia',
+-            field=models.AutoField(default=1, primary_key=True, serialize=False, db_column='idproductohasfotografia'),
++            field=models.AutoField(primary_key=True, serialize=False, db_column='idproductohasfotografia'),
+             preserve_default=False,
+         ),
+         migrations.AlterField(
+diff --git a/kadoshapp/migrations/0010_auto_20160712_1630.py b/kadoshapp/migrations/0010_auto_20160712_1630.py
+index 19a25f0..d46f581 100644
+--- a/kadoshapp/migrations/0010_auto_20160712_1630.py
++++ b/kadoshapp/migrations/0010_auto_20160712_1630.py
+@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
+         migrations.AddField(
+             model_name='indexhasfotografia',
+             name='idindexhasfotografia',
+-            field=models.AutoField(default=1, db_column='idindexhasfotografia', serialize=False, primary_key=True),
++            field=models.AutoField(db_column='idindexhasfotografia', serialize=False, primary_key=True),
+             preserve_default=False,
+         ),
+     ]
+diff --git a/kadoshapp/migrations/0011_auto_20160712_1632.py b/kadoshapp/migrations/0011_auto_20160712_1632.py
+index d5df82c..08b9ccb 100644
+--- a/kadoshapp/migrations/0011_auto_20160712_1632.py
++++ b/kadoshapp/migrations/0011_auto_20160712_1632.py
+@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
+         migrations.AddField(
+             model_name='noticiahasfotografia',
+             name='idnoticiahasfotografia',
+-            field=models.AutoField(serialize=False, db_column='idnoticiahasfotografia', primary_key=True, default=1),
++            field=models.AutoField(serialize=False, db_column='idnoticiahasfotografia', primary_key=True),
+             preserve_default=False,
+         ),
+     ]
+diff --git a/kadoshapp/migrations/0012_auto_20160712_1635.py b/kadoshapp/migrations/0012_auto_20160712_1635.py
+index 820138f..d099584 100644
+--- a/kadoshapp/migrations/0012_auto_20160712_1635.py
++++ b/kadoshapp/migrations/0012_auto_20160712_1635.py
+@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
+         migrations.AddField(
+             model_name='promocionhasproducto',
+             name='idpromocionhasproducto',
+-            field=models.AutoField(serialize=False, primary_key=True, db_column='idpromocionhasproducto', default=1),
++            field=models.AutoField(serialize=False, primary_key=True, db_column='idpromocionhasproducto'),
+             preserve_default=False,
+         ),
+     ]
+diff --git a/kadoshapp/migrations/0013_auto_20160713_0021.py b/kadoshapp/migrations/0013_auto_20160713_0021.py
+index 2cd06c3..edb127c 100644
+--- a/kadoshapp/migrations/0013_auto_20160713_0021.py
++++ b/kadoshapp/migrations/0013_auto_20160713_0021.py
+@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
+         migrations.AddField(
+             model_name='detalleinventariorealizado',
+             name='iddetalleinventariorealizado',
+-            field=models.AutoField(serialize=False, db_column='iddetalleinventariorealizado', default=1, primary_key=True),
++            field=models.AutoField(serialize=False, db_column='iddetalleinventariorealizado', primary_key=True),
+             preserve_default=False,
+         ),
+     ]
+diff --git a/kadoshapp/migrations/0024_auto_20160730_1208.py b/kadoshapp/migrations/0024_auto_20160730_1208.py
+index 0fbaa52..37dedf7 100644
+--- a/kadoshapp/migrations/0024_auto_20160730_1208.py
++++ b/kadoshapp/migrations/0024_auto_20160730_1208.py
+@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
+         migrations.AddField(
+             model_name='marcahastipoproducto',
+             name='idmarcahastipopoducto',
+-            field=models.AutoField(primary_key=True, default=1, db_column='idMarcaHasTipoPoducto', serialize=False),
++            field=models.AutoField(primary_key=True, db_column='idMarcaHasTipoPoducto', serialize=False),
+             preserve_default=False,
+         ),
+         migrations.AlterField(
